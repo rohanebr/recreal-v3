@@ -1,0 +1,607 @@
+<section data-ng-controller="CandidateCvController">
+	<div class="page page-form">    
+	    <div class="row">
+	        <div class="col-md-6" >
+	        <div ><h1 style="text-align: center; padding: 15px">Build your profile</h1></div>
+	            <div class="panel panel-default">
+	                <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Personel Profile</strong></div>
+	                <div class="panel-body">
+	                    <form name="form_constraints" class="form-validation" novalidate>
+	                        <div class="form-group">
+
+	                        	<div class="form-group">
+	                                <div class="col-sm-3">
+	                                    <label for="">Job Title</label>
+	                                </div>
+	                                <div class="col-sm-9">
+	                                    <input  type="text" class="form-control" placeholder="Manager IT" data-ng-model="candidate.title">
+	                                </div>
+	                            </div>
+	                            <br>
+
+	                            <div class="form-group">
+	                                <div class="col-sm-3">
+	                                    <label for="">Gender</label>
+	                                </div>
+	                                <div class="col-sm-9">
+			                            <label class="ui-radio">
+			                            <input  name="role" 
+			                                    type="radio" 
+			                                    value="employer" 
+			                                    data-ng-model="candidate.gender" >
+			                                    <span>Male</span>
+			                            </label>
+			                            <label class="ui-radio">
+			                            <input  name="role" 
+			                                    type="radio" 
+			                                    value="candidate" 
+			                                    checked
+			                                    data-ng-model="candidate.gender" >
+			                                    <span>Female</span>
+			                            </label>
+	                                </div>
+	                            </div>
+	                            <br>
+
+	                            <div class="form-group">
+	                                <div class="col-sm-3">
+	                                    <label for="">Country</label>
+	                                </div>
+	                                <div class="col-sm-9">
+	                                    <input  type="text" class="form-control" data-ng-model="candidate.country">
+	                                </div>
+	                            </div>
+	                            <br>
+
+	                            <div class="form-group">
+	                                <div class="col-sm-3">
+	                                    <label for="">Location</label>
+	                                </div>
+	                                <div class="col-sm-9">
+	                                    <input  type="text" class="form-control" data-ng-model="candidate.location">
+	                                </div>
+	                            </div>
+	                            <br>
+
+	                            <div class="form-group">
+	                                <div class="col-sm-3">
+	                                    <label for="">E-mail</label>
+	                                </div>
+	                                <div class="col-sm-9">
+	                                    <input  type="text" class="form-control" data-ng-model="candidate.job_title">
+	                                </div>
+	                            </div>
+	                            <br>
+
+	                            <div class="form-group">
+	                                <div class="col-sm-3">
+	                                    <label for="">Contact No</label>
+	                                </div>
+	                                <div class="col-sm-9">
+	                                    <input  type="text" class="form-control" data-ng-model="candidate.contact_no">
+	                                </div>
+	                            </div>
+	                            <br>
+
+	                            <div class="form-group">
+	                                <div class="col-sm-3">
+	                                    <label for="">Skype ID</label>
+	                                </div>
+	                                <div class="col-sm-9">
+	                                    <input  type="text" class="form-control" data-ng-model="candidate.skype_name">
+	                                </div>
+	                            </div>
+	                            <br>
+
+	                            <div class="form-group">
+	                                <div class="col-sm-3">
+	                                    <label for="">Address</label>
+	                                </div>
+	                                <div class="col-sm-9">
+	                                    <input  type="text" class="form-control" data-ng-model="candidate.address">
+	                                </div>
+	                            </div>
+	                            <br>
+
+	                            <div class="form-group">
+	                                <div class="col-sm-3">
+	                                    <label for="">Visa Status</label>
+	                                </div>
+	                                <div class="col-sm-9">
+	                                    <select data-ng-model="candidate.visa_status">
+	                                            <option>No Visa</option>
+	                                            <option>Residency Visa (Non-Transferable)</option>
+	                                            <option>Residency Visa (Transferable)</option>
+	                                            <option>Student Visa</option>
+	                                            <option>Transit Visa</option>
+	                                            <option>Visit Visa</option>
+	                                        </select>
+	                                </div>
+	                            </div>
+	                            <br>
+
+	                            <div class="form-group">
+	                                <div class="col-sm-3">
+	                                    <label for="">Driving License Issued From</label>
+	                                </div>
+	                                <div class="col-sm-9">
+	                                    <input  type="text" class="form-control" data-ng-model="candidate.driving_license_issued">
+	                                </div>
+	                            </div>
+	                            <br>
+	                            
+	                             <div class="form-group">
+	                                <div class="col-sm-3">
+	                                    <label for="">Profile Picture</label>
+	                                </div>
+	                                <div class="col-sm-9">
+	                                    <input type="file" title="Choose File" data-ui-file-upload class="btn-info">
+	                                </div>
+	                            </div>
+	                            <br>
+	                        </div>
+
+
+	                        <button type="submit"
+	                                class="btn btn-success"
+	                                ng-click="update()"
+	                                >Sumbit</button>
+	                    </form>
+	                </div>
+	            </div>
+	        <!-- </div> -->
+
+	        <!-- <div class="col-md-6"> -->
+	            <div class="panel panel-default">
+	                <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Target Job Profile</strong></div>
+	                <div class="panel-body">
+	                    <form name="form_signin" class="form-horizontal form-validation" data-ng-submit="submitForm()">
+	                        <fieldset>  
+
+	                            <div class="form-group">
+	                                <div class="col-sm-3">
+	                                    <label for="">Target Job Title</label>
+	                                </div>
+	                                <div class="col-sm-9">
+	                                    <input  type="text"
+	                                    class="form-control"
+	                                    data-ng-model="candidate.target_job_title">
+	                                </div>
+	                            </div>
+
+	                             <div class="form-group">
+	                                <div class="col-sm-3">
+	                                    <label for="">Career Level</label>
+	                                </div>
+	                                <div class="col-sm-9">
+	                                        <select data-ng-model="candidate.career_level">
+	                                            <option>Student/Internship</option>
+	                                            <option>Entry Level</option>
+	                                            <option>Mid Career</option>
+	                                            <option>Management</option>
+	                                            <option>Executive (Director)</option>
+	                                            <option>Senior Executive (CEO)</option>
+	                                        </select>
+	                                </div>
+	                            </div>
+
+	                            <div class="form-group">
+	                                <div class="col-sm-3">
+	                                    <label for="">Employee Type</label>
+	                                </div>
+	                                <div class="col-sm-9">
+	                                        <select data-ng-model="candidate.employee_type">
+	                                            <option>Permanent</option>
+	                                            <option>Internship</option>
+	                                            <option>Contractor</option>
+	                                            <option>Temporary</option>
+	                                        </select>
+	                                </div>
+	                            </div>
+
+	                             <div class="form-group">
+	                                <div class="col-sm-3">
+	                                    <label for="">Employment Status</label>
+	                                </div>
+	                                <div class="col-sm-9">
+	                                        <select data-ng-model="candidate.employee_status">
+	                                            <option>Part Time</option>
+	                                            <option>Full Time</option>
+	                                        </select>
+	                                </div>
+	                            </div>
+
+	                            <div class="form-group">
+	                                <div class="col-sm-3">
+	                                    <label for="">Salary Range</label>
+	                                </div>
+	                                <div class="col-sm-9">
+	                                        <select data-ng-model="candidate.salart_expectation">
+	                                            <option>10,000 - 15,000</option>
+	                                            <option>15,000 - 30,000</option>
+	                                            <option>30,000 - 60,000</option>
+	                                        </select>
+	                                </div>
+	                            </div>
+	                             <div class="form-group">
+	                                <div class="col-sm-3">
+	                                    <label for="">Availability (Weeks)</label>
+	                                </div>
+	                                <div class="col-sm-9">
+	                                        <select data-ng-model="candidate.notice_period">
+	                                            <option>1</option>
+	                                            <option>2</option>
+	                                            <option>3</option>
+	                                            <option>4</option>
+	                                        </select>
+	                                </div>
+	                            </div>
+	                            <div class="form-group">
+	                                <div class="col-sm-3">
+	                                    <label for="">Industry</label>
+	                                </div>
+	                                <div class="col-sm-9">
+	                                        <select data-ng-model="candidate.division">
+	                                            <option>Accounts</option>
+	                                            <option>Sales</option>
+	                                            <option>Business</option>
+	                                            <option>Marketing</option>
+	                                        </select>
+	                                </div>
+	                            </div>
+	                            <div class="form-group">
+	                                <div class="col-sm-3">
+	                                    <label for="">Location</label>
+	                                </div>
+	                                <div class="col-sm-9">
+	                                        <select data-ng-model="candidate.department">
+	                                            <option>Pakistan</option>
+	                                            <option>Lahore</option>
+	                                            <option>Pakistan - Karachi</option>
+	                                            <option>UAE - Dubai</option>
+	                                            <option>UAE - Sharjah</option>
+	                                            <option>UAE</option>
+	                                        </select>
+	                                </div>
+	                            </div>
+	                        </fieldset>
+	                    </form>
+	                </div>
+	            </div>
+
+	            <div class="panel panel-default">
+	                <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Skills</strong></div>
+	                <div class="panel-body" >
+	                    <div >
+	                        <table class="table">
+	                            <tr>
+	                                <th>Skill</th>
+	                                <th>Level</th>
+	                                <th>Experience (Years)</th>
+	                                <th>Last Used</th>
+	                                <th></th>
+	                            </tr>
+	                            <tr data-ng-repeat="skill in candidate.skills">
+	                                <td><input type="text" placeholder="e.g Communications" data-ng-model="skill.title"class="input-small"></td>           
+	                                <td>
+	                                    <select data-ng-model="skill.level">
+	                                            <option>Beginner</option>
+	                                            <option>Intermidiate</option>
+	                                            <option>Expert</option>
+	                                    </select>
+	                                </td>
+	                                <td>
+	                                    <select data-ng-model="skill.experience">
+	                                            <option>1</option>
+	                                            <option>2</option>
+	                                            <option>3</option>
+	                                            <option>4</option>
+	                                            <option>5</option>
+	                                            <option>6</option>
+	                                            <option>7</option>
+	                                            <option>8</option>
+	                                            <option>9</option>
+	                                            <option>10</option>
+	                                    </select>
+	                                </td>
+	                                <td>
+	                                    <input  type="date"
+	                                    class="form-control"
+	                                    required
+	                                    data-ng-model="skill.last_used"
+	                                    >
+	                                </td>
+	                                <td>
+	                                    <a ng-click="removeSkill($index)">[ X ]</a>
+	                                </td>
+	                            </tr>
+	                            <tr>
+	                                <td><button ng-click="addSkill()" class="btn btn-small">Add Skill</button></td>
+	                                <td></td>
+	                            </tr>
+	                        </table>
+	                        <h3>
+	                            <ng-pluralize count="skillMatrix.skills.length" when="pluralizer"></ng-pluralize>
+	                        </h3>
+	                    </div>
+	                </div>
+	            </div>
+
+	             <div class="panel panel-default">
+	                <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Languages</strong></div>
+	                <div class="panel-body" >
+
+	                    <h2>Languages</h2>
+	                    <div >
+	                        <table class="table">
+	                            <tr>
+	                                <th>Language</th>
+	                                <th>Proficiency</th>
+	                                <th></th>
+	                            </tr>
+	                            <tr ng-repeat="language in candidate.languages">
+	                                <td><input type="text" placeholder="e.g Englist" ng-model="language.name"class="input-small"></td>           
+	                                <td>
+	                                    <select data-ng-model="language.proficiency">
+	                                            <option>Elementry</option>
+	                                            <option>Limited Working</option>
+	                                            <option>Professional Working</option>
+	                                            <option>Full Professional</option>
+	                                            <option>Native or Bilingual</option>
+	                                    </select>
+	                                </td>
+	                                <td>
+	                                    <a ng-click="removeSkill($index)">[ X ]</a>
+	                                </td>
+	                            </tr>
+	                            <tr>
+	                                <td><button ng-click="addSkill()" class="btn btn-small">Add Language</button></td>
+	                                <td></td>
+	                            </tr>
+	                        </table>
+	                        <h3>
+	                            <ng-pluralize count="skillMatrix.skills.length" when="pluralizer"></ng-pluralize>
+	                        </h3>
+	                    </div>
+	                </div>
+	            </div>
+
+	            <!-- Education -->
+	             <div class="panel panel-default">
+	                <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Education</strong></div>
+	                <div class="panel-body" >
+	                    <form name="form_signin" class="form-horizontal form-validation" data-ng-submit="submitForm()">
+	                        <fieldset ng-repeat="education in candidate.educations">   
+	                            <div class="form-group">
+	                                <a ng-click="removeEducation($index)">[ X ]</a>
+	                                <div class="col-sm-3">
+	                                    <label for="">Degree</label>
+	                                </div>
+	                                <div class="col-sm-9">
+	                                        <select ng-model="education.degree">
+	                                            <option>Matric</option>
+	                                            <option>Inter</option>
+	                                            <option>B.Sc</option>
+	                                            <option>BS</option>
+	                                            <option>M.Sc</option>
+	                                            <option>MS</option>
+	                                            <option>M.Phil</option>
+	                                            <option>Phd</option>
+	                                        </select>
+	                                </div>
+	                            </div>
+	                            <div class="form-group">
+	                                <div class="col-sm-3">
+	                                    <label for="">Study Field</label>
+	                                </div>
+	                                <div class="col-sm-9">
+	                                        <select ng-model="education.study_field">
+	                                            <option>Electrical Engineering</option>
+	                                            <option>Computer Engineering</option>
+	                                            <option>Civil Engineering</option>
+	                                            <option>MBA</option>
+	                                            <option>BBA</option>
+	                                            <option>Physics</option>
+	                                            <option>Mathematics</option>
+	                                            <option>Chemistry</option>
+	                                        </select>
+	                                </div>
+	                            </div>
+	                            <div class="form-group">
+	                                <div class="col-sm-3">
+	                                    <label for="">Institute</label>
+	                                </div>
+	                                <div class="col-sm-9">
+	                                        <select ng-model="education.institute">
+	                                            <option>Comsats</option>
+	                                            <option>Air University</option>
+	                                            <option>NUST</option>
+	                                            <option>NDU</option>
+	                                            <option>Bahria University</option>
+	                                            <option>IIUI</option>
+	                                            <option>Iqra University</option>
+	                                            <option>MAJU</option>
+	                                        </select>
+	                                </div>
+	                            </div>
+	                            <div class="form-group">
+	                                <div class="col-sm-3" style="padding-top: 2%">
+	                                    <label for="">Start Date</label>
+	                                </div>
+	                                <div class="col-sm-9">
+	                                    <input type="date" ng-model="education.start_date" />
+	                                </div>
+	                            </div>
+	                            <div class="form-group">
+	                                <div class="col-sm-3" style="padding-top: 2%">
+	                                    <label for="">End Date</label>
+	                                </div>
+	                                <div class="col-sm-9">
+	                                    <input type="date" ng-model="education.end_date " />
+	                                </div>
+	                            </div>
+	                        </fieldset>
+	                        <button ng-click="addEducation()" class="btn btn-small">Add Education</button>
+	                    </form>
+	                </div>
+	            </div>
+	             <!-- Experience -->
+	             <div class="panel panel-default">
+	                <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Experience</strong></div>
+	                <div class="panel-body">
+	                    <form name="form_signin" class="form-horizontal form-validation" data-ng-submit="submitForm()">
+	                        <fieldset ng-repeat="experience in candidate.positions">   
+	                            <div class="form-group">
+	                                <a ng-click="removeExperience($index)">[ X ]</a>
+	                                <div class="col-sm-3">
+	                                    <label for="">Company Name</label>
+	                                </div>
+	                                <div class="col-sm-9">
+	                                    <input  type="text"
+	                                    class="form-control"
+	                                    required
+	                                    data-ng-model="experience.company_name"
+	                                    >
+	                                </div>
+	                            </div>
+	                            <div class="form-group">
+	                                <div class="col-sm-3">
+	                                    <label for="">Job Title</label>
+	                                </div>
+	                                <div class="col-sm-9">
+	                                    <input  type="text"
+	                                    class="form-control"
+	                                    required
+	                                    data-ng-model="experience.title"
+	                                    >
+	                                </div>
+	                            </div>
+	                             <div class="form-group">
+	                                <div class="col-sm-3">
+	                                    <label for="">Location</label>
+	                                </div>
+	                                <div class="col-sm-9">
+	                                        <select data-ng-model="candidate.company_location">
+	                                            <option>Pakistan</option>
+	                                            <option>Lahore</option>
+	                                            <option>Pakistan - Karachi</option>
+	                                            <option>UAE - Dubai</option>
+	                                            <option>UAE - Sharjah</option>
+	                                            <option>UAE</option>
+	                                        </select>
+	                                </div>
+	                            </div>
+	                            <div class="form-group">
+	                                <div class="col-sm-3">
+	                                    <label for="">Industry</label>
+	                                </div>
+	                                <div class="col-sm-9">
+	                                        <select data-ng-model="candidate.company_industry">
+	                                            <option>Accounts</option>
+	                                            <option>Sales</option>
+	                                            <option>Business</option>
+	                                            <option>Marketing</option>
+	                                        </select>
+	                                </div>
+	                            </div>
+	                            <div class="form-group">
+	                                <div class="col-sm-3" style="padding-top: 2%">
+	                                    <label for="">Start Date</label>
+	                                </div>
+	                                <div class="col-sm-9">
+	                                    <input type="date" ng-model="experience.start_date" />
+	                                </div>
+	                            </div>
+	                            <div class="form-group">
+	                                <div class="col-sm-3" style="padding-top: 2%">
+	                                    <label for="">End Date</label>
+	                                </div>
+	                                <div class="col-sm-9">
+	                                    <input type="date" ng-model="experience.end_date" />
+	                                </div>
+	                            </div>
+	                            <div class="form-group">
+	                                <div class="col-sm-3" style="padding-top: 2%">
+	                                <label for="">Responsibilities</label>
+	                                </div>
+	                                 <div class="col-sm-9">
+	                                    <textarea class="form-control"
+	                                      rows="10"
+	                                      required
+	                                      data-ng-model="experience.summary"></textarea>
+	                                </div>
+	                            </div>
+	                            
+	                        </fieldset>
+	                        <button ng-click="addExperience()" class="btn btn-small">Add Experience</button>
+	                    </form>
+	                </div>
+	            </div>
+
+	            <div class="panel panel-default">
+	                <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Projects</strong></div>
+	                <div class="panel-body">
+	                    <form class="form-horizontal form-validation" data-ng-submit="submitForm()">
+	                        <fieldset ng-repeat="project in candidate.projects">   
+	                            <div class="form-group">
+	                                <a ng-click="removeExperience($index)">[ X ]</a>
+	                                <div class="col-sm-3">
+	                                    <label for="">Project Name</label>
+	                                </div>
+	                                <div class="col-sm-9">
+	                                    <input  type="text"
+	                                    class="form-control"
+	                                    required
+	                                    data-ng-model="project.name"
+	                                    >
+	                                </div>
+	                            </div>
+	                             <div class="form-group">
+	                                <div class="col-sm-3">
+	                                    <label for="">Company</label>
+	                                </div>
+	                                <div class="col-sm-9">
+	                                        <select data-ng-model="project.company">
+	                                            <option>CNS</option>
+	                                            <option>IBM</option>
+	                                        </select>
+	                                </div>
+	                            </div>
+	                            <div class="form-group">
+	                                <div class="col-sm-3" style="padding-top: 2%">
+	                                    <label for="">Start Date</label>
+	                                </div>
+	                                <div class="col-sm-9">
+	                                    <input type="date" ng-model="project.start_date" />
+	                                </div>
+	                            </div>
+	                            <div class="form-group">
+	                                <div class="col-sm-3" style="padding-top: 2%">
+	                                    <label for="">End Date</label>
+	                                </div>
+	                                <div class="col-sm-9">
+	                                    <input type="date" ng-model="project.end_date" />
+	                                </div>
+	                            </div>
+	                            <div class="form-group">
+	                                <div class="col-sm-3" style="padding-top: 2%">
+	                                <label for="">Description</label>
+	                                </div>
+	                                 <div class="col-sm-9">
+	                                    <textarea class="form-control"
+	                                      rows="10"
+	                                      required
+	                                      data-ng-model="project.description"></textarea>
+	                                </div>
+	                            </div>
+	                            
+	                        </fieldset>
+	                        <button ng-click="addExperience()" class="btn btn-small">Add Project</button>
+	                    </form>
+	                </div>
+	            </div>
+
+	        </div>
+	    </div>
+	</div>
+</section>

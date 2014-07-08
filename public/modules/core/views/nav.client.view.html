@@ -1,0 +1,87 @@
+<ul id="nav"
+    data-collapse-nav
+    data-slim-scroll
+    data-highlight-active>
+
+    <li data-ng-hide="authentication.user.userType === 'employer'">
+        <a href=""><i class="fa fa-magic"></i><span>Profile</span></a>
+        <ul>
+            <li><a href="/"><i class="fa fa-caret-right"></i><span>Dashboard</span></a></li>
+            <li><a href="/#!/candidate-cv"><i class="fa fa-caret-right"></i><span>My CV</span></a></li>
+            <li><a href="#/jobs"><i class="fa fa-caret-right"></i><span>CV Visibility</span></a></li>
+            <li><a href="#/jobs"><i class="fa fa-caret-right"></i><span>Recommendations</span></a></li>
+            <li><a href="#/jobs"><i class="fa fa-caret-right"></i><span>Purchased Features</span></a></li>
+            <li><a href="#/jobs"><i class="fa fa-caret-right"></i><span>Upgrade Features</span></a></li>
+        </ul>
+    </li>
+    
+    <li data-ng-hide="authentication.user.userType === 'employer'">
+        <a href="#!/jobs"><i class="fa fa-magic"></i><span>Jobs</span></a>
+        <ul>
+            <li><a href="/#!/jobs"><i class="fa fa-caret-right"></i><span>Open Jobs</span></a></li>
+            <li><a href="#/jobs"><i class="fa fa-caret-right"></i><span>Applied Jobs</span></a></li>
+        </ul>
+    </li>
+
+    <li data-ng-hide="authentication.user.userType === 'employer'"><a href="#/jobs/closed"> <i class="fa fa-tasks"></i><span>People</span> </a></li> 
+
+    <li data-ng-hide="authentication.user.userType === 'employer'"><a href="#/candidates/starred"> <i class="fa fa-bar-chart-o"></i><span>Company</span> </a></li> 
+
+    <li  data-ng-hide="authentication.user.userType === 'employer'">
+        <a href="#!/ui"><i class="fa fa-magic"></i><span>Tests</span></a>
+        <ul>
+            <li><a href="#/jobs"><i class="fa fa-caret-right"></i><span>Request by System</span></a></li>
+            <li><a href="#/jobs"><i class="fa fa-caret-right"></i><span>Request by Employer</span></a></li>
+            <li><a href="#/jobs"><i class="fa fa-caret-right"></i><span>Given Test</span></a></li>
+        </ul>
+    </li>
+
+
+
+
+
+    <li  data-ng-show="authentication.user.userType === 'employer'">
+        <a href="#!/ui"><i class="fa fa-magic"></i><span>Profile</span></a>
+        <ul>
+            <li><a href="#/jobs"><i class="fa fa-caret-right"></i><span>Dashboard</span></a></li>
+            <li><a href="#/jobs"><i class="fa fa-caret-right"></i><span>Edit Profile</span></a></li>
+            <li><a href="#/jobs"><i class="fa fa-caret-right"></i><span>Purchased Features</span></a></li>
+            <li><a href="#/jobs"><i class="fa fa-caret-right"></i><span>Upgrade Features</span></a></li>
+        </ul>
+    </li>
+
+    <li  data-ng-show="authentication.user.userType === 'employer'">
+        <a href="#!/ui"><i class="fa fa-magic"></i><span>jobs</span></a>
+        <ul>
+            <li><a href="#/jobs"><i class="fa fa-caret-right"></i><span>Post a Job</span></a></li>
+            <li><a href="#/jobs"><i class="fa fa-caret-right"></i><span>Open Jobs</span></a></li>
+            <li><a href="#/jobs"><i class="fa fa-caret-right"></i><span>Closed Jobs</span></a></li>
+            <li><a href="#/jobs"><i class="fa fa-caret-right"></i><span>Cancel Jobs</span></a></li>
+        </ul>
+    </li>
+
+    <li data-ng-show="authentication.user.userType === 'employer'"><a href="#/jobs/closed"> <i class="fa fa-tasks"></i><span>People</span> </a></li> 
+
+    <li  data-ng-show="authentication.user.userType === 'employer'">
+        <a href="#!/ui"><i class="fa fa-magic"></i><span>Company</span></a>
+        <ul>
+            <li><a href="#/jobs"><i class="fa fa-caret-right"></i><span>Profile</span></a></li>
+            <li><a href="#/jobs"><i class="fa fa-caret-right"></i><span>Collaborators</span></a></li>
+            <li><a href="#/jobs"><i class="fa fa-caret-right"></i><span>Followers</span></a></li>
+            <li><a href="#/jobs"><i class="fa fa-caret-right"></i><span>Reviews</span></a></li>
+            <li><a href="#/jobs"><i class="fa fa-caret-right"></i><span>Salary Reviews</span></a></li>
+            <li><a href="#/jobs"><i class="fa fa-caret-right"></i><span>Hired Employees</span></a></li>
+        </ul>
+    </li>
+
+    <li  data-ng-show="authentication.user.userType === 'employer'">
+        <a href="#!/ui"><i class="fa fa-magic"></i><span>Tasks</span></a>
+        <ul>
+            <li><a href="#/jobs"><i class="fa fa-caret-right"></i><span>Assign</span></a></li>
+            <li><a href="#/jobs"><i class="fa fa-caret-right"></i><span>Pending</span></a></li>
+            <li><a href="#/jobs"><i class="fa fa-caret-right"></i><span>Complete</span></a></li>
+        </ul>
+    </li>
+
+</ul>
+

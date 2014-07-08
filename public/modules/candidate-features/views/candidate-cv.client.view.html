@@ -1,0 +1,241 @@
+<section data-ng-controller="CandidateCvController">
+	<div class="page page-profile">
+    <div class="row">
+        <div class="col-md-6">
+
+            <div class="panel panel-profile">
+                <div class="panel-heading text-center bg-info">
+                    <img alt="" src="{{candidate.BasicProfile.pictureurl}}" class="img-circle img80_80">
+                    <h3>{{user.displayName}}</h3>
+                    <p>{{candidate.title}}</p>
+
+                </div>
+                <div class="list-justified-container">
+                    <ul class="list-justified text-center">
+                        <li>
+                            <p class="size-h3">{{candidate.xp}}</p>
+                            <p class="text-muted">Experience</p>
+                        </li>
+                        <li>
+                            <p class="size-h3">{{candidate.rating}}</p>
+                            <p class="text-muted">Rating</p>
+                        </li>
+                        <li>
+                            <p class="size-h3">15</p>
+                            <p class="text-muted">Recommendations</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+             <section class="panel panel-box">
+                <div class="panel-left panel-item bg-facebook">
+                    <p class="size-h1"><i class="fa fa-facebook"></i></p>
+                    <p>Facebook</p>
+                </div>
+                <div class="panel-item bg-twitter">
+                    <p class="size-h1"><i class="fa fa-twitter"></i></p>
+                    <p>Twitter</p>
+                </div>
+                <div class="panel-right panel-item bg-google-plus">
+                    <p class="size-h1"><i class="fa fa-google-plus"></i></p>
+                    <p>Google Plus</p>
+                </div>
+            </section> 
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="panel mini-box">
+                        <span class="box-icon bg-danger">
+                            <i class="fa fa-film"></i>
+                        </span>
+                        <div class="box-info">
+                            <p class="size-h2">{{candidate.certificates}}</p>
+                            <p class="text-muted">Certifications</p>
+                        </div>
+                    </div>                    
+                </div>
+                <div class="col-sm-6">
+                    <div class="panel mini-box">
+                        <span class="box-icon bg-warning">
+                            <i class="fa fa-bookmark-o"></i>
+                        </span>
+                        <div class="box-info">
+                            <p class="size-h2">{{candidate.honors}}</p>
+                            <p class="text-muted">Honors</p>
+                        </div>
+                    </div>                    
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="panel mini-box">
+                        <span class="box-icon bg-success">
+                            <i class="fa fa-camera"></i>
+                        </span>
+                        <div class="box-info">
+                            <p class="size-h2">{{candidate.FullProfile.test_failed}}</p>
+                            <p class="text-muted">Test(s) Failed</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="panel mini-box">
+                        <span class="box-icon bg-info">
+                            <i class="fa fa-check"></i>
+                        </span>
+  <!--                       <div class="box-info" data-ng-controller="ModalDemoCtrl">
+                            <script type="text/ng-template" id="myModalContent.html">
+                                <div class="modal-header">
+                                    <h3>Passed Test Percentages</h3>
+                                </div>
+                                <div class="modal-body">
+                                    <section class="panel panel-default">
+                                        <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Progress</strong></div>
+                                        <div class="panel-body" data-ng-controller="ProgressDemoCtrl">
+                                            <p>Windows Service - 100%</p>
+                                            <progressbar class="progressbar-xs" value="100"></progressbar>
+                                            <p>Windows Forms - 43%</p>
+                                            <progressbar class="progressbar-xs" value="43" type="success"></progressbar>
+                                            <p>MVVM - 68%</p>
+                                            <progressbar class="progressbar-xs" value="68" type="info"></progressbar>
+                                            <p>Object Oriented Programming - 86%</p>
+                                            <progressbar class="progressbar-xs" value="86" type="warning"></progressbar>
+                                            <p>Bugs Fixing - 77%</p>
+                                            <progressbar class="progressbar-xs" value="77" type="danger"></progressbar>
+                                        </div>
+                                    </section> 
+                                </div>
+                                <div class="modal-footer">
+                                    <button class="btn btn-primary" ng-click="ok()">OK</button>
+                                    <button class="btn btn-warning"  ng-click="cancel()">Cancel</button>
+                                </div>
+                            </script>
+                            <p class="size-h2">{{candidate.FullProfile.test_passed}}</p>
+                            <a class="text-muted" ng-click="open()">Test(s) Passed</a>
+
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+
+            <section class="panel panel-default">
+                <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Education</strong></div>
+                <div class="panel-body">
+                     <ul>
+                         <li ng-repeat="edu in candidate.educations">
+                            <h4>{{edu.degree}} , {{edu.study_field}}</h4>
+                            <h5>{{edu.institute}}</h5>
+                            <h6>{{edu.start_date}} - {{edu.end_date}}</h6>
+                        </li>
+                     </ul>          
+                </div>
+            </section> 
+
+        </div>
+        <div class="col-md-6">
+            <a href="#!/edit-cv" class="btn btn-default pull-right">Edit Profile</a>
+        </div>
+        <div class="col-md-6">
+
+            <div class="panel panel-default">
+                <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Profile Info</strong></div>
+                <div class="panel-body">
+                    <div class="media">
+                        <div class="media-body">
+                            <ul class="list-unstyled list-info">
+                                <li>
+                                    <span class="icon glyphicon glyphicon-user"></span>
+                                    <label>Name</label>
+                                    {{user.displayName}}
+                                </li>
+                                <li>
+                                    <span class="icon glyphicon glyphicon-envelope"></span>
+                                    <label>Email</label>
+                                    {{user.email}}
+                                </li>
+                                <li>
+                                    <span class="icon glyphicon glyphicon-home"></span>
+                                    <label>Address</label>
+                                    {{candidate.address}}
+                                </li>
+                                <li>
+                                    <span class="icon glyphicon glyphicon-earphone"></span>
+                                    <label>Contact</label>
+                                    {{candidate.contact_no}}
+                                </li>
+                                <li>
+                                    <span class="icon glyphicon glyphicon-flag"></span>
+                                    <label>Nationality</label>
+                                    {{candidate.country}}
+                                </li>
+                                <li>
+                                    <span class="icon glyphicon glyphicon-globe"></span>
+                                    <label>Website</label>
+                                    www.cns.com.pk
+                                </li>
+                            </ul>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+             <section class="panel panel-default">
+                <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Experience</strong></div>
+                <div class="panel-body">
+                    <ul>
+                        <li ng-repeat="pos in candidate.positions">
+                            <h4>{{pos.title}}</h4>
+                            <h5>{{pos.company_name}}</h5>
+                            <h6>{{pos.start_date}} to {{pos.end_date}}</h6>
+                            <p>{{pos.summary}}</p>
+                        </li>
+                    </ul>                   
+                </div>
+            </section> 
+
+            <section class="panel panel-default">
+                <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Projects</strong></div>
+                <div class="panel-body">
+                    <ul>
+                        <li ng-repeat="project in candidate.projects">
+                            <h4>{{project.name}}</h4>
+                            <h5>{{project.company}}</h5>
+                            <h6>{{project.start_date}} to {{project.end_date}}</h6>
+                            <p>{{project.description}}</p>
+                        </li>
+                    </ul>                   
+                </div>
+            </section> 
+
+             <section class="panel panel-default">
+                <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Skills</strong></div>
+                <div class="panel-body">
+                    <ul>
+                        <li ng-repeat="skill in candidate.skills">
+                            <div><h4>{{skill.title}}</h4> - <h5>{{skill.level}}</h5></div>
+                            <h6>{{skill.experience}}</h6>
+                        </li>
+                    </ul>                   
+                </div>
+            </section> 
+            
+            <section class="panel panel-default">
+                <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Languages</strong></div>
+                <div class="panel-body">
+                    <ul>
+                        <li ng-repeat="language in candidate.languages">
+                            <div><h4>{{language.name}}</h4>
+                            <h6>{{language.proficiency}}</h6>
+                        </li>
+                    </ul>                   
+                </div>
+            </section> 
+
+
+        </div>
+    </div>
+</div>
+
+</section>
