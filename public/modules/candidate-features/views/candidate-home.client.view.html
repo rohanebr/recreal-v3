@@ -58,8 +58,8 @@
                     <img alt="" src="http://cns.com.pk/wp-content/uploads/2012/06/CNS-Logo.bmp" class="img-rounded img64_64">
                 </a>
                 <div class="media-body">
-                    <h4 class="media-heading">{{job.name}}</h4>
-                    <h5 style="color: #F68795">SNL Pakistan, Islamabad, Pakistan</h5>                    
+                    <a data-ng-href="#!/jobs/{{job._id}}"><h4 class="media-heading">{{job.title}}</h4></a>
+                    <a data-ng-href="#!/companies/{{job.company._id}}"><h5 style="color: #F68795">{{job.company.company_name}}</h5></a>                    
                     <p>{{job.description}}</p>
                 </div>
                 <div class="pull-right">    

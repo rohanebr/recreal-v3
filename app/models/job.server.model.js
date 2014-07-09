@@ -10,12 +10,84 @@ var mongoose = require('mongoose'),
  * Job Schema
  */
 var JobSchema = new Schema({
-	name: {
-		type: String,
-		default: '',
-		required: 'Please fill Job name',
-		trim: true
-	},
+	// name: {
+	// 	type: String,
+	// 	default: '',
+	// 	required: 'Please fill Job name',
+	// 	trim: true
+	// },
+	  title:{
+	    type: 'String',
+	    trim: true
+	  },
+	  description:{
+	    type: 'String'
+	  },
+	  requirement:{
+	    type: 'String',
+	    trim: true
+	  },
+	  responsibilities:{
+	    type: 'String',
+	    trim: true
+	  },
+	  no_of_positions:{
+	    type: 'Number'
+	  },
+	  travel_required:{
+	    type: 'Boolean',
+	    trim: true
+	  },
+	  due_date:{
+	    type: 'date'
+	  },
+	  industry:{
+	    type: 'String',
+	    trim: true
+	  },
+	  department:{
+	    type: 'date'
+	  },
+	  employee_type:{
+	    type: 'String',
+	    trim: true
+	  },
+	  employee_status:{
+	    type: 'String',
+	    trim: true
+	  },
+	  shift:{
+	    type: 'String',
+	    trim: true
+	  },
+	  salary_expectation:{
+	    type: 'String',
+	    trim: true
+	  },
+	  location:{
+	    type: 'String',
+	    trim: true
+	  },
+	  country:{
+	    type: 'String',
+	    trim: true
+	  },
+	  job_status:{
+	    type: 'String',
+	    trim: true
+	  },
+	  career_level:{
+	    type: 'String',
+	    trim: true
+	  },
+	  degree_title:{
+	    type: 'String',
+	    trim: true
+	  },
+	  study_feild:{
+	    type: 'String',
+	    trim: true
+	  },
 	created: {
 		type: Date,
 		default: Date.now

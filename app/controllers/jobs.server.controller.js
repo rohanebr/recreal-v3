@@ -47,17 +47,21 @@ exports.create = function(req, res) {
 		job.user = req.user;
 		console.log(req.user._id);
 
-		var emp = Employer.find({user: req.user._id}).exec(function(err, collection){
-			console.log(collection[0]._id);
-			job.employer = collection[0]._id;
-			collection[0].jobs.push(job);
+		var emp = Employer.find({user: req.user._id}).populate('company').exec(function(err, employers){
+			console.log(employers[0]._id);
+			job.employer = employers[0]._id;
+			job.company = employers[0].company._id;
+			employers[0].jobs.push(job);
+			var company = employers[0].company;
+			company.jobs.push(job);
+			company.save();
 			job.save(function(err) {
 				if (err) {
 					return res.send(400, {
 						message: getErrorMessage(err)
 					});
 				} else {
-					collection[0].save();
+					employers[0].save();
 					res.jsonp(job);
 				}
 			});
@@ -163,7 +167,7 @@ exports.delete = function(req, res) {
 /**
  * List of Jobs
  */
-exports.list = function(req, res) { Job.find().sort('-created').populate('user', 'displayName').exec(function(err, jobs) {
+exports.list = function(req, res) { Job.find().sort('-created').populate('user', 'displayName').populate('company').exec(function(err, jobs) {
 		if (err) {
 			return res.send(400, {
 				message: getErrorMessage(err)

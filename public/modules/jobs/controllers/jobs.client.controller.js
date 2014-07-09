@@ -9,7 +9,7 @@ angular.module('jobs').controller('JobsController', ['$http', '$scope', '$stateP
 		$scope.create = function() {
 			// Create new Job object
 			var job = new Jobs ({
-				name: this.name
+				title: this.title
 			});
 
 			// Redirect after save

@@ -1,0 +1,182 @@
+<section data-ng-controller="PostJobController">
+	<div class="page page-form">
+    <div><h1 style="text-align: center; padding: 15px">Post a new job</h1></div>
+    <div class="row">
+		<div data-ng-show="error" class="text-danger">
+			<strong data-ng-bind="error"></strong>
+		</div>
+        <div class="col-md-6" >
+            <div class="panel panel-default">
+                <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Job Description</strong></div>
+                <div class="panel-body">
+                    <form name="form_constraints" class="form-validation" novalidate>
+                        <div class="form-group">
+                            <label for="">Job Title</label>
+                            <input  type="text"
+                                    class="form-control"
+                                    required
+                                    data-ng-model="title"
+                            >
+                            <br>
+                            <input  type="checkbox"
+                                    id="required_checkbox"
+                                    required
+                                    data-ng-model="travelRequired"> 
+                            <label for="required_checkbox">Travelling required</label>
+                            <br>
+                            <label for="">Description</label>
+                            <textarea class="form-control"
+                                      rows="10"
+                                      required
+                                      data-ng-model="description"></textarea>
+                            <br>
+                            <label for="">Requirements</label>
+                            <textarea class="form-control"
+                                      rows="10"
+                                      required
+                                      data-ng-model="requirements"></textarea>
+                        </div>
+
+
+                        <button type="submit"
+                                class="btn btn-success"
+                                ng-click="create()"
+                                >Sumbit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Basic Info</strong></div>
+                <div class="panel-body">
+                    <form name="form_signin" class="form-horizontal form-validation">
+                        <fieldset>
+                            <div class="form-group">
+                                <div class="col-sm-3" style="padding-top: 2%">
+                                    <label for="">Due Date</label>
+                                </div>
+                                <div class="col-sm-9">
+                                    <input type="date" ng-model="dueDate" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-3">
+                                    <label for="">Industry</label>
+                                </div>
+                                <div class="col-sm-9">
+                                        <select ng-model="industry">
+                                            <option>Construction</option>
+                                            <option>Film</option>
+                                            <option>Software</option>
+                                        </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-3">
+                                    <label for="">Employee Type</label>
+                                </div>
+                                <div class="col-sm-9">
+                                        <select ng-model="employeeType">
+                                            <option>Permanent</option>
+                                            <option>Daily Wages</option>
+                                            <option>Temporary</option>
+                                        </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-3">
+                                    <label for="">Salary Range</label>
+                                </div>
+                                <div class="col-sm-9">
+                                        <select ng-model="salaryRange">
+                                            <option>10,000 - 15,000</option>
+                                            <option>15,000 - 30,000</option>
+                                            <option>30,000 - 60,000</option>
+                                        </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-3">
+                                    <label for="">Division</label>
+                                </div>
+                                <div class="col-sm-9">
+                                        <select ng-model="division">
+                                            <option>Accounts</option>
+                                            <option>Sales</option>
+                                            <option>Business</option>
+                                            <option>Marketing</option>
+                                        </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-3">
+                                    <label for="">Department</label>
+                                </div>
+                                <div class="col-sm-9">
+                                        <select ng-model="department">
+                                            <option>Accounts</option>
+                                            <option>IT</option>
+                                            <option>Business Strategy and Planning</option>
+                                            <option>Radio Frequency</option>
+                                        </select>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Skills and Tags</strong></div>
+                <div class="panel-body" >
+
+                    <h2>Skills</h2>
+                    <div >
+                        <table class="table">
+                            <tr>
+                                <th>Skill</th>
+                                <th>Rating</th>
+                            </tr>
+                            <tr ng-repeat="skill in skills">
+                                <td><input type="text" ng-model="skill.title"class="input-small"></td>           
+                                <td>
+                                    <input type="text"
+                                           ui-range-slider
+                                           data-slider-min="1"
+                                           data-slider-max="5"
+                                           data-slider-step="1"
+                                           data-slider-orientation="horizontal"
+                                           ng-model="skill.rating"
+                                           data-slider-value="3"
+                                           data-slider-selection="before"
+                                           data-slider-tooltip="show"
+                                           data-slider-handle="round">
+                                </td>
+                                <td>
+                                    <a ng-click="removeSkill($index)">[ X ]</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><button ng-click="addSkill()" class="btn btn-small">add skill</button></td>
+                                <td></td>
+                            </tr>
+                        </table>
+                        <h3>
+                            <ng-pluralize count="skillMatrix.skills.length" when="pluralizer"></ng-pluralize>
+                        </h3>
+                    </div>
+
+
+                    <!--  -->
+                    <div class="form-group">
+                        <label for="">Tags</label>
+                        <input name="tagsinput" id="tagsinput" class="tagsinput" value="Flat,Design,Lab,Clean" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</section>

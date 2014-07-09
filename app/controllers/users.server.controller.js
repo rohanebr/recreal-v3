@@ -60,7 +60,8 @@ exports.signup = function(req, res) {
 			typeObject = new Employer();
 			user.employer = typeObject;
 			var company = new Company();
-			user.employer.company = company;
+			typeObject.company = company;
+			company.employers.push(typeObject);
 			company.save();
 			break;
 	}

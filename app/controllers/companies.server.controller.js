@@ -121,7 +121,7 @@ exports.companyByID = function(req, res, next, id) { Company.findById(id).popula
  * Company authorization middleware
  */
 exports.hasAuthorization = function(req, res, next) {
-	if (req.company.user.id !== req.user.id) {
+	if (req.company.employers.indexOf(req.user.employer) === -1){
 		return res.send(403, 'User is not authorized');
 	}
 	next();
