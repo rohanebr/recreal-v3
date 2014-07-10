@@ -10,6 +10,20 @@ var mongoose = require('mongoose'),
  * Candidate Schema
  */
 var CandidateSchema = new Schema({
+	firstName: {
+		type: String,
+		trim: true,
+		default: ''
+	},
+	lastName: {
+		type: String,
+		trim: true,
+		default: ''
+	},
+	displayName: {
+		type: String,
+		trim: true
+	},
 	title:{
 		type: 'String',
 		trim: true

@@ -1,3 +1,6 @@
 <section data-ng-controller="EmployerJobCandidatesController">
-	This is the Employer job candidates view
+	<h2>{{job.title}}</h2>
+	<div data-ng-repeat="candidate in candidates">
+		<h3>{{candidate.displayName}}</h3>
+	</div>
 </section>

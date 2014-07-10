@@ -3,10 +3,10 @@
 //Setting up route
 angular.module('empoyer-jobs').config(['$stateProvider',
 	function($stateProvider) {
-		// Empoyer jobs state routing
+		// Empoyer jobs state routing   /jobs/:jobId
 		$stateProvider.
 		state('employer-job-candidates', {
-			url: '/employer-job-candidates',
+			url: '/employer-job-candidates/:jobId',
 			templateUrl: 'modules/empoyer-jobs/views/employer-job-candidates.client.view.html'
 		}).
 		state('company-open-jobs', {

@@ -1,6 +1,6 @@
 <section data-ng-controller="CompanyOpenJobsController">
 	<div ng-repeat="job in jobs">
-		<a >{{job.title}}</a>
+		<a href="/#!/employer-job-candidates/{{job._id}}" >{{job.title}}</a>
 		<div ng-repeat="candidate in job.candidates" >
 			{{candidate}}
 		</div>

@@ -11,6 +11,20 @@ var mongoose = require('mongoose'),
  * Employer Schema
  */
 var EmployerSchema = new Schema({
+  firstName: {
+    type: String,
+    trim: true,
+    default: ''
+  },
+  lastName: {
+    type: String,
+    trim: true,
+    default: ''
+  },
+  displayName: {
+    type: String,
+    trim: true
+  },
   title:{
     type: 'String',
     trim: true

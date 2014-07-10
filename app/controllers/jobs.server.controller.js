@@ -77,53 +77,43 @@ exports.create = function(req, res) {
  * Show the current Job
  */
 exports.read = function(req, res) {
-	res.jsonp(req.job);
+		Job.findOne({_id: req.job._id}).populate('company').exec(function(err, job){
+		res.jsonp(job);
+	});
 };
 
 /**
- * Apply for a Job
-
-exports.apply = function(req, res) {
-	console.log(req.user.candidate);
-	if(req.user.userType === 'candidate'){
-		var job = req.job;
-		job = _.extend(job , req.body);
-		var candidate = Candidate.findOne({user: req.user._id}).exec(function(err, candidate){
-			job.candidates.push(candidate);
-			candidate.jobs.push(job);
-			job.save(function(err) {
-				if (err) {
-					return res.send(400, {
-						message: getErrorMessage(err)
-					});
-				} else {
-					candidate.save();
-					res.jsonp(job);
-				}
-			});
-		});
-	}	
+ * Show the current Job
+ */
+exports.getJobCandidates = function(req, res) {
+	Job.findOne({_id: req.job._id}).populate('candidates').exec(function(err, job){
+		res.jsonp(job);
+	});
 };
 
- */
-
 exports.apply = function(req, res, next) {
-	var ObjectId = require('mongoose').Types.ObjectId;
 
 	if(req.user.userType === 'candidate'){
 		var job = req.job;
-		job = _.extend(job , req.body);
-		Candidate.findOne({user: req.user._id}).exec(function(err, candidate){
-			Job.findOne({_id: job._id})
-			.where({candidates: candidate._id})
-			.exec(function(err, doc){
-				if(!doc)
-				{
-					job.apply(candidate);
-					res.jsonp(req.job);
-				}
-			});			
+
+
+		Job.findOne({_id: req.job._id}).exec(function(err, doc){
+			job = doc;
+			Candidate.findOne({user: req.user._id}).exec(function(err, candidate){
+				Job.findOne({_id: job._id})
+				.where({candidates: candidate._id})
+				.exec(function(err, doc){
+					if(!doc)
+					{
+						//doc.apply(candidate);
+						job.apply(candidate);
+						res.jsonp(req.job);
+					}
+				});			
+			});
 		});
+
+		
 	}	
 };
 
