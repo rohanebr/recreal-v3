@@ -14,7 +14,7 @@
 
 /*! normalize.css v3.0.0 | MIT License | git.io/normalize */
 html {
-  font-family: sans-serif;
+  font-family: Helvetica, arial, freesans, clean, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
 }
@@ -339,10 +339,10 @@ html {
 }
 
 body {
-  font-family: "Lato", Helvetica, Arial, sans-serif;
+  font-family: Helvetica, arial, freesans, clean, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
   font-size: 13px;
   line-height: 1.42857;
-  color: #767676;
+  color: #333333;
   background-color: #f1f2f3;
 }
 
@@ -784,7 +784,7 @@ code,
 kbd,
 pre,
 samp {
-  font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+  font-family: Helvetica, arial, freesans, clean, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
 }
 
 code {
@@ -2023,7 +2023,7 @@ output {
   padding-top: 7px;
   font-size: 13px;
   line-height: 1.42857;
-  color: #767676;
+  color: #333333;
 }
 
 .form-control {
@@ -2033,7 +2033,7 @@ output {
   padding: 6px 12px;
   font-size: 13px;
   line-height: 1.42857;
-  color: #767676;
+  color: #333333;
   background-color: white;
   background-image: none;
   border: 1px solid #e2e2e4;
@@ -3891,7 +3891,7 @@ input[type="button"].btn-block {
   font-size: 13px;
   font-weight: normal;
   line-height: 1;
-  color: #767676;
+  color: #333333;
   text-align: center;
   background-color: #eeeeee;
   border: 1px solid #e2e2e4;
@@ -4894,7 +4894,7 @@ a.list-group-item.active > .badge,
 }
 .thumbnail .caption {
   padding: 9px;
-  color: #767676;
+  color: #333333;
 }
 
 a.thumbnail:hover,
@@ -5468,7 +5468,7 @@ a.list-group-item-danger.active, a.list-group-item-danger.active:hover, a.list-g
   border-color: #eff2f7;
 }
 .panel-default > .panel-heading {
-  color: #767676;
+  color: #333333;
   background-color: #fafafa;
   border-color: #eff2f7;
 }
@@ -6384,7 +6384,7 @@ span.block {
 
 .bg-reverse {
   background-color: white;
-  color: #767676;
+  color: #333333;
 }
 
 .bg-facebook {
@@ -6692,6 +6692,7 @@ span.block {
   font-size: 11px;
   font-weight: bold;
   color: #515253;
+  border: 1px solid #e2e2e4;
   text-indent: 0.01px;
   text-overflow: "";
   -webkit-appearance: none;
@@ -6709,6 +6710,7 @@ span.block {
   border-top: 6px solid;
   border-right: 6px solid transparent;
   border-left: 6px solid transparent;
+
 }
 
 .form-control {
@@ -6962,7 +6964,7 @@ input.input-danger:focus {
 }
 
 .btn-line-default {
-  color: #767676;
+  color: #333333;
   background-color: transparent;
   border-color: #b8bdcb;
 }
@@ -6976,7 +6978,7 @@ input.input-danger:focus {
 }
 
 .btn-line-primary {
-  color: #767676;
+  color: #333333;
   background-color: transparent;
   border-color: #5c468d;
 }
@@ -6990,7 +6992,7 @@ input.input-danger:focus {
 }
 
 .btn-line-success {
-  color: #767676;
+  color: #333333;
   background-color: transparent;
   border-color: #97c15a;
 }
@@ -7004,7 +7006,7 @@ input.input-danger:focus {
 }
 
 .btn-line-info {
-  color: #767676;
+  color: #333333;
   background-color: transparent;
   border-color: #63c2eb;
 }
@@ -7018,7 +7020,7 @@ input.input-danger:focus {
 }
 
 .btn-line-warning {
-  color: #767676;
+  color: #333333;
   background-color: transparent;
   border-color: #fdd148;
 }
@@ -7032,7 +7034,7 @@ input.input-danger:focus {
 }
 
 .btn-line-danger {
-  color: #767676;
+  color: #333333;
   background-color: transparent;
   border-color: #ff643e;
 }
@@ -7490,7 +7492,7 @@ html {
 }
 
 .breadcrumb a {
-  color: #767676;
+  color: #333333;
 }
 .breadcrumb a:hover {
   text-decoration: none;
@@ -7511,7 +7513,7 @@ html {
   position: relative;
   float: left;
   background-color: #eeeeee;
-  color: #767676;
+  color: #333333;
   font-size: 12px;
   padding: 10px;
 }
@@ -8821,7 +8823,7 @@ button.toast-close-button {
 }
 .page-tasks .task-footer .clear-completed:hover {
   cursor: pointer;
-  color: #767676;
+  color: #333333;
 }
 .page-tasks .tips h3 {
   margin-top: 0;

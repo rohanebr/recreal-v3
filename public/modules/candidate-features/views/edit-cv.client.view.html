@@ -2,7 +2,7 @@
 	<div class="page page-form">    
 	    <div class="row">
 	        <div class="col-md-8" >
-		        <div class="panel panel-default">
+		        <div class="panel panel-info">
 		        	<div class="panel-body">
 		        		<div class="Outer">
 					        <div class="InnerLeft">
@@ -152,7 +152,7 @@
 	        <!-- </div> -->
 
 	        <!-- <div class="col-md-6"> -->
-	            <div class="panel panel-danger">
+	            <div class="panel panel-info">
 	                <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Target Job Profile</strong></div>
 	                <div class="panel-body">
 	                    <form name="form_signin" class="form-horizontal form-validation" data-ng-submit="submitForm()">
@@ -283,7 +283,7 @@
 	                </div>
 	            </div>
 
-	            <div class="panel panel-success">
+	            <div class="panel panel-info">
 	                <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Skills</strong></div>
 	                <div class="panel-body" >
 	                    <div >
@@ -334,8 +334,10 @@
 	                                </td>
 	                            </tr>
 	                            <tr>
-	                                <td><button ng-click="addSkill()" class="btn btn-small">Add Skill</button></td>
 	                                <td></td>
+	                                <td></td>
+	                                <td></td>
+	                                <td><button ng-click="addSkill()" class="btn btn-small btn-success pull-right">Add Skill</button></td>
 	                            </tr>
 	                        </table>
 	                        <h3>
@@ -350,7 +352,7 @@
 	                <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Education</strong></div>
 	                <div class="panel-body" >
 	                    <form name="form_signin" class="form-horizontal form-validation" data-ng-submit="submitForm()">
-	                        <fieldset ng-repeat="education in candidate.educations" style="background-color: #fff; padding: 10px; margin: 10px; border: 1px solid #eee; box-shadow: 1px 1px 1px #888888; border-radius:3px;">   
+	                        <fieldset ng-repeat="education in candidate.educations" style="background-color: #fff; padding: 10px; margin: 10px; border: 1px solid #e1e1e1; box-shadow: 1px 1px 1px #eee; border-radius:3px;">   
 	                            <div class="form-group">                         
 	                                <div class="col-sm-3">
 	                                    <label for="">Degree</label>
@@ -428,16 +430,16 @@
 	                                </div>
 	                            </div>
 	                        </fieldset>
-	                        <button ng-click="addEducation()" class="btn btn-small">Add Education</button>
+	                        <button ng-click="addEducation()" class="btn btn-small btn-success pull-right">Add Education</button>
 	                    </form>
 	                </div>
 	            </div>
 	             <!-- Experience -->
-	             <div class="panel panel-success">
+	             <div class="panel panel-info">
 	                <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Experience</strong></div>
 	                <div class="panel-body">
 	                    <form name="form_signin" class="form-horizontal form-validation" data-ng-submit="submitForm()">
-	                        <fieldset ng-repeat="experience in candidate.positions" style="background-color: #fff; padding: 10px; margin: 10px; border: 1px solid #eee; box-shadow: 1px 1px 1px #888888; border-radius:3px;">   
+	                        <fieldset ng-repeat="experience in candidate.positions" style="background-color: #fff; padding: 10px; margin: 10px; border: 1px solid #e1e1e1; box-shadow: 1px 1px 1px #eee; border-radius:3px;">   
 	                            <div class="form-group">
 	                                
 	                                <div class="col-sm-3">
@@ -529,7 +531,7 @@
 	                            </div>
 	                            
 	                        </fieldset>
-	                        <button ng-click="addExperience()" class="btn btn-small">Add Experience</button>
+	                        <button ng-click="addExperience()" class="btn btn-small btn-success pull-right">Add Experience</button>
 	                    </form>
 	                </div>
 	            </div>
@@ -538,7 +540,7 @@
 	                <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Projects</strong></div>
 	                <div class="panel-body">
 	                    <form class="form-horizontal form-validation">
-	                        <fieldset ng-repeat="project in candidate.projects" style="background-color: #fff; padding: 10px; margin: 10px; border: 1px solid #eee; box-shadow: 1px 1px 1px #888888; border-radius:3px;">   
+	                        <fieldset ng-repeat="project in candidate.projects" style="background-color: #fff; padding: 10px; margin: 10px; border: 1px solid #e1e1e1; box-shadow: 1px 1px 1px #eee; border-radius:3px;">   
 	                            <div class="form-group">
 	                                
 	                                <div class="col-sm-3">
@@ -597,12 +599,12 @@
 	                            </div>
 	                            
 	                        </fieldset>
-	                        <button ng-click="addProject()" class="btn btn-small">Add Project</button>
+	                        <button ng-click="addProject()" class="btn btn-small btn-success pull-right">Add Project</button>
 	                    </form>
 	                </div>
 	            </div>
 
-	            <div class="panel panel-danger">
+	            <div class="panel panel-info">
 	                <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Languages</strong></div>
 	                <div class="panel-body" >
 
@@ -615,7 +617,7 @@
 	                                <th></th>
 	                            </tr>
 	                            <tr ng-repeat="language in candidate.languages">
-	                                <td><input type="text" placeholder="e.g Englist" ng-model="language.name"class="input-small"></td>           
+	                                <td><input type="text" placeholder="e.g English" ng-model="language.name"class="input-small"></td>           
 	                                <td>
 	                                	<span class="ui-select">
 		                                    <select data-ng-model="language.proficiency">
@@ -632,15 +634,16 @@
 	                                </td>
 	                            </tr>
 	                            <tr>
-	                                <td><button ng-click="addLanguage()" class="btn btn-small">Add Language</button></td>
-	                                <td></td>
+	                            	<td></td>
+	                            	<td></td>
+	                                <td><button ng-click="addLanguage()" class="btn btn-small btn-success pull-right">Add Language</button></td>
 	                            </tr>
 	                        </table>
 	                    </div>
 	                </div>
 	            </div>
 	        <button type="submit"
-	        class="btn btn-success btn-block btn-lg"
+	        class="btn btn-primary btn-block btn-lg"
 	        ng-click="update()"
 	        >Sumbit</button>
 		    </div>
@@ -667,4 +670,39 @@ div.InnerRight {
     position: relative;      
     float: right;
 }
+
+.btn-primary {
+    background-image: -webkit-linear-gradient(top, #428bca 0, #2d6ca2 100%);
+    background-image: linear-gradient(to bottom, #428bca 0, #2d6ca2 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff428bca', endColorstr='#ff2d6ca2', GradientType=0);
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+    background-repeat: repeat-x;
+    border-color: #2b669a;
+    color: #fff;
+    background-color: #428bca;
+}
+.btn-primary:active {
+    border-color: #2b669a;
+    color: #fff;
+    background-color: #428bca;
+}
+
+.btn-success {
+	background-image: -webkit-linear-gradient(top, #f0ad4e 0, #eb9316 100%);
+	background-image: linear-gradient(to bottom, #f0ad4e 0, #eb9316 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fff0ad4e', endColorstr='#ffeb9316', GradientType=0);
+	filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+	background-repeat: repeat-x;
+	border-color: #e38d13;
+	color: #fff;
+	background-color: #f0ad4e;
+}
+
+.btn-success:active {
+	border-color: #e38d13;
+	color: #fff;
+	background-color: #f0ad4e;
+}
+
+
 </style>
