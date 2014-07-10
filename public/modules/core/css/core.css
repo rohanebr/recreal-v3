@@ -344,6 +344,11 @@ body {
   line-height: 1.42857;
   color: #333333;
   background-color: #f1f2f3;
+
+  background-image: url(/modules/core/img/subtle-grunge.jpg);
+  background-repeat: repeat;
+  background-position: top left;
+  background-attachment: scroll;
 }
 
 input,
