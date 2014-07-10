@@ -36,7 +36,7 @@ var JobSchema = new Schema({
 	  },
 	  travel_required:{
 	    type: 'Boolean',
-	    trim: true
+	    default:false
 	  },
 	  due_date:{
 	    type: 'date'
@@ -88,6 +88,21 @@ var JobSchema = new Schema({
 	    type: 'String',
 	    trim: true
 	  },
+	  skills:[{
+	  	title:{
+	  		type:'String',
+	  		trim:true
+	  		},
+	  	level:{
+	  		type:'String',
+	  		trim:true
+	  		}
+	  	}],
+	  tags:[{
+	  	name:{
+	  		type:'String'
+	  		}
+	  	}],
 	created: {
 		type: Date,
 		default: Date.now

@@ -12,7 +12,21 @@ angular.module('empoyer-jobs').controller('PostJobController', ['$scope', '$loca
 			// Create new Job object
 			var job = new Jobs ({
 				title: this.title,
-				description: this.description
+				description: this.description,
+				requirement: this.requirements,
+				due_date: this.due_date,
+				employee_type: this.employee_type,
+				salary_range: this.salary_range,
+				industry: this.industry,
+				department: this.department,
+				no_of_positions: this.no_of_positions,
+				shift: this.shift,
+				location: this.location,
+				country: this.country,
+				career_level: this.career_level,
+				degree_title: this.degree_title,
+				study_feild: this.study_feild,
+				travel_required: this.travel_required
 			});
 
 			// Redirect after save
@@ -22,6 +36,16 @@ angular.module('empoyer-jobs').controller('PostJobController', ['$scope', '$loca
 				$scope.error = errorResponse.data.message;
 			});
 
+			//Skills
+		    $scope.addSkill = function() {
+		      $scope.job.skills.push({
+		        title: ''
+		      });
+		    };
+
+		    $scope.removeSkill = function(index) {
+		      $scope.job.skills.splice(index, 1);
+		    };
 			// Clear form fields
 			this.name = '';
 			this.description = '';
