@@ -30,7 +30,16 @@ angular.module('employer-company').controller('CompanyProfileController', ['$sco
 		};
 
 		
+		//Speciality
+	    $scope.addSpeciality = function() {
+	      $scope.company.specialties.push({
+	        name: ''
+	      });
+	    };
 
+	    $scope.removeSpeciality = function(index) {
+	      $scope.company.specialties.splice(index, 1);
+	    };
 
 		// Update existing Company
 		$scope.update = function() {

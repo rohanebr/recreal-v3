@@ -6,7 +6,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Company Profile</strong></div>
                 <div class="panel-body">
-                    <form name="form_company_profile" data-ng-submit="update()" class="form-horizontal" >
+                    <form name="form_company_profile" class="form-horizontal" >
                         <fieldset>
                              <div class="form-group">
                                 <div class="col-sm-3">
@@ -38,7 +38,7 @@
                                     <label for="">Company Type</label>
                                 </div>
                                 <div class="col-sm-9">
-                                    <select data-ng-model="newCandidate.company_type">
+                                    <select data-ng-model="company.company_type">
                                             <option>Sole Proprietorship</option>
                                             <option>Public</option>
                                             <option>Private</option>
@@ -52,7 +52,7 @@
                                     <label for="">Company Size</label>
                                 </div>
                                 <div class="col-sm-9">
-                                    <select data-ng-model="newCandidate.compnay_size">
+                                    <select data-ng-model="company.company_size">
                                             <option>1 - 10</option>
                                             <option>11 - 50</option>
                                             <option>51 - 100</option>
@@ -146,9 +146,9 @@
                                     <table class="table">
                                         <tr>
                                             <th><h5>Specialities</h5></th>
-                                            <th></th>
+                                            <th>Remove</th>
                                         </tr>
-                                        <tr ng-repeat="speciality in company.specialities">
+                                        <tr ng-repeat="speciality in company.specialties">
                                             <td><input type="text" placeholder="e.g Software" ng-model="specialty.name"class="input-small"></td>   
                                             <td>
                                                 <a ng-click="removeSpeciality($index)">[ X ]</a>

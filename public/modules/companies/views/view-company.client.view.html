@@ -1,7 +1,71 @@
 <section data-ng-controller="CompaniesController" data-ng-init="findOne()">
-	<div class="page-header">
-		<h1 data-ng-bind="company.name"></h1>
+	<div class="col-md-6">
+		<div class="panel panel-profile">
+                <div class="panel-heading text-center">
+                    <img alt="" src="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQdqDzj720ok-dvraQzi0ovTJo9UAuCOWn3nESHdbHpUCKthC-kRl-X-Q">
+                </div>
+                <div class="list-justified-container">
+                    <ul class="list-justified text-center">
+                        <li>
+                            <p class="size-h3">{{company.company_name}}</p>
+                            <p class="text-muted">Founded In: {{company.founded|date}}</p>
+                        </li>
+                    </ul>
+                </div>
+        </div>
+
+		<div class="panel panel-info">
+                <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Company Profile</strong></div>
+                <div class="panel-body">
+                    <div class="media">
+                        <div class="media-body">
+                            <ul class="list-unstyled list-info">
+                                <li>
+                                    <label>Industry:</label>
+                                    {{company.industry}}
+                                </li>
+                                <li>
+                                    <label>Company Type:</label>
+                                    {{company.company_type}}
+                                </li>
+                                <li>
+                                    <label>Company Size:</label>
+                                    {{company.company_size}}
+                                </li>
+                                <li>
+                                    <label>Contact Person:</label>
+                                    {{company.contact_person}}
+                                </li>
+                                <li>
+                                    <label>Contact Number:</label>
+                                    {{company.contact_no}}
+                                </li>
+                                <li>
+                                    <label>Person Email:</label>
+                                    {{company.contact_email}}
+                                </li>
+                                <li>
+                                    <label>Address:</label>
+                                    {{company.address}}
+                                </li>
+                                <li>
+                                    <label>Website:</label>
+                                    {{company.website}}
+                                </li>
+                                <li>
+                                    <label>Website:</label>
+                                    <spna data-ng-repeat= "speciality in company.specialities">{}</spna>
+                                </li>
+                            </ul>
+                            
+                        </div>
+                    </div>
+                </div>
+        </div>
 	</div>
+
+
+
 	<div class="pull-right" data-ng-show="authentication.user._id == company.user._id">
 		<a class="btn btn-primary" href="/#!/companies/{{company._id}}/edit">
 			<i class="glyphicon glyphicon-edit"></i>
@@ -10,6 +74,4 @@
 			<i class="glyphicon glyphicon-trash"></i>
 		</a>
 	</div>
-
-	<h3 data-ng-bind="company.company_name"></h3>
 </section>

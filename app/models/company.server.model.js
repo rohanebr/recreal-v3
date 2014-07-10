@@ -39,7 +39,7 @@ var CompanySchema = new Schema({
     type: 'String',
     trim: true
   },
-  compnay_size:{
+  company_size:{
     type: 'String',
     trim: true
   },

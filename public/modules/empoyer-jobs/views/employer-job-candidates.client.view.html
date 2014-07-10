@@ -1,6 +1,48 @@
-<section data-ng-controller="EmployerJobCandidatesController">
+<!-- <section data-ng-controller="EmployerJobCandidatesController">
 	<h2>{{job.title}}</h2>
 	<div data-ng-repeat="candidate in candidates">
 		<h3>{{candidate.displayName}}</h3>
+	</div>
+</section>
+ -->
+  <div><h2>List of Candidates for Executive Director Vacancy</h2></div>
+<section data-ng-controller="EmployerJobCandidatesController">
+	<div class="col-md-8">
+		<table class="table table-bordered table-hover">
+		<tr class="default">
+			<th>
+			   Candidate Name
+			</th>
+			<th>
+			   Rating
+			</th>
+			<th>
+			   Experience
+			</th>
+			<th>
+			   Career Level
+			</th>
+			<th>
+			   Location
+			</th>
+		<tr>
+		<tr data-ng-repeat = "candidate in candidates">
+			<td>
+				{{candidate.displayName}}
+			</td>
+			<td>
+				{{candidate.rating}}
+			</td>
+			<td>
+				{{candidate.experience}}
+			</td>
+			<td>
+				{{candidate.career_level}}
+			</td>
+			<td>
+				{{candidate.location}}
+			</td>
+		</tr>
+		</table>
 	</div>
 </section>
