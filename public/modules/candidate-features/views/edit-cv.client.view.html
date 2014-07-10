@@ -1,14 +1,26 @@
-<section data-ng-controller="CandidateCvController">
+<section data-ng-controller="CandidateCvController" background-url: "http://api.thumbr.it/whitenoise-361x370.png">
 	<div class="page page-form">    
 	    <div class="row">
-	        <div class="col-md-6" >
-	        <div ><h1 style="text-align: center; padding: 15px">Build your profile</h1></div>
-	            <div class="panel panel-default">
+	        <div class="col-md-8" >
+		        <div class="panel panel-default">
+		        	<div class="panel-body">
+		        		<div class="Outer">
+					        <div class="InnerLeft">
+					        	<img src="https://media.licdn.com/mpr/mpr/shrink_200_200/p/4/000/143/348/2800c86.jpg" alt="some_text">
+					        </div>
+					        <div class="InnerRight">
+					        <h2>Muhammad Ahsin Anwar</h3>
+					        <h4>{{candidate.title}} at Apple, Inc</h4>
+					        <h5>{{candidate.location}} | {{candidate.country}}</h5>
+					        </div>
+
+    					</div>
+					</div>
+		        </div>
+	            <div class="panel panel-info">
 	                <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Personel Profile</strong></div>
 	                <div class="panel-body">
-	                    <form name="form_constraints" class="form-validation" novalidate>
-	                        <div class="form-group">
-
+	                    <form name="form_constraints" class="form-horizontal form-validation" novalidate>
 	                        	<div class="form-group">
 	                                <div class="col-sm-3">
 	                                    <label for="">Job Title</label>
@@ -17,7 +29,6 @@
 	                                    <input  type="text" class="form-control" placeholder="Manager IT" data-ng-model="candidate.title">
 	                                </div>
 	                            </div>
-	                            <br>
 
 	                            <div class="form-group">
 	                                <div class="col-sm-3">
@@ -41,7 +52,7 @@
 			                            </label>
 	                                </div>
 	                            </div>
-	                            <br>
+	                            
 
 	                            <div class="form-group">
 	                                <div class="col-sm-3">
@@ -51,7 +62,6 @@
 	                                    <input  type="text" class="form-control" data-ng-model="candidate.country">
 	                                </div>
 	                            </div>
-	                            <br>
 
 	                            <div class="form-group">
 	                                <div class="col-sm-3">
@@ -61,7 +71,6 @@
 	                                    <input  type="text" class="form-control" data-ng-model="candidate.location">
 	                                </div>
 	                            </div>
-	                            <br>
 
 	                            <div class="form-group">
 	                                <div class="col-sm-3">
@@ -71,7 +80,6 @@
 	                                    <input  type="text" class="form-control" data-ng-model="candidate.job_title">
 	                                </div>
 	                            </div>
-	                            <br>
 
 	                            <div class="form-group">
 	                                <div class="col-sm-3">
@@ -81,7 +89,6 @@
 	                                    <input  type="text" class="form-control" data-ng-model="candidate.contact_no">
 	                                </div>
 	                            </div>
-	                            <br>
 
 	                            <div class="form-group">
 	                                <div class="col-sm-3">
@@ -91,7 +98,6 @@
 	                                    <input  type="text" class="form-control" data-ng-model="candidate.skype_name">
 	                                </div>
 	                            </div>
-	                            <br>
 
 	                            <div class="form-group">
 	                                <div class="col-sm-3">
@@ -101,13 +107,12 @@
 	                                    <input  type="text" class="form-control" data-ng-model="candidate.address">
 	                                </div>
 	                            </div>
-	                            <br>
 
 	                            <div class="form-group">
 	                                <div class="col-sm-3">
 	                                    <label for="">Visa Status</label>
 	                                </div>
-	                                <div class="col-sm-9">
+	                                <div class="col-sm-9 ">
 	                                    <select data-ng-model="candidate.visa_status">
 	                                            <option>No Visa</option>
 	                                            <option>Residency Visa (Non-Transferable)</option>
@@ -118,7 +123,6 @@
 	                                        </select>
 	                                </div>
 	                            </div>
-	                            <br>
 
 	                            <div class="form-group">
 	                                <div class="col-sm-3">
@@ -128,7 +132,6 @@
 	                                    <input  type="text" class="form-control" data-ng-model="candidate.driving_license_issued">
 	                                </div>
 	                            </div>
-	                            <br>
 	                            
 	                             <div class="form-group">
 	                                <div class="col-sm-3">
@@ -138,8 +141,6 @@
 	                                    <input type="file" title="Choose File" data-ui-file-upload class="btn-info">
 	                                </div>
 	                            </div>
-	                            <br>
-	                        </div>
 
 
 	                        <button type="submit"
@@ -152,7 +153,7 @@
 	        <!-- </div> -->
 
 	        <!-- <div class="col-md-6"> -->
-	            <div class="panel panel-default">
+	            <div class="panel panel-danger">
 	                <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Target Job Profile</strong></div>
 	                <div class="panel-body">
 	                    <form name="form_signin" class="form-horizontal form-validation" data-ng-submit="submitForm()">
@@ -269,7 +270,7 @@
 	                </div>
 	            </div>
 
-	            <div class="panel panel-default">
+	            <div class="panel panel-success">
 	                <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Skills</strong></div>
 	                <div class="panel-body" >
 	                    <div >
@@ -327,47 +328,8 @@
 	                </div>
 	            </div>
 
-	             <div class="panel panel-default">
-	                <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Languages</strong></div>
-	                <div class="panel-body" >
-
-	                    <h2>Languages</h2>
-	                    <div >
-	                        <table class="table">
-	                            <tr>
-	                                <th>Language</th>
-	                                <th>Proficiency</th>
-	                                <th></th>
-	                            </tr>
-	                            <tr ng-repeat="language in candidate.languages">
-	                                <td><input type="text" placeholder="e.g Englist" ng-model="language.name"class="input-small"></td>           
-	                                <td>
-	                                    <select data-ng-model="language.proficiency">
-	                                            <option>Elementry</option>
-	                                            <option>Limited Working</option>
-	                                            <option>Professional Working</option>
-	                                            <option>Full Professional</option>
-	                                            <option>Native or Bilingual</option>
-	                                    </select>
-	                                </td>
-	                                <td>
-	                                    <a ng-click="removeSkill($index)">[ X ]</a>
-	                                </td>
-	                            </tr>
-	                            <tr>
-	                                <td><button ng-click="addSkill()" class="btn btn-small">Add Language</button></td>
-	                                <td></td>
-	                            </tr>
-	                        </table>
-	                        <h3>
-	                            <ng-pluralize count="skillMatrix.skills.length" when="pluralizer"></ng-pluralize>
-	                        </h3>
-	                    </div>
-	                </div>
-	            </div>
-
 	            <!-- Education -->
-	             <div class="panel panel-default">
+	             <div class="panel panel-info">
 	                <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Education</strong></div>
 	                <div class="panel-body" >
 	                    <form name="form_signin" class="form-horizontal form-validation" data-ng-submit="submitForm()">
@@ -395,7 +357,7 @@
 	                                    <label for="">Study Field</label>
 	                                </div>
 	                                <div class="col-sm-9">
-	                                        <select ng-model="education.study_field">
+	                                        <select ng-model="education.study_feild">
 	                                            <option>Electrical Engineering</option>
 	                                            <option>Computer Engineering</option>
 	                                            <option>Civil Engineering</option>
@@ -446,7 +408,7 @@
 	                </div>
 	            </div>
 	             <!-- Experience -->
-	             <div class="panel panel-default">
+	             <div class="panel panel-success">
 	                <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Experience</strong></div>
 	                <div class="panel-body">
 	                    <form name="form_signin" class="form-horizontal form-validation" data-ng-submit="submitForm()">
@@ -538,13 +500,13 @@
 	                </div>
 	            </div>
 
-	            <div class="panel panel-default">
+	            <div class="panel panel-info">
 	                <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Projects</strong></div>
 	                <div class="panel-body">
 	                    <form class="form-horizontal form-validation" data-ng-submit="submitForm()">
 	                        <fieldset ng-repeat="project in candidate.projects">   
 	                            <div class="form-group">
-	                                <a ng-click="removeExperience($index)">[ X ]</a>
+	                                <a ng-click="removeProject($index)">[ X ]</a>
 	                                <div class="col-sm-3">
 	                                    <label for="">Project Name</label>
 	                                </div>
@@ -596,12 +558,68 @@
 	                            </div>
 	                            
 	                        </fieldset>
-	                        <button ng-click="addExperience()" class="btn btn-small">Add Project</button>
+	                        <button ng-click="addProject()" class="btn btn-small">Add Project</button>
 	                    </form>
 	                </div>
 	            </div>
+
+	            <div class="panel panel-danger">
+	                <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Languages</strong></div>
+	                <div class="panel-body" >
+
+	                    <h2>Languages</h2>
+	                    <div >
+	                        <table class="table">
+	                            <tr>
+	                                <th>Language</th>
+	                                <th>Proficiency</th>
+	                                <th></th>
+	                            </tr>
+	                            <tr ng-repeat="language in candidate.languages">
+	                                <td><input type="text" placeholder="e.g Englist" ng-model="language.name"class="input-small"></td>           
+	                                <td>
+	                                    <select data-ng-model="language.proficiency">
+	                                            <option>Elementry</option>
+	                                            <option>Limited Working</option>
+	                                            <option>Professional Working</option>
+	                                            <option>Full Professional</option>
+	                                            <option>Native or Bilingual</option>
+	                                    </select>
+	                                </td>
+	                                <td>
+	                                    <a ng-click="removeLanguage($index)">[ X ]</a>
+	                                </td>
+	                            </tr>
+	                            <tr>
+	                                <td><button ng-click="addLanguage()" class="btn btn-small">Add Language</button></td>
+	                                <td></td>
+	                            </tr>
+	                        </table>
+	                    </div>
+	                </div>
+	            </div>
+
 
 	        </div>
 	    </div>
 	</div>
 </section>
+<style type="text/css">
+div.Outer {
+    width: 100%;
+    position: relative;
+    clear: both;
+}
+
+div.InnerLeft {
+    width: 30%;
+    position: relative;      
+    float: left;
+ }
+
+div.InnerRight {
+    width: 60%;
+    position: relative;      
+    float: right;
+}
+</style>
