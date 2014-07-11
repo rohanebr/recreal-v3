@@ -23,7 +23,7 @@ angular.module('candidate-features').controller('CandidateHomeController', ['$sc
 			}
 		};
 
-				// Apply for a Job
+		// Apply for a Job
 		$scope.apply = function(job) {
 
 			$http.put('jobs/apply/' + job._id , job).success(function(response) {
