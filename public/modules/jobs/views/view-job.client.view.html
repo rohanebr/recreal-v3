@@ -1,5 +1,122 @@
 <section data-ng-controller="JobsController" data-ng-init="findOne()">
-	<div class="page-header">
+	<div class="col-md-8">
+			<div class="row" style="background-color: #fff; padding: 10px;box-shadow: 0 2px 5px #686868;margin-bottom: 2px;">
+	                <div class="col-md-3">
+	                    <img alt="" src="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQdqDzj720ok-dvraQzi0ovTJo9UAuCOWn3nESHdbHpUCKthC-kRl-X-Q">
+	                </div>    
+	                <div class="col-md-6">
+	                	<h2>{{job.title}}</h2>
+	                	<a href="/#!/companies/{{job.company.company_name}}">at <strong>Computer and Networking Services</strong></a>
+	                	<h4>valid till: <strong>25-jun-2014</strong></h4>
+					</div>
+		    </div>
+		    <div class="row" style="background-color: #f1f1f1; color: #333;padding: 10px; border: 1px solid #A8A6A6;">
+		    	<table style="width:100%; padding:5px;">
+		    	<tr>
+		    		<td width="30%">
+		    			<strong>Industry:</strong> 
+		    		</td>
+		    		<td>
+		    			{{job.industry}}
+		    		</td>
+		    		<td>
+		    			<strong>Location:</strong> 
+		    		</td>
+		    		<td>
+		    			{{job.location}}
+		    		</td>
+		    	</tr>
+		    	<tr>
+		    		<td>
+		    			<strong>Career Level:</strong> 
+		    		</td>
+		    		<td>
+		    			{{job.career_level}}
+		    		</td>
+		    		<td>
+		    			<strong>Country:</strong> 
+		    		</td>
+		    		<td>
+		    			{{job.country}}
+		    		</td>
+		    	</tr>
+		    	<tr>
+		    		<td>
+		    			<strong>Shift:</strong> 
+		    		</td>
+		    		<td>
+		    			{{job.shift}}
+		    		</td>
+		    		<td>
+		    			<strong>Dergee:</strong> 
+		    		</td>
+		    		<td>
+		    			{{job.degree_title}}
+		    		</td>
+		    	</tr>
+		    	<tr>
+		    		<td>
+		    			<strong>Employement Type:</strong> 
+		    		</td>
+		    		<td>
+		    			{{job.employee_type}}
+		    		</td>
+		    		<td>
+		    			<strong>Study Feild:</strong>
+		    		</td>
+		    		<td>
+		    			{{job.study_feild}}
+		    		</td>
+		    	</tr>
+		    	</table>
+		    </div>
+		    <div class="row" style="background-color: #fff; padding: 10px; margin-top:10px; line">
+		    		<div>
+		    			<h3>Description:</h3>
+						<p>{{job.description}}</p>
+				    </div> 
+				    <hr>
+				    <div>
+		    			<h3>Description:</h3>
+						<p>{{job.description}}</p>
+				    </div> 
+			</div>
+	</div>
+
+	<div class="col-md-4">
+		<!-- Thumbnails -->
+        <div class="panel panel-default">
+            <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Thumbnails</strong></div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="thumbnail">
+                            <img alt="" src="/modules/core/img/600_400-2.jpg">
+                            <div class="caption">
+                                <h3>Thumbnail label</h3>
+                                <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+                                <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
+                            </div>
+                        </div>    
+                    </div>
+                    <!-- <div class="col-sm-12">
+                        <div class="thumbnail">
+                            <img alt="" src="/modules/core/img/600_400-1.jpg">
+                            <div class="caption">
+                                <h3>Thumbnail label</h3>
+                                <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+                                <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
+                            </div>
+                        </div> --> 
+                </div>            
+            </div>
+        </div>
+        <!-- end Thumbnails -->
+	</div>
+
+
+
+	<!-- <div class="page-header">
 		<h1 data-ng-bind="job.name"></h1>
 	</div>
 	<div class="pull-right" data-ng-show="authentication.user._id == job.user._id">
@@ -20,5 +137,13 @@
 			<span data-ng-bind="job.user.displayName"></span>
 		</em>
 	</small>
-	<a ng-click="apply(job)">Apply</a>
+	<a ng-click="apply(job)">Apply</a> -->
 </section>
+
+<style type="text/css">
+.main-div{
+	width:400px;
+	height:300px;
+	background:#BCF5A9;
+}
+</style>
