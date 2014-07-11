@@ -37,7 +37,7 @@ angular.module('core').directive('collapseNav', [
             return $location.path();
           };
           highlightActive = function(links, path) {
-            path = '#' + path;
+            path = '#!' + path;
             return angular.forEach(links, function(link) {
               var $li, $link, href;
               $link = angular.element(link);
@@ -45,12 +45,15 @@ angular.module('core').directive('collapseNav', [
               href = $link.attr('href');
               if ($li.hasClass('active')) {
                 $li.removeClass('active');
+                $li.parent().parent().removeClass('active');
               }
               if (path.indexOf(href) === 0) {
+                $li.parent().parent().addClass('active');
                 return $li.addClass('active');
               }
             });
           };
+
           highlightActive(links, $location.path());
           return $scope.$watch(path, function(newVal, oldVal) {
             if (newVal === oldVal) {

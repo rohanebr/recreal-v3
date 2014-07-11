@@ -149,7 +149,7 @@
                                             <th>Remove</th>
                                         </tr>
                                         <tr ng-repeat="speciality in company.specialties">
-                                            <td><input type="text" placeholder="e.g Software" ng-model="specialty.name"class="input-small"></td>   
+                                            <td><input type="text" placeholder="e.g Software" data-ng-model="speciality.name"class="input-small"></td>   
                                             <td>
                                                 <a ng-click="removeSpeciality($index)">[ X ]</a>
                                             </td>
