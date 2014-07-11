@@ -223,33 +223,27 @@
             </div>
 
             <div class="panel panel-danger">
-                <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Skills and Tags</strong></div>
+                <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Required Skills</strong></div>
                 <div class="panel-body" >
-
-                    <h2>Skills</h2>
                     <div >
                         <table class="table">
                             <tr>
                                 <th>Skill</th>
-                                <th>Rating</th>
+                                <th>Level</th>
                             </tr>
-                            <tr ng-repeat="skill in job.skills">
+                            <tr data-ng-repeat="skill in job.skills">
                                 <td><input type="text" ng-model="skill.title"class="input-small"></td>           
                                 <td>
-                                    <input type="text"
-                                           ui-range-slider
-                                           data-slider-min="1"
-                                           data-slider-max="5"
-                                           data-slider-step="1"
-                                           data-slider-orientation="horizontal"
-                                           ng-model="skill.rating"
-                                           data-slider-value="3"
-                                           data-slider-selection="before"
-                                           data-slider-tooltip="show"
-                                           data-slider-handle="round">
+                                    <span class="ui-select">
+                                        <select data-ng-model="skill.level"  style="width: 150px;">
+                                                <option>Beginner</option>
+                                                <option>Intermidiate</option>
+                                                <option>Expert</option>
+                                        </select>
+                                    </span>
                                 </td>
                                 <td>
-                                    <a ng-click="removeSkill($index)">[ X ]</a>
+                                    <a ng-click="removeSkill($index)"><i class="fa fa-times pull-right"></i></a>
                                 </td>
                             </tr>
                             <tr>
@@ -257,9 +251,6 @@
                                 <td></td>
                             </tr>
                         </table>
-                        <h3>
-                            <ng-pluralize count="skillMatrix.skills.length" when="pluralizer"></ng-pluralize>
-                        </h3>
                     </div>
 
 

@@ -2,12 +2,12 @@
 	<div class="col-md-8">
 			<div class="row" style="background-color: #fff; padding: 10px;box-shadow: 0 2px 5px #686868;margin-bottom: 2px;">
 	                <div class="col-md-3">
-	                    <img alt="" src="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQdqDzj720ok-dvraQzi0ovTJo9UAuCOWn3nESHdbHpUCKthC-kRl-X-Q">
+	                    <img alt="" max-width:150px; max-height:150px; src="https://media.licdn.com/media/p/8/000/2a8/0b9/35aede1.png">
 	                </div>    
 	                <div class="col-md-6">
 	                	<h2>{{job.title}}</h2>
 	                	<a href="/#!/companies/{{job.company.company_name}}">at <strong>Computer and Networking Services</strong></a>
-	                	<h4>valid till: <strong>25-jun-2014</strong></h4>
+	                	<h5>Post 5 days ago</h5>
 					</div>
 		    </div>
 		    <div class="row" style="background-color: #f1f1f1; color: #333;padding: 10px; border: 1px solid #A8A6A6;">
@@ -70,15 +70,24 @@
 		    	</tr>
 		    	</table>
 		    </div>
-		    <div class="row" style="background-color: #fff; padding: 10px; margin-top:10px; line">
+		    <div class="row" style="background-color: #fff; padding: 15px; margin-top:10px; line">
 		    		<div>
 		    			<h3>Description:</h3>
 						<p>{{job.description}}</p>
 				    </div> 
 				    <hr>
 				    <div>
-		    			<h3>Description:</h3>
-						<p>{{job.description}}</p>
+		    			<h3>Requirement:</h3>
+						<p>{{job.requirement}}</p>
+				    </div> 
+				    <hr>
+				    <div>
+		    			<h3>Required Skills</h3>
+						<ul>
+                        <li ng-repeat="skill in job.skills">
+                            {{skill.title}} - <strong>{{skill.level}}</strong>
+                        </li>
+                    </ul>
 				    </div> 
 			</div>
 	</div>
