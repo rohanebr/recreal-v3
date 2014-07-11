@@ -2,22 +2,19 @@
 	<div class="page page-form">    
 	    <div class="row">
 	        <div class="col-md-8" >
-		        <div class="panel panel-info">
+		        <div class="panel panel-default">
 		        	<div class="panel-body">
-		        		<div class="Outer">
-					        <div class="InnerLeft">
-					        	<img src="https://media.licdn.com/mpr/mpr/shrink_200_200/p/4/000/143/348/2800c86.jpg" alt="some_text">
-					        </div>
-					        <div class="InnerRight">
+				        <div class="col-md-4">
+				        	<img height="110" src="https://media.licdn.com/mpr/mpr/shrink_200_200/p/4/000/143/348/2800c86.jpg" alt="some_text">
+				        </div>
+				        <div class="col-md-8">
 					        <h2>Muhammad Ahsin Anwar</h3>
 					        <h4>{{candidate.title}} at Apple, Inc</h4>
 					        <h5>{{candidate.location}} | {{candidate.country}}</h5>
-					        </div>
-
-    					</div>
+				        </div>    					
 					</div>
 		        </div>
-	            <div class="panel panel-info">
+	            <div class="panel panel-default">
 	                <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Personel Profile</strong></div>
 	                <div class="panel-body">
 	                    <form name="form_constraints" class="form-horizontal form-validation" novalidate>
@@ -149,10 +146,8 @@
 	                    </form>
 	                </div>
 	            </div>
-	        <!-- </div> -->
 
-	        <!-- <div class="col-md-6"> -->
-	            <div class="panel panel-info">
+	            <div class="panel panel-default">
 	                <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Target Job Profile</strong></div>
 	                <div class="panel-body">
 	                    <form name="form_signin" class="form-horizontal form-validation" data-ng-submit="submitForm()">
@@ -283,7 +278,7 @@
 	                </div>
 	            </div>
 
-	            <div class="panel panel-info">
+	            <div class="panel panel-default">
 	                <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Skills</strong></div>
 	                <div class="panel-body" >
 	                    <div >
@@ -348,7 +343,7 @@
 	            </div>
 
 	            <!-- Education -->
-	             <div class="panel panel-info">
+	             <div class="panel panel-default">
 	                <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Education</strong></div>
 	                <div class="panel-body" >
 	                    <form name="form_signin" class="form-horizontal form-validation" data-ng-submit="submitForm()">
@@ -435,7 +430,7 @@
 	                </div>
 	            </div>
 	             <!-- Experience -->
-	             <div class="panel panel-info">
+	             <div class="panel panel-default">
 	                <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Experience</strong></div>
 	                <div class="panel-body">
 	                    <form name="form_signin" class="form-horizontal form-validation" data-ng-submit="submitForm()">
@@ -536,7 +531,7 @@
 	                </div>
 	            </div>
 
-	            <div class="panel panel-info">
+	            <div class="panel panel-default">
 	                <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Projects</strong></div>
 	                <div class="panel-body">
 	                    <form class="form-horizontal form-validation">
@@ -604,7 +599,7 @@
 	                </div>
 	            </div>
 
-	            <div class="panel panel-info">
+	            <div class="panel panel-default">
 	                <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Languages</strong></div>
 	                <div class="panel-body" >
 
@@ -642,13 +637,46 @@
 	                    </div>
 	                </div>
 	            </div>
-	        <button type="submit"
-	        class="btn btn-primary btn-block btn-lg"
-	        ng-click="update()"
-	        >Sumbit</button>
+		        <button type="submit"
+		        class="btn btn-primary btn-block btn-lg"
+		        ng-click="update()"
+		        >Sumbit</button>
 		    </div>
 
-	        </div>
+		    <div class="col-md-4 pull-right">
+		        <!-- Thumbnails -->
+		        <div class="panel panel-default">
+		            <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Thumbnails</strong>
+		            </div>
+		            <div class="panel-body">
+		                <div class="row">
+		                    <div class="col-sm-12">
+		                        <div class="thumbnail">
+		                            <img alt="" src="/modules/core/img/600_400-2.jpg">
+		                            <div class="caption">
+		                                <h3>Thumbnail label</h3>
+		                                <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+		                                <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
+		                            </div>
+		                        </div>    
+		                    </div>
+		                    <div class="col-sm-12">
+		                        <div class="thumbnail">
+		                            <img alt="" src="/modules/core/img/600_400-1.jpg">
+		                            <div class="caption">
+		                                <h3>Thumbnail label</h3>
+		                                <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+		                                <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
+		                            </div>
+		                        </div> 
+		                    </div>            
+		                </div>
+		            </div>
+		        </div>
+		            <!-- end Thumbnails -->
+		    </div>
+
+	    </div>
 
 	</div>
 </section>
