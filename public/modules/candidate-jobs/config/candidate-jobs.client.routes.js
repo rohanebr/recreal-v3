@@ -1,0 +1,17 @@
+'use strict';
+
+//Setting up route
+angular.module('candidate-jobs').config(['$stateProvider',
+	function($stateProvider) {
+		// Candidate jobs state routing
+		$stateProvider.
+		state('candidate-applied-jobs', {
+			url: '/candidate-applied-jobs',
+			templateUrl: 'modules/candidate-jobs/views/candidate-applied-jobs.client.view.html'
+		}).
+		state('candidate-open-jobs', {
+			url: '/candidate-open-jobs',
+			templateUrl: 'modules/candidate-jobs/views/candidate-open-jobs.client.view.html'
+		});
+	}
+]);

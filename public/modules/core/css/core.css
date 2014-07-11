@@ -14,7 +14,7 @@
 
 /*! normalize.css v3.0.0 | MIT License | git.io/normalize */
 html {
-  font-family: Helvetica, arial, freesans, clean, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
+  font-family: Arial,'Helvetica Neue',Helvetica,sans-serif !important;
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
 }
@@ -339,14 +339,13 @@ html {
 }
 
 body {
-  font-family: Helvetica, arial, freesans, clean, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
+  font-family: Arial,'Helvetica Neue',Helvetica,sans-serif !important;
   font-size: 13px;
   line-height: 1.42857;
   color: #333333;
-  background-color: #f1f2f3;
+  background-color: #e1e1e1;
 
-  /*background-image: url(/modules/core/img/subtle-grunge.jpg);*/
-  background-image: url(/modules/core/img/bg_repeat.gif);
+  /*background-image: url(/modules/core/img/linkedin.png);*/
   background-repeat: repeat;
   background-position: top left;
   background-attachment: scroll;
@@ -790,7 +789,7 @@ code,
 kbd,
 pre,
 samp {
-  font-family: Helvetica, arial, freesans, clean, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
+  font-family: Arial,'Helvetica Neue',Helvetica,sans-serif !important;
 }
 
 code {
