@@ -2,7 +2,7 @@
     <div class="page-header">
         <h1>Build Company Profile</h1>
     </div>
-        <div class="col-md-6" >
+        <div class="col-md-8" >
             <div class="panel panel-default">
                 <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Company Profile</strong></div>
                 <div class="panel-body">
@@ -24,12 +24,14 @@
                                     <label for="">Industry</label>
                                 </div>
                                 <div class="col-sm-9">
-                                    <select data-ng-model="company.industry">
-                                            <option>Accounts</option>
-                                            <option>Sales</option>
-                                            <option>Business</option>
-                                            <option>Marketing</option>
+                                    <span class="ui-select">
+                                        <select data-ng-model="company.industry">
+                                                <option>Accounts</option>
+                                                <option>Sales</option>
+                                                <option>Business</option>
+                                                <option>Marketing</option>
                                         </select>
+                                    </span>
                                 </div>
                             </div>
 
@@ -38,12 +40,14 @@
                                     <label for="">Company Type</label>
                                 </div>
                                 <div class="col-sm-9">
-                                    <select data-ng-model="company.company_type">
-                                            <option>Sole Proprietorship</option>
-                                            <option>Public</option>
-                                            <option>Private</option>
-                                            <option>NGO</option>
-                                        </select>
+                                    <span class="ui-select">
+                                        <select data-ng-model="company.company_type">
+                                                <option>Sole Proprietorship</option>
+                                                <option>Public</option>
+                                                <option>Private</option>
+                                                <option>NGO</option>
+                                            </select>
+                                    </span>
                                 </div>
                             </div>
 
@@ -52,7 +56,8 @@
                                     <label for="">Company Size</label>
                                 </div>
                                 <div class="col-sm-9">
-                                    <select data-ng-model="company.company_size">
+                                    <span class="ui-select">
+                                        <select data-ng-model="company.company_size">
                                             <option>1 - 10</option>
                                             <option>11 - 50</option>
                                             <option>51 - 100</option>
@@ -61,6 +66,7 @@
                                             <option>1001 - 5000</option>
                                             <option>5001 - 10000</option>
                                         </select>
+                                    </span> 
                                 </div>
                             </div>
 
@@ -68,7 +74,7 @@
                                 <div class="col-sm-3">
                                     <label for="">Founded</label>
                                 </div>
-                                <div class="col-sm-9">
+                                <div class="col-sm-4">
                                     <input  type="date"
                                             class="form-control"
                                             data-ng-model="company.founded">
@@ -145,25 +151,25 @@
                                 <div class="panel-body" >
                                     <table class="table">
                                         <tr>
-                                            <th><h5>Specialities</h5></th>
-                                            <th>Remove</th>
+                                            <th>Specialities</th>
+                                            <th></th>
                                         </tr>
                                         <tr ng-repeat="speciality in company.specialties">
-                                            <td><input type="text" placeholder="e.g Software" data-ng-model="speciality.name"class="input-small"></td>   
+                                            <td><input type="text" placeholder="e.g Software" data-ng-model="speciality.name" class="form-control"></td>   
                                             <td>
-                                                <a ng-click="removeSpeciality($index)">[ X ]</a>
+                                                <a href="" ng-click="removeSpeciality($index)"><i class="fa fa-times"></i></a>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td><button ng-click="addSpeciality()" class="btn btn-small">Add Speciality</button></td>
                                             <td></td>
+                                            <td><button ng-click="addSpeciality()" class="btn btn-small btn-success pull-right">Add Speciality</button></td>                                            
                                         </tr>
                                     </table>
                                 </div>
                             </div>
 
                             <button type="submit"
-                                class="btn btn-sucess btn-block btn-lg"
+                                class="btn btn-primary btn-block btn-lg"
                                 ng-click="update()"
                                 >Sumbit</button>                             
                             <div data-ng-show="error" class="text-danger">
@@ -175,4 +181,75 @@
                 </div>
             </div>
         </div>
- </section>    
+
+    <div class="col-md-4 pull-right">
+        <!-- Thumbnails -->
+        <div class="panel panel-default">
+            <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Thumbnails</strong>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="thumbnail">
+                            <img alt="" src="/modules/core/img/600_400-2.jpg">
+                            <div class="caption">
+                                <h3>Thumbnail label</h3>
+                                <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+                                <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
+                            </div>
+                        </div>    
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="thumbnail">
+                            <img alt="" src="/modules/core/img/600_400-1.jpg">
+                            <div class="caption">
+                                <h3>Thumbnail label</h3>
+                                <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+                                <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
+                            </div>
+                        </div> 
+                    </div>            
+                </div>
+            </div>
+        </div>
+            <!-- end Thumbnails -->
+    </div>
+ </section>  
+
+
+<style type="text/css">
+.btn-primary {
+    background-image: -webkit-linear-gradient(top, #428bca 0, #2d6ca2 100%);
+    background-image: linear-gradient(to bottom, #428bca 0, #2d6ca2 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff428bca', endColorstr='#ff2d6ca2', GradientType=0);
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+    background-repeat: repeat-x;
+    border-color: #2b669a;
+    color: #fff;
+    background-color: #428bca;
+}
+.btn-primary:active {
+    border-color: #2b669a;
+    color: #fff;
+    background-color: #428bca;
+}
+
+.btn-success {
+    background-image: -webkit-linear-gradient(top, #f0ad4e 0, #eb9316 100%);
+    background-image: linear-gradient(to bottom, #f0ad4e 0, #eb9316 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fff0ad4e', endColorstr='#ffeb9316', GradientType=0);
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+    background-repeat: repeat-x;
+    border-color: #e38d13;
+    color: #fff;
+    background-color: #f0ad4e;
+}
+
+.btn-success:active {
+    border-color: #e38d13;
+    color: #fff;
+    background-color: #f0ad4e;
+}
+
+
+</style>  
