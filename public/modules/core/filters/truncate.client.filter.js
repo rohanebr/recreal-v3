@@ -7,7 +7,7 @@ angular.module('core').filter('truncate', [
                 length = 10;
 
             if (end === undefined)
-                end = "...";
+                end = '...';
 
             if (text.length <= length || text.length - end.length <= length) {
                 return text;

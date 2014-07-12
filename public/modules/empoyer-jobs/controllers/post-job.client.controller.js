@@ -6,7 +6,10 @@ angular.module('empoyer-jobs').controller('PostJobController', ['$scope', '$loca
 
 		// If user is not signed in then redirect back home
 		if (!$scope.user) $location.path('/signin');
-
+		$scope.skills = [];
+		$scope.skills.push({
+		        title: ''
+		      });
 		// Create new Job
 		$scope.create = function() {
 			// Create new Job object
@@ -26,7 +29,8 @@ angular.module('empoyer-jobs').controller('PostJobController', ['$scope', '$loca
 				career_level: this.career_level,
 				degree_title: this.degree_title,
 				study_feild: this.study_feild,
-				travel_required: this.travel_required
+				travel_required: this.travel_required,
+				skills: this.skills
 			});
 
 			// Redirect after save
@@ -36,19 +40,20 @@ angular.module('empoyer-jobs').controller('PostJobController', ['$scope', '$loca
 				$scope.error = errorResponse.data.message;
 			});
 
-			//Skills
-		    $scope.addSkill = function() {
-		      $scope.job.skills.push({
-		        title: ''
-		      });
-		    };
-
-		    $scope.removeSkill = function(index) {
-		      $scope.job.skills.splice(index, 1);
-		    };
 			// Clear form fields
 			this.name = '';
 			this.description = '';
 		};
+
+		//Skills
+	    $scope.addSkill = function() {
+	      $scope.skills.push({
+	        title: ''
+	      });
+	    };
+
+	    $scope.removeSkill = function(index) {
+	      $scope.skills.splice(index, 1);
+	    };
 	}
 ]);
