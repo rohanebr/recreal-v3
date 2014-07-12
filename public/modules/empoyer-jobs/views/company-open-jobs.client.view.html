@@ -7,7 +7,7 @@
                         <h4>{{job.company.company_name}}</h4>
                 	<span class="pull-right"> Close Date: {{job.due_date | date}}</span>
                 	<p><h4>{{job.location}} , {{job.country}}</h4></p>
-                	<p><span><strong>Description:</strong> {{job.description}} </span></p>        
+                	<p><span><strong>Description:</strong> {{job.description | truncate:250}} </span></p>        
                 </div>
         </section> 
 		<!-- <div ng-repeat="candidate in job.candidates" >
