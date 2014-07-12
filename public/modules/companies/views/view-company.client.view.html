@@ -52,9 +52,9 @@
                                     <label>Website:</label>
                                     {{company.website}}
                                 </li>
-                                <li>
-                                    <label>Website:</label>
-                                    <spna data-ng-repeat= "speciality in company.specialities">{}</spna>
+                                <li >
+                                    <label>Specialties:</label>
+                                    <span data-ng-repeat= "speciality in company.specialties">{{speciality.name}}, </span>
                                 </li>
                             </ul>
                             
