@@ -7624,6 +7624,11 @@ img.img80_80 {
   height: 80px;
 }
 
+img.img150_150 {
+  width: 150px;
+  height: 150px;
+}
+
 .label {
   padding: .5em .8em;
 }

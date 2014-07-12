@@ -3,73 +3,107 @@
 
 <div class="page page-dashboard" >
 
+    <div class="col-md-8">
+        <!-- stats -->
+        <div class="row dashboard-stats" >
+            <div class="col-lg-4 col-sm-12 col-md-4">
+                <section class="panel panel-box">
+                    <div class="panel-left panel-item bg-success">
+                        <i class="fa fa-rocket text-large stat-icon"></i>
+                    </div>
+                    <div class="panel-right panel-item bg-reverse">
+                        <p class="size-h1 no-margin">{{jobs.length}}<span class="size-h3"></span></p>
+                        <p class="text-muted no-margin"><span>New Jobs</span></p>
+                    </div>
+                </section>
+            </div>
 
-    <!-- stats -->
-    <div class="row dashboard-stats" >
-        <div class="col-lg-4 col-sm-12 col-md-4">
-            <section class="panel panel-box">
-                <div class="panel-left panel-item bg-success">
-                    <i class="fa fa-rocket text-large stat-icon"></i>
-                </div>
-                <div class="panel-right panel-item bg-reverse">
-                    <p class="size-h1 no-margin">{{jobs.length}}<span class="size-h3"></span></p>
-                    <p class="text-muted no-margin"><span>New Jobs</span></p>
-                </div>
-            </section>
+            <div class="col-lg-4 col-sm-12 col-md-4">
+                <section class="panel panel-box">
+                    <div class="panel-left panel-item bg-info">
+                        <i class="fa fa-users text-large stat-icon"></i>
+                    </div>
+                    <div class="panel-right panel-item bg-reverse">
+                        <p class="size-h1 no-margin">5</p>
+                        <p class="text-muted no-margin"><span>Rejected</span></p>
+                    </div>
+                </section>
+            </div>
+
+            <div class="col-lg-4 col-sm-12 col-md-4">
+                <section class="panel panel-box">
+                    <div class="panel-left panel-item bg-warning">
+                        <i class="fa fa-dollar text-large stat-icon"></i>
+                    </div>
+                    <div class="panel-right panel-item bg-reverse">
+                        <p class="size-h1 no-margin">10</p>
+                        <p class="text-muted no-margin"><span>Awaiting</span></p>
+                    </div>
+                </section>
+            </div>
         </div>
+      
 
-        <div class="col-lg-4 col-sm-12 col-md-4">
-            <section class="panel panel-box">
-                <div class="panel-left panel-item bg-info">
-                    <i class="fa fa-users text-large stat-icon"></i>
-                </div>
-                <div class="panel-right panel-item bg-reverse">
-                    <p class="size-h1 no-margin">5</p>
-                    <p class="text-muted no-margin"><span>Rejected</span></p>
-                </div>
-            </section>
-        </div>
-
-        <div class="col-lg-4 col-sm-12 col-md-4">
-            <section class="panel panel-box">
-                <div class="panel-left panel-item bg-warning">
-                    <i class="fa fa-dollar text-large stat-icon"></i>
-                </div>
-                <div class="panel-right panel-item bg-reverse">
-                    <p class="size-h1 no-margin">10</p>
-                    <p class="text-muted no-margin"><span>Awaiting</span></p>
-                </div>
-            </section>
-        </div>
-    </div>
-  
-
-    <!-- Media object -->
-    <div class="panel panel-default">
-        <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Jobs</strong></div>
-        <div class="panel-body" ng-repeat="job in jobs">
-            <div class="media"  data-ng-hide="hasApplied(job)">
-                <a class="pull-left" href="#">
-                    <img alt="" src="http://cns.com.pk/wp-content/uploads/2012/06/CNS-Logo.bmp" class="img-rounded img64_64">
-                </a>
-                <div class="media-body">
-                    <a data-ng-href="#!/jobs/{{job._id}}"><h4 class="media-heading">{{job.title}}</h4></a>
-                    <a data-ng-href="#!/companies/{{job.company._id}}"><h5 style="color: #F68795">{{job.company.company_name}}</h5></a>                    
-                    <p>{{job.description}}</p>
-                </div>
-                <div class="pull-right">    
-                    <label>{{job.dueDate | date}}</label>
-                    <strong><a class="btn btn-sm btn-success" ng-click="apply(job)">Apply Now</a></strong>
+        <!-- Media object -->
+        <div class="panel panel-default">
+            <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Jobs</strong></div>
+            <div class="panel-body" ng-repeat="job in jobs">
+                <div class="media"  data-ng-hide="hasApplied(job)">
+                    <a class="pull-left" href="#">
+                        <img alt="" src="http://cns.com.pk/wp-content/uploads/2012/06/CNS-Logo.bmp" class="img-rounded img150_150">
+                    </a>
+                    <div class="media-body">
+                        <a data-ng-href="#!/jobs/{{job._id}}"><h4 class="media-heading">{{job.title}}</h4></a>
+                        <a data-ng-href="#!/companies/{{job.company._id}}"><h5 style="color: #F68795">{{job.company.company_name}}</h5></a>                    
+                        <p>{{job.description | truncate:250}}</p>
+                    </div>
+                    <div class="pull-right">    
+                        <label>{{job.dueDate | date}}</label>
+                        <strong><a class="btn btn-sm btn-success" ng-click="apply(job)">Apply Now</a></strong>
+                    </div>
                 </div>
             </div>
         </div>
+        <!-- end Media object -->
+
+        <!-- Media object -->
+        <div class="panel panel-default">
+            <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Media object</strong></div>
+            <div class="panel-body">
+                <div class="media">
+                    <a class="pull-left" href="#">
+                        <img alt="" src="images/g1.jpg" class="img-rounded img64_64">
+                    </a>
+                    <div class="media-body">
+                        <h4 class="media-heading">Media heading</h4>
+                        <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce cfelis in faucibus.</p>
+                    </div>
+                </div>
+                <div class="media">
+                    <a class="pull-left" href="#">
+                        <img alt="" src="images/g1.jpg" class="img-rounded img64_64">
+                    </a>
+                    <div class="media-body">
+                        <h4 class="media-heading">Media heading</h4>
+                        <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at. Donec lacinia congue felis in faucibus.</p>
+
+                        <div class="media">
+                            <a class="pull-left" href="#">
+                                <img alt="" src="images/g1.jpg" class="img-rounded img64_64">
+                            </a>
+                            <div class="media-body">
+                                <h4 class="media-heading">Media heading</h4>
+                                <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus  Donec lacinia congue felis in faucibus.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <!-- end Media object -->
     </div>
-    <!-- end Media object -->
-</div>
-
-
 
 
   
 </section>
-
