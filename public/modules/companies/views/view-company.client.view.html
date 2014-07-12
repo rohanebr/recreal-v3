@@ -1,70 +1,135 @@
 <section data-ng-controller="CompaniesController" data-ng-init="findOne()">
-	<div class="col-md-6">
-		<div class="panel panel-profile">
-                <div class="panel-heading text-center">
-                    <img alt="" src="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQdqDzj720ok-dvraQzi0ovTJo9UAuCOWn3nESHdbHpUCKthC-kRl-X-Q">
+    <div class="signin-header container row " style="background-color: #333; padding: 8px 0; margin-top: -10px; margin-bottom: 10px;">
+        <div class="col-md-3">
+                <span  ><i class="fa fa-bank super-awesome"></i></span>
+        </div>
+        <div class="text-center col-md-6">
+            <section class="logo" style="padding-top: 10px;">
+                <span style="color: #fff; text-shadow: 1px 1px -2px #D5D5D5; font-size:30px; padding-top:10px">Company Profile</span>
+            </section>
+        </div>
+    </div>
+
+	<div class="col-md-8">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="col-md-3" style=" text-align:center; vertical-align:middle; padding-top:25px">
+                    <img alt="" max-width:150px; max-height:150px; src="https://media.licdn.com/media/p/8/000/2a8/0b9/35aede1.png">
+                </div>    
+                <div class="col-md-9">
+                    <h2>{{company.company_name}}</h2>
+                    <h4>Industry: {{company.industry}}</h4>
+                    <h6>Founded In: {{company.founded|date}}</h6>
                 </div>
-                <div class="list-justified-container">
-                    <ul class="list-justified text-center">
-                        <li>
-                            <p class="size-h3">{{company.company_name}}</p>
-                            <p class="text-muted">Founded In: {{company.founded|date}}</p>
-                        </li>
-                    </ul>
-                </div>
+            </div>
         </div>
 
-		<div class="panel panel-info">
+        <div class="panel panel-default">
                 <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Company Profile</strong></div>
                 <div class="panel-body">
-                    <div class="media">
-                        <div class="media-body">
-                            <ul class="list-unstyled list-info">
-                                <li>
-                                    <label>Industry:</label>
-                                    {{company.industry}}
-                                </li>
-                                <li>
-                                    <label>Company Type:</label>
+                    <form name="form_companyProfile" class="form-horizontal">
+                        <fieldset>
+                            <div class="form-group">
+                                <div class="col-sm-3">
+                                    <label for="">Company Type:</label>
+                                </div>
+                                <div class="col-sm-9">
                                     {{company.company_type}}
-                                </li>
-                                <li>
-                                    <label>Company Size:</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-3">
+                                    <label for="">Company Size:</label>
+                                </div>
+                                <div class="col-sm-9">
                                     {{company.company_size}}
-                                </li>
-                                <li>
-                                    <label>Contact Person:</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-3">
+                                    <label for="">Comtact Person:</label>
+                                </div>
+                                <div class="col-sm-9">
                                     {{company.contact_person}}
-                                </li>
-                                <li>
-                                    <label>Contact Number:</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-3">
+                                    <label for="">Contact Number:</label>
+                                </div>
+                                <div class="col-sm-9">
                                     {{company.contact_no}}
-                                </li>
-                                <li>
-                                    <label>Person Email:</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-3">
+                                    <label for="">Contact Email:</label>
+                                </div>
+                                <div class="col-sm-9">
                                     {{company.contact_email}}
-                                </li>
-                                <li>
-                                    <label>Address:</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-3">
+                                    <label for="">Address:</label>
+                                </div>
+                                <div class="col-sm-9">
                                     {{company.address}}
-                                </li>
-                                <li>
-                                    <label>Website:</label>
-                                    {{company.website}}
-                                </li>
-                                <li >
-                                    <label>Specialties:</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-3">
+                                    <label for="">Specialties:</label>
+                                </div>
+                                <div class="col-sm-9">
                                     <span data-ng-repeat= "speciality in company.specialties">{{speciality.name}}, </span>
-                                </li>
-                            </ul>
-                            
-                        </div>
-                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
                 </div>
         </div>
 	</div>
 
+    <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Thumbnails</strong></div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="thumbnail">
+                                <img alt="" src="/modules/core/img/600_400-2.jpg">
+                                <div class="caption">
+                                    <h3>Thumbnail label</h3>
+                                    <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+                                    <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
+                                </div>
+                            </div>    
+                        </div>
+                    </div>            
+                </div>
+            </div>
+    </div>
 
+    <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Thumbnails</strong></div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="thumbnail">
+                                <img alt="" src="/modules/core/img/600_400-2.jpg">
+                                <div class="caption">
+                                    <h3>Thumbnail label</h3>
+                                    <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+                                    <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
+                                </div>
+                            </div>    
+                        </div>
+                    </div>            
+                </div>
+            </div>
+    </div>
 
 	<div class="pull-right" data-ng-show="authentication.user._id == company.user._id">
 		<a class="btn btn-primary" href="/#!/companies/{{company._id}}/edit">
@@ -75,3 +140,17 @@
 		</a>
 	</div>
 </section>
+
+<style>
+.super-awesome {
+        display: block;
+        color: #fff;
+        font-size: 5em;
+         text-shadow: 1px 1px #D5D5D5;
+         color: #f2f2f2
+}
+.signin-header {
+        padding: 8px 0;    
+        background-color: #898989;
+}
+</style>
