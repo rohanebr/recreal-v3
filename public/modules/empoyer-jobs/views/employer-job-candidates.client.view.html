@@ -5,44 +5,102 @@
 	</div>
 </section>
  -->
-  <div><h2>List of Candidates for Executive Director Vacancy</h2></div>
 <section data-ng-controller="EmployerJobCandidatesController">
+	<div class="signin-header container row " style="background-color: #333; padding: 8px 0; margin-top: -10px; margin-bottom: 10px;">
+        <div class="col-md-3">
+                <span ><i class="fa fa-user super-awesome"></i></span>
+        </div>
+        <div class="text-center col-md-6">
+            <section class="logo">
+                <span style="color: #fff; text-shadow: 1px 1px -2px #D5D5D5; font-size:20px">List of Candidates applied for Post of {{job.title}}</span>
+            </section>
+        </div>
+    </div>
+
 	<div class="col-md-8">
-		<table class="table table-bordered table-hover">
-		<tr class="info">
-			<th>
-			   Candidate Name
-			</th>
-			<th>
-			   Rating
-			</th>
-			<th>
-			   Experience
-			</th>
-			<th>
-			   Career Level
-			</th>
-			<th>
-			   Location
-			</th>
-		<tr>
-		<tr data-ng-repeat = "candidate in candidates">
-			<td>
-				{{candidate.displayName}}
-			</td>
-			<td>
-				{{candidate.rating}}
-			</td>
-			<td>
-				{{candidate.experience}}
-			</td>
-			<td>
-				{{candidate.career_level}}
-			</td>
-			<td>
-				{{candidate.location}}
-			</td>
-		</tr>
-		</table>
+		<div >
+			<table class="table table-bordered table-hover" style="background-color:#fff">
+				<tr class="default">
+					<th>
+					   Candidate Name
+					</th>
+					<th>
+					   Rating
+					</th>
+					<th>
+					   Experience
+					</th>
+					<th>
+					   Career Level
+					</th>
+					<th>
+					   Location
+					</th>
+				<tr>
+				<tr data-ng-repeat = "candidate in candidates">
+					<td>
+						{{candidate.displayName}}
+					</td>
+					<td>
+						{{candidate.rating}}
+					</td>
+					<td>
+						{{candidate.experience}}
+					</td>
+					<td>
+						{{candidate.career_level}}
+					</td>
+					<td>
+						{{candidate.location}}
+					</td>
+				</tr>
+			</table>
+		</div>
 	</div>
+	<div class="col-md-4 pull-right">
+        <!-- Thumbnails -->
+        <div class="panel panel-default">
+            <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Thumbnails</strong>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="thumbnail">
+                            <img alt="" src="/modules/core/img/600_400-2.jpg">
+                            <div class="caption">
+                                <h3>Thumbnail label</h3>
+                                <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+                                <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
+                            </div>
+                        </div>    
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="thumbnail">
+                            <img alt="" src="/modules/core/img/600_400-1.jpg">
+                            <div class="caption">
+                                <h3>Thumbnail label</h3>
+                                <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+                                <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
+                            </div>
+                        </div> 
+                    </div>            
+                </div>
+            </div>
+        </div>
+            <!-- end Thumbnails -->
+    </div>
 </section>
+
+<style>
+.super-awesome {
+        display: block;
+        color: #fff;
+        font-size: 5em;
+         text-shadow: 1px 1px #D5D5D5;
+         color: #f2f2f2
+}
+.signin-header {
+        padding: 8px 0;    
+        background-color: #898989;
+}
+</style>

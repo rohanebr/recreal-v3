@@ -9565,3 +9565,36 @@ button.toast-close-button {
 .steps-indicator li.editing a:before {
   background-color: #ff0000;
 }
+
+.btn-primary {
+    background-image: -webkit-linear-gradient(top, #428bca 0, #2d6ca2 100%);
+    background-image: linear-gradient(to bottom, #428bca 0, #2d6ca2 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff428bca', endColorstr='#ff2d6ca2', GradientType=0);
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+    background-repeat: repeat-x;
+    border-color: #2b669a;
+    color: #fff;
+    background-color: #428bca;
+}
+.btn-primary:active {
+    border-color: #2b669a;
+    color: #fff;
+    background-color: #428bca;
+}
+
+.btn-success {
+  background-image: -webkit-linear-gradient(top, #f0ad4e 0, #eb9316 100%);
+  background-image: linear-gradient(to bottom, #f0ad4e 0, #eb9316 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fff0ad4e', endColorstr='#ffeb9316', GradientType=0);
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+  background-repeat: repeat-x;
+  border-color: #e38d13;
+  color: #fff;
+  background-color: #f0ad4e;
+}
+
+.btn-success:active {
+  border-color: #e38d13;
+  color: #fff;
+  background-color: #f0ad4e;
+}
