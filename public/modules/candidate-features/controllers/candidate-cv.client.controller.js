@@ -1,8 +1,9 @@
 'use strict';
 
-angular.module('candidate-features').controller('CandidateCvController', ['$scope', 'Authentication', 'Candidates', '$location',
-	function($scope, Authentication, Candidates, $location) {
+angular.module('candidate-features').controller('CandidateCvController', ['$scope', 'Authentication', 'Candidates', '$location', '$modal',
+	function($scope, Authentication, Candidates, $location, $modal) {
 		$scope.user = Authentication.user;
+		$scope.isEditing = false;
 
 		// If user is not signed in then redirect back home
 		if (!$scope.user) $location.path('/signin');
@@ -87,6 +88,53 @@ angular.module('candidate-features').controller('CandidateCvController', ['$scop
 	    };
 
 
+	    $scope.newSkill = { title: '', experience: 1, level: 'Beginner' };
+	    $scope.openSkillModal = function(skill) {
+	      var modalInstance;
+	      modalInstance = $modal.open({
+	        templateUrl: '/modules/candidate-features/views/cv-partials/skill-partial.html',
+	        controller: 'SkillModalCtrl',
+	        resolve: {
+	          skill: function() {
+	            return skill;
+	          }
+	        }
+	      });
+	      modalInstance.result.then(function(result) {
+	        var skill = result.skill;
+	        if (result.action == 'delete') {
+	        	var index = $scope.candidate.skills.indexOf(skill);
+		        $scope.candidate.skills.splice(index, 1);
+		    } else {
+		        skill.title = skill.title.trim();
+		        if (skill.id !== undefined) {
+		          var index = $scope.candidate.skills.indexOf(skill);
+		          $scope.candidate.skills[index].title = skill.title;
+		        } else {
+		          $scope.candidate.skills.push(skill);
+		          $scope.newSkill = { title: '', experience: 1, level: 'Beginner' };
+		        }
+		    }
+	      }, function() {
+	        // $log.info('Modal dismissed at: ' + new Date());
+	      });
+	    };
+
+
 
 	}
+]).controller('SkillModalCtrl', [
+  '$scope', '$modalInstance', 'skill', function($scope, $modalInstance, skill) {
+
+    $scope.skill = skill;
+
+	$scope.ok = function (action) {
+	$modalInstance.close({ action: action, skill: $scope.skill });
+	};
+
+	$scope.cancel = function () {
+	$modalInstance.dismiss('cancel');
+
+	};
+  }
 ]);
