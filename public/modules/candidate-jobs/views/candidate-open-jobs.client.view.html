@@ -53,8 +53,8 @@
             <!-- Media object -->
             <div class="panel panel-default">
                 <!-- <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Jobs</strong></div> -->
-                <div class="panel-body" ng-repeat="job in jobs">
-                    <div class="media"  data-ng-hide="hasApplied(job)">
+                <div class="panel-body" ng-repeat="job in jobs" data-ng-show="!hasApplied(job)">
+                    <div class="media">
                         <a class="pull-left" href="#">
                             <img alt="" src="http://cns.com.pk/wp-content/uploads/2012/06/CNS-Logo.bmp" class="img-rounded img64_64">
                         </a>
@@ -68,6 +68,7 @@
                             <strong><a class="btn btn-sm btn-success" ng-click="apply(job)">Apply Now</a></strong>
                         </div>
                     </div>
+                    <hr>
                 </div>
             </div>
             <!-- end Media object -->
