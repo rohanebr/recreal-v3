@@ -18,7 +18,7 @@
                         <h4>{{job.company.company_name}}</h4>
                 	<span class="pull-right"> Close Date: {{job.due_date | date}}</span>
                 	<p><h4>{{job.location}} , {{job.country}}</h4></p> 
-                	<p><span><strong>Description:</strong> {{job.description}} </span></p> 
+                	<p><span><strong>Description:</strong> {{job.description | truncate:270}} </span></p> 
                         <p class="pull-right"><a data-ng-href="#!/jobs/{{job._id}}" class="btn btn-small btn-success">View Job</a> <a href="/#!/employer-job-candidates/{{job._id}}" class="btn btn-small btn-success">View Candidates</a></p>
                 </div>
         </section> 

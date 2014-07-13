@@ -96,20 +96,24 @@ angular.module('candidate-features').controller('CandidateCvController', ['$scop
 	        controller: 'SkillModalCtrl',
 	        resolve: {
 	          skill: function() {
-	            return skill;
+	            return angular.copy(skill);
 	          }
 	        }
 	      });
 	      modalInstance.result.then(function(result) {
 	        var skill = result.skill;
 	        if (result.action == 'delete') {
-	        	var index = $scope.candidate.skills.indexOf(skill);
-		        $scope.candidate.skills.splice(index, 1);
+	        	angular.forEach($scope.candidate.skills, function(cSkill){
+		          	if(cSkill._id === skill._id )
+		          		$scope.candidate.skills.splice($scope.candidate.skills.indexOf(cSkill), 1);
+		          });
 		    } else {
 		        skill.title = skill.title.trim();
-		        if (skill.id !== undefined) {
-		          var index = $scope.candidate.skills.indexOf(skill);
-		          $scope.candidate.skills[index].title = skill.title;
+		        if (skill._id !== undefined) {
+		          angular.forEach($scope.candidate.skills, function(cSkill){
+		          	if(cSkill._id === skill._id )
+		          		cSkill.title = skill.title;
+		          });
 		        } else {
 		          $scope.candidate.skills.push(skill);
 		          $scope.newSkill = { title: '', experience: 1, level: 'Beginner' };
