@@ -8,11 +8,26 @@
 				        	<img height="110" src="https://media.licdn.com/mpr/mpr/shrink_200_200/p/4/000/143/348/2800c86.jpg" alt="some_text">
 				        </div>
 				        <div class="col-md-8">
-					        <h2>Muhammad Ahsin Anwar</h3>
+					        <h2>{{candidate.displayName}}</h3>
 					        <h4>{{candidate.title}} at Apple, Inc</h4>
 					        <h5>{{candidate.location}} | {{candidate.country}}</h5>
 				        </div>    					
 					</div>
+		        </div>
+		        <div class="panel panel-default">
+		        	<div class="panel-heading">
+		        		<strong><span class="glyphicon glyphicon-th"></span> Career Summary</strong>
+		        	</div>
+		        	<div class="panel-body">
+		        		<div class="form-group">
+                            <div class="col-sm-3">
+                                <label for="">Objective</label>
+                            </div>
+                            <div class="col-sm-9">
+                                <textarea class="form-control" data-ng-model="candidate.summary"></textarea>
+                            </div>
+	                     </div>
+		        	</div>
 		        </div>
 	            <div class="panel panel-default">
 	                <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Personel Profile</strong></div>
@@ -218,7 +233,7 @@
 	                                </div>
 	                                <div class="col-sm-9">
 	                               		<span class="ui-select">
-	                                        <select data-ng-model="candidate.salart_expectation">
+	                                        <select data-ng-model="candidate.salary_expectation">
 	                                            <option>10,000 - 15,000</option>
 	                                            <option>15,000 - 30,000</option>
 	                                            <option>30,000 - 60,000</option>
@@ -245,9 +260,9 @@
 	                                <div class="col-sm-3">
 	                                    <label for="">Industry</label>
 	                                </div>
-	                                <div class="col-sm-9">
+	                                <div class="col-sm-9" data-ng-repeat="target_industry in candidate.target_industries">
 	                                	<span class="ui-select">
-	                                        <select data-ng-model="candidate.division">
+	                                        <select data-ng-model="target_industry.name">
 	                                            <option>Accounts</option>
 	                                            <option>Sales</option>
 	                                            <option>Business</option>
@@ -260,9 +275,9 @@
 	                                <div class="col-sm-3">
 	                                    <label for="">Location</label>
 	                                </div>
-	                                <div class="col-sm-9">
+	                                <div class="col-sm-9" data-ng-repeat="target_location in candidate.target_locations">
 	                                	<span class="ui-select">
-	                                        <select data-ng-model="candidate.department">
+	                                        <select data-ng-model="target_location.name">
 	                                            <option>Pakistan</option>
 	                                            <option>Lahore</option>
 	                                            <option>Pakistan - Karachi</option>
@@ -318,7 +333,8 @@
 	                                    </span>
 	                                </td>
 	                                <td>
-	                                    <input  type="date"
+	                                    <input ui-date
+	                                    ui-date-format
 	                                    class="form-control"
 	                                    required
 	                                    data-ng-model="skill.last_used"
@@ -413,7 +429,7 @@
 	                                    <label for="">Start Date</label>
 	                                </div>
 	                                <div class="col-sm-4">
-	                                    <input type="date" class="form-control" ng-model="education.start_date" />
+	                                    <input ui-date ui-date-format class="form-control" ng-model="education.start_date" />
 	                                </div>
 	                            </div>
 	                            <div class="form-group">
@@ -421,7 +437,7 @@
 	                                    <label for="">End Date</label>
 	                                </div>
 	                                <div class="col-sm-4">
-	                                    <input type="date" class="form-control" ng-model="education.end_date " />
+	                                    <input ui-date ui-date-format class="form-control" ng-model="education.end_date" />
 	                                </div>
 	                            </div>
 	                        </fieldset>
@@ -469,7 +485,7 @@
 	                                </div>
 	                                <div class="col-sm-9">
 	                                	<span class="ui-select">
-	                                        <select data-ng-model="candidate.company_location">
+	                                        <select data-ng-model="experience.company_location">
 	                                            <option>Pakistan</option>
 	                                            <option>Lahore</option>
 	                                            <option>Pakistan - Karachi</option>
@@ -486,7 +502,7 @@
 	                                </div>
 	                                <div class="col-sm-9">
 	                                	<span class="ui-select">
-	                                        <select data-ng-model="candidate.company_industry">
+	                                        <select data-ng-model="experience.company_industry">
 	                                            <option>Accounts</option>
 	                                            <option>Sales</option>
 	                                            <option>Business</option>
@@ -502,7 +518,7 @@
 
 
 	                                <div class="col-sm-4">
-	                                    <input type="date" class="form-control" ng-model="experience.start_date" />
+	                                    <input ui-date ui-date-format class="form-control" ng-model="experience.start_date" />
 	                                </div>
 	                            </div>
 	                            <div class="form-group">
@@ -510,7 +526,7 @@
 	                                    <label for="">End Date</label>
 	                                </div>
 	                                <div class="col-sm-4">
-	                                    <input type="date" class="form-control" ng-model="experience.end_date" />
+	                                    <input ui-date ui-date-format class="form-control" ng-model="experience.end_date" />
 	                                </div>
 	                            </div>
 	                            <div class="form-group">
@@ -570,7 +586,7 @@
 	                                    <label for="">Start Date</label>
 	                                </div>
 	                                <div class="col-sm-4">
-	                                    <input type="date" class="form-control" ng-model="project.start_date" />
+	                                    <input ui-date ui-date-format class="form-control" ng-model="project.start_date" />
 	                                </div>
 	                            </div>
 	                            <div class="form-group">
@@ -578,7 +594,7 @@
 	                                    <label for="">End Date</label>
 	                                </div>
 	                                <div class="col-sm-4">
-	                                    <input type="date" class="form-control" ng-model="project.end_date" />
+	                                    <input ui-date ui-date-format class="form-control" ng-model="project.end_date" />
 	                                </div>
 	                            </div>
 	                            <div class="form-group">
