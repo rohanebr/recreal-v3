@@ -17,90 +17,61 @@
         </div>
     </div>
 
-	<div class="col-md-8">
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <div data-ng-repeat="candidate in candidates">
-                <h2 style="color:#00afef;">{{candidate.displayName}}</h2>
-                <h4>{{candidate.title}}</h4>
-                <p style="color:rgb(83, 82, 82)">I am a people who likes and passionate to learn what’s new on software technology. I have a self-motivated desire for learning, quality work, and team efforts that produce measurable results. I would love to work with people that have interest with every cool technology and passionate about it. Currently, enjoying work on Node.JS</p>
-                <h5><span style="margin-right: 5px;" class="label label-default" data-ng-repeat="skill in candidate.skills">{{skill.title}}</span></h5>
-            </div>
-            
-        </div>
-		<div >
-			<table class="table table-bordered table-hover" style="background-color:#fff">
-				<tr class="default">
-					<th>
-					   Candidate Name
-					</th>
-					<th>
-					   Rating
-					</th>
-					<th>
-					   Experience
-					</th>
-					<th>
-					   Career Level
-					</th>
-					<th>
-					   Location
-					</th>
-				<tr>
-				<tr data-ng-repeat = "candidate in candidates">
-					<td>
-						{{candidate.displayName}}
-					</td>
-					<td>
-						{{candidate.rating}}
-					</td>
-					<td>
-						{{candidate.experience}}
-					</td>
-					<td>
-						{{candidate.career_level}}
-					</td>
-					<td>
-						{{candidate.location}}
-					</td>
-				</tr>
-			</table>
-		</div>
-	</div>
-	<div class="col-md-4 pull-right">
-        <!-- Thumbnails -->
-        <div class="panel panel-default">
-            <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Thumbnails</strong>
-            </div>
-            <div class="panel-body">
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div class="thumbnail">
-                            <img alt="" src="/modules/core/img/600_400-2.jpg">
-                            <div class="caption">
-                                <h3>Thumbnail label</h3>
-                                <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-                                <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
-                            </div>
-                        </div>    
+    	<div class="col-md-8">
+            <div class="panel panel-default">
+                <div class="panel-body" data-ng-repeat="candidate in candidates">
+                    <div class="col-md-3" style="padding-top:20px;">
+                        <img height=150px; width:150px; src="https://media.licdn.com/mpr/mpr/shrink_200_200/p/4/000/143/348/2800c86.jpg">
                     </div>
-                    <div class="col-sm-12">
-                        <div class="thumbnail">
-                            <img alt="" src="/modules/core/img/600_400-1.jpg">
-                            <div class="caption">
-                                <h3>Thumbnail label</h3>
-                                <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-                                <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
-                            </div>
-                        </div> 
-                    </div>            
+                    <div class="col-md-9">
+                        <h2 style="color:#00afef;">{{candidate.displayName}}</h2>
+                        <h4>{{candidate.title}}</h4>
+                        <p style="color:rgb(83, 82, 82)">I am a people who likes and passionate to learn what’s new on software technology. I have a self-motivated desire for learning, quality work.</p>
+                        <div style="line-height: 2">
+                            <span  class="skill-div" data-ng-repeat="skill in candidate.skills">{{skill.title}}</span>
+                        </div>
+                            
+                        <h6 style="padding-top:15px">Rating : 5  &nbsp;&nbsp;|&nbsp;&nbsp;  Location : Islamabad  &nbsp;&nbsp;|&nbsp;&nbsp;  Salary Range : 20,000-30,000  &nbsp;&nbsp;|&nbsp;&nbsp;  1 Test</h6>
+                        <hr>
+                    </div>
+                    
                 </div>
             </div>
         </div>
-            <!-- end Thumbnails -->
-    </div>
+    	<div class="col-md-4">
+            <!-- Thumbnails -->
+            <div class="panel panel-default">
+                <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Thumbnails</strong>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="thumbnail">
+                                <img alt="" src="/modules/core/img/600_400-2.jpg">
+                                <div class="caption">
+                                    <h3>Thumbnail label</h3>
+                                    <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+                                    <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
+                                </div>
+                            </div>    
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="thumbnail">
+                                <img alt="" src="/modules/core/img/600_400-1.jpg">
+                                <div class="caption">
+                                    <h3>Thumbnail label</h3>
+                                    <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+                                    <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
+                                </div>
+                            </div> 
+                        </div>            
+                    </div>
+                </div>
+            </div>
+                <!-- end Thumbnails -->
+        </div>
 </section>
-
+<!-- style="margin: 5px; padding:5px;background-color:#DBDBDB" -->
 <style>
 .super-awesome {
         display: block;
@@ -112,5 +83,20 @@
 .signin-header {
         padding: 8px 0;    
         background-color: #898989;
+}
+.skill-div
+{
+background-color: #f2f2f2;
+color: #7c7c7a;
+padding: 4px 12px;
+-webkit-border-radius: 4px;
+-moz-border-radius: 4px;
+-ms-border-radius: 4px;
+-o-border-radius: 4px;
+border-radius: 4px;
+margin: 4px;
+font-size: 11px;
+line-height: 0;
+
 }
 </style>
