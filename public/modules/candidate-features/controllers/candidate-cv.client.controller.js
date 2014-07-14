@@ -19,7 +19,12 @@ angular.module('candidate-features').controller('CandidateCvController', ['$scop
 			if(!candidate.educations){
 				$scope.candidate.educations =  [{degree: ''}];
 			}
-
+			if(candidate.target_industries.length < 1){
+				$scope.candidate.target_industries =  [{name: ''}];
+			}
+			if(candidate.target_locations.length < 1){
+				$scope.candidate.target_locations =  [{name: ''}];
+			}
 		});	
 
 		// Update existing Candidate
@@ -32,6 +37,7 @@ angular.module('candidate-features').controller('CandidateCvController', ['$scop
 				$scope.error = errorResponse.data.message;
 			});
 		};
+		
 		//Skills
 	    $scope.addSkill = function() {
 	      $scope.candidate.skills.push({
