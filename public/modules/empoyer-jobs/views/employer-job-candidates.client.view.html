@@ -7,17 +7,27 @@
  -->
 <section data-ng-controller="EmployerJobCandidatesController">
 	<div class="signin-header container row " style="background-color: #333; padding: 8px 0; margin-top: -10px; margin-bottom: 10px;">
-        <div class="col-md-3">
+        <div class="col-md-2">
                 <span ><i class="fa fa-user super-awesome" ></i></span>
         </div>
-        <div class="text-center col-md-6">
-            <section class="logo">
-                <span style="color: #fff; text-shadow: 1px 1px -2px #D5D5D5; font-size:20px">List of Candidates applied for Post of {{job.title}}</span>
+        <div class="text-center col-md-8">
+            <section class="logo" style="padding-top:10px">
+                <span style="color: #fff; text-shadow: 1px 1px -2px #D5D5D5; font-size:20px; ">List of Candidates applied for Post of {{job.title}}</span>
             </section>
         </div>
     </div>
 
 	<div class="col-md-8">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div data-ng-repeat="candidate in candidates">
+                <h2 style="color:#00afef;">{{candidate.displayName}}</h2>
+                <h4>{{candidate.title}}</h4>
+                <p style="color:rgb(83, 82, 82)">I am a people who likes and passionate to learn what’s new on software technology. I have a self-motivated desire for learning, quality work, and team efforts that produce measurable results. I would love to work with people that have interest with every cool technology and passionate about it. Currently, enjoying work on Node.JS</p>
+                <h5><span style="margin-right: 5px;" class="label label-default" data-ng-repeat="skill in candidate.skills">{{skill.title}}</span></h5>
+            </div>
+            
+        </div>
 		<div >
 			<table class="table table-bordered table-hover" style="background-color:#fff">
 				<tr class="default">
