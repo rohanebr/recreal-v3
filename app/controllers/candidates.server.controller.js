@@ -128,3 +128,30 @@ exports.hasAuthorization = function(req, res, next) {
 	}
 	next();
 };
+
+
+/**
+ * Update a Candidate
+ */
+exports.deleteSkill = function(req, res) {
+	// var candidate = req.candidate ;
+
+	// candidate = _.extend(candidate , req.body);
+
+
+
+	// candidate.save(function(err) {
+	// 	if (err) {
+	// 		return res.send(400, {
+	// 			message: getErrorMessage(err)
+	// 		});
+	// 	} else {
+	// 		res.jsonp(candidate);
+	// 	}
+	// });
+	
+
+	console.log('method called!');
+
+
+};
