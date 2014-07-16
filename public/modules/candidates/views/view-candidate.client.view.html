@@ -1,5 +1,5 @@
 <section data-ng-controller="CandidatesController" data-ng-init="findOne()">
-	<div class="page-header">
+	<!-- <div class="page-header">
 		<h1 data-ng-bind="candidate.name"></h1>
 	</div>
 	<div class="pull-right" data-ng-show="authentication.user._id == candidate.user._id">
@@ -17,5 +17,243 @@
 			by
 			<span data-ng-bind="candidate.user.displayName"></span>
 		</em>
-	</small>
+	</small> -->
+	<div class="page page-profile">
+    <div class="row">
+        <div class="col-md-7">
+
+            <div class="panel panel-profile">
+                <div class="panel-heading text-center bg-info">
+                    <img alt="" src="{{candidate.BasicProfile.pictureurl}}" class="img-circle img80_80">
+                    <h3>{{candidate.displayName}}</h3>
+                    <p>{{candidate.title}}</p>
+
+                </div>
+                <div class="list-justified-container">
+                    <ul class="list-justified text-center">
+                        <li>
+                            <p class="size-h3">{{candidate.xp}}</p>
+                            <p class="text-muted">Experience</p>
+                        </li>
+                        <li>
+                            <p class="size-h3">{{candidate.rating}}</p>
+                            <p class="text-muted">Rating</p>
+                        </li>
+                        <li>
+                            <p class="size-h3">15</p>
+                            <p class="text-muted">Recommendations</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <section class="panel panel-default">
+                <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Summary</strong></div>
+                <div class="panel-body">
+                    <p>{{candidate.summary}}</p>
+                </div>
+            </section>
+
+            <section class="panel panel-default">
+                <a href="" class="pull-right" ng-show="isEditing" ng-click="openSkillModal(newSkill)"><i style="margin: 20px;" class="fa fa-plus"></i></a>
+                <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Skills</strong></div>
+                <div class="panel-body">
+                    <ul>
+                        <li ng-repeat="skill in candidate.skills">
+                            <a class="pull-right" ng-show="isEditing" ng-click="openSkillModal(skill)" href=""><i class="fa fa-edit"></i></a>
+                            {{skill.title}} - <strong>{{skill.level}}</strong>
+                            <sm> with {{skill.experience}} year(s) of experience</sm>
+                        </li>
+                    </ul>
+                </div>
+            </section> 
+
+<!--             <section class="panel panel-default">
+                <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Skills</strong></div>
+                <div class="panel-body">
+                    <ul>
+                        <li ng-repeat="skill in candidate.skills">
+                            {{skill.title}} - <strong>{{skill.level}}</strong>
+                            <sm> with {{skill.experience}} year(s) of experience</sm>
+                        </li>
+                    </ul>
+                </div>
+            </section>  -->
+
+            <section class="panel panel-default">
+                <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Experience</strong></div>
+                <div class="panel-body">
+                    <ul>
+                        <li ng-repeat="pos in candidate.positions">
+                            <h4><strong>{{pos.title}}</strong></h4>
+                            <h5 style="margin-top: -3px;">{{pos.company_name}}</h5>
+                            <h5 style="margin-top: -3px; color: #ababab">{{pos.start_date | date}} to {{pos.end_date | date}}</h5>
+                            <p>{{pos.summary}}</p>
+                            <hr>
+                        </li>
+                    </ul>                   
+                </div>
+            </section> 
+
+            <section class="panel panel-default">
+                <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Projects</strong></div>
+                <div class="panel-body">
+                    <ul>
+                        <li ng-repeat="project in candidate.projects">
+                            <h4><strong>{{project.name}}</strong></h4>
+                            <h5>{{project.company}}</h5>
+                            <h5 style="color: #ababab">{{project.start_date | date}} to {{project.end_date | date}}</h5>
+                            <p>{{project.description}}</p>
+                        </li>
+                    </ul>                   
+                </div>
+            </section> 
+
+            <section class="panel panel-default">
+                <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Education</strong></div>
+                <div class="panel-body">
+                     <ul>
+                         <li ng-repeat="edu in candidate.educations">
+                            <h4><strong>{{edu.degree}} , {{edu.study_feild}}</strong></h4>
+                            <h5>{{edu.institute}}</h5>
+                            <h5 style="color: #ababab">{{edu.start_date | date}} - {{edu.end_date | date}}</h5>
+                        </li>
+                     </ul>          
+                </div>
+            </section> 
+            
+            <section class="panel panel-default">
+                <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Languages</strong></div>
+                <div class="panel-body">
+                    <ul>
+                        <li ng-repeat="language in candidate.languages">
+                            <strong>{{language.name}}</strong>
+                            <sm> - {{language.proficiency}}</sm>
+                        </li>
+                    </ul>                   
+                </div>
+            </section> 
+
+        </div>
+
+
+
+        <div class="col-md-5">
+            
+            
+
+
+            <div class="panel panel-default">
+                <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Profile Info</strong></div>
+                <div class="panel-body">
+                    <div class="media">
+                        <div class="media-body">
+                            <ul class="list-unstyled list-info">
+                                <li>
+                                    <span class="icon glyphicon glyphicon-user"></span>
+                                    <label>Name</label>
+                                    {{candidate.displayName}}
+                                </li>
+                                <li>
+                                    <span class="icon glyphicon glyphicon-envelope"></span>
+                                    <label>Email</label>
+                                    {{user.email}}
+                                </li>
+                                <li>
+                                    <span class="icon glyphicon glyphicon-home"></span>
+                                    <label>Address</label>
+                                    {{candidate.address}}
+                                </li>
+                                <li>
+                                    <span class="icon glyphicon glyphicon-earphone"></span>
+                                    <label>Contact</label>
+                                    {{candidate.contact_no}}
+                                </li>
+                                <li>
+                                    <span class="icon glyphicon glyphicon-flag"></span>
+                                    <label>Nationality</label>
+                                    {{candidate.country}}
+                                </li>
+                                <li>
+                                    <span class="icon glyphicon glyphicon-globe"></span>
+                                    <label>Website</label>
+                                    www.cns.com.pk
+                                </li>
+                            </ul>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="panel mini-box">
+                        <span class="box-icon bg-danger">
+                            <i class="fa fa-film"></i>
+                        </span>
+                        <div class="box-info">
+                            <p class="size-h2">{{candidate.certificates}}</p>
+                            <p class="text-muted">Certifications</p>
+                        </div>
+                    </div>                    
+                </div>
+                <div class="col-sm-12">
+                    <div class="panel mini-box">
+                        <span class="box-icon bg-warning">
+                            <i class="fa fa-bookmark-o"></i>
+                        </span>
+                        <div class="box-info">
+                            <p class="size-h2">{{candidate.honors}}</p>
+                            <p class="text-muted">Honors</p>
+                        </div>
+                    </div>                    
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="panel mini-box">
+                        <span class="box-icon bg-success">
+                            <i class="fa fa-camera"></i>
+                        </span>
+                        <div class="box-info">
+                            <p class="size-h2">{{candidate.FullProfile.test_failed}}</p>
+                            <p class="text-muted">Test(s) Failed</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="panel mini-box">
+                        <span class="box-icon bg-info">
+                            <i class="fa fa-check"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
 </section>
+
+<style type="text/css">
+.btn-primary {
+    background-image: -webkit-linear-gradient(top, #428bca 0, #2d6ca2 100%);
+    background-image: linear-gradient(to bottom, #428bca 0, #2d6ca2 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff428bca', endColorstr='#ff2d6ca2', GradientType=0);
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+    background-repeat: repeat-x;
+    border-color: #2b669a;
+    color: #fff;
+    background-color: #428bca;
+}
+.btn-primary:active {
+    border-color: #2b669a;
+    color: #fff;
+    background-color: #428bca;
+}
+</style>

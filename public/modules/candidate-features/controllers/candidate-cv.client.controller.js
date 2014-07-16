@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('candidate-features').controller('CandidateCvController', ['$scope', 'Authentication', 'Candidates', '$location', '$modal',
-	function($scope, Authentication, Candidates, $location, $modal) {
+angular.module('candidate-features').controller('CandidateCvController', ['$scope', '$http', 'Authentication', 'Candidates', '$location', '$modal',
+	function($scope, $http, Authentication, Candidates, $location, $modal) {
 		$scope.user = Authentication.user;
 		$scope.isEditing = false;
 
@@ -108,9 +108,33 @@ angular.module('candidate-features').controller('CandidateCvController', ['$scop
 	      });
 	      modalInstance.result.then(function(result) {
 	        var skill = result.skill;
-	        if (result.action == 'delete') {
+	        if (result.action === 'delete') {
 	        	angular.forEach($scope.candidate.skills, function(cSkill){
 		          	if(cSkill._id === skill._id )
+
+
+
+						$http.post('/candidates/deleteSkill', skill).success(function(response) {
+							//If successful we assign the response to the global user model
+							// $scope.authentication.user = response;
+
+							alert(response);
+
+							//And redirect to the index page
+							// $location.path('/');
+
+						}).error(function(response) {
+							$scope.error = response.message;
+						});
+
+
+
+
+
+
+
+
+
 		          		$scope.candidate.skills.splice($scope.candidate.skills.indexOf(cSkill), 1);
 		          });
 		    } else {

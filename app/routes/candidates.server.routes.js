@@ -14,6 +14,9 @@ module.exports = function(app) {
 		.put(users.requiresLogin, candidates.hasAuthorization, candidates.update)
 		.delete(users.requiresLogin, candidates.hasAuthorization, candidates.delete);
 
+	app.route('/candidates/deleteSkill')
+		.put(users.requiresLogin, candidates.hasAuthorization, candidates.deleteSkill);
+
 	// Finish by binding the Candidate middleware
 	app.param('candidateId', candidates.candidateByID);
 };
