@@ -20,9 +20,12 @@
                         <img alt="" src="http://cns.com.pk/wp-content/uploads/2012/06/CNS-Logo.bmp" class="img-rounded img64_64">
                     </a>
                     <div class="media-body">
-                        <a data-ng-href="#!/jobs/{{job._id}}"><h3 class="media-heading">{{job.title}}</h3></a>
-                        <h5 >at <a style="color: #F68795" data-ng-href="#!/companies/{{job.company._id}}">{{job.company.company_name}}</a></h5>                    
-                        <p>{{job.description | truncate:270}}</p>
+                        <a data-ng-href="#!/jobs/{{job._id}}"><h3 style="color:#00afef;" class="media-heading">{{job.title}}</h3></a>
+                        <h5 >at <a style=" margin-bottom:15px;" data-ng-href="#!/companies/{{job.company._id}}">{{job.company.company_name}}</a></h5>                   
+                        <p style="color:gray">{{job.description | truncate:270}}</p>
+                        <div style="line-height: 2">
+                            <span  class="skill-div" data-ng-repeat="skill in job.skills">{{skill.title}}</span>
+                        </div>
                     </div>
                     <div>    
                         <label>{{job.dueDate | date}}</label>
@@ -66,5 +69,20 @@
 .signin-header {
         padding: 8px 0;    
         background-color: #898989;
+}
+.skill-div
+{
+background-color: #f2f2f2;
+color: #7c7c7a;
+padding: 4px 12px;
+-webkit-border-radius: 4px;
+-moz-border-radius: 4px;
+-ms-border-radius: 4px;
+-o-border-radius: 4px;
+border-radius: 4px;
+margin: 4px;
+font-size: 11px;
+line-height: 0;
+
 }
 </style>

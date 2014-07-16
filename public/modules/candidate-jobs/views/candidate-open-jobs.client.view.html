@@ -1,43 +1,4 @@
 <section data-ng-controller="CandidateOpenJobsController">
-    <!-- stats -->
-   <!--  <div class="row dashboard-stats" >
-        <div class="col-lg-4 col-sm-12 col-md-4">
-            <section class="panel panel-box">
-                <div class="panel-left panel-item bg-success">
-                    <i class="fa fa-rocket text-large stat-icon"></i>
-                </div>
-                <div class="panel-right panel-item bg-reverse">
-                    <p class="size-h1 no-margin">{{jobs.length}}<span class="size-h3"></span></p>
-                    <p class="text-muted no-margin"><span>New Jobs</span></p>
-                </div>
-            </section>
-        </div>
-
-        <div class="col-lg-4 col-sm-12 col-md-4">
-            <section class="panel panel-box">
-                <div class="panel-left panel-item bg-info">
-                    <i class="fa fa-users text-large stat-icon"></i>
-                </div>
-                <div class="panel-right panel-item bg-reverse">
-                    <p class="size-h1 no-margin">5</p>
-                    <p class="text-muted no-margin"><span>Rejected</span></p>
-                </div>
-            </section>
-        </div>
-
-        <div class="col-lg-4 col-sm-12 col-md-4">
-            <section class="panel panel-box">
-                <div class="panel-left panel-item bg-warning">
-                    <i class="fa fa-dollar text-large stat-icon"></i>
-                </div>
-                <div class="panel-right panel-item bg-reverse">
-                    <p class="size-h1 no-margin">10</p>
-                    <p class="text-muted no-margin"><span>Awaiting</span></p>
-                </div>
-            </section>
-        </div>
-    </div> -->
-    
     <div class="signin-header container row " style="background-color: #333; padding: 8px 0; margin-top: -10px; margin-bottom: 10px;">
         <div class="col-md-3">
                 <span  ><i class="fa fa-briefcase super-awesome"></i></span>
@@ -59,13 +20,16 @@
                             <img alt="" src="http://cns.com.pk/wp-content/uploads/2012/06/CNS-Logo.bmp" class="img-rounded img64_64">
                         </a>
                         <div class="media-body">
-                            <a data-ng-href="#!/jobs/{{job._id}}"><h3 class="media-heading">{{job.title}}</h3></a>
-                            <h5 >at <a style="color: #F68795" data-ng-href="#!/companies/{{job.company._id}}">{{job.company.company_name}}</a></h5>                    
-                            <p>{{job.description | truncate:270}}</p>
+                            <a data-ng-href="#!/jobs/{{job._id}}"><h3 style="color:#00afef;" class="media-heading">{{job.title}}</h3></a>
+                            <h5 style=" margin-bottom:15px;" >at <a data-ng-href="#!/companies/{{job.company._id}}">{{job.company.company_name}}</a></h5>                    
+                            <p style="color:gray">{{job.description | truncate:270}}</p>
+                            <div style="line-height: 2">
+                                <span  class="skill-div" data-ng-repeat="skill in job.skills">{{skill.title}}</span>
+                            </div>
                         </div>
                         <div class="pull-right">    
                             <label>{{job.dueDate | date}}</label>
-                            <strong><a class="btn btn-sm btn-success" ng-click="apply(job)">Apply Now</a></strong>
+                           
                         </div>
                     </div>
                     <hr>
@@ -114,5 +78,20 @@
 .signin-header {
         padding: 8px 0;    
         background-color: #898989;
+}
+.skill-div
+{
+background-color: #f2f2f2;
+color: #7c7c7a;
+padding: 4px 12px;
+-webkit-border-radius: 4px;
+-moz-border-radius: 4px;
+-ms-border-radius: 4px;
+-o-border-radius: 4px;
+border-radius: 4px;
+margin: 4px;
+font-size: 11px;
+line-height: 0;
+
 }
 </style>
