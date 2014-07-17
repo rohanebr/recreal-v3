@@ -9,7 +9,7 @@
 	                	<h2>{{job.title}}</h2>
 	                	<a href="/#!/companies/{{job.company.company_name}}">at <strong>{{job.company.company_name}}</strong></a>
 	                	<h5>Post 5 days ago</h5>
-	                	 <strong><a class="btn btn-sm btn-success pull-right" ng-click="apply(job)">Apply Now</a></strong>
+	                	 <strong><a class="btn btn-sm btn-success pull-right" ng-hide=" authentication.user.userType==='employer' || isApplied" ng-click="apply(job)">Apply Now</a></strong>
 					</div>
 		    </div>
 		    <div class="row" style="background-color: #f1f1f1; color: #333;padding: 10px; border: 1px solid #A8A6A6;">
