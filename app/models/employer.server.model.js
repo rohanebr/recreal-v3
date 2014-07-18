@@ -37,7 +37,8 @@ var EmployerSchema = new Schema({
     trim: true
   },
   department:{
-    type: 'date'
+    type: 'String',
+    trim: true
   },
   office_no:{
     type: 'String',

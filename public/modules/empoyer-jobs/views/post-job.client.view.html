@@ -101,10 +101,7 @@
                                 <div class="col-sm-9">
                                     <span class="ui-select">
                                         <select data-ng-model="industry">
-                                            <option>Accounts</option>
-                                            <option>Sales</option>
-                                            <option>Business</option>
-                                            <option>Marketing</option>
+                                            <option data-ng-repeat="ind in industrys">{{ind.name}}</option>
                                         </select>
                                     </span>
                                 </div>
@@ -193,10 +190,14 @@
                                 <div class="col-sm-9">
                                     <span class="ui-select">
                                         <select ng-model="degree_title">
-                                            <option>Matric</option>
-                                            <option>B.Sc</option>
-                                            <option>MS</option>
-                                            <option>Phd</option>
+                                            <option>Pre-Matriculation</option>
+                                            <option>O-level/Matriculation</option>
+                                            <option>Intermediate/A-Level</option>
+                                            <option>Bachelor's Degree</option>
+                                            <option>Master's Degree</option>
+                                            <option>Doctorate</option>
+                                            <option>Certificate</option>
+                                            <option>Diploma</option>
                                         </select>
                                     </span>
                                 </div>
