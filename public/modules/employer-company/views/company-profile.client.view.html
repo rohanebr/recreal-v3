@@ -33,10 +33,7 @@
                             <div class="col-sm-9">
                                 <span class="ui-select">
                                     <select data-ng-model="company.industry">
-                                            <option>Accounts</option>
-                                            <option>Sales</option>
-                                            <option>Business</option>
-                                            <option>Marketing</option>
+                                            <option data-ng-repeat="ind in industries">{{ind.name}}</option>
                                     </select>
                                 </span>
                             </div>

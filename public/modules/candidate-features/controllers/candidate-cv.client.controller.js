@@ -1,10 +1,10 @@
 'use strict';
 
-angular.module('candidate-features').controller('CandidateCvController', ['$scope', '$http', 'Authentication', 'Candidates', '$location', '$modal',
-	function($scope, $http, Authentication, Candidates, $location, $modal) {
+angular.module('candidate-features').controller('CandidateCvController', ['$scope','Industries', '$http', 'Authentication', 'Candidates', '$location', '$modal',
+	function($scope, Industries, $http, Authentication, Candidates, $location, $modal) {
 		$scope.user = Authentication.user;
 		$scope.isEditing = false;
-
+		$scope.industries = Industries.getIndustries();
 		// If user is not signed in then redirect back home
 		if (!$scope.user) $location.path('/signin');
 

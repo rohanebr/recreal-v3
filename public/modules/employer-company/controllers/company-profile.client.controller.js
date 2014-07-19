@@ -1,9 +1,9 @@
 'use strict';
 
-angular.module('employer-company').controller('CompanyProfileController', ['$scope', 'Authentication', 'Employers', 'Companies', '$location',
-	function($scope, Authentication, Employers, Companies, $location) {
+angular.module('employer-company').controller('CompanyProfileController', ['$scope','Industries', 'Authentication', 'Employers', 'Companies', '$location',
+	function($scope, Industries, Authentication, Employers, Companies, $location) {
 		$scope.user = Authentication.user;
-
+		$scope.industries = Industries.getIndustries();
 		// If user is not signed in then redirect back home
 		if (!$scope.user) $location.path('/signin');
 
