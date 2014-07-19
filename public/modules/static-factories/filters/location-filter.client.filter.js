@@ -3,8 +3,15 @@
 angular.module('static-factories').filter('locationFilter', [
 	function() {
 		return function(input, filter, isEnable) {
+			var allUnchecked = true;
 			// if isEnable then filter out wines
-			if (isEnable) {
+			angular.forEach(filter, function (filter) {
+				if (filter.value) {
+					allUnchecked = false;
+				}
+		    });
+
+			if (!allUnchecked && isEnable) {
 			  var result = [];
 			  angular.forEach(input, function (candidate) {
 			      angular.forEach(filter, function (filter) {

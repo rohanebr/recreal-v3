@@ -30,7 +30,7 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
 					$scope.locationFilters.push({
 						name: filterValue,
 						count: 0,
-						value: true
+						value: false
 					});
 				}
 				$scope.locationFilters[$scope.locationFilters.length - 1].count++;
