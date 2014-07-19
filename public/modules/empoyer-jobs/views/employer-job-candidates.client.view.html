@@ -37,12 +37,13 @@
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-sm-12">
+                            <input type="checkbox" ng-model="isEnable">Is Filter Enable
                             <div class="thumbnail">
                                 <label>Locations</label>
                                 <ul>
                                     <li data-ng-repeat="locationFilter in locationFilters">
-                                    <input type="checkbox" value="checkedCategory" data-ng-model="checkedCategory['{{locationFilter.name}}']" id="checkedCategory{{locationFilter.name}}" />
-                                    <label for="checkedCategory{{locationFilter.name}}" >{{locationFilter.name}} ({{locationFilter.count}})</label>
+                                    <input type="checkbox" value="locationFilter.value" data-ng-model="locationFilter.value" id="{{locationFilter.name}}" ng-disabled="!isEnable" />
+                                    <label for="{{locationFilter.name}}" >{{locationFilter.name}} ({{locationFilter.count}})</label>
                                         
                                     </li>
                                 </ul>
@@ -64,7 +65,7 @@
             
             
             <div class="panel panel-default">
-                <div class="panel-body" data-ng-repeat="candidate in candidates | filter:searchText">
+                <div class="panel-body" data-ng-repeat="candidate in candidates | locationFilter:locationFilters:isEnable | filter:searchText">
                     <div class="col-md-3" style="padding-top:20px;">
                         <img height=150px; width:150px; src="https://media.licdn.com/mpr/mpr/shrink_200_200/p/4/000/143/348/2800c86.jpg">
                     </div>
