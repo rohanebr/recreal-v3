@@ -17,6 +17,17 @@
         </div>
     </div>
 
+    <div class="row">
+        <div class="col-md-4 pull-right panel" style="padding: 10px">
+            <div class="col-md-4">
+                <label class="col-md-3" for="searchBox">Search</label>
+            </div>
+            <div class="col-md-8">
+                <input id="searchBox" class="col-md-8 form-control" type="text" data-ng-model="searchText" />
+            </div>
+        </div>
+    </div>
+        
 
         <div class="col-md-3">
             <!-- Filters -->
@@ -46,9 +57,14 @@
                 <!-- end Filters -->
         </div>
 
+            
+
     	<div class="col-md-9">
+
+            
+            
             <div class="panel panel-default">
-                <div class="panel-body" data-ng-repeat="candidate in candidates">
+                <div class="panel-body" data-ng-repeat="candidate in candidates | filter:searchText">
                     <div class="col-md-3" style="padding-top:20px;">
                         <img height=150px; width:150px; src="https://media.licdn.com/mpr/mpr/shrink_200_200/p/4/000/143/348/2800c86.jpg">
                     </div>
