@@ -208,6 +208,7 @@
 	                                            <option>Internship</option>
 	                                            <option>Contractor</option>
 	                                            <option>Temporary</option>
+	                                            <option>Internship</option>
 	                                        </select>
 	                                    </span>
 	                                </div>
@@ -243,15 +244,15 @@
 	                            </div>
 	                             <div class="form-group">
 	                                <div class="col-sm-3">
-	                                    <label for="">Availability (Weeks)</label>
+	                                    <label for="">Availability</label>
 	                                </div>
 	                                <div class="col-sm-9">
 	                                	<span class="ui-select">
 	                                        <select data-ng-model="candidate.notice_period">
-	                                            <option>1</option>
-	                                            <option>2</option>
-	                                            <option>3</option>
-	                                            <option>4</option>
+	                                            <option>1 month or less</option>
+	                                            <option>3 month or less</option>
+	                                            <option>6 month or less</option>
+	                                            <option>1 year or less</option>
 	                                        </select>
 	                                    </span>
 	                                </div>
@@ -263,10 +264,7 @@
 	                                <div class="col-sm-9" data-ng-repeat="target_industry in candidate.target_industries">
 	                                	<span class="ui-select">
 	                                        <select data-ng-model="target_industry.name">
-	                                            <option>Accounts</option>
-	                                            <option>Sales</option>
-	                                            <option>Business</option>
-	                                            <option>Marketing</option>
+	                                            <option data-ng-repeat="ind in industries">{{ind.name}}</option>
 	                                        </select>
 	                                    </span>
 	                                </div>
