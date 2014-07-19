@@ -13,9 +13,6 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
 
 			populateLocationFilters();
 
-
-
-
 		});
 
 		// $scope.search.name = 'Rawalpindi';
@@ -32,7 +29,8 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
 					filterValue = candidate.location;
 					$scope.locationFilters.push({
 						name: filterValue,
-						count: 0
+						count: 0,
+						value: true
 					});
 				}
 				$scope.locationFilters[$scope.locationFilters.length - 1].count++;
