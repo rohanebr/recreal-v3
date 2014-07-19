@@ -1,9 +1,20 @@
 'use strict';
 
 // Jobs controller
-angular.module('jobs').controller('JobsController', ['$http', '$scope', '$stateParams', '$location', 'Authentication', 'Jobs',
-	function($http, $scope, $stateParams, $location, Authentication, Jobs ) {
+angular.module('jobs').controller('JobsController', ['$http', '$scope', '$stateParams', '$location', 'Authentication', 'Candidates', 'Jobs',
+	function($http, $scope, $stateParams, $location, Authentication, Candidates, Jobs ) {
 		$scope.authentication = Authentication;
+
+		$scope.user = Authentication.user;
+
+		// If user is not signed in then redirect back home
+		if (!$scope.user) $location.path('/signin');
+
+
+
+
+		
+
 
 		// Create new Job
 		$scope.create = function() {
@@ -71,7 +82,20 @@ angular.module('jobs').controller('JobsController', ['$http', '$scope', '$stateP
 		$scope.findOne = function() {
 			$scope.job = Jobs.get({ 
 				jobId: $stateParams.jobId
+			}, function(job){
+
+				$scope.candidate = Candidates.get({ 
+					candidateId: $scope.user.candidate
+				}, function(candidate){
+
+					if($scope.user.userType === 'candidate' && $scope.candidate.jobs.indexOf($scope.job._id) > 1){
+						$scope.isApplied = true;
+					}
+					
+				});	
+
 			});
+
 		};
 	}
 ]);

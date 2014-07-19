@@ -17,7 +17,36 @@
         </div>
     </div>
 
-    	<div class="col-md-8">
+
+        <div class="col-md-3">
+            <!-- Filters -->
+            <div class="panel panel-default">
+                <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Filters</strong>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="thumbnail">
+                                <label>Locations</label>
+                                <ul>
+                                    <li data-ng-repeat="locationFilter in locationFilters">
+                                    <input type="checkbox" value="checkedCategory" data-ng-model="checkedCategory['{{locationFilter.name}}']" id="checkedCategory{{locationFilter.name}}" />
+                                    <label for="checkedCategory{{locationFilter.name}}" >{{locationFilter.name}} ({{locationFilter.count}})</label>
+                                        
+                                    </li>
+                                </ul>
+                            </div>    
+                        </div>
+                        
+
+                                  
+                    </div>
+                </div>
+            </div>
+                <!-- end Filters -->
+        </div>
+
+    	<div class="col-md-9">
             <div class="panel panel-default">
                 <div class="panel-body" data-ng-repeat="candidate in candidates">
                     <div class="col-md-3" style="padding-top:20px;">
@@ -38,38 +67,7 @@
                 </div>
             </div>
         </div>
-    	<div class="col-md-4">
-            <!-- Thumbnails -->
-            <div class="panel panel-default">
-                <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Thumbnails</strong>
-                </div>
-                <div class="panel-body">
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <div class="thumbnail">
-                                <img alt="" src="/modules/core/img/600_400-2.jpg">
-                                <div class="caption">
-                                    <h3>Thumbnail label</h3>
-                                    <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-                                    <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
-                                </div>
-                            </div>    
-                        </div>
-                        <div class="col-sm-12">
-                            <div class="thumbnail">
-                                <img alt="" src="/modules/core/img/600_400-1.jpg">
-                                <div class="caption">
-                                    <h3>Thumbnail label</h3>
-                                    <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-                                    <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
-                                </div>
-                            </div> 
-                        </div>            
-                    </div>
-                </div>
-            </div>
-                <!-- end Thumbnails -->
-        </div>
+
 </section>
 <!-- style="margin: 5px; padding:5px;background-color:#DBDBDB" -->
 <style>
