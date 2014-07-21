@@ -31,7 +31,7 @@ var CandidateSchema = new Schema({
 	picture_url:{
 		type: 'String'
 	},
-	summary:{
+	objective:{
 		type: 'String',
 		trim: true
 	},

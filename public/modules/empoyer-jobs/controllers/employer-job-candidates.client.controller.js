@@ -4,7 +4,7 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
 	function($scope, $filter, Jobs, $stateParams, $http) {
 
 		$scope.locationFilters = [];
-
+		$scope.salaryFilters = [];
 
 		$http.get('jobs/candidates/' + $stateParams.jobId).success(function(job) {
 			$scope.job = job;
@@ -12,9 +12,17 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
 			$scope.filteredCandidates = $scope.candidates;
 
 			populateLocationFilters();
+			populateSalaryFilters();
 
 		});
+		// $http.get('jobs/candidates/' + $stateParams.jobId).success(function(job) {
+		// 	$scope.job = job;
+		// 	$scope.candidates = job.candidates;
+		// 	$scope.filteredCandidates = $scope.candidates;
 
+			
+
+		// });
 		// $scope.search.name = 'Rawalpindi';
 
 
@@ -37,10 +45,22 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
 			}
 		};
 
-
-
-       
-
-
+		var populateSalaryFilters = function(){
+			
+			$scope.candidates = $filter('orderBy')($scope.candidates, 'salary_expectation');
+			var filterValue = 'invalid_value';
+			for (var i = 0 ; i < $scope.candidates.length ; i++ ){
+				var candidate = $scope.candidates[i];
+				if(candidate.salary_expectation !== filterValue){
+					filterValue = candidate.salary_expectation;
+					$scope.salaryFilters.push({
+						name: filterValue,
+						count: 0,
+						value: false
+					});
+				}
+				$scope.salaryFilters[$scope.salaryFilters.length - 1].count++;
+			}
+		};
 }
 ]);

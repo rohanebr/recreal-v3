@@ -111,9 +111,11 @@
                                 <label for="">Country</label>
                             </div>
                             <div class="col-sm-9">
-                                <input  type="text"
-                                        class="form-control"
-                                        data-ng-model="employer.country">
+                                <span class="ui-select">
+                                        <select ng-model="country">
+                                            <option data-ng-repeat="count in countries">{{count.name}}</option>
+                                        </select>
+                                    </span>
                             </div>
                         </div>
 
