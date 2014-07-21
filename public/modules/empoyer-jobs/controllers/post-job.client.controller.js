@@ -1,12 +1,13 @@
 'use strict';
 
-angular.module('empoyer-jobs').controller('PostJobController', ['$scope', 'Industries', '$location', 'Authentication', 'Jobs',
-	function($scope, Industries, $location, Authentication, Jobs) {
+angular.module('empoyer-jobs').controller('PostJobController', ['$scope', 'Industries','Countries', '$location', 'Authentication', 'Jobs',
+	function($scope, Industries, Countries, $location, Authentication, Jobs) {
 		$scope.user = Authentication.user;
 		// If user is not signed in then redirect back home
 		if (!$scope.user) $location.path('/signin');
 
 		$scope.industries = Industries.getIndustries();
+		$scope.countries = Countries.getCountries();
 		// $scope.texting = IndustriesFactory.sayHello('world');
 
 		$scope.skills = [];

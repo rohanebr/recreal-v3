@@ -47,7 +47,17 @@
                                         
                                     </li>
                                 </ul>
-                            </div>    
+                            </div>  
+                            <div class="thumbnail">
+                                <label>Salary Range</label>
+                                <ul>
+                                    <li data-ng-repeat="salaryFilter in salaryFilters">
+                                    <input type="checkbox" value="salaryFilter.value" data-ng-model="salaryFilter.value" id="{{salaryFilter.name}}" />
+                                    <label for="{{salaryFilter.name}}" >{{salaryFilter.name}} ({{salaryFilter.count}})</label>
+                                        
+                                    </li>
+                                </ul>
+                            </div>      
                         </div>
                         
 
@@ -65,14 +75,14 @@
             
             
             <div class="panel panel-default">
-                <div class="panel-body" data-ng-repeat="candidate in candidates | locationFilter:locationFilters:true | filter:searchText">
+                <div class="panel-body" data-ng-repeat="candidate in candidates | locationFilter:locationFilters:true | salaryFilter:salaryFilters:true |filter:searchText">
                     <div class="col-md-3" style="padding-top:20px;">
                         <img height=150px; width:150px; src="https://media.licdn.com/mpr/mpr/shrink_200_200/p/4/000/143/348/2800c86.jpg">
                     </div>
                     <div class="col-md-9">
                         <a data-ng-href="#!/candidates/{{candidate._id}}"><h2 style="color:#00afef;">{{candidate.displayName}}</h2></a>
                         <h4>{{candidate.title}}</h4>
-                        <p style="color:rgb(83, 82, 82)">{{candidate.summary}}</p>
+                        <p style="color:rgb(83, 82, 82)">{{candidate.objective}}</p>
                         <div style="line-height: 2">
                             <span  class="skill-div" data-ng-repeat="skill in candidate.skills">{{skill.title}}</span>
                         </div>

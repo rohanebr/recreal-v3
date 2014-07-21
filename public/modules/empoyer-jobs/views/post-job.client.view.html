@@ -165,10 +165,7 @@
                                 <div class="col-sm-9">
                                     <span class="ui-select">
                                         <select ng-model="country">
-                                            <option>Pakistan</option>
-                                            <option>UAE</option>
-                                            <option>India</option>
-                                            <option>Germany</option>
+                                            <option data-ng-repeat="count in countries">{{count.name}}</option>
                                         </select>
                                     </span>
                                 </div>
