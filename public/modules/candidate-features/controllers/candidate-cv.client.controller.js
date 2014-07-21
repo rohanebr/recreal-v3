@@ -110,11 +110,9 @@ angular.module('candidate-features').controller('CandidateCvController', ['$scop
 	        var skill = result.skill;
 	        if (result.action === 'delete') {
 	        	angular.forEach($scope.candidate.skills, function(cSkill){
-		          	if(cSkill._id === skill._id )
+		          	if(cSkill._id === skill._id ){
 
-
-
-						$http.post('/candidates/deleteSkill', skill).success(function(response) {
+						$http.post('/candidates/deleteSkill', cSkill).success(function(response) {
 							//If successful we assign the response to the global user model
 							// $scope.authentication.user = response;
 
@@ -127,15 +125,9 @@ angular.module('candidate-features').controller('CandidateCvController', ['$scop
 							$scope.error = response.message;
 						});
 
-
-
-
-
-
-
-
-
 		          		$scope.candidate.skills.splice($scope.candidate.skills.indexOf(cSkill), 1);
+		          		
+		          	}
 		          });
 		    } else {
 		        skill.title = skill.title.trim();
