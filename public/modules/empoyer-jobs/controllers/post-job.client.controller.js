@@ -8,11 +8,16 @@ angular.module('empoyer-jobs').controller('PostJobController', ['$scope', 'Indus
 
 		$scope.industries = Industries.getIndustries();
 		$scope.countries = Countries.getCountries();
+		// $scope.studyFields = Studyfields.getStudyFields();
 		// $scope.texting = IndustriesFactory.sayHello('world');
 
 		$scope.skills = [];
 		$scope.skills.push({
 		        title: ''
+		      });
+		$scope.certificates = [];
+		$scope.certificates.push({
+		        name: ''
 		      });
 		// Create new Job
 		$scope.create = function() {
@@ -22,6 +27,8 @@ angular.module('empoyer-jobs').controller('PostJobController', ['$scope', 'Indus
 				description: this.description,
 				requirement: this.requirements,
 				due_date: this.due_date,
+				gender: this.gender,
+				work_permit: this.work_permit,
 				employee_type: this.employee_type,
 				salary_range: this.salary_range,
 				industry: this.industry,
@@ -31,10 +38,12 @@ angular.module('empoyer-jobs').controller('PostJobController', ['$scope', 'Indus
 				location: this.location,
 				country: this.country,
 				career_level: this.career_level,
+				experience: this.experience,
 				degree_title: this.degree_title,
-				study_feild: this.study_feild,
+				study_field: this.study_field,
 				travel_required: this.travel_required,
-				skills: this.skills
+				skills: this.skills,
+				certificates: this.certificates
 			});
 
 			// Redirect after save
@@ -58,6 +67,17 @@ angular.module('empoyer-jobs').controller('PostJobController', ['$scope', 'Indus
 
 	    $scope.removeSkill = function(index) {
 	      $scope.skills.splice(index, 1);
+	    };
+
+	    //Certificates
+	    $scope.addCertificate = function() {
+	      $scope.certificates.push({
+	        name: ''
+	      });
+	    };
+
+	    $scope.removeCertificate = function(index) {
+	      $scope.certificates.splice(index, 1);
 	    };
 	}
 ]);
