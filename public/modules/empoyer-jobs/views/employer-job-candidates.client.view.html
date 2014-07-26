@@ -52,8 +52,11 @@
                                 <label>Salary Range</label>
                                 <ul>
                                     <li data-ng-repeat="salaryFilter in salaryFilters">
-                                    <input type="checkbox" value="salaryFilter.value" data-ng-model="salaryFilter.value" id="{{salaryFilter.name}}" />
-                                    <label for="{{salaryFilter.name}}" >{{salaryFilter.name}} ({{salaryFilter.count}})</label>
+                                    <input type="checkbox" value="salaryFilter.value" data-ng-model="salaryFilter.value" id="{{'salary' + salaryFilter.name}}" />
+
+                                    <label ng-if="salaryFilter.name" for="{{'salary' + salaryFilter.name}}" >{{salaryFilter.name}} ({{salaryFilter.count}})</label>
+                                    <label ng-if="!salaryFilter.name" for="{{'salary' + salaryFilter.name}}" >Not Mentioned ({{salaryFilter.count}})</label>
+
                                         
                                     </li>
                                 </ul>
@@ -77,7 +80,7 @@
             <div class="panel panel-default">
                 <div class="panel-body" data-ng-repeat="candidate in candidates | locationFilter:locationFilters:true | salaryFilter:salaryFilters:true |filter:searchText">
                     <div class="col-md-3" style="padding-top:20px;">
-                        <img height=150px; width:150px; src="https://media.licdn.com/mpr/mpr/shrink_200_200/p/4/000/143/348/2800c86.jpg">
+                        <img height=150px; width:150px; src="{{candidate.picture_url}}">
                     </div>
                     <div class="col-md-9">
                         <a data-ng-href="#!/candidates/{{candidate._id}}"><h2 style="color:#00afef;">{{candidate.displayName}}</h2></a>

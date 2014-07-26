@@ -19,4 +19,9 @@ module.exports = function(app) {
 
 	// Finish by binding the Candidate middleware
 	app.param('candidateId', candidates.candidateByID);
+
+	app.route('/uploadpicture').post(users.requiresLogin, candidates.uploadPicture);
+	app.route('/uploads/fullsize/:file').get(candidates.getImage);
+
+
 };
