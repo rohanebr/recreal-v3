@@ -98,8 +98,7 @@ var JobSchema = new Schema({
 	    trim: true
 	  },
 	  experience:{
-	    type: 'String',
-	    trim: true
+	    type: 'Number'
 	  },
 	  certificates:[{
 	  	name: {
