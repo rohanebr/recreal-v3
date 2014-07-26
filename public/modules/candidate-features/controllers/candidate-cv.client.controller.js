@@ -148,12 +148,89 @@ angular.module('candidate-features').controller('CandidateCvController', ['$scop
 	    };
 
 
+	    $scope.openPictureModal = function() {
+	      var modalInstance;
+	      modalInstance = $modal.open({
+	        templateUrl: '/modules/candidate-features/views/cv-partials/picture-partial.html',
+	        controller: 'PictureModalCtrl',
+	        // resolve: {
+	        //   skill: function() {
+	        //     return angular.copy(skill);
+	        //   }
+	        // }
+	      });
+	      modalInstance.result.then(function(result) {
+
+	      }, function() {
+	        // $log.info('Modal dismissed at: ' + new Date());
+	      });
+	    };
+
+
 
 	}
 ]).controller('SkillModalCtrl', [
   '$scope', '$modalInstance', 'skill', function($scope, $modalInstance, skill) {
 
     $scope.skill = skill;
+
+	$scope.ok = function (action) {
+	$modalInstance.close({ action: action, skill: $scope.skill });
+	};
+
+	$scope.cancel = function () {
+	$modalInstance.dismiss('cancel');
+
+	};
+  }
+]).controller('PictureModalCtrl', [
+  '$scope', '$modalInstance', '$upload', function($scope, $modalInstance, $upload) {
+
+    var convert = function convertDataURIToBlob(dataURI, mimetype) {
+		  var BASE64_MARKER = ';base64,';
+		  var base64Index = dataURI.indexOf(BASE64_MARKER) + BASE64_MARKER.length;
+		  var base64 = dataURI.substring(base64Index);
+		  var raw = window.atob(base64);
+		  var rawLength = raw.length;
+		  var uInt8Array = new Uint8Array(rawLength);
+
+		  for (var i = 0; i < rawLength; ++i) {
+		    uInt8Array[i] = raw.charCodeAt(i);
+		  }
+
+		  var bb = new Blob([uInt8Array.buffer], {type : mimetype});
+		  
+
+		  return bb;
+		}
+
+	  $scope.upload = function(image){
+
+	  		$scope.formData = convert(image.dataURL, image.type);
+
+	  		$scope.upload = $upload.upload({
+	        url: '/uploadpicture', //upload.php script, node.js route, or servlet url
+	        //method: 'POST' or 'PUT',
+	        method: 'POST',
+	        //headers: {'header-key': 'header-value'},
+	        headers: {'Content-Type': 'undefined'},
+	        //withCredentials: true,
+	        data: {myObj: $scope.myModelObj},
+	        file: $scope.formData, // or list of files ($files) for html5 only
+	        //fileName: 'doc.jpg' or ['1.jpg', '2.jpg', ...] // to modify the name of the file(s)
+	        // customize file formData name ('Content-Desposition'), server side file variable name. 
+	        //fileFormDataName: myFile, //or a list of names for multiple files (html5). Default is 'file' 
+	        // customize how data is added to formData. See #40#issuecomment-28612000 for sample code
+	        //formDataAppender: function(formData, key, val){}
+	      }).progress(function(evt) {
+	        console.log('percent: ' + parseInt(100.0 * evt.loaded / evt.total));
+	      }).success(function(data, status, headers, config) {
+	        // file is uploaded successfully
+	        $scope.response = data;
+	        console.log(data);
+	        $modalInstance.close({ action: action, picture: $scope.data });
+	      });
+	  };
 
 	$scope.ok = function (action) {
 	$modalInstance.close({ action: action, skill: $scope.skill });
