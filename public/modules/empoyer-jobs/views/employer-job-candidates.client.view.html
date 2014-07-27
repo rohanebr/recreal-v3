@@ -80,7 +80,7 @@
             <div class="panel panel-default">
                 <div class="panel-body" data-ng-repeat="candidate in candidates | locationFilter:locationFilters:true | salaryFilter:salaryFilters:true |filter:searchText">
                     <div class="col-md-3" style="padding-top:20px;">
-                        <img height=150px; width:150px; src="{{candidate.picture_url}}">
+                        <img width="150" src="{{candidate.picture_url}}">
                     </div>
                     <div class="col-md-9">
                         <a data-ng-href="#!/candidates/{{candidate._id}}"><h2 style="color:#00afef;">{{candidate.displayName}}</h2></a>
