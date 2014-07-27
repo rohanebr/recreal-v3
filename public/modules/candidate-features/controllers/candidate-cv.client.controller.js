@@ -160,9 +160,9 @@ angular.module('candidate-features').controller('CandidateCvController', ['$scop
 	        // }
 	      });
 	      modalInstance.result.then(function(result) {
-
+	         $scope.candidate.picture_url = result.picture_url;
 	      }, function() {
-	        // $log.info('Modal dismissed at: ' + new Date());
+
 	      });
 	    };
 
@@ -228,7 +228,7 @@ angular.module('candidate-features').controller('CandidateCvController', ['$scop
 	        // file is uploaded successfully
 	        $scope.response = data;
 	        console.log(data);
-	        $modalInstance.close({ action: action, picture: $scope.data });
+	        $modalInstance.close({picture_url: data});
 	      });
 	  };
 
