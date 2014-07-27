@@ -1,22 +1,21 @@
-<h2>Single image with resizing</h2>
-<div>
-    <label for="inputImage2">Image 2</label>
-    
-    <input id="inputImage2" 
-        type="file" 
-        accept="image/*" 
-        image="image2" 
-        resize-max-height="300"
-        resize-max-width="250"
-        resize-quality="0.7" />
-    
-    <!-- <p>Original</p> -->
-    <!-- <img ng-show="image2" ng-src="{{image2.url}}" type="{{image2.file.type}}"/> -->
-    <p>Resized</p>
-    <img ng-show="image2" ng-src="{{image2.resized.dataURL}}"/>
-    <br>
-    <button ng-click="upload(image2.resized)">Add</button>
-    <p>From Server</p>
-    <img width="100" src="{{response}}"> 
+<div style="padding: 10px;">
+    <h2>Make sure you look good.</h2>
+    <div>
+        
+        <input id="inputImage2" 
+            class="btn btn-primary"
+            type="file" 
+            accept="image/*" 
+            image="image2" 
+            resize-max-height="300"
+            resize-max-width="250"
+            resize-quality="0.9" />
+        <img width="250" height="250" ng-src="{{image2.resized.dataURL}}"/>
+        <br>
+    </div>
+    <button class="btn btn-primary" ng-click="upload(image2.resized)">Upload</button>
+    <button class="btn btn-success" ng-click="cancel()">Cancel</button>
+
+    <hr />
 </div>
-<hr />
+    
