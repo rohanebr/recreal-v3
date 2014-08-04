@@ -28,16 +28,18 @@
                             >
                             <br>
                             <label for="">Description <span class="required-css">*</span></label>
-                            <textarea class="form-control"
-                                      rows="10"
+                            <div style="border: 1px solid #eee; background-color: #eee">
+                                <text-angular 
                                       required
-                                      data-ng-model="description"></textarea>
+                                      data-ng-model="description"></text-angular>
+                            </div>
                             <br>
                             <label for="">Requirements <span class="required-css">*</span></label>
-                            <textarea class="form-control"
-                                      rows="10"
+                            <div style="border: 1px solid #eee; background-color: #eee">    
+                                <text-angular 
                                       required
-                                      data-ng-model="requirements"></textarea>
+                                      data-ng-model="requirements"></text-angular>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -56,7 +58,7 @@
                                     <td>
                                         <span class="ui-select">
                                             <select data-ng-model="skill.level"  style="width: 150px;">
-                                                    <option>Beginner</option>
+                                                    <option selected="selected">Beginner</option>
                                                     <option>Intermidiate</option>
                                                     <option>Expert</option>
                                             </select>
@@ -115,7 +117,7 @@
                                     <div class="col-sm-9">
                                         <span class="ui-select">
                                             <select data-ng-model="department">
-                                                <option>Administration</option>
+                                                <option selected="selected">Administration</option>
                                                 <option>Accounts</option>
                                                 <option>Budget</option>
                                                 <option>Distribution</option>
@@ -143,10 +145,11 @@
                                     <div class="col-sm-9">
                                         <span class="ui-select">
                                             <select data-ng-model="gender">
-                                                <option>No prference</option>
-                                                <option>Male</option>
-                                                <option>Female</option>                                          
+                                                <option value="No preference" selected>No prference</option>
+                                                <option value="Male">Male</option>
+                                                <option value="Female">Female</option>                                          
                                             </select>
+                                            
                                         </span>
                                     </div>
                                 </div>
@@ -365,7 +368,7 @@
                                          style="width:200px;"
                                         data-ng-model="certificate.name"
                                         ><a ng-click="removeCertificate($index)"><i class="fa fa-times pull-right"></i></a>
-                                        </span><button class= "btn btn-default btn-xs" data-ng-click="addCertificate()">Add more</button>
+                                        </span><a class= "btn btn-default btn-xs" data-ng-click="addCertificate()">Add more</a>
                                     </div>
                             </div>
                         </div>

@@ -17,7 +17,9 @@
                 	<a href="/#!/employer-job-candidates/{{job._id}}" ><h2 style="color:#00afef;" class="media-heading">{{job.title}}</h2></a>
                 	<span class="pull-right"> Close Date: {{job.due_date | date}}</span>
                 	<p><h4>{{job.location}} , {{job.country}}</h4></p>
-                	<p><span><strong style="color:gray">Description:</strong> <span style="color:gray">{{job.description | truncate:270}}</span> </span></p> 
+                	<p><span><strong style="color:gray">Description:</strong>
+                        <div style="color:gray" ng-bind-html="job.requirement | truncate:270"></div>
+                     </span></p> 
                         <p class="pull-right"><a data-ng-href="#!/jobs/{{job._id}}" class="btn btn-small btn-success">View Job</a> <a href="/#!/employer-job-candidates/{{job._id}}" class="btn btn-small btn-success">View Candidates ({{job.candidates.length}})</a></p>
                 </div>
         </section> 
