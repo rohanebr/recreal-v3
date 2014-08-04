@@ -199,6 +199,7 @@ exports.uploadPicture = function(req, res) {
          // res.redirect("/uploads/fullsize/" + imageName);
 
          var candidate = Candidate.find({user: req.user._id}).exec(function(err, candidates){
+         	var old_url = candidates[0].picture_url;
 			candidates[0].picture_url = "/uploads/fullsize/" + imageName;
 			candidates[0].save(function(err) {
 				if (err) {
@@ -206,6 +207,14 @@ exports.uploadPicture = function(req, res) {
 						message: getErrorMessage(err)
 					});
 				} else {
+					
+					//delete old picture
+					if (old_url != '/uploads/fullsize/no-image.jpg') {
+						fs.unlink(__dirname + '../../..' + old_url, function (err) {
+					  		if (err) console.log(err);
+						  	console.log('successfully deleted /tmp/hello');
+						});
+					};
 					res.send("/uploads/fullsize/" + imageName)
 				}
 			});
