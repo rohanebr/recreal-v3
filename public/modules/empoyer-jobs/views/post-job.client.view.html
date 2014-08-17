@@ -1,16 +1,14 @@
 <section data-ng-controller="PostJobController">
-    <article>
-        <header class="text-center col-md-6">
-                <span class="header-page">Post Job</span>
-        </header>
-    </article>
+    <header class="text-center col-md-6">
+            <span class="header-page">Post Job</span>
+    </header>
     <form ng-submit="create()">
-        <section class="row">
-    		<div data-ng-show="error" class="text-danger">
+        <article class="row">
+    		<section data-ng-show="error" class="text-danger">
     			<strong data-ng-bind="error"></strong>
-    		</div>
+    		</section>
 
-            <article class="col-md-6" >
+            <section class="col-md-6" >
                 <div class="panel panel-default">
                     <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Job Description</strong></div>
                     <div class="panel-body">
@@ -75,9 +73,9 @@
                         </div>
                     </div>
                 </div>
-            </article>
+            </section>
 
-            <article class="col-md-6">
+            <section class="col-md-6">
                 <div class="panel panel-default">
                     <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Basic Info</strong></div>
                     <div class="panel-body">
@@ -369,16 +367,16 @@
                         </div>
                     </div>
                 </div>
-            </article>
-        </section>
-        <div class="row text-center">
+            </section>
+        </article>
+        <section class="row text-center">
                 <button type="submit"
                     class="btn btn-success btn-lg"
                     >Post Job</button>
                 <button
                     class="btn btn-primary btn-lg"
                     >Save Job</button>
-        </div>
+        </section>
     </form>
 </section>
 <style>

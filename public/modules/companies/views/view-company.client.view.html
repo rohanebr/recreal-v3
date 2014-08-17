@@ -1,22 +1,20 @@
 <section data-ng-controller="CompaniesController" data-ng-init="findOne()">
-    <article>
-        <header class="text-center col-md-12">
-                <span class="header-page">Company Profile</span>
-        </header>
-    </article>
+    <header class="text-center col-md-12">
+            <span class="header-page">Company Profile</span>
+    </header>
 
-	<section class="col-md-8">
-        <article class="panel-body">
-            <section class="col-md-3" style=" text-align:center; vertical-align:middle; padding-top:25px">
+	<article class="col-md-8">
+        <section class="panel-body">
+            <div class="col-md-3" style=" text-align:center; vertical-align:middle; padding-top:25px">
                 <img alt="" max-width:150px; max-height:150px; src="https://media.licdn.com/media/p/8/000/2a8/0b9/35aede1.png">
-            </section>    
-            <section class="col-md-9">
+            </div>    
+            <div class="col-md-9">
                 <h2>{{company.company_name}}</h2>
                 <h4>Industry: {{company.industry}}</h4>
                 <h6>Founded In: {{company.founded|date}}</h6>
-            </section>
-        </article>
-        <article class="panel-body">
+            </div>
+        </section>
+        <section class="panel-body">
             <form name="form_companyProfile" class="form-horizontal">
                 <fieldset>
                     <div class="form-group">
@@ -77,15 +75,15 @@
                     </div>
                 </fieldset>
             </form>
-        </article>
-	</section>
+        </section>
+	</article>
 
     <aside class="col-md-4">
         <header> <h2>Title</h2></header>
-        <article class="caption">
+        <section class="caption">
             <h3>Thumbnail label</h3>
             <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-        </article>
+        </section>
     </aside>
 
 	<div class="pull-right" data-ng-show="authentication.user._id == company.user._id">

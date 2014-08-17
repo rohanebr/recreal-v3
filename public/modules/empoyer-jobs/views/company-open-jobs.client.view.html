@@ -1,12 +1,10 @@
 <section data-ng-controller="CompanyOpenJobsController" class="page-signup">
-    <article>
-        <header class="text-center col-md-6">
-                <span class="header-page">Open Jobs</span>
-        </header>
-    </article>
+    <header class="text-center col-md-6">
+            <span class="header-page">Open Jobs</span>
+    </header>
 
-    <section class="col-md-8">
-    	<article class="panel-body" ng-repeat="job in jobs">
+    <article class="col-md-8">
+    	<section class="panel-body" ng-repeat="job in jobs">
         	<a href="/#!/employer-job-candidates/{{job._id}}" ><h2  class="media-heading">{{job.title}}</h2></a>
         	<span class="pull-right"> Close Date: {{job.due_date | date}}</span>
         	<p><h4>{{job.location}} , {{job.country}}</h4></p>
@@ -14,8 +12,8 @@
                 <div ng-bind-html="job.requirement | truncate:270"></div>
              </span></p> 
                 <p class="pull-right"><a data-ng-href="#!/jobs/{{job._id}}" class="btn btn-small btn-success">View Job</a> <a href="/#!/employer-job-candidates/{{job._id}}" class="btn btn-small btn-success">View Candidates ({{job.candidates.length}})</a></p>
-    	</article>
-    </section>
+    	</section>
+    </article>
 
 </section>
 
