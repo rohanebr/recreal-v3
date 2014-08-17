@@ -59,14 +59,14 @@
 
             
 
-    	<section class="col-md-9">
+    	<article class="col-md-9">
             <section class="panel-body" data-ng-repeat="candidate in candidates | locationFilter:locationFilters:true | salaryFilter:salaryFilters:true |filter:searchText">
-                <article class="col-md-3" style="padding-top:20px;">
+                <section class="col-md-3" style="padding-top:20px;">
                     <a data-ng-href="#!/candidates/{{candidate._id}}">
                         <img width="150" src="{{candidate.picture_url}}">
                     </a>
-                </article>
-                <article class="col-md-9">
+                </section>
+                <section class="col-md-9">
                     <a data-ng-href="#!/candidates/{{candidate._id}}"><h2 style="color:#00afef;">{{candidate.displayName}}</h2></a>
                     <h4>{{candidate.title}}</h4>
                     <p style="color:rgb(83, 82, 82)">{{candidate.objective}}</p>
@@ -76,9 +76,9 @@
                         
                     <h6 style="padding-top:15px">Rating : 5  &nbsp;&nbsp;|&nbsp;&nbsp;  Location : {{candidate.location}}  &nbsp;&nbsp;|&nbsp;&nbsp;  Salary Range : {{candidate.salary_expectation}}  &nbsp;&nbsp;|&nbsp;&nbsp;  1 Test</h6>
                     <hr>
-                </article>
+                </section>
             </section>
-        </section>
+        </article>
 
 </section>
 <!-- style="margin: 5px; padding:5px;background-color:#DBDBDB" -->

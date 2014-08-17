@@ -1,28 +1,7 @@
 <section data-ng-controller="CandidatesController" data-ng-init="findOne()">
-	<!-- <div class="page-header">
-		<h1 data-ng-bind="candidate.name"></h1>
-	</div>
-	<div class="pull-right" data-ng-show="authentication.user._id == candidate.user._id">
-		<a class="btn btn-primary" href="/#!/candidates/{{candidate._id}}/edit">
-			<i class="glyphicon glyphicon-edit"></i>
-		</a>
-		<a class="btn btn-primary" data-ng-click="remove();">
-			<i class="glyphicon glyphicon-trash"></i>
-		</a>
-	</div>
-	<small>
-		<em class="text-muted">
-			Posted on
-			<span data-ng-bind="candidate.created | date:'mediumDate'"></span>
-			by
-			<span data-ng-bind="candidate.user.displayName"></span>
-		</em>
-	</small> -->
-	<div class="page page-profile">
-    <div class="row">
-        <div class="col-md-7">
-
-            <div class="panel panel-profile">
+	<article class="page page-profile">
+        <section class="col-md-7">
+            <section class="panel panel-profile">
                 <div class="panel-heading text-center bg-info">
                     <img alt="" src="{{candidate.picture_url}}" class="img-circle img80_80">
                     <h3>{{candidate.displayName}}</h3>
@@ -45,7 +24,7 @@
                         </li>
                     </ul>
                 </div>
-            </div>
+            </section>
 
             <section class="panel panel-default">
                 <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Career Objective</strong></div>
@@ -133,16 +112,9 @@
                     </ul>                   
                 </div>
             </section> 
+        </section>
 
-        </div>
-
-
-
-        <div class="col-md-5">
-            
-            
-
-
+        <section class="col-md-5">
             <div class="panel panel-default">
                 <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Profile Info</strong></div>
                 <div class="panel-body">
@@ -233,11 +205,8 @@
                     </div>
                 </div>
             </div>
-
-
-        </div>
-    </div>
-</div>
+        </section>
+    </article>
 </section>
 
 <style type="text/css">
