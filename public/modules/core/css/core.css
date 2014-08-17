@@ -9,8 +9,15 @@
 }
 
 
+body {
+  margin: 82px;
+}
+
 
 /*	css from main.css of the admin-iflat-theme -- converted from less to css in one big file	*/
+
+
+
 
 /*
 .btn-primary {
