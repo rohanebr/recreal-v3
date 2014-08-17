@@ -6,48 +6,32 @@
     </article>
     <section class="row">
         <section class="col-md-8">
-            <div class="panel panel-default">
-                <!-- <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Applied Jobs</strong></div> -->
-                <div class="panel-body" ng-repeat="job in jobs" data-ng-show="hasApplied(job)">
-                    <div class="media">
-                        <a class="pull-left" href="#">
-                            <img alt="" src="http://cns.com.pk/wp-content/uploads/2012/06/CNS-Logo.bmp" class="img-rounded img64_64">
-                        </a>
-                        <div class="media-body">
-                            <a data-ng-href="#!/jobs/{{job._id}}"><h3 style="color:#00afef;" class="media-heading">{{job.title}}</h3></a>
-                            <h5 >at <a style=" margin-bottom:15px;" data-ng-href="#!/companies/{{job.company._id}}">{{job.company.company_name}}</a></h5>                   
-                            <p style="color:gray">{{job.description | truncate:270}}</p>
-                            <div style="line-height: 2">
-                                <span  class="skill-div" data-ng-repeat="skill in job.skills">{{skill.title}}</span>
-                            </div>
-                        </div>
-                        <div>    
-                            <label>{{job.dueDate | date}}</label>
-                            <!-- <strong><a class="btn btn-sm btn-success" ng-click="apply(job)">Apply Now</a></strong> -->
+            <article class="panel-body" ng-repeat="job in jobs" data-ng-show="hasApplied(job)">
+                <div class="media">
+                    <a class="pull-left" href="#">
+                        <img alt="" src="http://cns.com.pk/wp-content/uploads/2012/06/CNS-Logo.bmp" class="img-rounded img64_64">
+                    </a>
+                    <div class="media-body">
+                        <a data-ng-href="#!/jobs/{{job._id}}"><h3 class="media-heading">{{job.title}}</h3></a>
+                        <h5 >at <a data-ng-href="#!/companies/{{job.company._id}}">{{job.company.company_name}}</a></h5>                   
+                        <p>{{job.description | truncate:270}}</p>
+                        <div>
+                            <span  class="skill-div" data-ng-repeat="skill in job.skills">{{skill.title}}</span>
                         </div>
                     </div>
-                    <hr>
+                    <div>    
+                        <label>{{job.dueDate | date}}</label>
+                        <!-- <strong><a class="btn btn-sm btn-success" ng-click="apply(job)">Apply Now</a></strong> -->
+                    </div>
                 </div>
-            </div>
+            </article>
         </section>
         <aside class="col-md-4">
-                <div class="panel panel-default">
-                    <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Thumbnails</strong></div>
-                    <div class="panel-body">
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <div class="thumbnail">
-                                    <img alt="" src="/modules/core/img/600_400-2.jpg">
-                                    <div class="caption">
-                                        <h3>Thumbnail label</h3>
-                                        <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-                                        <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
-                                    </div>
-                                </div>    
-                            </div>
-                        </div>            
-                    </div>
-                </div>
+            <header> <h2>Title</h2></header>
+            <article class="caption">
+                <h3>Thumbnail label</h3>
+                <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+            </article>
         </aside>
     </section>
 </section>
@@ -78,5 +62,12 @@ margin: 4px;
 font-size: 11px;
 line-height: 0;
 
+}
+.header-page
+{
+    color: #464545; 
+    text-shadow: 1px 1px -2px #D5D5D5; 
+    font-size:30px; 
+    padding-top:10px;
 }
 </style>

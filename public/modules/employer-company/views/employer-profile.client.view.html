@@ -3,20 +3,13 @@
 </section> -->
 
 <section data-ng-controller="EmployerProfileController" data-ng-init="findOne()">
-    <div class="signin-header container row " style="background-color: #333; padding: 8px 0; margin-top: -10px; margin-bottom: 10px;">
-        <div class="col-md-3">
-                <span  ><i class="fa fa-user super-awesome"></i></span>
-        </div>
-        <div class="text-center col-md-6">
-            <section class="logo" style="padding-top: 10px;">
-                <span style="color: #fff; text-shadow: 1px 1px -2px #D5D5D5; font-size:30px; padding-top:10px">Edit Your Profile</span>
-            </section>
-        </div>
-    </div>
-    <div class="col-md-6" >
-        <div class="panel panel-default">
-            <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Employer Profile</strong></div>
-            <div class="panel-body">
+    <article>
+        <header class="text-center col-md-12">
+                <span class="header-page">Employer Profile</span>
+        </header>
+    </article>
+    <section class="col-md-6" >
+        <article class="panel panel-default">
                 <form name="form_employeer_profile" data-ng-submit="update()" class="form-horizontal" >
                     <fieldset>
                          <div class="form-group">
@@ -150,10 +143,8 @@
                         </div>
                     </fieldset>
                 </form>
-                         
-            </div>
-        </div>
-    </div>
+        </article>
+    </section>
  </section>  
 
  <style>

@@ -1,21 +1,16 @@
 <section data-ng-controller="PostJobController">
-	<div class="signin-header container row " style="background-color: #333; padding: 8px 0; margin-top: -10px; margin-bottom: 10px;">
-        <div class="col-md-3">
-                <span  ><i class="fa fa-briefcase super-awesome"></i></span>
-        </div>
-        <div class="text-center col-md-6">
-            <section class="logo" style="padding-top: 10px;">
-                <span style="color: #fff; text-shadow: 1px 1px -2px #D5D5D5; font-size:30px; padding-top:10px">Post Job</span>
-            </section>
-        </div>
-    </div>
+    <article>
+        <header class="text-center col-md-6">
+                <span class="header-page">Post Job</span>
+        </header>
+    </article>
     <form ng-submit="create()">
-        <div class="row">
+        <section class="row">
     		<div data-ng-show="error" class="text-danger">
     			<strong data-ng-bind="error"></strong>
     		</div>
 
-            <div class="col-md-6" >
+            <article class="col-md-6" >
                 <div class="panel panel-default">
                     <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Job Description</strong></div>
                     <div class="panel-body">
@@ -80,9 +75,9 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </article>
 
-            <div class="col-md-6">
+            <article class="col-md-6">
                 <div class="panel panel-default">
                     <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Basic Info</strong></div>
                     <div class="panel-body">
@@ -374,8 +369,8 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
+            </article>
+        </section>
         <div class="row text-center">
                 <button type="submit"
                     class="btn btn-success btn-lg"
