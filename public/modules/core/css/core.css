@@ -13,7 +13,6 @@ body {
   margin-top: 0px;
 }
 
-
 img.img30_30 {
   width: 30px;
   height: 30px;
@@ -35,6 +34,14 @@ img.img100_100 {
 }
 
 
+img.img150_150 {
+  width: 150px;
+  position: absolute;
+    top: 0; bottom:0; left: 0; right:0;
+    margin: auto;
+}
+
+
 /*-------------------------*/
 /* SHOWCASE */
 /*-------------------------*/
@@ -44,7 +51,7 @@ img.img100_100 {
 
 /*.showcase-content {padding-top: 100px;}*/
 
-.showcase-content h1 {font-size: 65px; letter-spacing: -5px; color: #727171; font-weight: 700;}
+.showcase-content h1 {font-size: 40px; letter-spacing: -3px; color: #727171; font-weight: 700;}
 
 .showcase-content h1 span {font-size: 30px; font-weight: 300; letter-spacing: -2px; padding-left: 10px;}
 

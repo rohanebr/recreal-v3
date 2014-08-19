@@ -33,7 +33,7 @@
 /*----------------------------------------------------------*/
 /* GENERAL */
 /*----------------------------------------------------------*/
-.wrapper {width: 100%; height: auto; overflow-x: hidden; margin-top: -100}
+.wrapper {width: 100%; height: auto; overflow-x: hidden;}
 
 .button {font-family: 'Ubuntu', sans-serif; font-weight: 700; text-transform: uppercase; -webkit-transition: all 0.5s; -moz-transition: all 0.5s; -ms-transition: all 0.5s; -o-transition: all 0.5s; transition: all 0.5s; -webkit-border-radius: 3px; border-radius: 3px; font-size:12px; padding: 12px 30px; text-decoration:none; display:inline-block; text-shadow: none; color: #FFFFFF; margin-right: 5px;}
 
