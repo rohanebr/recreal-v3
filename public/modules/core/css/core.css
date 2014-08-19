@@ -1,5 +1,5 @@
 .content {
-	margin-top: 50px;
+	margin-top: 0px;
 }
 .undecorated-link:hover {
 	text-decoration: none;
@@ -9,8 +9,76 @@
 }
 
 
+body {
+  margin-top: 0px;
+}
+
+img.img30_30 {
+  width: 30px;
+  height: 30px;
+}
+img.img64_64 {
+  width: 64px;
+  height: 64px;
+}
+img.img80_80 {
+  width: 80px;
+  height: 80px;
+}
+
+img.img100_100 {
+  width: 100px;
+  position: absolute;
+    top: 0; bottom:0; left: 0; right:0;
+    margin: auto;
+}
+
+
+img.img150_150 {
+  width: 150px;
+  position: absolute;
+    top: 0; bottom:0; left: 0; right:0;
+    margin: auto;
+}
+
+
+/*-------------------------*/
+/* SHOWCASE */
+/*-------------------------*/
+.showcase {width: 100%; height: auto; border-bottom: 1px solid #E1E1E1; overflow: hidden;}
+
+.showcase.dark {background: url('../img/tile.jpg') repeat #f0f0f0;}
+
+/*.showcase-content {padding-top: 100px;}*/
+
+.showcase-content h1 {font-size: 40px; letter-spacing: -3px; color: #727171; font-weight: 700;}
+
+.showcase-content h1 span {font-size: 30px; font-weight: 300; letter-spacing: -2px; padding-left: 10px;}
+
+.showcase-model {padding: 80px 0 0;}
+
+.showcase.dark .showcase-model img {float: right;}
+
+.showcase .showcase-model img {float: left; opacity: 0;}
+
+.title-bullet {width: 100%; height: 0px; border-top: 1px solid #ddd; display: block; margin: 30px 0;}
+
+.title-bullet span {width: 70px; height: 6px; display: table; margin-top: -3px;}
+
+.os-icons i {color: #E7E4E4; font-size: 48px; padding-right: 20px; margin-top: 15px;}
+
+.os-icons i:hover {color: #CCC; -webkit-transition: all 0.5s; -moz-transition: all 0.5s; -ms-transition: all 0.5s; -o-transition: all 0.5s; transition: all 0.5s;}
+
+
+/*.site-wrapper{
+  margin-top: -100px;
+}*/
+
 
 /*	css from main.css of the admin-iflat-theme -- converted from less to css in one big file	*/
+
+
+
 
 /*
 .btn-primary {
