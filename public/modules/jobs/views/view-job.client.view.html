@@ -2,7 +2,7 @@
 <section data-ng-controller="JobsController" data-ng-init="findOne()">
 	<article class="col-md-8">
 		<header>
-			<section class="row">
+			<section>
 	                <div class="col-md-3">
 	                    <img alt="" max-width:150px; max-height:150px; src="https://media.licdn.com/media/p/8/000/2a8/0b9/35aede1.png">
 	                </div>    
@@ -13,8 +13,58 @@
 	                	 <strong><a class="btn btn-sm btn-success pull-right" ng-hide=" authentication.user.userType==='employer' || isApplied" ng-click="apply(job)">Apply Now</a></strong>
 					</div>
 		    </section>
-		    <section>
-		    	<table>
+		    <section class="col-md-12">
+		    	<section class="col-md-3">
+		    		Industry:
+		    	</section>
+		    	<section class="col-md-3">
+		    		{{job.industry}}
+		    	</section>
+		    	<section class="col-md-3">
+		    		Location:
+		    	</section>
+		    	<section class="col-md-3">
+		    		{{job.location}}
+		    	</section>
+		    	<section class="col-md-3">
+		    		Career Level:
+		    	</section>
+		    	<section class="col-md-3">
+		    		{{job.career_level}}
+		    	</section>
+		    	<section class="col-md-3">
+		    		Country:
+		    	</section>
+		    	<section class="col-md-3">
+		    		{{job.country}}
+		    	</section>
+
+		    	<section class="col-md-3">
+		    		Shift:
+		    	</section>
+		    	<section class="col-md-3">
+		    		{{job.shift}}
+		    	</section>
+		    	<section class="col-md-3">
+		    		Degree
+		    	</section>
+		    	<section class="col-md-3">
+		    		{{job.degree_title}}
+		    	</section>
+
+		    	<section class="col-md-3">
+		    		Employement Type:
+		    	</section>
+		    	<section class="col-md-3">
+		    		{{job.employee_type}}
+		    	</section>
+		    	<section class="col-md-3">
+		    		Study Feild:
+		    	</section>
+		    	<section class="col-md-3">
+		    		{{job.study_field}}
+		    	</section>
+<!-- 		    	<table>
 		    	<tr>
 		    		<td>
 		    			<strong>Industry:</strong> 
@@ -71,9 +121,10 @@
 		    			{{job.study_field}}
 		    		</td>
 		    	</tr>
-		    	</table>
+		    	</table> -->
 		    </section>
 		</header>
+		<hr>
 		<section>
 			<h3>Description:</h3>
 			<div ng-bind-html="job.description"></div>
