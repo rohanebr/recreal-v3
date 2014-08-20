@@ -5,55 +5,48 @@
 
             <div>
                 <a class="pull-right" ng-show="isEditing" ng-click="openPictureModal()" href=""><i class="fa fa-edit"></i></a>
-                <section class="row">
-                    <div class="col-md-3" style="height: 150px">
+                <section class="row" style="height: 220px">
+                    <div class="col-md-3" style="height: 170px">
                         <img alt="" class="img150_150" src="{{candidate.picture_url}}">
                     </div>   
-                    <div class="col-md-8">
+                    <div class="col-md-9">
                         <h2>{{user.displayName}}</h2>
                         <h5>{{candidate.title}}</h5>
                         <h6>{{candidate.location}}</h6>
                         <div class="row">
                             <div class="col-md-4">
-                                <label>{{candidate.xp}}150</label>
-                                <p>Experience</p>
+                                <h6>Experience: {{candidate.xp}}150</h6>
+                                <!-- <p></p> -->
                             </div>
-                            <div class="col-md-4">
-                                <label>{{candidate.rating}}5</label>
-                                <p>Rating</p>
+                            <div class="col-md-3">
+                                <h6>Rating: {{candidate.rating}}5</h6>
+                                <!-- <p></p> -->
                             </div>
-                            <div class="col-md-4">
-                                <label>15</label>
-                                <p>Recommendations</p>
+                            <div class="col-md-5">
+                                <h6>Recommendations: 15</h6>
+                                <!-- <p></p> -->
                             </div>
                         </div>
                     </div>
                 </section>
             </div>
 
+            <section>
+                <div><p>{{candidate.objective}}</p></div>
+            </section><hr>
 
-
-
-            <section class="panel panel-default">
-                <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Objective</strong></div>
-                <div class="panel-body">
-                    <p>{{candidate.objective}}</p>
-                </div>
-            </section>
-
-            <section class="panel panel-default">
-                <a href="" class="pull-right" ng-show="isEditing" ng-click="openSkillModal(newSkill)"><i style="margin: 20px;" class="fa fa-plus"></i></a>
-                <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Skills</strong></div>
-                <div class="panel-body">
-                    <ul>
+            <section>
+               <header class="h3">Skills</header>
+               <div>
+                   <ul>
                         <li ng-repeat="skill in candidate.skills">
                             <a class="pull-right" ng-show="isEditing" ng-click="openSkillModal(skill)" href=""><i class="fa fa-edit"></i></a>
                             {{skill.title}} - <strong>{{skill.level}}</strong>
                             <sm> with {{skill.experience}} year(s) of experience</sm>
                         </li>
                     </ul>
-                </div>
-            </section> 
+               </div>
+            </section> <hr>
 
 <!--             <section class="panel panel-default">
                 <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Skills</strong></div>
@@ -67,51 +60,50 @@
                 </div>
             </section>  -->
 
-            <section class="panel panel-default">
-                <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Experience</strong></div>
-                <div class="panel-body">
+            <section>
+                <header class="h3">Experience</header>
+                <div>
                     <ul>
                         <li ng-repeat="pos in candidate.positions">
                             <h4><strong>{{pos.title}}</strong></h4>
-                            <h5 style="margin-top: -3px;">{{pos.company_name}}</h5>
-                            <h5 style="margin-top: -3px; color: #ababab">{{pos.start_date | date}} to {{pos.end_date | date}}</h5>
+                            <h5>at {{pos.company_name}}</h5>
+                            <h6>{{pos.start_date | date}} to {{pos.end_date | date}}</h6>
                             <p>{{pos.summary}}</p>
-                            <hr>
                         </li>
                     </ul>                   
                 </div>
-            </section> 
+            </section> <hr>
 
-            <section class="panel panel-default">
-                <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Projects</strong></div>
-                <div class="panel-body">
+            <section>
+                <header class="h3">Projects</header>
+                <div>
                     <ul>
                         <li ng-repeat="project in candidate.projects">
                             <h4><strong>{{project.name}}</strong></h4>
-                            <h5>{{project.company}}</h5>
-                            <h5 style="color: #ababab">{{project.start_date | date}} to {{project.end_date | date}}</h5>
+                            <h5>at {{project.company}}</h5>
+                            <h6>{{project.start_date | date}} to {{project.end_date | date}}</h6>
                             <p>{{project.description}}</p>
                         </li>
                     </ul>                   
                 </div>
-            </section> 
+            </section> <hr>
 
-            <section class="panel panel-default">
-                <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Education</strong></div>
-                <div class="panel-body">
+            <section>
+                <header class="h3">Education</header>
+                <div>
                      <ul>
                          <li ng-repeat="edu in candidate.educations">
                             <h4><strong>{{edu.degree}} , {{edu.study_feild}}</strong></h4>
                             <h5>{{edu.institute}}</h5>
-                            <h5 style="color: #ababab">{{edu.start_date | date}} - {{edu.end_date | date}}</h5>
+                            <h6>{{edu.start_date | date}} - {{edu.end_date | date}}</h6>
                         </li>
                      </ul>          
                 </div>
-            </section> 
+            </section> <hr>
             
-            <section class="panel panel-default">
-                <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Languages</strong></div>
-                <div class="panel-body">
+            <section>
+                <header class="h3">Laungages</header>
+                <div>
                     <ul>
                         <li ng-repeat="language in candidate.languages">
                             <strong>{{language.name}}</strong>
@@ -119,7 +111,15 @@
                         </li>
                     </ul>                   
                 </div>
-            </section> 
+            </section> <hr>
+
+            <section>
+                <header class="h3">Contact</header>
+                <div><p><strong>Email: </strong> {{user.email}}</p></div>
+                <div><p><strong>Personel No: </strong> {{candidate.contact_no}}</p></div>
+                <div><p><strong>Address: </strong> {{candidate.address}}</p></div>
+                <div><p><strong>Website: </strong> www.cns.com.pk</p></div>
+            </section>
 
         </div>
 
@@ -134,11 +134,8 @@
                 <a href="" ng-show="!isEditing" ng-click="isEditing = !isEditing;" class="btn btn-primary btn-block btn-lg" style="margin-bottom: 15px;">Edit Profile</a>
                 <a href="" ng-show="isEditing" ng-click="isEditing = !isEditing;" class="btn btn-primary btn-block btn-lg" style="margin-bottom: 15px;">Done Editing</a>
             </div>
-            
-            
 
-
-            <div class="panel panel-default">
+           <!--  <div class="panel panel-default">
                 <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Profile Info</strong></div>
                 <div class="panel-body">
                     <div class="media">
@@ -162,7 +159,7 @@
                                 <li>
                                     <span class="icon glyphicon glyphicon-earphone"></span>
                                     <label>Contact</label>
-                                    {{candidate.contact_no}}
+                                    {{user.email}}{{candidate.contact_no}}
                                 </li>
                                 <li>
                                     <span class="icon glyphicon glyphicon-flag"></span>
@@ -179,7 +176,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
 
 
             <div class="row">
