@@ -1,36 +1,40 @@
-<section data-ng-controller="CandidateCvController" class="container">
-	<div class="page page-profile">
-    <div class="row">
-        <div class="col-md-7">
-
+<article data-ng-controller="CandidateCvController" class="container">
+    <section class="row">
+        <section class="col-md-2">
             <div>
                 <a class="pull-right" ng-show="isEditing" ng-click="openPictureModal()" href=""><i class="fa fa-edit"></i></a>
-                <section class="row" style="height: 220px">
-                    <div class="col-md-3" style="height: 170px">
-                        <img alt="" class="img150_150" src="{{candidate.picture_url}}">
-                    </div>   
-                    <div class="col-md-9">
-                        <h2>{{user.displayName}}</h2>
-                        <h5>{{candidate.title}}</h5>
-                        <h6>{{candidate.location}}</h6>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <h6>Experience: {{candidate.xp}}150</h6>
-                                <!-- <p></p> -->
-                            </div>
-                            <div class="col-md-3">
-                                <h6>Rating: {{candidate.rating}}5</h6>
-                                <!-- <p></p> -->
-                            </div>
-                            <div class="col-md-5">
-                                <h6>Recommendations: 15</h6>
-                                <!-- <p></p> -->
-                            </div>
-                        </div>
-                    </div>
-                </section>
+                <div><img alt=""style="max-width: 250px;max-height: 250px;" src="{{candidate.picture_url}}"></div>
             </div>
+            <p></p>
+            <p><label>Skills</label></p>
+            <p><label>Experience</label></p>
+            <p><label>Projects</label></p>
+            <p><label>Education</label></p>
+            <p><label>Certificates</label></p>
+            <p><label>Languages</label></p>
+            <p><label>Contact</label></p>
+            <p><label>Recommendations</label></p>
 
+
+        </section>
+
+        <section class="col-md-6">                
+            <section>
+                <h2>{{user.displayName}}</h2>
+                <h5>{{candidate.title}}</h5>
+                <h6>{{candidate.location}}</h6>
+                <div class="row">
+                    <div class="col-md-4">
+                        <h6>Experience: {{candidate.xp}}150</h6>
+                    </div>
+                    <!-- <div class="col-md-3">
+                        <h6>Rating: {{candidate.rating}}5</h6>
+                    </div>
+                    <div class="col-md-5">
+                        <h6>Recommendations: 15</h6> -->
+                    </div>
+                </div>
+            </section>
             <section>
                 <div><p>{{candidate.objective}}</p></div>
             </section><hr>
@@ -47,18 +51,6 @@
                     </ul>
                </div>
             </section> <hr>
-
-<!--             <section class="panel panel-default">
-                <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Skills</strong></div>
-                <div class="panel-body">
-                    <ul>
-                        <li ng-repeat="skill in candidate.skills">
-                            {{skill.title}} - <strong>{{skill.level}}</strong>
-                            <sm> with {{skill.experience}} year(s) of experience</sm>
-                        </li>
-                    </ul>
-                </div>
-            </section>  -->
 
             <section>
                 <header class="h3">Experience</header>
@@ -100,9 +92,20 @@
                      </ul>          
                 </div>
             </section> <hr>
-            
+
             <section>
-                <header class="h3">Laungages</header>
+                <header class="h3">Certifications</header>
+                <div>
+                     <ul>
+                         <li ng-repeat="cert in candidate.certificates">
+                            <h5><strong>{{candidate.certificates}}</strong></h5>
+                        </li>
+                     </ul>          
+                </div>
+            </section> <hr>
+                     
+            <section>
+                <header class="h3">Languages</header>
                 <div>
                     <ul>
                         <li ng-repeat="language in candidate.languages">
@@ -112,20 +115,9 @@
                     </ul>                   
                 </div>
             </section> <hr>
+        </section>
 
-            <section>
-                <header class="h3">Contact</header>
-                <div><p><strong>Email: </strong> {{user.email}}</p></div>
-                <div><p><strong>Personel No: </strong> {{candidate.contact_no}}</p></div>
-                <div><p><strong>Address: </strong> {{candidate.address}}</p></div>
-                <div><p><strong>Website: </strong> www.cns.com.pk</p></div>
-            </section>
-
-        </div>
-
-
-
-        <div class="col-md-5">
+        <section class="col-md-4">
 
             <div>
                 <a href="#!/edit-cv" class="btn btn-primary btn-block btn-lg" style="margin-bottom: 15px;">Edit Full Profile</a>
@@ -134,6 +126,30 @@
                 <a href="" ng-show="!isEditing" ng-click="isEditing = !isEditing;" class="btn btn-primary btn-block btn-lg" style="margin-bottom: 15px;">Edit Profile</a>
                 <a href="" ng-show="isEditing" ng-click="isEditing = !isEditing;" class="btn btn-primary btn-block btn-lg" style="margin-bottom: 15px;">Done Editing</a>
             </div>
+            <section>
+                <h2 class="text-center">Rating</h2>
+                <p class="text-center"><span style="font-size: 70px;">2.0</span><span style="font-size: 25px;">/5</span></p>
+            </section>
+            
+             <section>
+                <header class="h3">Contact</header>
+                <div><p><strong>Email: </strong> {{user.email}}</p></div>
+                <div><p><strong>Personel No: </strong> {{candidate.contact_no}}</p></div>
+                <div><p><strong>Address: </strong> {{candidate.address}}</p></div>
+                <div><p><strong>Website: </strong> www.cns.com.pk</p></div>
+            </section>
+
+            <section>
+                <h2>Recommendations</h2>
+                <ul>
+                 <li >
+                    <p>Problem is, of course, that sitting down and writing said recommendation always takes more time than you think it will. What should you say that will make your contact stand out</p>
+                </li>
+                <li >
+                    <p>Problem is, of course, that sitting down and writing said recommendation always takes more time than you think it will. What should you say that will make your contact stand out</p>
+                </li>
+                     </ul>
+            </section>
 
            <!--  <div class="panel panel-default">
                 <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Profile Info</strong></div>
@@ -179,18 +195,7 @@
             </div> -->
 
 
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="panel mini-box">
-                        <span class="box-icon bg-danger">
-                            <i class="fa fa-film"></i>
-                        </span>
-                        <div class="box-info">
-                            <p class="size-h2">{{candidate.certificates}}</p>
-                            <p class="text-muted">Certifications</p>
-                        </div>
-                    </div>                    
-                </div>
+            <!-- <div class="row">
                 <div class="col-sm-12">
                     <div class="panel mini-box">
                         <span class="box-icon bg-warning">
@@ -202,10 +207,10 @@
                         </div>
                     </div>                    
                 </div>
-            </div>
+            </div> -->
 
 
-            <div class="row">
+            <!-- <div class="row">
                 <div class="col-sm-12">
                     <div class="panel mini-box">
                         <span class="box-icon bg-success">
@@ -224,12 +229,9 @@
                         </span>
                     </div>
                 </div>
-            </div>
+            </div> -->
+        </section>
+    </section>
 
 
-        </div>
-    </div>
-</div>
-
-
-</section>
+</article>
