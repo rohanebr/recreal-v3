@@ -1,17 +1,16 @@
 <section data-ng-controller="PostJobController" class="container">
-    <header class="text-center col-md-6">
-            <span class="header-page">Post Job</span>
+    <header class="text-center">
+            <h1>Post Job</h1>
     </header>
-    <form ng-submit="create()">
-        <article class="row">
+    <form ng-submit="create()" class="col-md-8">
+        <article>
     		<section data-ng-show="error" class="text-danger">
     			<strong data-ng-bind="error"></strong>
     		</section>
 
-            <section class="col-md-6" >
-                <div class="panel panel-default">
-                    <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Job Description</strong></div>
-                    <div class="panel-body">
+            <section>
+                
+                    <h3> Job Description</h3>
                         <div class="form-group">
                             <label for="">Job Title <span class="required-css">*</span></label>
                             <input  type="text"
@@ -34,20 +33,19 @@
                                       data-ng-model="requirements"></text-angular>
                             </div>
                         </div>
-                    </div>
-                </div>
+                
 
-                <div class="panel panel-default">
-                    <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Required Skills</strong>
-                    </div>
-                    <div class="panel-body" >
+                
+                    <h3> Required Skills</h3>
+                    
+                    
                             <table class="table">
                                 <tr>
                                     <th>Skill <span class="required-css">*</span></th>
                                     <th>Level</th>
                                 </tr>
                                 <tr data-ng-repeat="skill in skills">
-                                    <td><input type="text" ng-model="skill.title"class="input-small"></td>           
+                                    <td><input type="text" ng-model="skill.title"class="form-control"></td>           
                                     <td>
                                         <span class="ui-select">
                                             <select data-ng-model="skill.level"  style="width: 150px;">
@@ -71,14 +69,13 @@
                             <label for="">Tags</label>
                             <input name="tagsinput" id="tagsinput" class="tagsinput" value="Flat,Design,Lab,Clean" />
                         </div>
-                    </div>
-                </div>
+                   
+                
             </section>
 
-            <section class="col-md-6">
-                <div class="panel panel-default">
-                    <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Basic Info</strong></div>
-                    <div class="panel-body">
+            <section>
+                
+                    <h3>Basic Info</h3>
                         <div name="form_signin" class="form-horizontal form-validation">
                             <fieldset>
                                 <div class="form-group">
@@ -284,12 +281,10 @@
 
                             </fieldset>
                         </div>
-                    </div>
-                </div>
+                    
 
-                <div class="panel panel-default">
-                    <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Education and Experience</strong></div>
-                    <div class="panel-body" >
+                
+                    <h3>Education and Experience</h3>
                         <div name="form_signin" class="form-horizontal form-validation">
                             <div class="form-group">
                                 <div class="col-sm-3">
@@ -357,7 +352,7 @@
                                         <label for="">Certificates</label>
                                     </div>
                                     <div class="col-sm-9">
-                                        <span data-ng-repeat="certificate in certificates"><input  type="text"
+                                        <span data-ng-repeat="certificate in certificates"><input  type="text" class="form-control"
                                          style="width:200px;"
                                         data-ng-model="certificate.name"
                                         ><a ng-click="removeCertificate($index)"><i class="fa fa-times pull-right"></i></a>
@@ -365,8 +360,7 @@
                                     </div>
                             </div>
                         </div>
-                    </div>
-                </div>
+                    
             </section>
         </article>
         <section class="row text-center">
@@ -379,20 +373,3 @@
         </section>
     </form>
 </section>
-<style>
-.super-awesome {
-        display: block;
-        color: #fff;
-        font-size: 5em;
-         text-shadow: 1px 1px #D5D5D5;
-         color: #f2f2f2
-}
-.signin-header {
-        padding: 8px 0;    
-        background-color: #898989;
-}
-.required-css
-{
-    color: red;
-}
-</style>
