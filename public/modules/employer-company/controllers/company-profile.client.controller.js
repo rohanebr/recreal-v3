@@ -46,7 +46,7 @@ angular.module('employer-company').controller('CompanyProfileController', ['$sco
 			var company = $scope.company ;
 
 			company.$update(function() {
-				$location.path('companies/' + company._id);
+				$location.path('company-profile-view');
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
 			});

@@ -1,6 +1,5 @@
 'use strict';
-
-angular.module('employer-company').controller('EmployerProfileController', ['$scope', 'Countries', 'Authentication', 'Employers', '$location',
+angular.module('employer-company').controller('EmployerProfileViewController', ['$scope', 'Countries', 'Authentication', 'Employers', '$location',
 	function($scope,Countries, Authentication, Employers, $location) {
 		$scope.user = Authentication.user;
 		$scope.countries = Countries.getCountries();
@@ -13,19 +12,5 @@ angular.module('employer-company').controller('EmployerProfileController', ['$sc
 				employerId: $scope.user.employer
 			});
 		};
-
-
-		// Update existing Employer
-		$scope.update = function() {
-			var employer = $scope.employer ;
-
-			employer.$update(function() {
-				$location.path('employer-profile-view');
-			}, function(errorResponse) {
-				$scope.error = errorResponse.data.message;
-			});
-		};
-
-
 	}
 ]);

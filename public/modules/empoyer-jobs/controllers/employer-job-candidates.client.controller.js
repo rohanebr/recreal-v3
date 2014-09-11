@@ -13,6 +13,7 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
 
 			populateLocationFilters();
 			populateSalaryFilters();
+			populateSkillsFilters();
 
 		});
 		// $http.get('jobs/candidates/' + $stateParams.jobId).success(function(job) {
@@ -60,6 +61,26 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
 					});
 				}
 				$scope.salaryFilters[$scope.salaryFilters.length - 1].count++;
+			}
+		};
+
+		var populateSkillsFilters = function(){
+			
+			$scope.candidates = $filter('orderBy')($scope.candidates, 'skills');
+			var filterValue = 'invalid_value';
+			for (var i = 0 ; i < $scope.candidates.length ; i++ ){
+				var candidate = $scope.candidates[i];
+				for(var j=0; i< $scope.candidates[j].skills.length; j++){
+				if(candidate.skills.title !== filterValue){
+					filterValue = candidate.skills.title;
+					$scope.skillsFilters.push({
+						name: filterValue,
+						count: 0,
+						value: false
+					});
+				}
+			}
+				$scope.skillsFilters[$scope.skillsFilters.length - 1].count++;
 			}
 		};
 }
