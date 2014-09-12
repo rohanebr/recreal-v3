@@ -38,7 +38,8 @@
                                 
                             </li>
                         </ul>
-                    </article>  
+                    </article> 
+
                     <article class="thumbnail">
                         <label>Salary Range</label>
                         <ul>
@@ -51,7 +52,50 @@
                                 
                             </li>
                         </ul>
-                    </article>      
+                    </article> 
+
+                     <article class="thumbnail">
+                        <label>Visa</label>
+                        <ul>
+                            <li data-ng-repeat="visaFilter in visaFilters">
+                            <input type="checkbox" value="visaFilter.value" data-ng-model="visaFilter.value" id="{{'visa' + visaFilter.name}}" />
+
+                            <label ng-if="visaFilter.name" for="{{'visa' + visaFilter.name}}" >{{visaFilter.name}} ({{visaFilter.count}})</label>
+                            <label ng-if="!visaFilter.name" for="{{'visa' + visaFilter.name}}" >Not Mentioned ({{visaFilter.count}})</label>
+
+                                
+                            </li>
+                        </ul>
+                    </article> 
+
+                    <article class="thumbnail">
+                        <label>Employee Type</label>
+                        <ul>
+                            <li data-ng-repeat="employeetypeFilter in employeetypeFilters">
+                            <input type="checkbox" value="employeetypeFilter.value" data-ng-model="employeetypeFilter.value" id="{{'employeetype' + employeetypeFilter.name}}" />
+
+                            <label ng-if="employeetypeFilter.name" for="{{'employeetype' + employeetypeFilter.name}}" >{{employeetypeFilter.name}} ({{employeetypeFilter.count}})</label>
+                            <label ng-if="!employeetypeFilter.name" for="{{'employeetype' + employeetypeFilter.name}}" >Not Mentioned ({{employeetypeFilter.count}})</label>
+
+                                
+                            </li>
+                        </ul>
+                    </article> 
+
+                    <article class="thumbnail">
+                        <label>Employment Status</label>
+                        <ul>
+                            <li data-ng-repeat="employeestatusFilter in employeestatusFilters">
+                            <input type="checkbox" value="employeestatusFilter.value" data-ng-model="employeestatusFilter.value" id="{{'employeestatus' + employeestatusFilter.name}}" />
+
+                            <label ng-if="employeestatusFilter.name" for="{{'employeestatus' + employeestatusFilter.name}}" >{{employeestatusFilter.name}} ({{employeestatusFilter.count}})</label>
+                            <label ng-if="!employeestatusFilter.name" for="{{'employeestatus' + employeestatus.name}}" >Not Mentioned ({{employeestatusFilter.count}})</label>
+
+                                
+                            </li>
+                        </ul>
+                    </article>                     
+
                 </div>          
             </section>
                 <!-- end Filters -->
@@ -60,7 +104,7 @@
             
 
     	<article class="col-md-9">
-            <section class="panel-body" data-ng-repeat="candidate in candidates | locationFilter:locationFilters:true | salaryFilter:salaryFilters:true |filter:searchText">
+            <section class="panel-body" data-ng-repeat="candidate in candidates | locationFilter:locationFilters:true | salaryFilter:salaryFilters:true | visaFilter:visaFilters:true | employeetypeFilter:employeetypeFilters:true | employeestatusFilter:employeestatusFilters:true | filter:searchText">
                 <section class="col-md-3" style="padding-top:20px;">
                     <a data-ng-href="#!/candidates/{{candidate._id}}">
                         <img width="150" src="{{candidate.picture_url}}">
@@ -74,7 +118,7 @@
                         <span  class="skill-div" data-ng-repeat="skill in candidate.skills">{{skill.title}}</span>
                     </div>
                         
-                    <h6 style="padding-top:15px">Rating : 5  &nbsp;&nbsp;|&nbsp;&nbsp;  Location : {{candidate.location}}  &nbsp;&nbsp;|&nbsp;&nbsp;  Salary Range : {{candidate.salary_expectation}}  &nbsp;&nbsp;|&nbsp;&nbsp;  1 Test</h6>
+                    <h6 style="padding-top:15px">Rating : 5  &nbsp;&nbsp;|&nbsp;&nbsp;  Location : {{candidate.location}}  &nbsp;&nbsp;|&nbsp;&nbsp;  Salary Range : {{candidate.salary_expectation}}  &nbsp;&nbsp;|&nbsp;&nbsp;Visa : {{candidate.visa_status}}  &nbsp;&nbsp;|&nbsp;&nbsp; Employee Type : {{candidate.employee_type}}  &nbsp;&nbsp;|&nbsp;&nbsp; Employee Status : {{candidate.employee_status}}  &nbsp;&nbsp;|&nbsp;&nbsp; 1 Test</h6>
                     <hr>
                 </section>
             </section>
