@@ -35,7 +35,7 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
 					candidateId: candidate._id
 				}
 
-			$http.put('jobs/addToShortList/' + job._id , attribute).success(function(response) {
+			$http.put('jobs/addToShortList/' + $scope.job._id , attribute).success(function(response) {
 
 				alert('server responded');
 				// $scope.candidate.jobs.push(job);
@@ -58,7 +58,7 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
 					candidateId: candidate._id
 				}
 
-			$http.put('jobs/removeFromShortList/' + job._id , attribute).success(function(response) {
+			$http.put('jobs/removeFromShortList/' + $scope.job._id , attribute).success(function(response) {
 
 				$scope.candidate.jobs.push(job);
 				$scope.jobs.splice($scope.jobs.indexOf(job), 1);
