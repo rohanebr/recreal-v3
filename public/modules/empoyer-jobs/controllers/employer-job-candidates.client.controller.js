@@ -22,6 +22,21 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
 		// 	$scope.filteredCandidates = $scope.candidates;
 
 			
+			// Add to Short List
+		$scope.apply = function(job) {
+
+			$http.put('jobs/apply/' + job._id , job).success(function(response) {
+
+				$scope.candidate.jobs.push(job);
+				$scope.jobs.splice($scope.jobs.indexOf(job), 1);
+				$scope.$apply();
+				//And redirect to the index page
+
+				$location.path('jobs/' + job._id);
+			}).error(function(response) {
+				$scope.error = response.message;
+			});
+		};
 
 		// });
 		// $scope.search.name = 'Rawalpindi';
