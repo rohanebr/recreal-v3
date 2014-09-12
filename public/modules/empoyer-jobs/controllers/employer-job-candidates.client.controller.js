@@ -28,9 +28,37 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
 
 			
 			// Add to Short List
-		$scope.apply = function(job) {
+		$scope.addCandidateToShortList = function(candidate) {
 
-			$http.put('jobs/apply/' + job._id , job).success(function(response) {
+			var attribute = {
+					jobId: $scope.job._id,
+					candidateId: candidate._id
+				}
+
+			$http.put('jobs/addToShortList/' + job._id , attribute).success(function(response) {
+
+				alert('server responded');
+				// $scope.candidate.jobs.push(job);
+				// $scope.jobs.splice($scope.jobs.indexOf(job), 1);
+				// $scope.$apply();
+				//And redirect to the index page
+
+				// $location.path('jobs/' + job._id);
+			}).error(function(response) {
+				$scope.error = response.message;
+			});
+		};
+
+
+		// Remove from Short List
+		$scope.removeCandidateFromShortList = function(candidate) {
+
+				var attribute = {
+					jobId: $scope.job._id,
+					candidateId: candidate._id
+				}
+
+			$http.put('jobs/removeFromShortList/' + job._id , attribute).success(function(response) {
 
 				$scope.candidate.jobs.push(job);
 				$scope.jobs.splice($scope.jobs.indexOf(job), 1);
