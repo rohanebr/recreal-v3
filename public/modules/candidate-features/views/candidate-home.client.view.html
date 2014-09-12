@@ -1,80 +1,39 @@
-<section data-ng-controller="CandidateHomeController">
-	<section >
-		<div class="jumbotron text-center"><h1>Candidate's Landing Page<h1></div>
-	</section>
+<section data-ng-controller="CandidateHomeController" class="container">
 
 
-<div class="page page-dashboard" >
 
 
-    <!-- stats -->
-    <div class="row dashboard-stats">
-        <div class="col-lg-4 col-sm-12 col-md-4">
-            <section class="panel panel-box">
-                <div class="panel-left panel-item bg-success">
-                    <i class="fa fa-rocket text-large stat-icon"></i>
+    <article class="col-md-8">
+        
+      
+
+        
+            
+            <section class="row" ng-repeat="job in jobs">
+                <div data-ng-hide="hasApplied(job)">
+                    <div class="col-md-3" style="height: 150px">    
+                        <a class="pull-left" href="#!/jobs/{{job._id}}">
+                            <img alt="" src="http://1.bp.blogspot.com/-PDyJ4V86jJc/UegSwGYXY2I/AAAAAAAABjM/adUNk71ddes/s1600/954862_10151698062655336_1754121665_n.jpg" class="img-rounded img150_150">
+                        </a>
+                    </div>
+                    <div class="col-md-9"  style="height: 250px">    
+                        <div >
+                            <a data-ng-href="#!/jobs/{{job._id}}"><h4>{{job.title}}</h4></a>
+                            <a data-ng-href="#!/companies/{{job.company._id}}"><h5>{{job.company.company_name}}</h5></a>                    
+                            <p>{{job.description | truncate:250}}</p>
+                        </div>
+                        <div class="pull-right">    
+                            <label>{{job.dueDate | date}}</label>
+                            <strong><a class="btn btn-sm btn-success" ng-click="apply(job)">Apply Now</a></strong>
+                        </div>
+                    </div>
                 </div>
-                <div class="panel-right panel-item bg-reverse">
-                    <p class="size-h1 no-margin">{{jobs.length}}<span class="size-h3"></span></p>
-                    <p class="text-muted no-margin"><span>New Jobs</span></p>
-                </div>
+                <hr>
             </section>
-        </div>
-
-        <div class="col-lg-4 col-sm-12 col-md-4">
-            <section class="panel panel-box">
-                <div class="panel-left panel-item bg-info">
-                    <i class="fa fa-users text-large stat-icon"></i>
-                </div>
-                <div class="panel-right panel-item bg-reverse">
-                    <p class="size-h1 no-margin">5</p>
-                    <p class="text-muted no-margin"><span>Rejected</span></p>
-                </div>
-            </section>
-        </div>
-
-        <div class="col-lg-4 col-sm-12 col-md-4">
-            <section class="panel panel-box">
-                <div class="panel-left panel-item bg-warning">
-                    <i class="fa fa-dollar text-large stat-icon"></i>
-                </div>
-                <div class="panel-right panel-item bg-reverse">
-                    <p class="size-h1 no-margin">10</p>
-                    <p class="text-muted no-margin"><span>Awaiting</span></p>
-                </div>
-            </section>
-        </div>
-    <!-- end stats -->
-    <div class="row job-header" style="text-align: center; padding: 15px">
-        <h1>Jobs Recommended for you</h1>
-    </div>
-
-    <!-- Media object -->
-    <div class="panel panel-default">
-        <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Jobs</strong></div>
-        <div class="panel-body" ng-repeat="job in jobs">
-            <div class="media"  data-ng-hide="hasApplied(job)">
-                <a class="pull-left" href="#">
-                    <img alt="" src="http://cns.com.pk/wp-content/uploads/2012/06/CNS-Logo.bmp" class="img-rounded img64_64">
-                </a>
-                <div class="media-body">
-                    <a data-ng-href="#!/jobs/{{job._id}}"><h4 class="media-heading">{{job.title}}</h4></a>
-                    <a data-ng-href="#!/companies/{{job.company._id}}"><h5 style="color: #F68795">{{job.company.company_name}}</h5></a>                    
-                    <p>{{job.description}}</p>
-                </div>
-                <div class="pull-right">    
-                    <label>{{job.dueDate | date}}</label>
-                    <strong><a class="btn btn-sm btn-success" ng-click="apply(job)">Apply Now</a></strong>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- end Media object -->
+        
+        
+    </article>
 
 
-
-
-</div>
   
 </section>
-

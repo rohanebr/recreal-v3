@@ -31,13 +31,6 @@ var JobSchema = new Schema({
 	    type: 'String',
 	    trim: true
 	  },
-	  no_of_positions:{
-	    type: 'Number'
-	  },
-	  travel_required:{
-	    type: 'Boolean',
-	    trim: true
-	  },
 	  due_date:{
 	    type: 'date'
 	  },
@@ -46,7 +39,20 @@ var JobSchema = new Schema({
 	    trim: true
 	  },
 	  department:{
-	    type: 'date'
+	    type: 'String',
+	    trim: true
+	  },
+	  gender:{
+	  	type: 'String',
+	    trim: true
+	  },
+	  work_permit:{
+	  	type: 'String',
+	    trim: true
+	  },
+	  salary_range:{
+	    type: 'String',
+	    trim: true
 	  },
 	  employee_type:{
 	    type: 'String',
@@ -60,7 +66,10 @@ var JobSchema = new Schema({
 	    type: 'String',
 	    trim: true
 	  },
-	  salary_expectation:{
+	  no_of_positions:{
+	    type: 'Number'
+	  },
+	  travel_required:{
 	    type: 'String',
 	    trim: true
 	  },
@@ -76,18 +85,42 @@ var JobSchema = new Schema({
 	    type: 'String',
 	    trim: true
 	  },
-	  career_level:{
-	    type: 'String',
-	    trim: true
-	  },
 	  degree_title:{
 	    type: 'String',
 	    trim: true
 	  },
-	  study_feild:{
+	  study_field:{
 	    type: 'String',
 	    trim: true
 	  },
+	  career_level:{
+	    type: 'String',
+	    trim: true
+	  },
+	  experience:{
+	    type: 'Number'
+	  },
+	  certificates:[{
+	  	name: {
+	  		type:'String',
+	  		trim: true
+	  		}
+		}],
+	  skills:[{
+	  	title:{
+	  		type:'String',
+	  		trim:true
+	  		},
+	  	level:{
+	  		type:'String',
+	  		trim:true
+	  		}
+	  	}],
+	  tags:[{
+	  	name:{
+	  		type:'String'
+	  		}
+	  	}],
 	created: {
 		type: Date,
 		default: Date.now

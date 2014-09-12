@@ -1,7 +1,177 @@
-<section data-ng-controller="CompaniesController" data-ng-init="findOne()">
-	<div class="page-header">
-		<h1 data-ng-bind="company.name"></h1>
-	</div>
+<section data-ng-controller="CompaniesController" data-ng-init="findOne()" class="container">
+    
+
+	<article class="col-md-8">
+
+        <header class="text-center col-md-12">
+            <!-- Contents -->
+            <div class="showcase-content">
+                <div class="row">
+                    <div class="col-md-3" style="height: 100px">
+                        <img alt="" class="img100_100" src="http://1.bp.blogspot.com/-PDyJ4V86jJc/UegSwGYXY2I/AAAAAAAABjM/adUNk71ddes/s1600/954862_10151698062655336_1754121665_n.jpg">
+                    </div>
+                    <h1>{{company.company_name}}</h1>
+                </div>
+                <div class="title-bullet"><span></span></div><p></p><p></p>
+                <p>Jack Daniel's is a brand of Tennessee whiskey that is the highest selling American whiskey in the world. It is produced in Lynchburg, Tennessee, by the Jack Daniel Distillery, which has been owned by the Brown-Forman Corporation since 1956.Jack Daniel's is a brand of Tennessee whiskey that is the highest selling American whiskey in the world. It is produced in Lynchburg, Tennessee, by the Jack Daniel Distillery, which has been owned by the Brown-Forman Corporation since 1956.</p>
+            </div>
+        </header>
+        <section>
+        <div class="col-md-12">
+            <div class="col-md-6"><label for="">Industry</label></div>
+            <div class="col-md-6"><label for="">Founded In</label></div>
+        </div>
+        <div class="col-md-12">
+            <div class="col-md-6">{{company.industry}}</div>
+            <div class="col-md-6">{{company.founded|date}}</div>
+        </div>
+
+        <div class="col-md-12">
+            <div class="col-md-6"><label for="">Company Type</label></div>
+            <div class="col-md-6"><label for="">Company Size</label></div>
+        </div>
+        <div class="col-md-12">
+            <div class="col-md-6">{{company.company_type}}</div>
+            <div class="col-md-6">{{company.company_size}}</div>
+        </div>
+
+        <div class="col-md-12">
+            <div class="col-md-6"><label for="">Contact Person</label></div>
+            <div class="col-md-6"><label for="">Contact Number</label></div>
+        </div>
+        <div class="col-md-12">
+            <div class="col-md-6">{{company.contact_person}}</div>
+            <div class="col-md-6">{{company.contact_no}}</div>
+        </div>
+
+        <div class="col-md-12">
+            <div class="col-md-6"><label for="">E-mail</label></div>
+            <div class="col-md-6"><label for="">Address</label></div>
+        </div>
+        <div class="col-md-12">
+            <div class="col-md-6">{{company.contact_email}}</div>
+            <div class="col-md-6">{{company.address}}</div>
+        </div>
+
+        <div class="col-md-12">
+            <div class="col-md-12"><label for="">Specialties</label></div>
+        </div>
+        <div class="col-md-12">
+            <div class="col-md-12"><span data-ng-repeat= "speciality in company.specialties">{{speciality.name}}, </span></div>
+        </div>
+
+
+            <!-- <form name="form_companyProfile" class="form-horizontal">
+                <div class="form-group">
+                    <div class="col-sm-3">
+                        <label for=""><strong>Industry:</strong></label>
+                    </div>
+                    <div class="col-sm-9">
+                        {{company.industry}}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-3">
+                        <label for=""><strong>Founded In:</strong></label>
+                    </div>
+                    <div class="col-sm-9">
+                        {{company.founded|date}}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-3">
+                        <label for=""><strong>Company Type:</strong></label>
+                    </div>
+                    <div class="col-sm-9">
+                        {{company.company_type}}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-3">
+                        <label for=""><strong>Company Size:</strong></label>
+                    </div>
+                    <div class="col-sm-9">
+                        {{company.company_size}}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-3">
+                        <label for=""><strong>Contact Person:</strong></label>
+                    </div>
+                    <div class="col-sm-9">
+                        {{company.contact_person}}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-3">
+                        <label for=""><strong>Contact Number:</strong></label>
+                    </div>
+                    <div class="col-sm-9">
+                        {{company.contact_no}}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-3">
+                        <label for=""><strong>Contact Email:</strong></label>
+                    </div>
+                    <div class="col-sm-9">
+                        {{company.contact_email}}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-3">
+                        <label for=""><strong>Address:</strong></label>
+                    </div>
+                    <div class="col-sm-9">
+                        {{company.address}}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-3">
+                        <label for=""><strong>Specialties:</strong></label>
+                    </div>
+                    <div class="col-sm-9">
+                        <span data-ng-repeat= "speciality in company.specialties">{{speciality.name}}, </span>
+                    </div>
+                </div>
+            </form> -->
+        </section>
+	</article>
+
+    <aside class="col-md-4">
+        <header class="h4">Recommended Companies</header><hr>
+        <section class="media">
+            <a class="pull-left" href="#">
+              <img class="media-object" src="http://1.bp.blogspot.com/-PDyJ4V86jJc/UegSwGYXY2I/AAAAAAAABjM/adUNk71ddes/s1600/954862_10151698062655336_1754121665_n.jpg" 
+              alt="Media Object">
+            </a>
+            <div class="media-body">
+              <h4 class="h5">Telenor</h4>
+              This is some sample text. This is some sample text. This is some sample text. This is some sample text.
+            </div>
+        </section><hr>
+        <section class="media">
+            <a class="pull-left" href="#">
+              <img class="media-object" src="http://1.bp.blogspot.com/-PDyJ4V86jJc/UegSwGYXY2I/AAAAAAAABjM/adUNk71ddes/s1600/954862_10151698062655336_1754121665_n.jpg" 
+              alt="Media Object">
+            </a>
+            <div class="media-body">
+              <h4 class="h5">Telenor</h4>
+              This is some sample text. This is some sample text. This is some sample text. This is some sample text.
+            </div>
+        </section><hr>
+        <section class="media">
+            <a class="pull-left" href="#">
+              <img class="media-object" src="http://1.bp.blogspot.com/-PDyJ4V86jJc/UegSwGYXY2I/AAAAAAAABjM/adUNk71ddes/s1600/954862_10151698062655336_1754121665_n.jpg" 
+              alt="Media Object">
+            </a>
+            <div class="media-body">
+              <h4 class="h5">Telenor</h4>
+              This is some sample text. This is some sample text. This is some sample text. This is some sample text.
+            </div>
+        </section><hr>
+    </aside>
+
 	<div class="pull-right" data-ng-show="authentication.user._id == company.user._id">
 		<a class="btn btn-primary" href="/#!/companies/{{company._id}}/edit">
 			<i class="glyphicon glyphicon-edit"></i>
@@ -10,6 +180,25 @@
 			<i class="glyphicon glyphicon-trash"></i>
 		</a>
 	</div>
-
-	<h3 data-ng-bind="company.company_name"></h3>
 </section>
+
+<style>
+.super-awesome {
+        display: block;
+        color: #fff;
+        font-size: 5em;
+         text-shadow: 1px 1px #D5D5D5;
+         color: #f2f2f2
+}
+.signin-header {
+        padding: 8px 0;    
+        background-color: #898989;
+}
+.header-page
+{
+    color: #464545; 
+    text-shadow: 1px 1px -2px #D5D5D5; 
+    font-size:30px; 
+    padding-top:10px;
+}
+</style>

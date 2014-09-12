@@ -18,6 +18,7 @@ var express = require('express'),
 	flash = require('connect-flash'),
 	config = require('./config'),
 	consolidate = require('consolidate'),
+	multer = require('multer'),
 	path = require('path');
 
 module.exports = function(db) {
@@ -76,6 +77,21 @@ module.exports = function(db) {
 	app.use(bodyParser.urlencoded());
 	app.use(bodyParser.json());
 	app.use(methodOverride());
+
+
+
+
+
+
+	app.use(multer({dest:'./uploads/'}));
+
+
+
+
+
+
+
+
 
 	// Enable jsonp
 	app.enable('jsonp callback');

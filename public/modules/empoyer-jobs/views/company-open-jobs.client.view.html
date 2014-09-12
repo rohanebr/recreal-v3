@@ -1,10 +1,23 @@
-<section data-ng-controller="CompanyOpenJobsController">
-	<div ng-repeat="job in jobs">
-		<a href="/#!/employer-job-candidates/{{job._id}}" >{{job.title}}</a>
-		<div ng-repeat="candidate in job.candidates" >
-			{{candidate}}
-		</div>
-	</div>
+<section data-ng-controller="CompanyOpenJobsController" class="container">
+    <header class="text-center">
+            <h1>Open Jobs</h1>
+    </header>
 
+    <article class="col-md-8">
+    	<section ng-repeat="job in jobs">
+        	<a href="/#!/employer-job-candidates/{{job._id}}" ><h2>{{job.title}}</h2></a>
+        	<span class="pull-right"> Close Date: {{job.due_date | date}}</span>
+        	<p><h4>{{job.location}} , {{job.country}}</h4></p>
+        	<p><span><strong>Description:</strong>
+                <div ng-bind-html="job.description | truncate:270"></div>
+             </span></p> 
+            <div class="pull-right">
+                <a data-ng-href="#!/jobs/{{job._id}}" class="btn btn-small btn-success">View Job</a> 
+                <a href="/#!/employer-job-candidates/{{job._id}}" class="btn btn-small btn-success">View Candidates ({{job.candidates.length}})</a>
+            </div>
+            <br>
+            <hr>
+    	</section>
+    </article>
 
 </section>

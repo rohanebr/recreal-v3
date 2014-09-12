@@ -29,9 +29,10 @@ var CandidateSchema = new Schema({
 		trim: true
 	},
 	picture_url:{
-		type: 'String'
+		type: 'String',
+		default: '/uploads/fullsize/no-image.jpg'
 	},
-	summary:{
+	objective:{
 		type: 'String',
 		trim: true
 	},

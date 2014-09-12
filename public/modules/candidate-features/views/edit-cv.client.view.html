@@ -1,23 +1,35 @@
-<section data-ng-controller="CandidateCvController" background-url: "http://api.thumbr.it/whitenoise-361x370.png">
+<section data-ng-controller="CandidateCvController" class="container">
 	<div class="page page-form">    
 	    <div class="row">
 	        <div class="col-md-8" >
 		        <div class="panel panel-default">
 		        	<div class="panel-body">
-		        		<div class="Outer">
-					        <div class="InnerLeft">
-					        	<img src="https://media.licdn.com/mpr/mpr/shrink_200_200/p/4/000/143/348/2800c86.jpg" alt="some_text">
-					        </div>
-					        <div class="InnerRight">
-					        <h2>Muhammad Ahsin Anwar</h3>
+				        <div class="col-md-4">
+				        	<img height="110" src="https://media.licdn.com/mpr/mpr/shrink_200_200/p/4/000/143/348/2800c86.jpg" alt="some_text">
+				        </div>
+				        <div class="col-md-8">
+					        <h2>{{candidate.displayName}}</h3>
 					        <h4>{{candidate.title}} at Apple, Inc</h4>
 					        <h5>{{candidate.location}} | {{candidate.country}}</h5>
-					        </div>
-
-    					</div>
+				        </div>    					
 					</div>
 		        </div>
-	            <div class="panel panel-info">
+		        <div class="panel panel-default">
+		        	<div class="panel-heading">
+		        		<strong><span class="glyphicon glyphicon-th"></span> Career Objective</strong>
+		        	</div>
+		        	<div class="panel-body">
+		        		<div class="form-group">
+                            <!-- <div class="col-sm-3">
+                                <label for="">Objective</label>
+                            </div> -->
+                            <!-- <div class="col-sm-9"> -->
+                                <textarea class="form-control" data-ng-model="candidate.objective"></textarea>
+                            <!-- </div> -->
+	                     </div>
+		        	</div>
+		        </div>
+	            <div class="panel panel-default">
 	                <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Personel Profile</strong></div>
 	                <div class="panel-body">
 	                    <form name="form_constraints" class="form-horizontal form-validation" novalidate>
@@ -50,25 +62,6 @@
 			                                    data-ng-model="candidate.gender" >
 			                                    <span>Female</span>
 			                            </label>
-	                                </div>
-	                            </div>
-	                            
-
-	                            <div class="form-group">
-	                                <div class="col-sm-3">
-	                                    <label for="">Country</label>
-	                                </div>
-	                                <div class="col-sm-9">
-	                                    <input  type="text" class="form-control" data-ng-model="candidate.country">
-	                                </div>
-	                            </div>
-
-	                            <div class="form-group">
-	                                <div class="col-sm-3">
-	                                    <label for="">Location</label>
-	                                </div>
-	                                <div class="col-sm-9">
-	                                    <input  type="text" class="form-control" data-ng-model="candidate.location">
 	                                </div>
 	                            </div>
 
@@ -108,12 +101,35 @@
 	                                </div>
 	                            </div>
 
+	                             <div class="form-group">
+	                                <div class="col-sm-3">
+	                                    <label for="">Country</label>
+	                                </div>
+	                                <div class="col-sm-9">
+	                                    <span class="ui-select">
+	                                        <select ng-model="country">
+                                            	<option data-ng-repeat="count in countries">{{count.name}}</option>
+                                        	</select>
+                                    	</span>
+	                                </div>
+	                            </div>
+
+	                            <div class="form-group">
+	                                <div class="col-sm-3">
+	                                    <label for="">Location</label>
+	                                </div>
+	                                <div class="col-sm-9">
+	                                    <input  type="text" class="form-control" data-ng-model="candidate.location">
+	                                </div>
+	                            </div>
+	                            
 	                            <div class="form-group">
 	                                <div class="col-sm-3">
 	                                    <label for="">Visa Status</label>
 	                                </div>
-	                                <div class="col-sm-9 ">
-	                                    <select data-ng-model="candidate.visa_status">
+	                                <div class="col-sm-9">
+	                                	<span class="ui-select">
+	                                    	<select data-ng-model="candidate.visa_status">
 	                                            <option>No Visa</option>
 	                                            <option>Residency Visa (Non-Transferable)</option>
 	                                            <option>Residency Visa (Transferable)</option>
@@ -121,6 +137,7 @@
 	                                            <option>Transit Visa</option>
 	                                            <option>Visit Visa</option>
 	                                        </select>
+	                                	</span>
 	                                </div>
 	                            </div>
 
@@ -143,17 +160,12 @@
 	                            </div>
 
 
-	                        <button type="submit"
-	                                class="btn btn-success"
-	                                ng-click="update()"
-	                                >Sumbit</button>
+	                        
 	                    </form>
 	                </div>
 	            </div>
-	        <!-- </div> -->
 
-	        <!-- <div class="col-md-6"> -->
-	            <div class="panel panel-danger">
+	            <div class="panel panel-default">
 	                <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Target Job Profile</strong></div>
 	                <div class="panel-body">
 	                    <form name="form_signin" class="form-horizontal form-validation" data-ng-submit="submitForm()">
@@ -175,6 +187,7 @@
 	                                    <label for="">Career Level</label>
 	                                </div>
 	                                <div class="col-sm-9">
+	                                	<span class="ui-select">
 	                                        <select data-ng-model="candidate.career_level">
 	                                            <option>Student/Internship</option>
 	                                            <option>Entry Level</option>
@@ -183,6 +196,7 @@
 	                                            <option>Executive (Director)</option>
 	                                            <option>Senior Executive (CEO)</option>
 	                                        </select>
+	                                    </span>	
 	                                </div>
 	                            </div>
 
@@ -191,12 +205,15 @@
 	                                    <label for="">Employee Type</label>
 	                                </div>
 	                                <div class="col-sm-9">
+	                                	<span class="ui-select">
 	                                        <select data-ng-model="candidate.employee_type">
 	                                            <option>Permanent</option>
 	                                            <option>Internship</option>
 	                                            <option>Contractor</option>
 	                                            <option>Temporary</option>
+	                                            <option>Internship</option>
 	                                        </select>
+	                                    </span>
 	                                </div>
 	                            </div>
 
@@ -205,10 +222,12 @@
 	                                    <label for="">Employment Status</label>
 	                                </div>
 	                                <div class="col-sm-9">
+	                                	<span class="ui-select">
 	                                        <select data-ng-model="candidate.employee_status">
 	                                            <option>Part Time</option>
 	                                            <option>Full Time</option>
 	                                        </select>
+	                                    </span>
 	                                </div>
 	                            </div>
 
@@ -217,45 +236,49 @@
 	                                    <label for="">Salary Range</label>
 	                                </div>
 	                                <div class="col-sm-9">
-	                                        <select data-ng-model="candidate.salart_expectation">
+	                               		<span class="ui-select">
+	                                        <select data-ng-model="candidate.salary_expectation">
 	                                            <option>10,000 - 15,000</option>
 	                                            <option>15,000 - 30,000</option>
 	                                            <option>30,000 - 60,000</option>
 	                                        </select>
+	                                    </span>
 	                                </div>
 	                            </div>
 	                             <div class="form-group">
 	                                <div class="col-sm-3">
-	                                    <label for="">Availability (Weeks)</label>
+	                                    <label for="">Availability</label>
 	                                </div>
 	                                <div class="col-sm-9">
+	                                	<span class="ui-select">
 	                                        <select data-ng-model="candidate.notice_period">
-	                                            <option>1</option>
-	                                            <option>2</option>
-	                                            <option>3</option>
-	                                            <option>4</option>
+	                                            <option>1 month or less</option>
+	                                            <option>3 month or less</option>
+	                                            <option>6 month or less</option>
+	                                            <option>1 year or less</option>
 	                                        </select>
+	                                    </span>
 	                                </div>
 	                            </div>
 	                            <div class="form-group">
 	                                <div class="col-sm-3">
 	                                    <label for="">Industry</label>
 	                                </div>
-	                                <div class="col-sm-9">
-	                                        <select data-ng-model="candidate.division">
-	                                            <option>Accounts</option>
-	                                            <option>Sales</option>
-	                                            <option>Business</option>
-	                                            <option>Marketing</option>
+	                                <div class="col-sm-9" data-ng-repeat="target_industry in candidate.target_industries">
+	                                	<span class="ui-select">
+	                                        <select data-ng-model="target_industry.name">
+	                                            <option data-ng-repeat="ind in industries">{{ind.name}}</option>
 	                                        </select>
+	                                    </span>
 	                                </div>
 	                            </div>
 	                            <div class="form-group">
 	                                <div class="col-sm-3">
 	                                    <label for="">Location</label>
 	                                </div>
-	                                <div class="col-sm-9">
-	                                        <select data-ng-model="candidate.department">
+	                                <div class="col-sm-9" data-ng-repeat="target_location in candidate.target_locations">
+	                                	<span class="ui-select">
+	                                        <select data-ng-model="target_location.name">
 	                                            <option>Pakistan</option>
 	                                            <option>Lahore</option>
 	                                            <option>Pakistan - Karachi</option>
@@ -263,6 +286,7 @@
 	                                            <option>UAE - Sharjah</option>
 	                                            <option>UAE</option>
 	                                        </select>
+	                                    </span>
 	                                </div>
 	                            </div>
 	                        </fieldset>
@@ -270,7 +294,7 @@
 	                </div>
 	            </div>
 
-	            <div class="panel panel-success">
+	            <div class="panel panel-default">
 	                <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Skills</strong></div>
 	                <div class="panel-body" >
 	                    <div >
@@ -285,40 +309,47 @@
 	                            <tr data-ng-repeat="skill in candidate.skills">
 	                                <td><input type="text" placeholder="e.g Communications" data-ng-model="skill.title"class="input-small"></td>           
 	                                <td>
-	                                    <select data-ng-model="skill.level">
-	                                            <option>Beginner</option>
-	                                            <option>Intermidiate</option>
-	                                            <option>Expert</option>
-	                                    </select>
+	                                	<span class="ui-select">
+		                                    <select data-ng-model="skill.level"  style="width: 150px;">
+		                                            <option>Beginner</option>
+		                                            <option>Intermidiate</option>
+		                                            <option>Expert</option>
+		                                    </select>
+	                                    </span>
 	                                </td>
 	                                <td>
-	                                    <select data-ng-model="skill.experience">
-	                                            <option>1</option>
-	                                            <option>2</option>
-	                                            <option>3</option>
-	                                            <option>4</option>
-	                                            <option>5</option>
-	                                            <option>6</option>
-	                                            <option>7</option>
-	                                            <option>8</option>
-	                                            <option>9</option>
-	                                            <option>10</option>
-	                                    </select>
+	                                	<span class="ui-select" >
+		                                    <select data-ng-model="skill.experience" style="width: 50px;">
+		                                            <option>1</option>
+		                                            <option>2</option>
+		                                            <option>3</option>
+		                                            <option>4</option>
+		                                            <option>5</option>
+		                                            <option>6</option>
+		                                            <option>7</option>
+		                                            <option>8</option>
+		                                            <option>9</option>
+		                                            <option>10</option>
+		                                    </select>
+	                                    </span>
 	                                </td>
 	                                <td>
-	                                    <input  type="date"
+	                                    <input ui-date
+	                                    ui-date-format
 	                                    class="form-control"
 	                                    required
 	                                    data-ng-model="skill.last_used"
 	                                    >
 	                                </td>
 	                                <td>
-	                                    <a ng-click="removeSkill($index)">[ X ]</a>
+	                                    <a href="" ng-click="removeSkill($index)"><i class="fa fa-times"></i></a>
 	                                </td>
 	                            </tr>
 	                            <tr>
-	                                <td><button ng-click="addSkill()" class="btn btn-small">Add Skill</button></td>
 	                                <td></td>
+	                                <td></td>
+	                                <td></td>
+	                                <td><button ng-click="addSkill()" class="btn btn-small btn-success pull-right">Add Skill</button></td>
 	                            </tr>
 	                        </table>
 	                        <h3>
@@ -329,34 +360,39 @@
 	            </div>
 
 	            <!-- Education -->
-	             <div class="panel panel-info">
+	             <div class="panel panel-default">
 	                <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Education</strong></div>
 	                <div class="panel-body" >
 	                    <form name="form_signin" class="form-horizontal form-validation" data-ng-submit="submitForm()">
-	                        <fieldset ng-repeat="education in candidate.educations">   
-	                            <div class="form-group">
-	                                <a ng-click="removeEducation($index)">[ X ]</a>
+	                        <fieldset ng-repeat="education in candidate.educations" style="background-color: #fff; padding: 10px; margin: 10px; border: 1px solid #e1e1e1; box-shadow: 1px 1px 1px #eee; border-radius:3px;">   
+	                            <div class="form-group">                         
 	                                <div class="col-sm-3">
 	                                    <label for="">Degree</label>
 	                                </div>
-	                                <div class="col-sm-9">
+	                                <div class="col-sm-8">
+	                                	<span class="ui-select">
 	                                        <select ng-model="education.degree">
-	                                            <option>Matric</option>
-	                                            <option>Inter</option>
-	                                            <option>B.Sc</option>
-	                                            <option>BS</option>
-	                                            <option>M.Sc</option>
-	                                            <option>MS</option>
-	                                            <option>M.Phil</option>
-	                                            <option>Phd</option>
+	                                            <option>Pre-Matriculation</option>
+	                                            <option>O-level/Matriculation</option>
+	                                            <option>Intermediate/A-Level</option>
+	                                            <option>Bachelor's Degree</option>
+	                                            <option>Master's Degree</option>
+	                                            <option>Doctorate</option>
+	                                            <option>Certificate</option>
+	                                            <option>Diploma</option>
 	                                        </select>
+	                                    </span>
 	                                </div>
+	                                <div class="col-sm-1">
+	                            		<a href="" ng-click="removeEducation($index)"><i class="fa fa-times pull-right"></i></a>
+	                            	</div>	
 	                            </div>
 	                            <div class="form-group">
 	                                <div class="col-sm-3">
 	                                    <label for="">Study Field</label>
 	                                </div>
 	                                <div class="col-sm-9">
+	                                	<span class="ui-select">
 	                                        <select ng-model="education.study_feild">
 	                                            <option>Electrical Engineering</option>
 	                                            <option>Computer Engineering</option>
@@ -367,6 +403,7 @@
 	                                            <option>Mathematics</option>
 	                                            <option>Chemistry</option>
 	                                        </select>
+	                                    </span>
 	                                </div>
 	                            </div>
 	                            <div class="form-group">
@@ -374,6 +411,7 @@
 	                                    <label for="">Institute</label>
 	                                </div>
 	                                <div class="col-sm-9">
+	                                	<span class="ui-select">
 	                                        <select ng-model="education.institute">
 	                                            <option>Comsats</option>
 	                                            <option>Air University</option>
@@ -384,46 +422,50 @@
 	                                            <option>Iqra University</option>
 	                                            <option>MAJU</option>
 	                                        </select>
+	                                    </span>
 	                                </div>
 	                            </div>
 	                            <div class="form-group">
 	                                <div class="col-sm-3" style="padding-top: 2%">
 	                                    <label for="">Start Date</label>
 	                                </div>
-	                                <div class="col-sm-9">
-	                                    <input type="date" ng-model="education.start_date" />
+	                                <div class="col-sm-4">
+	                                    <input ui-date ui-date-format class="form-control" ng-model="education.start_date" />
 	                                </div>
 	                            </div>
 	                            <div class="form-group">
 	                                <div class="col-sm-3" style="padding-top: 2%">
 	                                    <label for="">End Date</label>
 	                                </div>
-	                                <div class="col-sm-9">
-	                                    <input type="date" ng-model="education.end_date " />
+	                                <div class="col-sm-4">
+	                                    <input ui-date ui-date-format class="form-control" ng-model="education.end_date" />
 	                                </div>
 	                            </div>
 	                        </fieldset>
-	                        <button ng-click="addEducation()" class="btn btn-small">Add Education</button>
+	                        <button ng-click="addEducation()" class="btn btn-small btn-success pull-right">Add Education</button>
 	                    </form>
 	                </div>
 	            </div>
 	             <!-- Experience -->
-	             <div class="panel panel-success">
+	             <div class="panel panel-default">
 	                <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Experience</strong></div>
 	                <div class="panel-body">
 	                    <form name="form_signin" class="form-horizontal form-validation" data-ng-submit="submitForm()">
-	                        <fieldset ng-repeat="experience in candidate.positions">   
+	                        <fieldset ng-repeat="experience in candidate.positions" style="background-color: #fff; padding: 10px; margin: 10px; border: 1px solid #e1e1e1; box-shadow: 1px 1px 1px #eee; border-radius:3px;">   
 	                            <div class="form-group">
-	                                <a ng-click="removeExperience($index)">[ X ]</a>
+	                                
 	                                <div class="col-sm-3">
 	                                    <label for="">Company Name</label>
 	                                </div>
-	                                <div class="col-sm-9">
+	                                <div class="col-sm-8">
 	                                    <input  type="text"
 	                                    class="form-control"
 	                                    required
 	                                    data-ng-model="experience.company_name"
 	                                    >
+	                                </div>
+	                                <div class="col-sm-1">
+	                                	<a ng-click="removeExperience($index)"><i class="fa fa-times pull-right"></i></a>
 	                                </div>
 	                            </div>
 	                            <div class="form-group">
@@ -443,7 +485,8 @@
 	                                    <label for="">Location</label>
 	                                </div>
 	                                <div class="col-sm-9">
-	                                        <select data-ng-model="candidate.company_location">
+	                                	<span class="ui-select">
+	                                        <select data-ng-model="experience.company_location">
 	                                            <option>Pakistan</option>
 	                                            <option>Lahore</option>
 	                                            <option>Pakistan - Karachi</option>
@@ -451,6 +494,7 @@
 	                                            <option>UAE - Sharjah</option>
 	                                            <option>UAE</option>
 	                                        </select>
+	                                    </span>
 	                                </div>
 	                            </div>
 	                            <div class="form-group">
@@ -458,28 +502,32 @@
 	                                    <label for="">Industry</label>
 	                                </div>
 	                                <div class="col-sm-9">
-	                                        <select data-ng-model="candidate.company_industry">
+	                                	<span class="ui-select">
+	                                        <select data-ng-model="experience.company_industry">
 	                                            <option>Accounts</option>
 	                                            <option>Sales</option>
 	                                            <option>Business</option>
 	                                            <option>Marketing</option>
 	                                        </select>
+	                                    </span>
 	                                </div>
 	                            </div>
 	                            <div class="form-group">
 	                                <div class="col-sm-3" style="padding-top: 2%">
 	                                    <label for="">Start Date</label>
 	                                </div>
-	                                <div class="col-sm-9">
-	                                    <input type="date" ng-model="experience.start_date" />
+
+
+	                                <div class="col-sm-4">
+	                                    <input ui-date ui-date-format class="form-control" ng-model="experience.start_date" />
 	                                </div>
 	                            </div>
 	                            <div class="form-group">
 	                                <div class="col-sm-3" style="padding-top: 2%">
 	                                    <label for="">End Date</label>
 	                                </div>
-	                                <div class="col-sm-9">
-	                                    <input type="date" ng-model="experience.end_date" />
+	                                <div class="col-sm-4">
+	                                    <input ui-date ui-date-format class="form-control" ng-model="experience.end_date" />
 	                                </div>
 	                            </div>
 	                            <div class="form-group">
@@ -495,27 +543,30 @@
 	                            </div>
 	                            
 	                        </fieldset>
-	                        <button ng-click="addExperience()" class="btn btn-small">Add Experience</button>
+	                        <button ng-click="addExperience()" class="btn btn-small btn-success pull-right">Add Experience</button>
 	                    </form>
 	                </div>
 	            </div>
 
-	            <div class="panel panel-info">
+	            <div class="panel panel-default">
 	                <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Projects</strong></div>
 	                <div class="panel-body">
-	                    <form class="form-horizontal form-validation" data-ng-submit="submitForm()">
-	                        <fieldset ng-repeat="project in candidate.projects">   
+	                    <form class="form-horizontal form-validation">
+	                        <fieldset ng-repeat="project in candidate.projects" style="background-color: #fff; padding: 10px; margin: 10px; border: 1px solid #e1e1e1; box-shadow: 1px 1px 1px #eee; border-radius:3px;">   
 	                            <div class="form-group">
-	                                <a ng-click="removeProject($index)">[ X ]</a>
+	                                
 	                                <div class="col-sm-3">
 	                                    <label for="">Project Name</label>
 	                                </div>
-	                                <div class="col-sm-9">
+	                                <div class="col-sm-8">
 	                                    <input  type="text"
 	                                    class="form-control"
 	                                    required
 	                                    data-ng-model="project.name"
 	                                    >
+	                                </div>
+	                                <div class="col-sm-1">
+	                                	<a ng-click="removeProject($index)"><i class="fa fa-times pull-right"></i></a>
 	                                </div>
 	                            </div>
 	                             <div class="form-group">
@@ -523,26 +574,28 @@
 	                                    <label for="">Company</label>
 	                                </div>
 	                                <div class="col-sm-9">
+	                                	<span class="ui-select">
 	                                        <select data-ng-model="project.company">
 	                                            <option>CNS</option>
 	                                            <option>IBM</option>
 	                                        </select>
+	                                    </span>
 	                                </div>
 	                            </div>
 	                            <div class="form-group">
 	                                <div class="col-sm-3" style="padding-top: 2%">
 	                                    <label for="">Start Date</label>
 	                                </div>
-	                                <div class="col-sm-9">
-	                                    <input type="date" ng-model="project.start_date" />
+	                                <div class="col-sm-4">
+	                                    <input ui-date ui-date-format class="form-control" ng-model="project.start_date" />
 	                                </div>
 	                            </div>
 	                            <div class="form-group">
 	                                <div class="col-sm-3" style="padding-top: 2%">
 	                                    <label for="">End Date</label>
 	                                </div>
-	                                <div class="col-sm-9">
-	                                    <input type="date" ng-model="project.end_date" />
+	                                <div class="col-sm-4">
+	                                    <input ui-date ui-date-format class="form-control" ng-model="project.end_date" />
 	                                </div>
 	                            </div>
 	                            <div class="form-group">
@@ -558,12 +611,12 @@
 	                            </div>
 	                            
 	                        </fieldset>
-	                        <button ng-click="addProject()" class="btn btn-small">Add Project</button>
+	                        <button ng-click="addProject()" class="btn btn-small btn-success pull-right">Add Project</button>
 	                    </form>
 	                </div>
 	            </div>
 
-	            <div class="panel panel-danger">
+	            <div class="panel panel-default">
 	                <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Languages</strong></div>
 	                <div class="panel-body" >
 
@@ -576,32 +629,72 @@
 	                                <th></th>
 	                            </tr>
 	                            <tr ng-repeat="language in candidate.languages">
-	                                <td><input type="text" placeholder="e.g Englist" ng-model="language.name"class="input-small"></td>           
+	                                <td><input type="text" placeholder="e.g English" ng-model="language.name"class="input-small"></td>           
 	                                <td>
-	                                    <select data-ng-model="language.proficiency">
-	                                            <option>Elementry</option>
-	                                            <option>Limited Working</option>
-	                                            <option>Professional Working</option>
-	                                            <option>Full Professional</option>
-	                                            <option>Native or Bilingual</option>
-	                                    </select>
+	                                	<span class="ui-select">
+		                                    <select data-ng-model="language.proficiency">
+		                                            <option>Elementry</option>
+		                                            <option>Limited Working</option>
+		                                            <option>Professional Working</option>
+		                                            <option>Full Professional</option>
+		                                            <option>Native or Bilingual</option>
+		                                    </select>
+	                                    </span>
 	                                </td>
 	                                <td>
-	                                    <a ng-click="removeLanguage($index)">[ X ]</a>
+	                                    <a ng-click="removeLanguage($index)"><i class="fa fa-times pull-right"></i></a>
 	                                </td>
 	                            </tr>
 	                            <tr>
-	                                <td><button ng-click="addLanguage()" class="btn btn-small">Add Language</button></td>
-	                                <td></td>
+	                            	<td></td>
+	                            	<td></td>
+	                                <td><button ng-click="addLanguage()" class="btn btn-small btn-success pull-right">Add Language</button></td>
 	                            </tr>
 	                        </table>
 	                    </div>
 	                </div>
 	            </div>
+		        <button type="submit"
+		        class="btn btn-primary btn-block btn-lg"
+		        ng-click="update()"
+		        >Sumbit</button>
+		    </div>
 
+		    <div class="col-md-4 pull-right">
+		        <!-- Thumbnails -->
+		        <div class="panel panel-default">
+		            <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Thumbnails</strong>
+		            </div>
+		            <div class="panel-body">
+		                <div class="row">
+		                    <div class="col-sm-12">
+		                        <div class="thumbnail">
+		                            <img alt="" src="/modules/core/img/600_400-2.jpg">
+		                            <div class="caption">
+		                                <h3>Thumbnail label</h3>
+		                                <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+		                                <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
+		                            </div>
+		                        </div>    
+		                    </div>
+		                    <div class="col-sm-12">
+		                        <div class="thumbnail">
+		                            <img alt="" src="/modules/core/img/600_400-1.jpg">
+		                            <div class="caption">
+		                                <h3>Thumbnail label</h3>
+		                                <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+		                                <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
+		                            </div>
+		                        </div> 
+		                    </div>            
+		                </div>
+		            </div>
+		        </div>
+		            <!-- end Thumbnails -->
+		    </div>
 
-	        </div>
 	    </div>
+
 	</div>
 </section>
 <style type="text/css">
@@ -622,4 +715,7 @@ div.InnerRight {
     position: relative;      
     float: right;
 }
+
+
+
 </style>

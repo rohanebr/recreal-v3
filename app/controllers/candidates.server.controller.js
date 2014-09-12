@@ -1,5 +1,7 @@
 'use strict';
 
+//  git test comment by ejaz
+
 /**
  * Module dependencies.
  */
@@ -97,7 +99,8 @@ exports.delete = function(req, res) {
 /**
  * List of Candidates
  */
-exports.list = function(req, res) { Candidate.find().sort('-created').populate('user', 'displayName').exec(function(err, candidates) {
+exports.list = function(req, res) { 
+	Candidate.find().sort('-created').populate('user', 'displayName').exec(function(err, candidates) {
 		if (err) {
 			return res.send(400, {
 				message: getErrorMessage(err)
@@ -111,7 +114,8 @@ exports.list = function(req, res) { Candidate.find().sort('-created').populate('
 /**
  * Candidate middleware
  */
-exports.candidateByID = function(req, res, next, id) { Candidate.findById(id).populate('user', 'displayName').exec(function(err, candidate) {
+exports.candidateByID = function(req, res, next, id) {
+	Candidate.findById(id).populate('user', 'displayName').exec(function(err, candidate) {
 		if (err) return next(err);
 		if (! candidate) return next(new Error('Failed to load Candidate ' + id));
 		req.candidate = candidate ;
@@ -127,4 +131,112 @@ exports.hasAuthorization = function(req, res, next) {
 		return res.send(403, 'User is not authorized');
 	}
 	next();
+};
+
+
+/**
+ * Update a Candidate
+ */
+exports.deleteSkill = function(req, res) {
+	// var candidate = req.candidate ;
+
+	// candidate = _.extend(candidate , req.body);
+
+
+
+	// candidate.save(function(err) {
+	// 	if (err) {
+	// 		return res.send(400, {
+	// 			message: getErrorMessage(err)
+	// 		});
+	// 	} else {
+	// 		res.jsonp(candidate);
+	// 	}
+	// });
+	
+
+	console.log('method called!');
+
+
+};
+
+
+var path = require('path');
+var fs = require('fs');
+var util = require('util');
+
+/// Post files
+exports.uploadPicture = function(req, res) {
+
+  fs.readFile(req.files.file.path, function (err, data) {
+
+    var imageName = req.files.file.name
+
+    /// If there's an error
+    if(!imageName){
+
+      console.log("There was an error")
+      res.redirect("/");
+      res.end();
+
+    } else {
+
+       var newPath = __dirname + "../../../uploads/fullsize/" + imageName;
+
+      var thumbPath = __dirname + "../../../uploads/thumbs/" + imageName;
+
+      /// write file to uploads/fullsize folder
+      fs.writeFile(newPath, data, function (err) {
+
+        /// write file to uploads/thumbs folder
+        // im.resize({
+        //   srcPath: newPath,
+        //   dstPath: thumbPath,
+        //   width:   200
+        // }, function(err, stdout, stderr){
+        //   if (err) throw err;
+        //   console.log('resized image to fit within 200x200px');
+        // });
+
+         // res.redirect("/uploads/fullsize/" + imageName);
+
+         var candidate = Candidate.find({user: req.user._id}).exec(function(err, candidates){
+         	var old_url = candidates[0].picture_url;
+			candidates[0].picture_url = "/uploads/fullsize/" + imageName;
+			candidates[0].save(function(err) {
+				if (err) {
+					return res.send(400, {
+						message: getErrorMessage(err)
+					});
+				} else {
+					
+					//delete old picture
+					if (old_url != '/uploads/fullsize/no-image.jpg') {
+						fs.unlink(__dirname + '../../..' + old_url, function (err) {
+					  		if (err) console.log(err);
+						  	console.log('successfully deleted /tmp/hello');
+						});
+					};
+					res.send("/uploads/fullsize/" + imageName)
+				}
+			});
+		});
+
+         
+
+      });
+    }
+  });
+};
+
+// Show files
+exports.getImage =  function (req, res){
+  var path = __dirname + "../../../uploads/fullsize/" + req.params.file;
+//   file = req.params.file;
+	
+
+  var img = fs.readFileSync(path);
+  res.writeHead(200, {'Content-Type': 'image/jpg' });
+  res.end(img, 'binary');
+
 };

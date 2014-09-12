@@ -1,178 +1,196 @@
-<section data-ng-controller="CompanyProfileController" data-ng-init="findOne()">
-    <div class="page-header">
-        <h1>Build Company Profile</h1>
-    </div>
-        <div class="col-md-6" >
-            <div class="panel panel-default">
-                <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Company Profile</strong></div>
-                <div class="panel-body">
-                    <form name="form_company_profile" data-ng-submit="update()" class="form-horizontal" >
-                        <fieldset>
-                             <div class="form-group">
-                                <div class="col-sm-3">
-                                    <label for="">Company Name</label>
-                                </div>
-                                <div class="col-sm-9">
-                                    <input  type="text"
-                                            class="form-control"
-                                            data-ng-model="company.company_name">
-                                </div>
-                            </div>
+<section data-ng-controller="CompanyProfileController" data-ng-init="findOne()" class="container">
+    <article>
+        <header class="text-center col-md-12">
+                <h1>Build Company Profile</h1>
+        </header>
+    </article>
+    <article class="col-md-8" >
+        <form name="form_company_profile" class="form-horizontal" >
+            <fieldset>
+                 <section class="form-group">
+                    <div class="col-sm-3">
+                        <label for="">Company Name</label>
+                    </div>
+                    <div class="col-sm-6">
+                        <input  type="text"
+                                class="form-control"
+                                data-ng-model="company.company_name">
+                    </div>
+                </section>
 
-                            <div class="form-group">
-                                <div class="col-sm-3">
-                                    <label for="">Industry</label>
-                                </div>
-                                <div class="col-sm-9">
-                                    <select data-ng-model="company.industry">
-                                            <option>Accounts</option>
-                                            <option>Sales</option>
-                                            <option>Business</option>
-                                            <option>Marketing</option>
-                                        </select>
-                                </div>
-                            </div>
+                <section class="form-group">
+                    <div class="col-sm-3">
+                        <label for="">Industry</label>
+                    </div>
+                    <div class="col-sm-6">
+                        <span class="ui-select">
+                            <select data-ng-model="company.industry">
+                                    <option data-ng-repeat="ind in industries">{{ind.name}}</option>
+                            </select>
+                        </span>
+                    </div>
+                </section>
 
-                            <div class="form-group">
-                                <div class="col-sm-3">
-                                    <label for="">Company Type</label>
-                                </div>
-                                <div class="col-sm-9">
-                                    <select data-ng-model="newCandidate.company_type">
-                                            <option>Sole Proprietorship</option>
-                                            <option>Public</option>
-                                            <option>Private</option>
-                                            <option>NGO</option>
-                                        </select>
-                                </div>
-                            </div>
+                <section class="form-group">
+                    <div class="col-sm-3">
+                        <label for="">Company Type</label>
+                    </div>
+                    <div class="col-sm-6">
+                        <span class="ui-select">
+                            <select data-ng-model="company.company_type">
+                                    <option>Sole Proprietorship</option>
+                                    <option>Public</option>
+                                    <option>Private</option>
+                                    <option>NGO</option>
+                                </select>
+                        </span>
+                    </div>
+                </section>
 
-                            <div class="form-group">
-                                <div class="col-sm-3">
-                                    <label for="">Company Size</label>
-                                </div>
-                                <div class="col-sm-9">
-                                    <select data-ng-model="newCandidate.compnay_size">
-                                            <option>1 - 10</option>
-                                            <option>11 - 50</option>
-                                            <option>51 - 100</option>
-                                            <option>101 - 500</option>
-                                            <option>501 - 1000</option>
-                                            <option>1001 - 5000</option>
-                                            <option>5001 - 10000</option>
-                                        </select>
-                                </div>
-                            </div>
+                <section class="form-group">
+                    <div class="col-sm-3">
+                        <label for="">Company Size</label>
+                    </div>
+                    <div class="col-sm-6">
+                        <span class="ui-select">
+                            <select data-ng-model="company.company_size">
+                                <option>1 - 10</option>
+                                <option>11 - 50</option>
+                                <option>51 - 100</option>
+                                <option>101 - 500</option>
+                                <option>501 - 1000</option>
+                                <option>1001 - 5000</option>
+                                <option>5001 - 10000</option>
+                            </select>
+                        </span> 
+                    </div>
+                </section>
 
-                            <div class="form-group">
-                                <div class="col-sm-3">
-                                    <label for="">Founded</label>
-                                </div>
-                                <div class="col-sm-9">
-                                    <input  type="date"
-                                            class="form-control"
-                                            data-ng-model="company.founded">
-                                </div>
-                            </div>
+                <section class="form-group">
+                    <div class="col-sm-3">
+                        <label for="">Founded</label>
+                    </div>
+                    <div class="col-sm-4">
+                        <input  type="date"
+                                class="form-control"
+                                data-ng-model="company.founded">
+                    </div>
+                </section>
 
-                            <div class="form-group">
-                                <div class="col-sm-3">
-                                    <label for="">Website</label>
-                                </div>
-                                <div class="col-sm-9">
-                                    <input  type="text"
-                                            class="form-control"
-                                            data-ng-model="company.website">
-                                </div>
-                            </div>
+                <section class="form-group">
+                    <div class="col-sm-3">
+                        <label for="">Website</label>
+                    </div>
+                    <div class="col-sm-6">
+                        <input  type="text"
+                                class="form-control"
+                                data-ng-model="company.website">
+                    </div>
+                </section>
 
-                            <div class="form-group">
-                                <div class="col-sm-3">
-                                    <label for="">Address</label>
-                                </div>
-                                <div class="col-sm-9">
-                                    <input  type="text"
-                                            class="form-control"
-                                            data-ng-model="company.address">
-                                </div>
-                            </div>
+                <section class="form-group">
+                    <div class="col-sm-3">
+                        <label for="">Address</label>
+                    </div>
+                    <div class="col-sm-6">
+                        <input  type="text"
+                                class="form-control"
+                                data-ng-model="company.address">
+                    </div>
+                </section>
 
-                            <div class="form-group">
-                                <div class="col-sm-3">
-                                    <label for="">Phone No</label>
-                                </div>
-                                <div class="col-sm-9">
-                                    <input  type="text"
-                                            class="form-control"
-                                            data-ng-model="company.contact_no">
-                                </div>
-                            </div>
+                <section class="form-group">
+                    <div class="col-sm-3">
+                        <label for="">Phone No</label>
+                    </div>
+                    <div class="col-sm-6">
+                        <input  type="text"
+                                class="form-control"
+                                data-ng-model="company.contact_no">
+                    </div>
+                </section>
 
-                            <div class="form-group">
-                                <div class="col-sm-3">
-                                    <label for="">Contact Person Name</label>
-                                </div>
-                                <div class="col-sm-9">
-                                    <input  type="text"
-                                            class="form-control"
-                                            data-ng-model="company.contact_person">
-                                </div>
-                            </div>
+                <section class="form-group">
+                    <div class="col-sm-3">
+                        <label for="">Contact Person Name</label>
+                    </div>
+                    <div class="col-sm-6">
+                        <input  type="text"
+                                class="form-control"
+                                data-ng-model="company.contact_person">
+                    </div>
+                </section>
 
-                            <div class="form-group">
-                                <div class="col-sm-3">
-                                    <label for="">Contact Person Email</label>
-                                </div>
-                                <div class="col-sm-9">
-                                    <input  type="text"
-                                            class="form-control"
-                                            data-ng-model="company.contact_email">
-                                </div>
-                            </div>
+                <section class="form-group">
+                    <div class="col-sm-3">
+                        <label for="">Contact Person Email</label>
+                    </div>
+                    <div class="col-sm-6">
+                        <input  type="text"
+                                class="form-control"
+                                data-ng-model="company.contact_email">
+                    </div>
+                </section>
 
-                            <div class="form-group">
-                                <div class="col-sm-3">
-                                    <label for="">Company Logo</label>
-                                </div>
-                                <div class="col-sm-9">
-                                    <input  type="text"
-                                            class="form-control"
-                                            data-ng-model="company.logo_url">
-                                </div>
-                            </div>
+                <section class="form-group">
+                    <div class="col-sm-3">
+                        <label for="">Company Logo</label>
+                    </div>
+                    <div class="col-sm-6">
+                        <input  type="text"
+                                class="form-control"
+                                data-ng-model="company.logo_url">
+                    </div>
+                </section>
 
-                            <div class="form-group">
-                                <div class="panel-body" >
-                                    <table class="table">
-                                        <tr>
-                                            <th><h5>Specialities</h5></th>
-                                            <th></th>
-                                        </tr>
-                                        <tr ng-repeat="speciality in company.specialities">
-                                            <td><input type="text" placeholder="e.g Software" ng-model="specialty.name"class="input-small"></td>   
-                                            <td>
-                                                <a ng-click="removeSpeciality($index)">[ X ]</a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td><button ng-click="addSpeciality()" class="btn btn-small">Add Speciality</button></td>
-                                            <td></td>
-                                        </tr>
-                                    </table>
-                                </div>
-                            </div>
+                <section class="form-group">
+                    <div class="panel-body" >
+                        <table class="table">
+                            <tr>
+                                <th>Specialities</th>
+                                <th></th>
+                            </tr>
+                            <tr ng-repeat="speciality in company.specialties">
+                                <td><input type="text" placeholder="e.g Software" data-ng-model="speciality.name" class="form-control"></td>   
+                                <td>
+                                    <a href="" ng-click="removeSpeciality($index)"><i class="fa fa-times"></i></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td><button ng-click="addSpeciality()" class="btn btn-small btn-success pull-right">Add Speciality</button></td>                                            
+                            </tr>
+                        </table>
+                    </div>
+                </section>
 
-                            <button type="submit"
-                                class="btn btn-sucess btn-block btn-lg"
-                                ng-click="update()"
-                                >Sumbit</button>                             
-                            <div data-ng-show="error" class="text-danger">
-                                <strong data-ng-bind="error"></strong>
-                            </div>
-                        </fieldset>
-                    </form>
-                             
-                </div>
-            </div>
-        </div>
- </section>    
+                <button type="submit"
+                    class="btn btn-primary btn-block btn-lg"
+                    ng-click="update()"
+                    >Sumbit</button>                             
+                <section data-ng-show="error" class="text-danger">
+                    <strong data-ng-bind="error"></strong>
+                </section>
+            </fieldset>
+        </form>
+    </article>
+
+    <aside class="col-md-4">
+        <header> <h2>Title</h2></header>
+        <article class="caption">
+            <h3>Thumbnail label</h3>
+            <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+        </article>
+    </aside>
+ </section>  
+
+
+<style type="text/css">
+.header-page
+{
+    color: #464545; 
+    text-shadow: 1px 1px -2px #D5D5D5; 
+    font-size:30px; 
+    padding-top:10px;
+}
+</style>  
