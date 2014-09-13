@@ -138,6 +138,16 @@ var JobSchema = new Schema({
 		type: Schema.ObjectId,
 		ref: 'Candidate'
 	}],
+	shortListedCandidates: [{
+		candidate: {
+			type: Schema.ObjectId,
+			ref: 'Candidate'
+		},
+		employer: {
+			type: Schema.ObjectId,
+			ref: 'Employer'
+		}
+	}],
 	user: {
 		type: Schema.ObjectId,
 		ref: 'User'
@@ -158,6 +168,15 @@ JobSchema.methods.apply = function(candidate, callback) {
 	});
 };
 		
-
+JobSchema.methods.addToShortList = function(candidate, employer, callback) {
+	var job = this;
+	var shortListedCandidate = {
+		candidate: candidate,
+		employer: employer
+	};
+   	this.shortListedCandidates.push(shortListedCandidate);	
+	this.save(callback);
+};
+		
 
 mongoose.model('Job', JobSchema);

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 
 <!-- <section data-ng-controller="EmployerJobCandidatesController">
@@ -9,6 +10,17 @@
  -->
 <section data-ng-controller="EmployerJobCandidatesController" class="container">
     <article class="row ">
+=======
+<!-- <section data-ng-controller="EmployerJobCandidatesController">
+	<h2>{{job.title}}</h2>
+	<div data-ng-repeat="candidate in candidates">
+		<h3>{{candidate.displayName}}</h3>
+	</div>
+</section>
+ -->
+<section data-ng-controller="EmployerJobCandidatesController" class="container">
+	<article class="row ">
+>>>>>>> dbcf0e5259299a603d31074e7dd935cfed166442
         <header class="col-md-3">
                 <span><i class="fa fa-user super-awesome text-center" ></i></span>
         </header>
@@ -105,7 +117,11 @@
 
             
 
+<<<<<<< HEAD
         <article class="col-md-9">
+=======
+    	<article class="col-md-9">
+>>>>>>> dbcf0e5259299a603d31074e7dd935cfed166442
             <section class="panel-body" data-ng-repeat="candidate in candidates | locationFilter:locationFilters:true | salaryFilter:salaryFilters:true | visaFilter:visaFilters:true | employeetypeFilter:employeetypeFilters:true | employeestatusFilter:employeestatusFilters:true | filter:searchText">
                 <section class="col-md-3" style="padding-top:20px;">
                     <a data-ng-href="#!/candidates/{{candidate._id}}">
