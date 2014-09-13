@@ -41,7 +41,7 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
 				// $scope.candidate.jobs.push(job);
 				// $scope.jobs.splice($scope.jobs.indexOf(job), 1);
 				// $scope.$apply();
-				//And redirect to the index page
+				
 
 				// $location.path('jobs/' + job._id);
 			}).error(function(response) {
@@ -113,6 +113,7 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
 		};
 
 		var populateVisaFilters = function(){
+<<<<<<< HEAD
 			
 			$scope.candidates = $filter('orderBy')($scope.candidates, 'visa_status');
 			var filterValue = 'invalid_value';
@@ -139,11 +140,61 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
 				if(candidate.employee_type !== filterValue){
 					filterValue = candidate.employee_type;
 					$scope.employeetypeFilters.push({
+=======
+			
+			$scope.candidates = $filter('orderBy')($scope.candidates, 'visa_status');
+			var filterValue = 'invalid_value';
+			for (var i = 0 ; i < $scope.candidates.length ; i++ ){
+				var candidate = $scope.candidates[i];
+				if(candidate.visa_status !== filterValue){
+					filterValue = candidate.visa_status;
+					$scope.visaFilters.push({
+>>>>>>> dbcf0e5259299a603d31074e7dd935cfed166442
 						name: filterValue,
 						count: 0,
 						value: false
 					});
 				}
+<<<<<<< HEAD
+				$scope.employeetypeFilters[$scope.employeetypeFilters.length - 1].count++;
+			}
+		};
+
+		var populateEmployeestatusFilters = function(){
+			
+			$scope.candidates = $filter('orderBy')($scope.candidates, 'employee_status');
+			var filterValue = 'invalid_value';
+			for (var i = 0 ; i < $scope.candidates.length ; i++ ){
+				var candidate = $scope.candidates[i];
+				if(candidate.employee_status !== filterValue){
+					filterValue = candidate.employee_status;
+					$scope.employeestatusFilters.push({
+=======
+				$scope.visaFilters[$scope.visaFilters.length - 1].count++;
+			}
+		};
+
+		var populateEmployeetypeFilters = function(){
+			
+			$scope.candidates = $filter('orderBy')($scope.candidates, 'employee_type');
+			var filterValue = 'invalid_value';
+			for (var i = 0 ; i < $scope.candidates.length ; i++ ){
+				var candidate = $scope.candidates[i];
+				if(candidate.employee_type !== filterValue){
+					filterValue = candidate.employee_type;
+					$scope.employeetypeFilters.push({
+>>>>>>> dbcf0e5259299a603d31074e7dd935cfed166442
+						name: filterValue,
+						count: 0,
+						value: false
+					});
+				}
+<<<<<<< HEAD
+				$scope.employeestatusFilters[$scope.employeestatusFilters.length - 1].count++;
+			}
+		};
+
+=======
 				$scope.employeetypeFilters[$scope.employeetypeFilters.length - 1].count++;
 			}
 		};
@@ -166,5 +217,7 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
 			}
 		};
 
+>>>>>>> dbcf0e5259299a603d31074e7dd935cfed166442
 }
 ]);
+
