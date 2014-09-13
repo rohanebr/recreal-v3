@@ -41,7 +41,7 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
 				// $scope.candidate.jobs.push(job);
 				// $scope.jobs.splice($scope.jobs.indexOf(job), 1);
 				// $scope.$apply();
-				//And redirect to the index page
+				
 
 				// $location.path('jobs/' + job._id);
 			}).error(function(response) {
