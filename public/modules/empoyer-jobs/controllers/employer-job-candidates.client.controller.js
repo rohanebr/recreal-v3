@@ -27,6 +27,49 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
 		// 	$scope.filteredCandidates = $scope.candidates;
 
 			
+			// Add to Short List
+		$scope.addCandidateToShortList = function(candidate) {
+
+			var attribute = {
+					jobId: $scope.job._id,
+					candidateId: candidate._id
+				}
+
+			$http.put('jobs/addToShortList/' + $scope.job._id , attribute).success(function(response) {
+
+				alert('server responded');
+				// $scope.candidate.jobs.push(job);
+				// $scope.jobs.splice($scope.jobs.indexOf(job), 1);
+				// $scope.$apply();
+				
+
+				// $location.path('jobs/' + job._id);
+			}).error(function(response) {
+				$scope.error = response.message;
+			});
+		};
+
+
+		// Remove from Short List
+		$scope.removeCandidateFromShortList = function(candidate) {
+
+				var attribute = {
+					jobId: $scope.job._id,
+					candidateId: candidate._id
+				}
+
+			$http.put('jobs/removeFromShortList/' + $scope.job._id , attribute).success(function(response) {
+
+				$scope.candidate.jobs.push(job);
+				$scope.jobs.splice($scope.jobs.indexOf(job), 1);
+				$scope.$apply();
+				//And redirect to the index page
+
+				$location.path('jobs/' + job._id);
+			}).error(function(response) {
+				$scope.error = response.message;
+			});
+		};
 
 		// });
 		// $scope.search.name = 'Rawalpindi';
@@ -125,3 +168,4 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
 
 }
 ]);
+

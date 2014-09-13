@@ -1,0 +1,122 @@
+<article data-ng-controller="EmployerProfileViewController" data-ng-init="findOne()" class="container">
+    <header class="text-center col-md-8">
+    </header>
+    <section class="col-md-8" >
+        <section>
+            <div class="col-md-4">
+                <img alt=""class="img180_180" src="https://media.licdn.com/mpr/mpr/shrink_200_200/p/7/005/078/1ef/03dc8ac.jpg">
+            </div>
+
+            <div class="col-md-8 ">
+                <h2>{{employer.displayName.toUpperCase()}}</h2>
+                <h4>{{employer.title}}</h4>
+                <h5>Member Since:1947</h5>
+                <section>
+                    <h6>Total Posted Jobs: 8</h6>
+                    <h6>Open Jobs: 2</h6>
+                </section>
+                <hr>
+            </div>
+        </section>
+
+        <section>
+
+                <section class="col-md-12" >
+                <h4>Personal Information</h4>
+            
+                <div class="col-md-12">
+                    <div class="col-md-4"><label for="">Division: </label></div>
+                    <div class="col-md-6">{{employer.division}}</div>    
+                </div>
+                
+                <div class="col-md-12">
+                    <div class="col-md-4"><label for="">Department: </label></div>
+                    <div class="col-md-6">{{employer.department}}</div>
+                </div>
+                
+                <div class="col-md-12">
+                    <div class="col-md-4"><label for="">Gender: </label></div>
+                    <div class="col-md-6">Male/female</div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="col-md-4"><label for="">Location:</label></div>
+                    <div class="col-md-6">{{employer.location}}</div>    
+                </div>
+                
+                <div class="col-md-12">
+                    <div class="col-md-4"><label for="">Country:</label></div>
+                    <div class="col-md-6">{{employer.country}}</div>
+                </div>
+
+                <h4>Contact Information</h4>
+        
+                <div class="col-md-12">
+                    <div class="col-md-4"><label for="">Email: </label></div>
+                    <div class="col-md-6">{{employer.contact_email}}</div>
+                </div>
+                
+                <div class="col-md-12">
+                    <div class="col-md-4"><label for="">Skype: </label></div>
+                    <div class="col-md-6">{{employer.skype_id}}</div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="col-md-4"><label for="">Office No:</label></div>
+                     <div class="col-md-6">{{employer.office_no}}</div>   
+                </div>
+                
+                <div class="col-md-12">
+                    <div class="col-md-4"><label for="">Personel No:</label></div>
+                    <div class="col-md-6">{{employer.personal_no}}</div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="col-md-4"><label for="">Fax No:</label></div>
+                    <div class="col-md-6">0092-51-5525405</div>    
+                </div>
+
+                <div class="col-md-12">
+                    <div class="col-md-4"><label for="">Web Site:</label></div>
+                    <div class="col-md-6">www.cns.com</div>    
+                </div>
+
+                
+            </section>
+        </section>
+    </section> 
+    
+    <aside class="col-md-4">
+        <br/><br/>
+        <div class="text-center">
+            <a href="#!/employer-profile" class="btn btn-success text-center">Edit Profile</a>
+        </div>
+        <section>
+            <h2>Open Jobs by Employer</h2>
+            <div>
+                <h4>Software Developer</h4>
+                <h4>Finance Manager</h4>
+                <h4>Accounts Manager</h4>
+            </div><hr>
+            <h2>Open Jobs By Company</h2>
+            <div>
+                <h4>Software Developer</h4>
+                <h4>Finance Manager</h4>
+                <h4>Accounts Manager</h4>
+            </div>
+        </section>
+    </aside>
+</article>
+ <style>
+.super-awesome {
+        display: block;
+        color: #fff;
+        font-size: 5em;
+         text-shadow: 1px 1px #D5D5D5;
+         color: #f2f2f2
+}
+.signin-header {
+        padding: 8px 0;    
+        background-color: #898989;
+}
+</style>
