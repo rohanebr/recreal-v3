@@ -88,7 +88,7 @@
 
 .nav {width: auto; height: 100px; float: right;}
 
-.menu li {float: left; line-height: 20px; padding: 40px 10px; font-size: 13px; text-transform: uppercase;}
+.menu li {float: left; line-height: 20px; padding: 40px 10px 0 5px; font-size: 13px; text-transform: uppercase;}
 
 .menu a {color: #DAD7D7; letter-spacing: -0.5px;}
 
@@ -99,6 +99,9 @@
 .mobile-menu {display: none !important; color: #fff; font-size: 33px; float: right; margin: 33px 0; cursor: pointer;}
 
 .header.stuck .mobile-menu {margin: 13px 0;}
+
+.nav-extras {width: auto; height: 100px; float: right;  padding: 30px 10px 0 5px;}
+
 
 /*-------------------------*/
 /* SLIDER */
