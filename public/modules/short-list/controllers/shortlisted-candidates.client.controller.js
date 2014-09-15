@@ -10,8 +10,6 @@ angular.module('short-list').controller('ShortlistedCandidatesController', ['$sc
 			$scope.candidates = job.shortListedCandidates;
 			$scope.filteredCandidates = $scope.candidates;
 
-			alert('page loaded');
-			alert($scope.candidates.indexOf(0).displayName);
 
 		});
 	}
