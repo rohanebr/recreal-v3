@@ -125,7 +125,7 @@ var JobSchema = new Schema({
 		type: Date,
 		default: Date.now
 	},	
-	employer: {
+	employer: { 
 		type: Schema.ObjectId,
 		ref: 'Employer',
 		required: 'Jobs can only be posted from Employer accounts'
