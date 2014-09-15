@@ -174,7 +174,8 @@ exports.delete = function(req, res) {
 /**
  * List of Jobs
  */
-exports.list = function(req, res) { Job.find().sort('-created').populate('user', 'displayName').populate('company').exec(function(err, jobs) {
+exports.list = function(req, res) { 
+	Job.find().sort('-created').populate('user', 'displayName').populate('company').exec(function(err, jobs) {
 		if (err) {
 			return res.send(400, {
 				message: getErrorMessage(err)
@@ -199,11 +200,12 @@ exports.jobByID = function(req, res, next, id) { Job.findById(id).populate('user
 exports.addToShortList = function(req, res, next) {
 
 	if(req.user.userType === 'employer'){
+
 		var jobId = req.body.jobId;
 		var candidateId = req.body.candidateId;
 
 
-		Job.findOne({_id: jobId}).exec(function(err, job){
+			Job.findOne({_id: jobId}).exec(function(err, job){
 			Employer.findOne({user: req.user._id}).exec(function(err, employer){
 				Candidate.findOne({_id: candidateId}).exec(function(err, candidate){
 					job.addToShortList(candidate, employer);
