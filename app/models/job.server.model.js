@@ -178,5 +178,23 @@ JobSchema.methods.addToShortList = function(candidate, employer, callback) {
 	this.save(callback);
 };
 		
+JobSchema.methods.removeFromShortList = function(candidate, employer, callback) {
+	var job = this;
 
+	// Job.findOne({_id: this._id}).populate('shortListedCandidates').exec(function(err, doc){
+	// 	job = doc;
+	// });
+
+	this.shortListedCandidates.forEach(function(c){
+		if(c.candidate._id === candidate._id){
+			this.shortListedCandidates.splice(this.shortListedCandidates.indexOf(c), 1);
+		}
+	});
+
+	this.save(callback);
+
+
+	
+
+};
 mongoose.model('Job', JobSchema);

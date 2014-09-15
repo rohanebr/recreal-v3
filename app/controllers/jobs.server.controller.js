@@ -100,6 +100,12 @@ exports.getShortListedCandidates = function(req, res) {
 	});
 };
 
+exports.getRemoveShortListedCandidates = function(req, res) {
+	Job.findOne({_id: req.job._id}).populate('shortListedCandidates').exec(function(err, job){
+		res.jsonp(job);
+	});
+};
+
 exports.apply = function(req, res, next) 
 
 {
@@ -223,7 +229,18 @@ exports.addToShortList = function(req, res, next) {
 exports.removeFromShortList = function(req, res, next) {
 
 	if(req.user.userType === 'employer'){
-		var job = req.job;
+		var jobId = req.body.jobId;
+		var candidateId = req.body.candidateId;
+
+
+			Job.findOne({_id: jobId}).exec(function(err, job){
+			Employer.findOne({user: req.user._id}).exec(function(err, employer){
+				Candidate.findOne({_id: candidateId}).exec(function(err, candidate){
+					job.removeFromShortList(candidate, employer);
+					res.jsonp(job);
+				});
+			});
+		});
 
 	
 	}	
@@ -238,4 +255,4 @@ exports.hasAuthorization = function(req, res, next) {
 		return res.send(403, 'User is not authorized');
 	}
 	next();
-};
+};
