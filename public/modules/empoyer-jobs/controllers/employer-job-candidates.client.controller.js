@@ -37,7 +37,6 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
 
 			$http.put('jobs/addToShortList/' + $scope.job._id , attribute).success(function(response) {
 
-				alert('server responded');
 				// $scope.candidate.jobs.push(job);
 				// $scope.jobs.splice($scope.jobs.indexOf(job), 1);
 				// $scope.$apply();
