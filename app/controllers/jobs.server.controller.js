@@ -233,16 +233,14 @@ exports.removeFromShortList = function(req, res, next) {
 		var candidateId = req.body.candidateId;
 
 
-			Job.findOne({_id: jobId}).exec(function(err, job){
-			Employer.findOne({user: req.user._id}).exec(function(err, employer){
-				Candidate.findOne({_id: candidateId}).exec(function(err, candidate){
-					job.removeFromShortList(candidate, employer);
-					res.jsonp(job);
-				});
-			});
+		Job.findByIdAndUpdate(jobId, {
+		  $pull: {
+		    shortListedCandidates: {candidate: candidateId}
+		  }
+		}, function(err, job){
+			res.jsonp(job);
 		});
-
-	
+			
 	}	
 };
 
@@ -255,4 +253,5 @@ exports.hasAuthorization = function(req, res, next) {
 		return res.send(403, 'User is not authorized');
 	}
 	next();
-};
+};
+
