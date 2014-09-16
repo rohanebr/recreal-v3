@@ -1,18 +1,17 @@
 <section data-ng-controller="ShortlistedCandidatesController" class="container">
     <article class="row ">
-        <section class="logo text-center col-md-12" >
+        <section class="logo text-center col-md-9" >
             <h2> {{job.title}}</h2>
         </section>  
-                <article class="col-md-8">
-                    <section class="col-md-4 pull-right panel">
+                <artical class="col-md-3">
+                    
+                       <label class="col-md-3" for="searchBox">Search</label>
                    
-                        <label class="col-md-3" for="searchBox">Search</label>
-                   
-                        <article class="col-md-8">
-                        <input id="searchBox" class="col-md-8 form-control" type="text" data-ng-model="searchTex"/>
+                        <article class="col-md-9">
+                        <input id="searchBox" class="col-md-12 form-control" type="text" data-ng-model="searchTex"/>
                         </article>
-                    </section>   
-                </article>
+                    </artical>   
+                </section>
         
         <section class="col-md-8">
             data of candidate
