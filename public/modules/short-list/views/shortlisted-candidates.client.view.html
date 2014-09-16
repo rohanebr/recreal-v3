@@ -21,6 +21,12 @@
                 </article>
     </section>
         </aside>
+
+
+        <section ng-repeat="candidate in candidates">
+            {{candidate.displayName}}
+            <button class="btn btn-sm btn-default pull-right" ng-click="removeCandidateFromShortList(candidate)">Remove From Favorites</button>
+        </section>
         
         <section class="col-md-8">
             data of candidate
