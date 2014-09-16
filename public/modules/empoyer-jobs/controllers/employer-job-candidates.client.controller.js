@@ -8,6 +8,14 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
 		$scope.visaFilters = [];
 		$scope.employeetypeFilters = [];
 		$scope.employeestatusFilters = [];
+
+		$scope.Mujahid = true;
+
+		$scope.isShortListed = function(candidate){
+			// job.candidates = [];
+			// job.shortListedCandidates = [];
+			return false;
+		};
 		
 		$http.get('jobs/candidates/' + $stateParams.jobId).success(function(job) {
 			$scope.job = job;

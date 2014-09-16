@@ -123,9 +123,9 @@
                 <section class="col-md-9">
                     <a data-ng-href="#!/candidates/{{candidate._id}}"><h2 style="color:#00afef;">{{candidate.displayName}}</h2></a>
                    
-                    <button class="btn btn-sm btn-default pull-right"  ng-click="addCandidateToShortList(candidate)">Add to Favorites</button>
+                    <button class="btn btn-sm btn-default pull-right" ng-hide="isShortListed(candidate)"  ng-click="addCandidateToShortList(candidate)">Add to Favorites</button>
                    
-                    <button class="btn btn-sm btn-default pull-right" ng-click="removeCandidateFromShortList(candidate)">Remove From Favorites</button>
+                    <button class="btn btn-sm btn-default pull-right" ng-show="isShortListed(candidate)" ng-click="removeCandidateFromShortList(candidate)">Remove From Favorites</button>
                    
                     <h4>{{candidate.title}}</h4>
                     <p style="color:rgb(83, 82, 82)">{{candidate.objective}}</p>
