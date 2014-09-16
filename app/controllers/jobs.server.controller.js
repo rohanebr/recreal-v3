@@ -219,7 +219,6 @@ exports.addToShortList = function(req, res, next) {
 				});
 			});
 		});
-		
 	}	
 };
 
@@ -254,4 +253,5 @@ exports.hasAuthorization = function(req, res, next) {
 	}
 	next();
 };
+
 
