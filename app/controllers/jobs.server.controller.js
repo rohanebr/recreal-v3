@@ -95,13 +95,7 @@ exports.getJobCandidates = function(req, res) {
  * Show the current Job
  */
 exports.getShortListedCandidates = function(req, res) {
-	Job.findOne({_id: req.job._id}).populate('shortListedCandidates').exec(function(err, job){
-		res.jsonp(job);
-	});
-};
-
-exports.getRemoveShortListedCandidates = function(req, res) {
-	Job.findOne({_id: req.job._id}).populate('shortListedCandidates').exec(function(err, job){
+	Job.findOne({_id: req.job._id}).populate('shortListedCandidates').populate('shortListedCandidates.candidate').exec(function(err, job){
 		res.jsonp(job);
 	});
 };
@@ -211,18 +205,31 @@ exports.addToShortList = function(req, res, next) {
 		var candidateId = req.body.candidateId;
 
 
+
+
 			Job.findOne({_id: jobId}).exec(function(err, job){
-			Employer.findOne({user: req.user._id}).exec(function(err, employer){
-				Candidate.findOne({_id: candidateId}).exec(function(err, candidate){
-					job.addToShortList(candidate, employer);
-					res.jsonp(job);
+
+				var exists = false;
+				job.shortListedCandidates.forEach(function(slc){
+					if(slc.candidate == candidateId)
+					{
+						exists = true;
+					}
 				});
-			});
+
+				if(!exists){
+					Employer.findOne({user: req.user._id}).exec(function(err, employer){
+						Candidate.findOne({_id: candidateId}).exec(function(err, candidate)
+							{
+							job.addToShortList(candidate, employer);
+							res.jsonp(job);
+						});
+					});
+				}
 		});
+		
 	}	
 };
-
-
 
 
 exports.removeFromShortList = function(req, res, next) {
@@ -254,4 +261,4 @@ exports.hasAuthorization = function(req, res, next) {
 	next();
 };
 
-
+
