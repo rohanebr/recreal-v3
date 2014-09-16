@@ -34,7 +34,7 @@ angular.module('short-list').controller('ShortlistedCandidatesController', ['$sc
 
 				var attribute = {
 					jobId: $scope.job._id,
-					candidateId: candidate
+					candidateId: candidate.candidate
 				}
 
 			$http.put('jobs/removeFromShortList/' + $scope.job._id , attribute).success(function(response) {
@@ -42,7 +42,7 @@ angular.module('short-list').controller('ShortlistedCandidatesController', ['$sc
 				//And redirect to the index page
 
 
-				$location.path('jobs/' + job._id);
+				// $location.path('jobs/' + job._id);
 			}).error(function(response) {
 				$scope.error = response.message;
 			});
