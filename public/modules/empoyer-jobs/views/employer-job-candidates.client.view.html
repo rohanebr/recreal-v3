@@ -8,14 +8,14 @@
 <section data-ng-controller="EmployerJobCandidatesController" class="container">
     <article class="row ">
 <!-- <section data-ng-controller="EmployerJobCandidatesController">
-	<h2>{{job.title}}</h2>
-	<div data-ng-repeat="candidate in candidates">
-		<h3>{{candidate.displayName}}</h3>
-	</div>
+    <h2>{{job.title}}</h2>
+    <div data-ng-repeat="candidate in candidates">
+        <h3>{{candidate.displayName}}</h3>
+    </div>
 </section>
  -->
 <section data-ng-controller="EmployerJobCandidatesController" class="container">
-	<article class="row ">
+    <article class="row ">
         <header class="col-md-3">
                 
         </header>
@@ -113,19 +113,15 @@
 
 
         <article class="col-md-9">
-    	<article class="col-md-9">
+        <article class="col-md-9">
             <section class="panel-body" data-ng-repeat="candidate in candidates | locationFilter:locationFilters:true | salaryFilter:salaryFilters:true | visaFilter:visaFilters:true | employeetypeFilter:employeetypeFilters:true | employeestatusFilter:employeestatusFilters:true | filter:searchText">
-                <section class="col-md-3" style="padding-top:20px;">
+                <section class="col-md-4" style="padding-top:20px;">
                     <a data-ng-href="#!/candidates/{{candidate._id}}">
                         <img width="150" src="{{candidate.picture_url}}">
                     </a>
                 </section>
-                <section class="col-md-9">
+                <section class="col-md-8">
                     <a data-ng-href="#!/candidates/{{candidate._id}}"><h2 style="color:#00afef;">{{candidate.displayName}}</h2></a>
-                   
-                    <button class="btn btn-sm btn-default pull-right" ng-hide="isShortListed(candidate)"  ng-click="addCandidateToShortList(candidate)">Add to Favorites</button>
-                   
-                    <button class="btn btn-sm btn-default pull-right" ng-click="removeCandidateFromShortList(candidate)">Remove From Favorites</button>
                    
                     <h4>{{candidate.title}}</h4>
                     <p style="color:rgb(83, 82, 82)">{{candidate.objective}}</p>
@@ -134,6 +130,10 @@
                     </div>
                         
                     <h6 style="padding-top:15px">Rating : 5  &nbsp;&nbsp;|&nbsp;&nbsp;  Location : {{candidate.location}}  &nbsp;&nbsp;|&nbsp;&nbsp;  Salary Range : {{candidate.salary_expectation}}  &nbsp;&nbsp;|&nbsp;&nbsp;Visa : {{candidate.visa_status}}  &nbsp;&nbsp;|&nbsp;&nbsp; Employee Type : {{candidate.employee_type}}  &nbsp;&nbsp;|&nbsp;&nbsp; Employee Status : {{candidate.employee_status}}  &nbsp;&nbsp;|&nbsp;&nbsp; 1 Test</h6>
+                    
+                    <button class="btn btn-sm btn-success center" ng-hide="isShortListed(candidate)"  ng-click="addCandidateToShortList(candidate)">Add to Favorites</button>
+                   
+                    <button class="btn btn-sm btn-success center" ng-show="isShortListed(candidate)" ng-click="removeCandidateFromShortList(candidate)">Remove From Favorites</button><br>
                     <hr>
                 </section>
             </section>
@@ -169,4 +169,3 @@ line-height: 0;
 
 }
 </style>
-
