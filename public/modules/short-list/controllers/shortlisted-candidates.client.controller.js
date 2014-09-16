@@ -7,23 +7,42 @@ angular.module('short-list').controller('ShortlistedCandidatesController', ['$sc
 
 		$http.get('jobs/shortListedCandidates/' + $stateParams.jobId).success(function(job) {
 			$scope.job = job;
-			$scope.candidates = job.shortListedCandidates;
-			$scope.filteredCandidates = $scope.candidates;
+			$scope.shortListedObjects = job.shortListedCandidates;
+			// $scope.filteredCandidates = $scope.candidates;
 
 
 		});
 
-		// Remove from Short List
+		// // Remove from Short List
+		// $scope.removeCandidateFromShortList = function(candidate) {
+
+		// 		var attribute = {
+		// 			jobId: $scope.job._id,
+		// 			candidateId: candidate._id
+		// 		}
+
+		// 	$http.put('jobs/removeFromShortList/' + $scope.job._id , attribute).success(function(response) {
+		// 		alert('responded');
+				
+		// 	}).error(function(response) {
+		// 		$scope.error = response.message;
+		// 	});
+		// };
+
+				// Remove from Short List
 		$scope.removeCandidateFromShortList = function(candidate) {
 
 				var attribute = {
 					jobId: $scope.job._id,
-					candidateId: candidate._id
+					candidateId: candidate.candidate
 				}
 
 			$http.put('jobs/removeFromShortList/' + $scope.job._id , attribute).success(function(response) {
 
-				
+				//And redirect to the index page
+
+
+				// $location.path('jobs/' + job._id);
 			}).error(function(response) {
 				$scope.error = response.message;
 			});
