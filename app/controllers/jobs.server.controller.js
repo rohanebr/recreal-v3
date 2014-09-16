@@ -95,13 +95,7 @@ exports.getJobCandidates = function(req, res) {
  * Show the current Job
  */
 exports.getShortListedCandidates = function(req, res) {
-	Job.findOne({_id: req.job._id}).populate('shortListedCandidates').exec(function(err, job){
-		res.jsonp(job);
-	});
-};
-
-exports.getRemoveShortListedCandidates = function(req, res) {
-	Job.findOne({_id: req.job._id}).populate('shortListedCandidates').exec(function(err, job){
+	Job.findOne({_id: req.job._id}).populate('shortListedCandidates').populate('shortListedCandidates.candidate').exec(function(err, job){
 		res.jsonp(job);
 	});
 };
