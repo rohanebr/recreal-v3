@@ -1,36 +1,32 @@
-
 <section data-ng-controller="ShortlistedCandidatesController" class="container">
     <article class="row ">
-        <header class="col-md-3">
-          
-        </header>
-        <section class="logo text-center col-md-8" >
+        <section class="logo text-center col-md-12" >
             <h2> {{job.title}}</h2>
+        </section>  
                 <article class="col-md-8">
-                    <input id="searchBox" class="col-md-8 form-control" type="text" data-ng-model="searchText" />
+                    <section class="col-md-4 pull-right panel">
+                   
+                        <label class="col-md-3" for="searchBox">Search</label>
+                   
+                        <article class="col-md-8">
+                        <input id="searchBox" class="col-md-8 form-control" type="text" data-ng-model="searchTex"/>
+                        </article>
+                    </section>   
                 </article>
-    </section>
-        </aside>
-
-
-        <section ng-repeat="candidate in candidates">
-            {{candidate.displayName}}
-            <button class="btn btn-sm btn-default pull-right" ng-click="removeCandidateFromShortList(candidate)">Remove From Favorites</button>
-        </section>
         
         <section class="col-md-8">
             data of candidate
-            <section class="panel-body" data-ng-repeat="shortListedObject in shortListedObjects | locationFilter:locationFilters:true | salaryFilter:salaryFilters:true | visaFilter:visaFilters:true | employeetypeFilter:employeetypeFilters:true | employeestatusFilter:employeestatusFilters:true | filter:searchText">
+            <section class="panel-body" data-ng-repeat="candidate in candidates | locationFilter:locationFilters:true | salaryFilter:salaryFilters:true | visaFilter:visaFilters:true | employeetypeFilter:employeetypeFilters:true | employeestatusFilter:employeestatusFilters:true | filter:searchText">
                 <section class="col-md-3" style="padding-top:20px;">
                     <a data-ng-href="#!/candidates/{{candidate._id}}">
                         <img width="150" src="{{candidate.picture_url}}">
                     </a>
                 </section>
                 <section class="col-md-9">
-                    <a data-ng-href="#!/candidates/{{candidate._id}}"><h2 style="color:#00afef;">{{shortListedObject.candidate.displayName}}</h2></a>
+                    <a data-ng-href="#!/candidates/{{candidate._id}}"><h2 style="color:#00afef;">{{candidate.displayName}}</h2></a>
                    
                     
-                    <button class="btn btn-sm btn-default pull-right" ng-click="removeCandidateFromShortList(shortListedObject.candidate)">Remove From Favorites</button>
+                    <button class="btn btn-sm btn-default pull-right" ng-click="removeCandidateFromShortList(candidate)">Remove From Favorites</button>
 
 
                    
@@ -47,14 +43,7 @@
         </section>
     </article>
 
-    <section class="col-md-4 pull-right panel">
-        <article class="col-md-4">
-            <label class="col-md-3" for="searchBox">Search</label>
-        </article>
-        <article class="col-md-8">
-            <input id="searchBox" class="col-md-8 form-control" type="text" data-ng-model="searchText" />
-        </article>
-    </section>
+    
         
         
     
