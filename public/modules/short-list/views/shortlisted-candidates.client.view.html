@@ -21,30 +21,23 @@
         </section>
 
 
-        <section ng-repeat="shortlist in shortListedObjects">
-            {{shortlist.candidate.displayName}}
-            <button class="btn btn-sm btn-success pull-right" ng-click="removeCandidateFromShortList(shortlist.candidate)">Remove From Favorites</button><br>
-        </section>
-
-        <section class="col-md-8">  
-                <section class="col-md-4" style="padding-top:20px;">
-                    <a data-ng-href="#!/candidates/{{candidate._id}}">
-                        <img width="150" src="{{candidate.picture_url}}">
+<section class="col-md-8"> 
+    <section ng-repeat="shortlist in shortListedObjects">
+            <section class="col-md-4" style="padding-top:20px;">
+                    <a data-ng-href="#!/candidates/{{shortlist.candidate}}">
+                        <img width="150" src="{{shortlist.candidate}}">
                     </a>
-                </section>
-                <section class="col-md-8">
-                    <a data-ng-href="#!/candidates/{{candidate._id}}"><h2 style="color:#00afef;">{{candidate.displayName}}</h2></a>
-        
-                    <h4>{{candidate.title}}</h4>
-                    <p style="color:rgb(83, 82, 82)">{{candidate.objective}}</p>
-                    <div style="line-height: 2">
-                        <span  class="skill-div" data-ng-repeat="skill in candidate.skills">{{skill.title}}</span>
-                    </div>
-                        
-                    <h6 style="padding-top:15px">Rating : 5  &nbsp;&nbsp;|&nbsp;&nbsp;  Location : {{candidate.location}}  &nbsp;&nbsp;|&nbsp;&nbsp;  Salary Range : {{candidate.salary_expectation}}  &nbsp;&nbsp;|&nbsp;&nbsp;Visa : {{candidate.visa_status}}  &nbsp;&nbsp;|&nbsp;&nbsp; Employee Type : {{candidate.employee_type}}  &nbsp;&nbsp;|&nbsp;&nbsp; Employee Status : {{candidate.employee_status}}  &nbsp;&nbsp;|&nbsp;&nbsp; 1 Test</h6>
+            </section>
+    <section class="col-md-8" style="padding-top:20px;">
+            <h1>{{shortlist.candidate.displayName}}</h1>
+             <h4>{{shortlist.candidate.title}}</h4>
+                <p style="color:rgb(83, 82, 82)">{{shortlist.candidate.objective}}</p>
+                <div style="line-height: 2">
+                    <span  class="skill-div" data-ng-repeat="skill in candidate.skills">{{shortlist.skill.title}}</span>
+                </div>
+            
 
-                    <button class="btn btn-sm btn-success pull-right" ng-click="removeCandidateFromShortList(candidate)">Remove From Favorites</button><br>
-                    <hr>
-                </section>
+            <h6 style="padding-top:15px">Rating : 5  &nbsp;&nbsp;|&nbsp;&nbsp;  Location : {{shortlist.candidate.location}}  &nbsp;&nbsp;|&nbsp;&nbsp;  Salary Range : {{shortlist.candidate.salary_expectation}}  &nbsp;&nbsp;|&nbsp;&nbsp;Visa : {{shortlist.candidate.visa_status}}  &nbsp;&nbsp;|&nbsp;&nbsp; Employee Type : {{shortlist.candidate.employee_type}}  &nbsp;&nbsp;|&nbsp;&nbsp; Employee Status : {{shortlist.candidate.employee_status}}  &nbsp;&nbsp;|&nbsp;&nbsp; 1 Test</h6>
+            <button class="btn btn-sm btn-success pull-right" ng-click="removeCandidateFromShortList(shortlist.candidate)">Remove From Favorites</button><br>
+            </section>
         </section>
-</section>
