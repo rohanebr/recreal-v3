@@ -97,7 +97,6 @@ exports.signup = function(req, res) {
 };
 
 
-
 /**
  * Signin after passport authentication
  */
@@ -277,6 +276,7 @@ exports.requiresLogin = function(req, res, next) {
 	next();
 };
 
+
 /**
  * User authorizations routing middleware
  */
@@ -370,6 +370,36 @@ exports.saveOAuthUserProfile = function(req, providerUserProfile, done) {
 		}
 	}
 };
+
+exports.getthread = function(req, res) {
+	user.findOne({_id: req.usser._id}).populate('thread').populate('thread.message').exec(function(err, user){
+		res.jsonp(user);
+	});
+};
+
+exports.sendMessage = function(req, res, next) {
+
+	if(req.user.userType === 'employer'){
+
+		var userId = req.body.userId;
+		var candidateId = req.body.candidateId;
+		var subject= req.body.subject;
+		var message= req.body.message.text;
+
+		User.findOne({_id: userId}).exec(function(err, user){
+			Candidate.findOne({_id: candidateId}).exec(function(err, candidate){
+				Subject.findOne({subject: subject}).exec(function(err, subject){
+					Message.findOne({message: message.text}){
+					user.sendMessage(candidate,subject,message.text);
+					res.jsonp(user);});
+				});
+			});
+		});
+		
+	}	
+};
+
+
 
 /**
  * Remove OAuth provider
