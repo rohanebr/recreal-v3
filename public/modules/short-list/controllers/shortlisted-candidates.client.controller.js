@@ -29,7 +29,35 @@ angular.module('short-list').controller('ShortlistedCandidatesController', ['$sc
 		// 	});
 		// };
 
-				// Remove from Short List
+//  $scope.newSms = { candidate:shortlist.candidate, subject: '', message:''};
+//     $scope.openSmsModal = function(sms) {
+//       var modalInstance;
+// 	     modalInstance = $modal.open({
+// 	        templateUrl: '/modules/short-list/views/message-partials/sms.html',
+// 	        controller: 'ShortlistedCandidatesController',
+// 	     resolve: {
+// 	          thread: function() {
+// 	            return angular.copy(thread);
+// 	          }
+// 	        }
+// 	      });
+// .controller('ShortlistedCandidatesController', [
+//   '$scope', '$modalInstance', 'thread', function($scope, $modalInstance, thread) {
+
+//     $scope.thread = thread;
+
+// 	$scope.ok = function (action) {
+// 	$modalInstance.close({ action: action, thread: $scope.thread });
+// 	};
+
+// 	$scope.cancel = function () {
+// 	$modalInstance.dismiss('cancel');
+
+// 	};
+//   }
+// ]);
+
+ // Remove from Short List
 		$scope.removeCandidateFromShortList = function(candidate) {
 
 				var attribute = {
