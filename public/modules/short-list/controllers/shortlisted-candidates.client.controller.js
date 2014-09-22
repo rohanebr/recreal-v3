@@ -13,7 +13,7 @@ angular.module('short-list').controller('ShortlistedCandidatesController', ['$sc
 
 		});
 
-		// // Remove from Short List
+	// // Remove from Short List
 		// $scope.removeCandidateFromShortList = function(candidate) {
 
 		// 		var attribute = {
@@ -29,25 +29,26 @@ angular.module('short-list').controller('ShortlistedCandidatesController', ['$sc
 		// 	});
 		// };
 
-//  $scope.newSms = { candidate:shortlist.candidate, subject: '', message:''};
-//     $scope.openSmsModal = function(sms) {
-//       var modalInstance;
-// 	     modalInstance = $modal.open({
+// 		 $scope.sms = {to: '{{shortlist.candidate.displayName}}' };
+// 	    $scope.openSmsModal = function(sms) {
+// 	      var modalInstance;
+// 	      modalInstance = $modal.open({
 // 	        templateUrl: '/modules/short-list/views/message-partials/sms.html',
-// 	        controller: 'ShortlistedCandidatesController',
-// 	     resolve: {
-// 	          thread: function() {
-// 	            return angular.copy(thread);
+// 	        controller: '',
+// 	        resolve: {
+// 	          sms: function() {
+// 	            return angular.copy(sms);
 // 	          }
 // 	        }
-// 	      });
-// .controller('ShortlistedCandidatesController', [
-//   '$scope', '$modalInstance', 'thread', function($scope, $modalInstance, thread) {
+// 	    	})
+	    	  
+// .controller('', [
+//   '$scope', '$modalInstance', 'sms', function($scope, $modalInstance,sms) {
 
-//     $scope.thread = thread;
+//     $scope.sms =sms ;
 
 // 	$scope.ok = function (action) {
-// 	$modalInstance.close({ action: action, thread: $scope.thread });
+// 	$modalInstance.close({ action: action, sms: $scope.sms });
 // 	};
 
 // 	$scope.cancel = function () {
@@ -56,7 +57,7 @@ angular.module('short-list').controller('ShortlistedCandidatesController', ['$sc
 // 	};
 //   }
 // ]);
-
+// }
  // Remove from Short List
 		$scope.removeCandidateFromShortList = function(candidate) {
 

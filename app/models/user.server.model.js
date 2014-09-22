@@ -91,39 +91,39 @@ var UserSchema = new Schema({
 	updated: {
 		type: Date
 	},
-	thread: [{
-		created: {
-		 	type: Date,
-			default: Date.now
-		},
+	// thread: [{
+	// 	created: {
+	// 	 	type: Date,
+	// 		default: Date.now
+	// 	},
 	
-		candidate: {
-			type: Schema.ObjectId,
-			ref: 'Candidate'
-		},
+	// 	candidate: {
+	// 		type: Schema.ObjectId,
+	// 		ref: 'Candidate'
+	// 	},
 
-		employer: {
-			type: Schema.ObjectId,
-			ref: 'Employer'
-		}
+	// 	employer: {
+	// 		type: Schema.ObjectId,
+	// 		ref: 'Employer'
+	// 	}
 		
-		subject:{
-			type:Schema.ObjectId,
-	  		ref: 'Subject'
-	  		},
-		message:[{
-				text:{
-	    			type:Schema.ObjectId,
-				ref: 'Text'	  
-				},
+	// 	subject:{
+	// 		type:Schema.ObjectId,
+	//   		ref: 'Subject'
+	//   		},
+	// 	message:[{
+	// 			text:{
+	//     			type:Schema.ObjectId,
+	// 			ref: 'Text'	  
+	// 			},
 
-				created: {
-		 		type: Date,
-				default: Date.now
-				}
-			}]
+	// 			created: {
+	// 	 		type: Date,
+	// 			default: Date.now
+	// 			}
+	// 		}]
 	
-	}],
+	// }],
 
 	
 	created: {
@@ -162,16 +162,16 @@ UserSchema.methods.authenticate = function(password) {
 	return this.password === this.hashPassword(password);
 };
 
-userSchema.methods.thread = function(candidate,subject,message.text,callback) {
-	var user = this;
-	var sendMessage = {
-		candidate: candidate,
-		subject: subject,
-		message: message.text
-	};
-   	this.thread.push(sendMessage);	
-	this.save(callback);
-};
+// userSchema.methods.thread = function(candidate,subject,message.text,callback) {
+// 	var user = this;
+// 	var sendMessage = {
+// 		candidate: candidate,
+// 		subject: subject,
+// 		message: message.text
+// 	};
+//    	this.thread.push(sendMessage);	
+// 	this.save(callback);
+// };
 /**
  * Find possible not used username
  */

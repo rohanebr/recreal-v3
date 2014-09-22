@@ -35,6 +35,13 @@ module.exports = function(app) {
 			'https://www.googleapis.com/auth/userinfo.email'
 		]
 	}));
+
+	// app.route('/users/sendMessage/:userId')
+	// 	.put(users.sendMessage);
+
+	// app.route('/users/thread/:userId')
+	// 	.get(user.getthreads);
+
 	app.route('/auth/google/callback').get(users.oauthCallback('google'));
 
 		// Setting the linkedin oauth routes

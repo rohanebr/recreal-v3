@@ -30,12 +30,7 @@ module.exports = function(app) {
 	app.route('/jobs/shortListedCandidates/:jobId')
 		.get(jobs.getShortListedCandidates);
 
-	app.route('/users/sendMessage/:userId')
-		.put(users.sendMessage);
-
-	app.route('/users/thread/:userId')
-		.get(user.getthreads);
-
+	
 	// Finish by binding the Job middleware
 	app.param('jobId', jobs.jobByID);
 };
