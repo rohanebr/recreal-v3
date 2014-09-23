@@ -377,27 +377,76 @@ exports.saveOAuthUserProfile = function(req, providerUserProfile, done) {
 // 	});
 // };
 
-// exports.sendMessage = function(req, res, next) {
+exports.sendMessage = function(req, res, next) {
 
-// 	if(req.user.userType === 'employer'){
 
-// 		var userId = req.body.userId;
-// 		var candidateId = req.body.candidateId;
-// 		var subject= req.body.subject;
-// 		var message= req.body.message.text;
 
-// 		User.findOne({_id: userId}).exec(function(err, user){
-// 			Candidate.findOne({_id: candidateId}).exec(function(err, candidate){
-// 				Subject.findOne({subject: subject}).exec(function(err, subject){
-// 					Message.findOne({message: message.text}){
-// 					user.sendMessage(candidate,subject,message.text);
-// 					res.jsonp(user);});
-// 				});
-// 			});
-// 		});
+	var user = req.user;
+	var recieverId = req.body.recieverId; // reciever is a user
+	var subject= req.body.subject;
+	var messageBody= req.body.messageBody;
+
+	// User.findOne({_id: userId}).exec(function(err, user){
+	// 	Candidate.findOne({_id: candidateId}).exec(function(err, candidate){
+	// 		Subject.findOne({subject: subject}).exec(function(err, subject){
+	// 			Message.findOne({message: message.text}){
+	// 			user.sendMessage(candidate,subject,message.text);
+	// 			res.jsonp(user);});
+	// 		});
+	// 	});
+	// });
+
+
+	if (req.user) {
+		User.findById(req.user.id, function(err, sender) {
+			User.findById(recieverId, function(err, reciever){
+				var thread = {
+					sender: sender,
+					reciever: recieverId,
+					subject: subject,
+					messages: []
+				};
+
+				var message = {
+					messageBody: messageBody
+				};
+
+				thread.messages.push(message);
+
+				sender.threads.push(thread);
+				reciever.threads.push(thread);
+
+				sender.save(function(err) {
+					if (err) {
+						return res.send(400, {
+							message: getErrorMessage(err)
+						});
+					} else {
+						res.send({
+							message: 'Message sent successfully'
+						});
+					}
+				});
+
+				reciever.save(function(err) {
+					if (err) {
+						return res.send(400, {
+							message: getErrorMessage(err)
+						});
+					} else {
+						res.send({
+							message: 'Message sent successfully'
+						});
+					}
+				});
+			});
+
+			
+		});
+	}
 		
-// 	}	
-// };
+
+};
 
 
 

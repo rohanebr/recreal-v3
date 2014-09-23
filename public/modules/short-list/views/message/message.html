@@ -6,13 +6,16 @@
   </div>
   <div class="modal-body">
     <label>To:</label>
-    <input class="form-control" type="text" dta-ng-model="message.candidate.displayName" />
+    <label class="label label-primary label-large " type="text" >{{reciever.displayName}}</label>
+    <br>
+    <label>Subject:</label>
+    <input class="form-control" data-ng-model="subject"></input>
     <label>Message:</label>
-    <textarea class="form-control" data-ng-model="message.body"></textarea>
+    <textarea class="form-control" data-ng-model="messageBody"></textarea>
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-default" ng-click="cancel()">Close</button>
-    <button type="button" class="btn btn-primary">Send</button>
+    <button type="button" ng-click="sendMessage()" class="btn btn-primary">Send</button>
   </div>
 </div><!-- /.modal-content -->
 

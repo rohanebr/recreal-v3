@@ -91,39 +91,37 @@ var UserSchema = new Schema({
 	updated: {
 		type: Date
 	},
-	// thread: [{
-	// 	created: {
-	// 	 	type: Date,
-	// 		default: Date.now
-	// 	},
-	
-	// 	candidate: {
-	// 		type: Schema.ObjectId,
-	// 		ref: 'Candidate'
-	// 	},
+	threads: [{
+		created: {
+		 	type: Date,
+			default: Date.now
+		},
+		updated: {
+			type: Date,
+			default: Date.now
+		},
+		sender: {
+			type: Schema.ObjectId,
+			ref: 'User'
+		},
 
-	// 	employer: {
-	// 		type: Schema.ObjectId,
-	// 		ref: 'Employer'
-	// 	}
-		
-	// 	subject:{
-	// 		type:Schema.ObjectId,
-	//   		ref: 'Subject'
-	//   		},
-	// 	message:[{
-	// 			text:{
-	//     			type:Schema.ObjectId,
-	// 			ref: 'Text'	  
-	// 			},
-
-	// 			created: {
-	// 	 		type: Date,
-	// 			default: Date.now
-	// 			}
-	// 		}]
-	
-	// }],
+		reciver: {
+			type: Schema.ObjectId,
+			ref: 'User'
+		},		
+		subject:{
+			type: String
+	  		},
+		messages:[{
+			messageBody:{
+    			type: String 
+			},
+			created: {
+	 		type: Date,
+			default: Date.now
+			}
+		}]
+	}],
 
 	
 	created: {

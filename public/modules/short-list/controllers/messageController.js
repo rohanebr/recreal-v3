@@ -1,9 +1,12 @@
 'use strict';
 
 angular.module('short-list').controller('messageController', [
-  '$scope', '$modalInstance', '$http', function($scope, $modalInstance, $http) {
+  '$scope', '$modalInstance', '$http', 'reciever', 'Authentication', function($scope, $modalInstance, $http, reciever, Authentication) {
 
-    
+    		$scope.authentication = Authentication;
+
+			$scope.user = Authentication.user;
+
 		 	$scope.ok = function (action) {
 			$modalInstance.close();
 			};
@@ -13,18 +16,28 @@ angular.module('short-list').controller('messageController', [
 
 			};	
 
+			$scope.recieverId = reciever._id;
+			$scope.reciever = reciever;
+
+			$scope.subject = "Hello!!!";
+			$scope.messageBody = "This is a system generated message for debbugin...";
+
+
+
 			// Remove from Short List
-		$scope.removeCandidateFromShortList = function(candidate) {
+		$scope.sendMessage = function() {
 
 				var attribute = {
-					jobId: $scope.job._id,
-					candidateId: candidate._id
-				}
+					recieverId: $scope.reciever.user,
+					subject: $scope.subject,
+					messageBody: $scope.messageBody
+				};
 
-			$http.put('jobs/removeFromShortList/' + $scope.job._id , attribute).success(function(response) {
+			$http.put('/users/sendMessage/' + $scope.user._id , attribute).success(function(response) {
 
 				//And redirect to the index page
-
+				alert(response.message);
+				$modalInstance.dismiss('cancel');
 
 				// $location.path('jobs/' + job._id);
 			}).error(function(response) {

@@ -13,51 +13,7 @@ angular.module('short-list').controller('ShortlistedCandidatesController', ['$sc
 
 		});
 
-	// // Remove from Short List
-		// $scope.removeCandidateFromShortList = function(candidate) {
-
-		// 		var attribute = {
-		// 			jobId: $scope.job._id,
-		// 			candidateId: candidate._id
-		// 		}
-
-		// 	$http.put('jobs/removeFromShortList/' + $scope.job._id , attribute).success(function(response) {
-		// 		alert('responded');
-				
-		// 	}).error(function(response) {
-		// 		$scope.error = response.message;
-		// 	});
-		// };
-
-// 		 $scope.sms = {to: '{{shortlist.candidate.displayName}}' };
-// 	    $scope.openSmsModal = function(sms) {
-// 	      var modalInstance;
-// 	      modalInstance = $modal.open({
-// 	        templateUrl: '/modules/short-list/views/message-partials/sms.html',
-// 	        controller: '',
-// 	        resolve: {
-// 	          sms: function() {
-// 	            return angular.copy(sms);
-// 	          }
-// 	        }
-// 	    	})
-	    	  
-// .controller('', [
-//   '$scope', '$modalInstance', 'sms', function($scope, $modalInstance,sms) {
-
-//     $scope.sms =sms ;
-
-// 	$scope.ok = function (action) {
-// 	$modalInstance.close({ action: action, sms: $scope.sms });
-// 	};
-
-// 	$scope.cancel = function () {
-// 	$modalInstance.dismiss('cancel');
-
-// 	};
-//   }
-// ]);
-// }
+	
  // Remove from Short List
 		$scope.removeCandidateFromShortList = function(candidate) {
 
@@ -78,16 +34,16 @@ angular.module('short-list').controller('ShortlistedCandidatesController', ['$sc
 		};
 
 					// send message
-		$scope.sendmessage = function() {
+		$scope.openMessageModal = function(reciever) {
 	     
 	     	var mesg = $modal.open({
 	        templateUrl: '/modules/short-list/views/message/message.html',
 	        controller: 'messageController',
-	        // resolve: {
-	        //   skill: function() {
-	        //     return angular.copy(skill);
-	        //   }
-	        // }
+	        resolve:{
+	        	reciever: function () {
+			        return reciever;
+			    }	
+	        } 
 	      });
 	      mesg.result.then(function(result) 
 	       {
