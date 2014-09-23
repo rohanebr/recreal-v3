@@ -153,11 +153,6 @@ angular.module('candidate-features').controller('CandidateCvController', ['$scop
 	      modalInstance = $modal.open({
 	        templateUrl: '/modules/candidate-features/views/cv-partials/picture-partial.html',
 	        controller: 'PictureModalCtrl',
-	        // resolve: {
-	        //   skill: function() {
-	        //     return angular.copy(skill);
-	        //   }
-	        // }
 	      });
 	      modalInstance.result.then(function(result) {
 	         $scope.candidate.picture_url = result.picture_url;

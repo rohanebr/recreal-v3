@@ -1,34 +1,38 @@
 'use strict';
 
-angular.module('short-list').controller('messageController', ['$scope', 'user', '$http', 'message', 'shortlist.Candidates', 'subject',
-	function($scope, user, $http, message, shortlist.Candidates, subject) {
+angular.module('short-list').controller('messageController', [
+  '$scope', '$modalInstance', '$http', function($scope, $modalInstance, $http) {
 
-		$scope.sms = {shortlist.Candidates: '{{shortlist.candidate.displayName}}',subject:'',message:'' };
-	    $scope.openSmsModal = function(thread) {
-	      var modalInstance;
-	      modalInstance = $modal.open({
-	        templateUrl: '/modules/short-list/views/message-partials/sms.html',
-	        controller: 'messageController',
-	        // resolve: {
-	        //   sms: function() {
-	        //     return angular.copy(sms);
-	        //   }
-	        // }
-	    	})
-	      .controller('messageController', [
-  '$scope', '$modalInstance', 'sms', function($scope, $modalInstance,sms) {
+    
+		 	$scope.ok = function (action) {
+			$modalInstance.close();
+			};
 
-    $scope.sms =sms ;
+			$scope.cancel = function () {
+			$modalInstance.dismiss('cancel');
 
-	$scope.ok = function (action) {
-	$modalInstance.close({ action: action, sms: $scope.sms });
-	};
+			};	
 
-	$scope.cancel = function () {
-	$modalInstance.dismiss('cancel');
+			// Remove from Short List
+		$scope.removeCandidateFromShortList = function(candidate) {
 
-	};
-  }
+				var attribute = {
+					jobId: $scope.job._id,
+					candidateId: candidate._id
+				}
+
+			$http.put('jobs/removeFromShortList/' + $scope.job._id , attribute).success(function(response) {
+
+				//And redirect to the index page
+
+
+				// $location.path('jobs/' + job._id);
+			}).error(function(response) {
+				$scope.error = response.message;
+			});
+		};
+		}
+
+
+  
 ]);
-}
-}

@@ -21,42 +21,36 @@
         </section>
 
 
-<section class="col-md-8"> 
-    <section ng-repeat="shortlist in shortListedObjects">
-            <section class="col-md-4" style="padding-top:20px;">
-                    <a data-ng-href="#!/candidates/{{shortlist.candidate}}">
-                        <img width="150" src="{{shortlist.candidate}}">
-                    </a>
+        <section class="col-md-8"> 
+            <section ng-repeat="shortlist in shortListedObjects">
+                <section class="col-md-4" style="padding-top:20px;">
+                        <a data-ng-href="#!/candidates/{{shortlist.candidate}}">
+                            <img width="150" src="{{shortlist.candidate.picture_url}}">
+                        </a>
+                </section>
+                <section class="col-md-8" style="padding-top:20px;">
+                        <h1>{{shortlist.candidate.displayName}}</h1>
+                         <h4>{{shortlist.candidate.title}}</h4>
+                            <p style="color:rgb(83, 82, 82)">{{shortlist.candidate.objective}}</p>
+                            <div style="line-height: 2">
+                                <span  class="skill-div" data-ng-repeat="skill in candidate.skills">{{shortlist.skill.title}}</span>
+                            </div>
+                        
+
+                        <h6 style="padding-top:15px">Rating : 5  &nbsp;&nbsp;|&nbsp;&nbsp;  Location : {{shortlist.candidate.location}}  &nbsp;&nbsp;|&nbsp;&nbsp;  Salary Range : {{shortlist.candidate.salary_expectation}}  &nbsp;&nbsp;|&nbsp;&nbsp;Visa : {{shortlist.candidate.visa_status}}  &nbsp;&nbsp;|&nbsp;&nbsp; Employee Type : {{shortlist.candidate.employee_type}}  &nbsp;&nbsp;|&nbsp;&nbsp; Employee Status : {{shortlist.candidate.employee_status}}  &nbsp;&nbsp;|&nbsp;&nbsp; 1 Test</h6>
+
+                        <a type="button" class="btn pull-right" data-ng-click="sendmessage()" data-toggle="modal">Send Message</a>
+
+
+                        <button class="btn btn-sm btn-success pull-right" ng-click="removeCandidateFromShortList(shortlist.candidate)">Remove From Favorites</button><br>
+                </section>
+
             </section>
-    <section class="col-md-8" style="padding-top:20px;">
-            <h1>{{shortlist.candidate.displayName}}</h1>
-             <h4>{{shortlist.candidate.title}}</h4>
-                <p style="color:rgb(83, 82, 82)">{{shortlist.candidate.objective}}</p>
-                <div style="line-height: 2">
-                    <span  class="skill-div" data-ng-repeat="skill in candidate.skills">{{shortlist.skill.title}}</span>
-                </div>
-            
-
-            <h6 style="padding-top:15px">Rating : 5  &nbsp;&nbsp;|&nbsp;&nbsp;  Location : {{shortlist.candidate.location}}  &nbsp;&nbsp;|&nbsp;&nbsp;  Salary Range : {{shortlist.candidate.salary_expectation}}  &nbsp;&nbsp;|&nbsp;&nbsp;Visa : {{shortlist.candidate.visa_status}}  &nbsp;&nbsp;|&nbsp;&nbsp; Employee Type : {{shortlist.candidate.employee_type}}  &nbsp;&nbsp;|&nbsp;&nbsp; Employee Status : {{shortlist.candidate.employee_status}}  &nbsp;&nbsp;|&nbsp;&nbsp; 1 Test</h6>
-<<<<<<< HEAD
-            <button class="btn btn-sm btn-success pull-right" ng-click="removeCandidateFromShortList(shortlist.candidate)">Remove From Favorites</button><br>
-=======
-<<<<<<< HEAD
-            <button class="btn btn-sm btn-success pull-right" ng-click="removeCandidateFromShortList(shortlist.candidate)">Remove From Favorites</button><br>
-            <a type="button" class="btn pull-right" data-ng-click="sendmessage()" data-toggle="modal">Send Message</a>
-    </section>
-
-    </section>
-</section>
-=======
-            <button class="btn btn-sm btn-success pull-right" ng-click="removeCandidateFromShortList(shortlist.candidate)">Remove From Favorites</button>
->>>>>>> f0386cda9fd969be6a6b3ab2c79465a0c60f2edd
-
-                 <button class="btn btn-sm btn-success pull-right" ng-click="openSmsModal(sms)">sms</button>        
+        </section>
+                  
          
                
                     
             
-         </section>
-        </section>
->>>>>>> 471e5b1a66545acdc89f82d15a9f710d7bb1bde9
+    </section>
+</section>
