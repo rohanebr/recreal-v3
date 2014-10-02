@@ -104,7 +104,9 @@ var UserSchema = new Schema({
 			type: Schema.ObjectId,
 			ref: 'User'
 		},
-
+		senderName: {
+			type: String
+		},
 		reciver: {
 			type: Schema.ObjectId,
 			ref: 'User'

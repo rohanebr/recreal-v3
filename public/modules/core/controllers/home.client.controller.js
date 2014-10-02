@@ -1,11 +1,28 @@
 'use strict';
 
 
-angular.module('core').controller('HomeController', ['$scope', 'Authentication', '$state', '$rootScope','Employers', 'Companies', 'Candidates',
-	function($scope, Authentication, $state, $rootScope, Employers, Companies, Candidates) {
+angular.module('core').controller('HomeController', ['$scope', 'Authentication', '$state', '$rootScope','Employers', 'Companies', 'Candidates', 'Socket',
+	function($scope, Authentication, $state, $rootScope, Employers, Companies, Candidates , Socket) {
 		// This provides Authentication context.
 		$scope.authentication = Authentication;
 		var user = $scope.authentication.user;
+
+		Socket.emit('message', {message: 'message'});
+
+
+		Socket.on('entrance', function (data) {
+		    console.log(data);
+		    Socket.emit('my other event', { my: 'data' });
+		  });
+		  Socket.on('exit', function (data) {
+		    console.log(data);
+		    Socket.emit('my other event', { my: 'data' });
+		  });
+		  Socket.on('applied_on_job', function (data) {
+		    console.log(data.candidate.displayName + ' applied on job : ' + data.job.title);
+		    if(user.userType === 'employer')
+		    	alert(data.candidate.displayName + ' applied on job : ' + data.job.title);
+		  });
 
 
 		if(!user)

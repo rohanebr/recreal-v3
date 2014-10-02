@@ -22,7 +22,9 @@ module.exports = {
 				'public/lib/angular-ui-router/release/angular-ui-router.js',
 				'public/lib/angular-ui-utils/ui-utils.js',
 				'public/lib/angular-bootstrap/ui-bootstrap-tpls.js',
-				'public/lib/bootstrap/dist/js/bootstrap.js'
+				'public/lib/bootstrap/dist/js/bootstrap.js',
+				'public/lib/angular-socket-io/socket.js',
+				'public/lib/socket.io-client/socket.io.js'
 			]
 		},
 		css: [

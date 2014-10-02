@@ -25,6 +25,10 @@ module.exports = function(db) {
 	// Initialize express app
 	var app = express();
 
+	//// added for socket support
+	var server = require('http').createServer(app);
+    var socket = require('./socket').create(server);
+
 	// Globbing model files
 	config.getGlobbedFiles('./app/models/**/*.js').forEach(function(modelPath) {
 		require(path.resolve(modelPath));
@@ -152,5 +156,7 @@ module.exports = function(db) {
 		});
 	});
 
-	return app;
+    return server;
+
+	// return app;
 };

@@ -404,6 +404,7 @@ exports.sendMessage = function(req, res, next) {
 					sender: sender,
 					reciever: recieverId,
 					subject: subject,
+					senderName: sender.displayName,
 					messages: []
 				};
 
