@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('candidate-features').controller('CandidateHomeController', ['$scope', 'Jobs', '$http', 'Authentication', 'Candidates', '$location',
-	function($scope, Jobs, $http, Authentication, Candidates, $location) {
+angular.module('candidate-features').controller('CandidateHomeController', ['$scope', 'Jobs', '$http', 'Authentication', 'Candidates', '$location', 'Socket',
+	function($scope, Jobs, $http, Authentication, Candidates, $location, Socket) {
 
 		$scope.user = Authentication.user;
 
@@ -27,6 +27,8 @@ angular.module('candidate-features').controller('CandidateHomeController', ['$sc
 		$scope.apply = function(job) {
 
 			$http.put('jobs/apply/' + job._id , job).success(function(response) {
+
+				Socket.emit('applied_on_job', {job: job, candidate: $scope.candidate});
 
 				$scope.candidate.jobs.push(job);
 				$scope.jobs.splice($scope.jobs.indexOf(job), 1);

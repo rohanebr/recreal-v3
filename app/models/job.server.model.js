@@ -4,6 +4,7 @@
  * Module dependencies.
  */
 var mongoose = require('mongoose'),
+Candidate = mongoose.model('Candidate'),
 	Schema = mongoose.Schema;
 
 /**
@@ -125,7 +126,7 @@ var JobSchema = new Schema({
 		type: Date,
 		default: Date.now
 	},	
-	employer: {
+	employer: { 
 		type: Schema.ObjectId,
 		ref: 'Employer',
 		required: 'Jobs can only be posted from Employer accounts'
@@ -177,6 +178,8 @@ JobSchema.methods.addToShortList = function(candidate, employer, callback) {
    	this.shortListedCandidates.push(shortListedCandidate);	
 	this.save(callback);
 };
-		
 
 mongoose.model('Job', JobSchema);
+
+
+

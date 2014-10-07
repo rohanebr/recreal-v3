@@ -35,12 +35,21 @@ module.exports = function(app) {
 			'https://www.googleapis.com/auth/userinfo.email'
 		]
 	}));
+
+	app.route('/users/sendMessage/:userId')
+		.put(users.sendMessage);
+
+	// app.route('/users/thread/:userId')
+	// 	.get(user.getthreads);
+
 	app.route('/auth/google/callback').get(users.oauthCallback('google'));
 
-	// Setting the linkedin oauth routes
+		// Setting the linkedin oauth routes
 	app.route('/auth/linkedin').get(passport.authenticate('linkedin'));
 	app.route('/auth/linkedin/callback').get(users.oauthCallback('linkedin'));
 
 	// Finish by binding the user middleware
 	app.param('userId', users.userByID);
+
+	
 };

@@ -91,6 +91,41 @@ var UserSchema = new Schema({
 	updated: {
 		type: Date
 	},
+	threads: [{
+		created: {
+		 	type: Date,
+			default: Date.now
+		},
+		updated: {
+			type: Date,
+			default: Date.now
+		},
+		sender: {
+			type: Schema.ObjectId,
+			ref: 'User'
+		},
+		senderName: {
+			type: String
+		},
+		reciver: {
+			type: Schema.ObjectId,
+			ref: 'User'
+		},		
+		subject:{
+			type: String
+	  		},
+		messages:[{
+			messageBody:{
+    			type: String 
+			},
+			created: {
+	 		type: Date,
+			default: Date.now
+			}
+		}]
+	}],
+
+	
 	created: {
 		type: Date,
 		default: Date.now
@@ -101,7 +136,8 @@ var UserSchema = new Schema({
  * Hook a pre save method to hash the password
  */
 UserSchema.pre('save', function(next) {
-	if (this.password && this.password.length > 6) {
+	if (this.password && this.password.length > 6 && !this.salt)  // ! salt : it only executes the first time and not every time user is updated
+	{
 		this.salt = new Buffer(crypto.randomBytes(16).toString('base64'), 'base64');
 		this.password = this.hashPassword(this.password);
 	}
@@ -127,6 +163,16 @@ UserSchema.methods.authenticate = function(password) {
 	return this.password === this.hashPassword(password);
 };
 
+// userSchema.methods.thread = function(candidate,subject,message.text,callback) {
+// 	var user = this;
+// 	var sendMessage = {
+// 		candidate: candidate,
+// 		subject: subject,
+// 		message: message.text
+// 	};
+//    	this.thread.push(sendMessage);	
+// 	this.save(callback);
+// };
 /**
  * Find possible not used username
  */

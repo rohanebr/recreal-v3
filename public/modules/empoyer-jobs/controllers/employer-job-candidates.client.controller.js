@@ -8,6 +8,12 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
 		$scope.visaFilters = [];
 		$scope.employeetypeFilters = [];
 		$scope.employeestatusFilters = [];
+
+		$scope.isShortListed = function(candidate){
+			// job.candidates = [];
+			// job.shortListedCandidates = [];
+			return false;
+		};
 		
 		$http.get('jobs/candidates/' + $stateParams.jobId).success(function(job) {
 			$scope.job = job;
@@ -37,7 +43,6 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
 
 			$http.put('jobs/addToShortList/' + $scope.job._id , attribute).success(function(response) {
 
-				alert('server responded');
 				// $scope.candidate.jobs.push(job);
 				// $scope.jobs.splice($scope.jobs.indexOf(job), 1);
 				// $scope.$apply();
@@ -60,9 +65,6 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
 
 			$http.put('jobs/removeFromShortList/' + $scope.job._id , attribute).success(function(response) {
 
-				$scope.candidate.jobs.push(job);
-				$scope.jobs.splice($scope.jobs.indexOf(job), 1);
-				$scope.$apply();
 				//And redirect to the index page
 
 				$location.path('jobs/' + job._id);

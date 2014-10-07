@@ -97,7 +97,6 @@ exports.signup = function(req, res) {
 };
 
 
-
 /**
  * Signin after passport authentication
  */
@@ -277,6 +276,7 @@ exports.requiresLogin = function(req, res, next) {
 	next();
 };
 
+
 /**
  * User authorizations routing middleware
  */
@@ -370,6 +370,86 @@ exports.saveOAuthUserProfile = function(req, providerUserProfile, done) {
 		}
 	}
 };
+
+// exports.getthread = function(req, res) {
+// 	user.findOne({_id: req.usser._id}).populate('thread').populate('thread.message').exec(function(err, user){
+// 		res.jsonp(user);
+// 	});
+// };
+
+exports.sendMessage = function(req, res, next) {
+
+
+
+	var user = req.user;
+	var recieverId = req.body.recieverId; // reciever is a user
+	var subject= req.body.subject;
+	var messageBody= req.body.messageBody;
+
+	// User.findOne({_id: userId}).exec(function(err, user){
+	// 	Candidate.findOne({_id: candidateId}).exec(function(err, candidate){
+	// 		Subject.findOne({subject: subject}).exec(function(err, subject){
+	// 			Message.findOne({message: message.text}){
+	// 			user.sendMessage(candidate,subject,message.text);
+	// 			res.jsonp(user);});
+	// 		});
+	// 	});
+	// });
+
+
+	if (req.user) {
+		User.findById(req.user.id, function(err, sender) {
+			User.findById(recieverId, function(err, reciever){
+				var thread = {
+					sender: sender,
+					reciever: recieverId,
+					subject: subject,
+					senderName: sender.displayName,
+					messages: []
+				};
+
+				var message = {
+					messageBody: messageBody
+				};
+
+				thread.messages.push(message);
+
+				sender.threads.push(thread);
+				reciever.threads.push(thread);
+
+				sender.save(function(err) {
+					if (err) {
+						return res.send(400, {
+							message: getErrorMessage(err)
+						});
+					} else {
+						res.send({
+							message: 'Message sent successfully'
+						});
+					}
+				});
+
+				reciever.save(function(err) {
+					if (err) {
+						return res.send(400, {
+							message: getErrorMessage(err)
+						});
+					} else {
+						res.send({
+							message: 'Message sent successfully'
+						});
+					}
+				});
+			});
+
+			
+		});
+	}
+		
+
+};
+
+
 
 /**
  * Remove OAuth provider

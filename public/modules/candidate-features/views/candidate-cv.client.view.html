@@ -10,7 +10,7 @@
                 <h2>{{user.displayName}}</h2>
                 <h5>{{candidate.title}}</h5>
                 <h6>{{candidate.location}}</h6>
-                <h6>Experience: {{candidate.xp}}5 years</h6>
+                <h6>position: {{candidate.xp}}5 years</h6>
                 <div><p><strong>Objective: </strong>{{candidate.objective}}</p></div>
             </div>
         </section>
@@ -18,32 +18,40 @@
         <section class="col-md-12">
            <section>
                <header class="h3">Skills</header>
+               <a class="pull-right" ng-show="isEditing" ng-click="openSkillModal(newSkill)" href=""><i class="fa fa-plus"></i></a>
                <div>
                    <ul>
                         <li ng-repeat="skill in candidate.skills">
                             <a class="pull-right" ng-show="isEditing" ng-click="openSkillModal(skill)" href=""><i class="fa fa-edit"></i></a>
                             {{skill.title}} - <strong>{{skill.level}}</strong>
-                            <sm> with {{skill.experience}} year(s) of experience</sm>
+                            <sm> with {{skill.position}} {{skill.experience}} year(s) of experience {{skill.last_used | date}}</sm>
                         </li>
                     </ul>
                </div>
             </section> <hr>
             <section>
-                <header class="h3">Experience</header>
+                <header class="h3">position</header>
+                <a class="pull-right" ng-show="isEditing" ng-click="openExperienceModal(position)" href=""><i class="fa fa-plus"></i></a>
+                <div>
                     <ul>
-                        <li ng-repeat="pos in candidate.positions">
-                            <h4><strong>{{pos.title}}</strong> at {{pos.company_name}}</h4>
-                            <h6>{{pos.start_date | date}} to {{pos.end_date | date}}</h6>
-                            <p>{{pos.summary}}</p>
+                        <li ng-repeat="position in candidate.positions">
+                            <a class="pull-right" ng-show="isEditing" ng-click="openExperienceModal(position)" href=""><i class="fa fa-edit"></i></a>
+                            <h4><strong>{{position.title}}</strong> at {{position.company_name}}</h4>
+                            <h6>{{position.start_date | date}} to {{position.end_date | date}}</h6>
+                            <p>{{position.summary}}</p>
                         </li>
-                    </ul>                   
+                    </ul>
+                    </div>
             </section> <hr>
 
             <section>
                 <header class="h3">Projects</header>
+                <a class="pull-right" ng-show="isEditing" ng-click="openProjectModal(project)" href=""><i class="fa fa-plus"></i></a>
                 <div>
                     <ul>
                         <li ng-repeat="project in candidate.projects">
+                           <a class="pull-right" ng-show="isEditing" ng-click="openProjectModal(project)" href=""><i class="fa fa-edit"></i></a>
+
                             <h4><strong>{{project.name}}</strong> at {{project.company}}</h4>
                             <h6>{{project.start_date | date}} to {{project.end_date | date}}</h6>
                             <p>{{project.description}}</p>
@@ -100,7 +108,7 @@
             </div>
         </section>
         <h2 class="text-center">Rating</h2>
-        <p class="text-center"><span style="font-size: 70px;">2.0</span><span style="font-size: 25px;">/5</span></p>
+        <p class="text-center"><span style="font-size: 70px;">5.0</span><span style="font-size: 25px;">/5</span></p>
         <section>
             <header class="h3">Contact</header>
             <div><p><strong>Email: </strong> {{user.email}}</p></div>
