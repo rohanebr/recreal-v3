@@ -18,7 +18,6 @@ var usersocketbind=[];   //single user can have multiple sockets
 
 }
 function containsObject(socket) {
-
     console.log("FUNCT");
     for (var x=0, b=online_users.length;x<b;x++) {
 

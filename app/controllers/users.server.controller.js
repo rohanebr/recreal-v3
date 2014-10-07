@@ -401,7 +401,7 @@ exports.sendMessage = function(req, res, next) {
 		User.findById(req.user.id, function(err, sender) {
 			User.findById(recieverId, function(err, reciever){
 				var thread = {
-					sender: sender,
+					sender: sender._id,
 					reciever: recieverId,
 					subject: subject,
 					senderName: sender.displayName,

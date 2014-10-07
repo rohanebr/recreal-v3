@@ -91,38 +91,9 @@ var UserSchema = new Schema({
 	updated: {
 		type: Date
 	},
-	threads: [{
-		created: {
-		 	type: Date,
-			default: Date.now
-		},
-		updated: {
-			type: Date,
-			default: Date.now
-		},
-		sender: {
-			type: Schema.ObjectId,
-			ref: 'User'
-		},
-		senderName: {
-			type: String
-		},
-		reciver: {
-			type: Schema.ObjectId,
-			ref: 'User'
-		},		
-		subject:{
-			type: String
-	  		},
-		messages:[{
-			messageBody:{
-    			type: String 
-			},
-			created: {
-	 		type: Date,
-			default: Date.now
-			}
-		}]
+	threads: [{		
+		type: Schema.ObjectId,
+		ref: 'Thread'
 	}],
 
 	
