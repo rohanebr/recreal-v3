@@ -26,13 +26,14 @@ angular.module('short-list').controller('messageController', [
 
 			var attribute = {
 				recieverId: $scope.reciever.user,
+				sender: $scope.user,
 				subject: message.subject,
 				messageBody: message.messageBody
 			};
 
 			$http.put('/users/sendMessage/' + $scope.user._id , attribute).success(function(response) {
 
-				Socket.emit('message_sent', {message: attribute});
+				Socket.emit('message_sent_from', {message: attribute});
 				$modalInstance.dismiss('cancel');
 
 				// $location.path('jobs/' + job._id);
