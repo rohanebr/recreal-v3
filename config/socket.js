@@ -17,7 +17,7 @@ exports.create = function(server){
 
         // registerPresence(socket);
 
-        socket.on('register:user',function(data)
+        socket.on('user',function(data)
         {
             var online_user = {
                 user: data,
