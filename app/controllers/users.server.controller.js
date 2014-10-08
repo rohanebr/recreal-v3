@@ -65,9 +65,9 @@ exports.signup = function(req, res) {
 			company.save();
 			break;
 	}
-	typeObject.firstName = user.firstName;
-	typeObject.lastName = user.lastName;
-	typeObject.displayName = user.displayName;
+	// typeObject.firstName = user.firstName;
+	// typeObject.lastName = user.lastName;
+	// typeObject.displayName = user.displayName;
 	typeObject.user = user;
 	typeObject.save();
 
@@ -401,7 +401,7 @@ exports.sendMessage = function(req, res, next) {
 		User.findById(req.user.id, function(err, sender) {
 			User.findById(recieverId, function(err, reciever){
 				var thread = {
-					sender: sender,
+					sender: sender._id,
 					reciever: recieverId,
 					subject: subject,
 					senderName: sender.displayName,

@@ -11,26 +11,9 @@ var mongoose = require('mongoose'),
  * Employer Schema
  */
 var EmployerSchema = new Schema({
-  firstName: {
-    type: String,
-    trim: true,
-    default: ''
-  },
-  lastName: {
-    type: String,
-    trim: true,
-    default: ''
-  },
-  displayName: {
-    type: String,
-    trim: true
-  },
   title:{
     type: 'String',
     trim: true
-  },
-  picture_url:{
-    type: 'String'
   },
   division:{
     type: 'String',
@@ -81,6 +64,17 @@ var EmployerSchema = new Schema({
 		type: Schema.ObjectId,
 		ref: 'User'
 	}
+});
+
+EmployerSchema.set('toJSON', { virtuals: true });
+
+EmployerSchema.virtual('displayName').get(function () {
+  
+  return this.user.displayName;
+});
+
+EmployerSchema.virtual('picture_url').get(function () {
+  return this.user.picture_url;
 });
 
 /**

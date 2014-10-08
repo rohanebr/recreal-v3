@@ -41,6 +41,10 @@ var UserSchema = new Schema({
 		type: String,
 		trim: true
 	},
+	picture_url:{
+		type: 'String',
+		default: '/uploads/fullsize/no-image.jpg'
+	},
 	email: {
 		type: String,
 		trim: true,
@@ -91,38 +95,9 @@ var UserSchema = new Schema({
 	updated: {
 		type: Date
 	},
-	threads: [{
-		created: {
-		 	type: Date,
-			default: Date.now
-		},
-		updated: {
-			type: Date,
-			default: Date.now
-		},
-		sender: {
-			type: Schema.ObjectId,
-			ref: 'User'
-		},
-		senderName: {
-			type: String
-		},
-		reciver: {
-			type: Schema.ObjectId,
-			ref: 'User'
-		},		
-		subject:{
-			type: String
-	  		},
-		messages:[{
-			messageBody:{
-    			type: String 
-			},
-			created: {
-	 		type: Date,
-			default: Date.now
-			}
-		}]
+	threads: [{		
+		type: Schema.ObjectId,
+		ref: 'Thread'
 	}],
 
 	
@@ -131,6 +106,7 @@ var UserSchema = new Schema({
 		default: Date.now
 	}
 });
+
 
 /**
  * Hook a pre save method to hash the password

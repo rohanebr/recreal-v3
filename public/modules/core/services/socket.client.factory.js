@@ -1,12 +1,32 @@
 'use strict';
 
-angular.module('core').factory('Socket', ['Authentication',
-	function(Authentication) {
-	var socket;
-	    if(Authentication.user){
-	       socket = io.connect('http://localhost:3000');
-	    }
+angular.module('core').factory('Socket', ['$rootScope',
+	function($rootScope) {
 
-		return socket;
-	}
+
+	var socket = io.connect('http://localhost:3000');
+    return {
+      on: function (eventName, callback) {
+        socket.on(eventName, function () {  
+          var args = arguments;
+          $rootScope.$apply(function () {
+            callback.apply(socket, args);
+          });
+        });
+      },
+      emit: function (eventName, data, callback) {
+        socket.emit(eventName, data, function () {
+          var args = arguments;
+          $rootScope.$apply(function () {
+            if (callback) {
+              callback.apply(socket, args);
+            }
+          });
+        })
+      }
+    };
+
+  }
+
+
 ]);
