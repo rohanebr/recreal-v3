@@ -221,8 +221,15 @@ var CandidateSchema = new Schema({
 	}
 });
 
+CandidateSchema.set('toJSON', { virtuals: true });
+
+
 CandidateSchema.virtual('displayName').get(function () {
-  return this.user.displayName;
+	var User = mongoose.model('User');
+	User.findOne({_id: this.user}).exec(function(err, user){
+		return user.displayName;
+	});
+	return 'Warren Buffet Static';
 });
 
 CandidateSchema.virtual('picture_url').get(function () {

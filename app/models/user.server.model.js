@@ -107,6 +107,7 @@ var UserSchema = new Schema({
 	}
 });
 
+
 /**
  * Hook a pre save method to hash the password
  */

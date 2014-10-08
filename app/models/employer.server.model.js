@@ -66,7 +66,10 @@ var EmployerSchema = new Schema({
 	}
 });
 
+EmployerSchema.set('toJSON', { virtuals: true });
+
 EmployerSchema.virtual('displayName').get(function () {
+  
   return this.user.displayName;
 });
 
