@@ -10,7 +10,7 @@ angular.module('core').controller('HeaderController', ['$scope', 'Authentication
 
 		if($scope.authentication.user){
 			Socket.on('message_sent_to', function (data) {
-				if(data.message.recieverId === $scope.authentication.user._id )
+				if(data.message.receiver === $scope.authentication.user._id )
 					var thread = {
 						senderName: data.message.sender.displayName,
 						subject: data.message.subject,
@@ -24,13 +24,6 @@ angular.module('core').controller('HeaderController', ['$scope', 'Authentication
 					// alert(data.message.subject + ' --------------> ' + data.message.messageBody);
 			});
 		}
-		
-
-		$scope.$on('$destroy', function (event) {
-        socket.removeAllListeners();
-        // or something like
-        // socket.removeListener(this);
-   		});
 
 
 		$scope.toggleCollapsibleMenu = function() {

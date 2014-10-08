@@ -18,6 +18,10 @@ var ThreadSchema = new Schema({
 		type: Date,
 		default: Date.now
 	},
+	read: {
+		type: Boolean,
+		default: false
+	},
 	sender: {
 		type: Schema.ObjectId,
 		ref: 'User'
@@ -32,6 +36,10 @@ var ThreadSchema = new Schema({
 	messages:[{
 		messageBody:{
 			type: String 
+		},
+		author: {
+			type: Schema.ObjectId,
+			ref: 'User'
 		},
 		created: {
  		type: Date,

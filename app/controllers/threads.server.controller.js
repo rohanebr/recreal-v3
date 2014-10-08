@@ -158,7 +158,8 @@ exports.getUserThreads = function(req, res) {
 				message: getErrorMessage(err)
 			});
 		} else {
-			res.jsonp(threads);
+			console.log("FETUSERTHREADS"+threads[0].sender+" "+threads[0].receiever);
+						res.jsonp(threads);
 		}
 	  });
 
@@ -167,7 +168,7 @@ exports.getUserThreads = function(req, res) {
 /**
  * Thread middleware
  */
-exports.threadByID = function(req, res, next, id) { Thread.findById(id).populate('user', 'displayName').exec(function(err, thread) {
+exports.threadByID = function(req, res, next, id) { Thread.findById(id).populate('messages.author').exec(function(err, thread) {
 		if (err) return next(err);
 		if (! thread) return next(new Error('Failed to load Thread ' + id));
 		req.thread = thread ;

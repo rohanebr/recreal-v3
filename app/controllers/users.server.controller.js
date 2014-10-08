@@ -65,9 +65,9 @@ exports.signup = function(req, res) {
 			company.save();
 			break;
 	}
-	typeObject.firstName = user.firstName;
-	typeObject.lastName = user.lastName;
-	typeObject.displayName = user.displayName;
+	// typeObject.firstName = user.firstName;
+	// typeObject.lastName = user.lastName;
+	// typeObject.displayName = user.displayName;
 	typeObject.user = user;
 	typeObject.save();
 

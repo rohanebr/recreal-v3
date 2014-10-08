@@ -101,11 +101,13 @@
                 </div>
                 <table class="table table-hover">
                     <tr class="mail-unread" data-ng-repeat="thread in threads">
-                        <td><label class="ui-checkbox"><input name="checkbox1" type="checkbox" value="option1" ><span></span></label></td>
-                        <td>{{thread.sender.displayName}}</td>
-                        <td>{{thread.subject}}</td>
-                        <td>{{thread.created | date}}</td>
-                        <td><i class="fa fa-star-o"></i></td>
+                        
+                            <td><label class="ui-checkbox"><input name="checkbox1" type="checkbox" value="option1" ><span></span></label></td>
+                            <td><a data-ng-href="#!/threads/{{thread._id}}">{{thread.sender.displayName}}</a></td>
+                            <td>{{thread.subject}}</td>
+                            <td>{{thread.created | date}}</td>
+                            <td><i class="fa fa-star-o"></i></td>
+                        
                     </tr>
                 </table>
             </section>

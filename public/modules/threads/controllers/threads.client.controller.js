@@ -57,7 +57,8 @@ angular.module('threads').controller('ThreadsController', ['$scope', '$statePara
 
 		// Find a list of Threads
 		$scope.findUserThreads = function() {
-			$http.get('/threads/getUserThreads/' + $scope.authentication.user._id).success(function(threads) {
+			console.log("FINDUSERTHREADS RAN");
+				$http.get('/threads/getUserThreads/' + $scope.authentication.user._id).success(function(threads) {
 				$scope.threads = threads;
 			});
 		};

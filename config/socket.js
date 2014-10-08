@@ -15,7 +15,6 @@ var usersocketbind=[];   //single user can have multiple sockets
         }
     }
     return usersocketbind;
-
 }
 function containsObject(socket) {
     console.log("FUNCT");
@@ -83,7 +82,7 @@ console.log(online_users[a].user.displayName+" "+online_users[a].socket.id);
         });
 
          socket.on('message_sent_from', function(data) {
-         var socketid=fetchmesocketid(data.message.recieverId);
+         var socketid=fetchmesocketid(data.message.receiver);
 
 
 

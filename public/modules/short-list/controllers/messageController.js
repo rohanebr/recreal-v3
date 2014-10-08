@@ -51,7 +51,8 @@ angular.module('short-list').controller('messageController', [
 				receiver: $scope.reciever.user,
 				subject:  message.subject,
 				messages: [{
-					messageBody: message.messageBody
+					messageBody: message.messageBody,
+					author: $scope.user._id
 				}]
 			});
 

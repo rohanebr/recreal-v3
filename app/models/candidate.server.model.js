@@ -10,27 +10,9 @@ var mongoose = require('mongoose'),
  * Candidate Schema
  */
 var CandidateSchema = new Schema({
-	firstName: {
-		type: String,
-		trim: true,
-		default: ''
-	},
-	lastName: {
-		type: String,
-		trim: true,
-		default: ''
-	},
-	displayName: {
-		type: String,
-		trim: true
-	},
 	title:{
 		type: 'String',
 		trim: true
-	},
-	picture_url:{
-		type: 'String',
-		default: '/uploads/fullsize/no-image.jpg'
 	},
 	objective:{
 		type: 'String',
@@ -238,6 +220,15 @@ var CandidateSchema = new Schema({
 		required: true
 	}
 });
+
+CandidateSchema.virtual('displayName').get(function () {
+  return this.user.displayName;
+});
+
+CandidateSchema.virtual('picture_url').get(function () {
+  return this.user.picture_url;
+});
+
 
 CandidateSchema.index({jobs: 1});
 
