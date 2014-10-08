@@ -19,4 +19,7 @@ module.exports = function(app) {
 
 	// Finish by binding the Thread middleware
 	app.param('threadId', threads.threadByID);
+	app.route('/threads/updateThread/:threadId')
+    		.put(users.requiresLogin,  threads.updateThread);
+    	
 };

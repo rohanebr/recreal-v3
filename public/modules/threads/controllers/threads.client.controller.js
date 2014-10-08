@@ -63,6 +63,24 @@ angular.module('threads').controller('ThreadsController', ['$scope', '$statePara
 			});
 		};
 
+		
+		$scope.sendMessage=function(){
+             console.log("{Thread} {SendMessage} running");
+            var message={messageBody : $scope.messageBody};
+
+           $http.put('/threads/updateThread/' + $scope.thread._id,message).success(function(messageBody) {
+
+$scope.thread.messages.push({messageBody:messageBody,
+								author: $scope.user,
+								created: Date.now()});
+
+             
+             });
+				
+ $scope.messageBody="";
+		};
+
+
 		// Find existing Thread
 		$scope.findOne = function() {
 			$scope.thread = Threads.get({ 

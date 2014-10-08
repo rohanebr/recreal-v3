@@ -128,7 +128,7 @@ Candidate.update(
       { safe: true },
       function removeConnectionsCB(err, obj) {
 
-      })
+      });
 
 }
 
