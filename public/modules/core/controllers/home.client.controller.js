@@ -17,7 +17,7 @@ angular.module('core').controller('HomeController', ['$scope', 'Authentication',
         		  });
         		  Socket.on('entrance', function (data) {
 
-                            Socket.emit('register:user',user);
+                            Socket.emit('user_data',user);
                   		  });
 
                   		     Socket.on('entrance_response',function(data)
@@ -38,7 +38,7 @@ angular.module('core').controller('HomeController', ['$scope', 'Authentication',
 		else if(user.userType === 'candidate'){
 		Socket.on('entrance', function (data) {
         		    console.log(data);
-                    Socket.emit('register:user',user);
+                    Socket.emit('user_data',user);
         		  });
 
         		   Socket.on('entrance_response',function(data)
