@@ -36,6 +36,11 @@ angular.module('exams').controller('TakeExamController', ['$scope', '$stateParam
 
 			
 
+			givenAnswers.push({
+				answer: $scope.answer,
+				index: $scope.questionIndex++				
+			});
+
 		};
 		$scope.prevQuestion = function(){
 			$scope.questionIndex--;
