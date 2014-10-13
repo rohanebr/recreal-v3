@@ -265,7 +265,7 @@ Thread.findById(threadId).populate('messages.author').exec(function(err, thread)
         thread.messages.push({messageBody:message,author:author._id});
      
         thread.markModified('messages');
-
+        thread.markModified('author');
          thread.save();
            thread.read=false;
          thread.markModified('read');

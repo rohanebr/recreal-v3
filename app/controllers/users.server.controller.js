@@ -383,13 +383,17 @@ exports.getMessages = function(req,res)
 	
 	var username= User.findOne({_id:userId}).exec(function(err,user){
 
+
+
+
+
+
 });
 	var threadsId=req.user.threads;
-console.log('{users}{controller}{getName} Ran USERIDE:'+userId+' df');
+console.log('{users}{controller}{getName} Ran USERIDE:'+' df');
 var threadId;
 
-for(var i=0;i<threadsId.length;i++)
-{
+
 
 	Threads.find({
     '_id': { $in: threadsId}
@@ -400,7 +404,7 @@ for(var i=0;i<threadsId.length;i++)
  		  {
  		  	
             var lengths=docs[x].messages.length;
-           
+           console.log(docs[x].messages[lengths-1]);
  		  if(!docs[x].read && !userId.equals(docs[x].messages[lengths-1].author._id))
  		  	  {var sendername=docs[x].messages[lengths-1].author.displayName;
  		  	  	var messagebody= docs[x].messages[lengths-1].messageBody;
@@ -426,7 +430,7 @@ for(var i=0;i<threadsId.length;i++)
  
  	
  		});
-}
+
 
 
 

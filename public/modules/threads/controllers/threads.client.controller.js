@@ -87,6 +87,7 @@ Socket.emit('message_sent_from', {message: thread});
       {
 
       var thread = {
+      	idc: threadId,
        sender : {displayName: $scope.authentication.user.displayName},
        receiver: $scope.thread.sender,
        messages:[{created: Date.now()}]
@@ -148,21 +149,7 @@ Socket.emit('update_threads', { sender : messageBody.sender,
 		};
 
 		
-		$scope.sendMessage=function(){
-             console.log("{Thread} {SendMessage} running");
-          
-         var message={threadId:$scope.thread._id,messageBody : $scope.messageBody,author:$scope.authentication.user.displayName};
-           $http.put('/threads/updateThread/' + $scope.thread._id,message).success(function(messageBody) {
 
-            $scope.thread.messages.push({messageBody:messageBody,
-								author: $scope.user,
-								created: Date.now()});
-
-             
-             });
-				
- $scope.messageBody="";
-		};
 
 
 		// Find existing Thread
