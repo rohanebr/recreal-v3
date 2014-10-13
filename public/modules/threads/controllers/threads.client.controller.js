@@ -70,7 +70,7 @@ $scope.$digest();
       {
 
       var thread = {
-      	id: threadId,
+      	idc: threadId,
        sender : {displayName: $scope.authentication.user.displayName},
        receiver: $scope.thread.receiver,
        messages:[{created: Date.now()}]

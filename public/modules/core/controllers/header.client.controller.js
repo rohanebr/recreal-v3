@@ -65,7 +65,7 @@ angular.module('core').controller('HeaderController', ['$scope', 'Authentication
 console.log(data.message);
 			
 						var thread = {
-							id:data.message._id || data.message.id,
+							id: data.message.idc,
 						senderName: data.message.sender.displayName,
 						//subject: data.message.subject,
 						created: data.message.messages.created    //wrong this shldnt be Data.now()
