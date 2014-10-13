@@ -35,7 +35,7 @@ console.log(leastamountofdata);
 
         // registerPresence(socket);
 
-        socket.on('user',function(data)
+        socket.on('user_data',function(data)
         {
             var online_user = {
                 user: data,

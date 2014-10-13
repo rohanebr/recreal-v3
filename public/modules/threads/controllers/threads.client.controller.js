@@ -154,7 +154,7 @@ Socket.emit('update_threads', { sender : messageBody.sender,
 
            $http.put('/threads/updateThread/' + $scope.thread._id,message).success(function(messageBody) {
 
-$scope.thread.messages.push({messageBody:messageBody,
+            $scope.thread.messages.push({messageBody:messageBody,
 								author: $scope.user,
 								created: Date.now()});
 
