@@ -166,8 +166,7 @@ exports.getUserThreads = function(req, res) {
 				message: getErrorMessage(err)
 			});
 		} else {
-			console.log('FETUSERTHREADS'+threads[0].sender+' '+threads[0].receiever);
-						res.jsonp(threads);
+			res.jsonp(threads);
 		}
 	  });
 
@@ -276,8 +275,7 @@ Thread.findById(threadId).populate('messages.author').exec(function(err, thread)
 	}
 	else
 	{
-		console.log('PPP'+thread.receiver);
-	res.json( {'sender':thread.sender,'receiver':thread.receiver});}
+		res.json( {'sender':thread.sender,'receiver':thread.receiver});}
 	});
 console.log("{Threads}{Controller} ran"+message+" author name:"+author);
 

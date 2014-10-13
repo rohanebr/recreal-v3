@@ -24,7 +24,8 @@ module.exports = {
 				'public/lib/angular-bootstrap/ui-bootstrap-tpls.js',
 				'public/lib/bootstrap/dist/js/bootstrap.js',
 				'public/lib/angular-socket-io/socket.js',
-				'public/lib/socket.io-client/socket.io.js'
+				'public/lib/socket.io-client/socket.io.js',
+				'public/lib/angular-timer/dist/angular-timer.js',
 			]
 		},
 		css: [

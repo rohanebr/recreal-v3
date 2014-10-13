@@ -17,6 +17,7 @@
     "ng-file-upload": "~1.6.1",
     "textAngular": "~1.2.2",
     "socket.io-client": "~1.1.0",
-    "angular-socket-io": "~0.6.0"
+    "angular-socket-io": "~0.6.0",
+    "angular-timer": "~1.1.7"
   }
 }

@@ -404,7 +404,6 @@ var threadId;
  		  {
  		  	
             var lengths=docs[x].messages.length;
-           console.log(docs[x].messages[lengths-1]);
  		  if(!docs[x].read && !userId.equals(docs[x].messages[lengths-1].author._id))
  		  	  {var sendername=docs[x].messages[lengths-1].author.displayName;
  		  	  	var messagebody= docs[x].messages[lengths-1].messageBody;

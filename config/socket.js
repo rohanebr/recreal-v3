@@ -37,6 +37,7 @@ console.log(leastamountofdata);
 
         socket.on('user_data',function(data)
         {
+            console.log("user data started");
             var online_user = {
                 user: data,
                 socket: socket

@@ -6,6 +6,10 @@
 	<div class="panel panel-primary">
 		<div class="panel panel-header">
 			<h3>Question # {{questionIndex + 1}}/{{exam.questions.length}}</h3>
+			<!-- <timer interval="1000" countdown="100">{{countdown}}</timer>
+			<timer autostart="false" countdown="90061">{{days}} day{{daysS}}, {{hours}} hour{{hoursS}}, {{minutes}} minute{{minutesS}}, {{seconds}} second{{secondsS}}.</timer> -->
+			<timer countdown="1" max-time-unit="'minute'" interval="1000">{{mminutes}} minute{{minutesS}}, {{sseconds}} second{{secondsS}}</timer>
+			<!--Nice work Asaad :)-->
 		</div>
 			
 		<div class="panel panel-body">
@@ -13,10 +17,10 @@
 			
 			<div data-ng-repeat="answer in currentQuestion.answers">
 				<label class="ui-radio">
-	            <input  name="role" 
+	            <input  name="answer" 
 	                    type="radio" 
-	                    value="answer"
-
+	                    value="{{answer.body}}"
+	                    data-ng-model="currentQuestion.selectedAnswer"
 	                    />
 	                    <span>{{answer.body}}</span>
 	            </label>
@@ -28,5 +32,4 @@
 	        </div>
     	</div>
 	</div>
-
 </section>
