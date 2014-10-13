@@ -195,32 +195,32 @@ console.log("{THREAD}{CONTROLLER}{THREADBYID}");
 };
 
 
-exports.updateThread = function (req,res)
-{
-var threadId=req.thread._id;
+// exports.updateThread = function (req,res)
+// {
+// var threadId=req.thread._id;
 
-console.log(threadId);
-var message=req.body.messageBody;
+// console.log(threadId);
+// var message=req.body.messageBody;
 
-console.log("{Threads}{Controller} ran");
-
-
- Thread.update(
-       { _id: threadId },
-       { $push: { messages : {messageBody:message} } },
-      { safe: true },
-       function (err, obj) {
-if (err) {
-			return res.send(400, {
-				message: getErrorMessage(err)
-			});
-		} else {
-			res.jsonp(message);
-		}
-       });
+// console.log("{Threads}{Controller} ran");
 
 
-}
+//  Thread.update(
+//        { _id: threadId },
+//        { $push: { messages : {messageBody:message} } },
+//       { safe: true },
+//        function (err, obj) {
+// if (err) {
+// 			return res.send(400, {
+// 				message: getErrorMessage(err)
+// 			});
+// 		} else {
+// 			res.jsonp(message);
+// 		}
+//        });
+
+
+// }
 /**
 *Get A single user thread and mark it as Read
 */

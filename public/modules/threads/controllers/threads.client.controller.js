@@ -150,8 +150,8 @@ Socket.emit('update_threads', { sender : messageBody.sender,
 		
 		$scope.sendMessage=function(){
              console.log("{Thread} {SendMessage} running");
-            var message={messageBody : $scope.messageBody};
-
+          
+         var message={threadId:$scope.thread._id,messageBody : $scope.messageBody,author:$scope.authentication.user.displayName};
            $http.put('/threads/updateThread/' + $scope.thread._id,message).success(function(messageBody) {
 
             $scope.thread.messages.push({messageBody:messageBody,
