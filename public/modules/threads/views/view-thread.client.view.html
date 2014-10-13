@@ -3,9 +3,9 @@
 	<div class="page-header">
 		<h1 data-ng-bind="thread.subject"></h1>
 	</div>
-	<div data-ng-repeat="message in thread.messages">
 
-		
+	<div data-ng-repeat="message in thread.messages">
+		<img class="img80_80" src="{{message.author.picture_url}}">
 		<h3>{{message.author.displayName}}</h3>
 		<p>{{message.messageBody}}</p>
 		<span data-ng-bind="message.created | date:'mediumDate'"></span>
@@ -15,7 +15,6 @@
 		
 	</textarea>
 
-
 	<button data-ng-click="sendMessage()" class="btn btn-primary btn-medium">
 		Send
 	</button>
@@ -23,12 +22,12 @@
 	<small>
 		<em class="text-muted">
 			Posted on
-
 			<span data-ng-bind="thread.messages[thread.messages.length-1].created | date:'mediumDate'"></span>
 			by 
   <!--good mudz -->
 			<span data-ng-bind="thread.messages[thread.messages.length-1].author.displayName"></span>
-
 		</em>
 	</small>
 </section>
+
+asdfasdf
