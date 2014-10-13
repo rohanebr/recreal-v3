@@ -135,7 +135,7 @@ Candidate.update(
 console.log("add Skill function called");
 
 
-}
+};
 exports.deleteSkill = function(req, res) {
 var userId=req.user._id;
 if(req.user.userType === 'candidate')

@@ -38,6 +38,9 @@ module.exports = function(app) {
 
 	app.route('/users/sendMessage/:userId')
 		.put(users.sendMessage);
+	app.route('/users/getMessages/:userId')
+		.get(users.getMessages);
+
 
 	// app.route('/users/thread/:userId')
 	// 	.get(user.getthreads);

@@ -5,14 +5,32 @@ var io;
 var online_users = [];
 
 
-
 exports.create = function(server){
     io = require('socket.io').listen(server);
     io.on('connection', function(socket) {
 
         console.log('connected'+socket.id);
         sock = socket;
+       socket.on('update_threads',function(data)
+        {
+      var leastamountofdata={messageBody:data.messageBody,author:data.author.displayName,created:data.created,authordp : data.authordp };
+            var socketid=fetchmesocketid(data.receiver);
+            for(var x=0;x<socketid.length;x++)
+          {socketid[x].emit('watched_thread','nothg');
+            socketid[x].emit('incoming_thread', leastamountofdata);}
+           var socketid=fetchmesocketid(data.sender);
+            for(var x=0;x<socketid.length;x++)
+           { socketid[x].emit('watched_thread','nothg');
+            socketid[x].emit('incoming_thread', leastamountofdata);
 
+
+        }
+console.log(leastamountofdata);
+              }  
+
+
+
+                   );
         socket.emit('entrance', {message: 'Welcome to the chat room'});
 
         // registerPresence(socket);
@@ -49,8 +67,19 @@ exports.create = function(server){
         socket.on('applied_on_job', function(data) {
             io.sockets.emit('applied_on_job', data);
         });
+     socket.on('watched_thread',function(data)
+{
+console.log(data);
+ var socketid=fetchmesocketid(data);
+            for(var x=0;x<socketid.length;x++)
+            socketid[x].emit('watched_thread_to', data);
+  
+    console.log("WATCHED THREAD");
+}
 
+        );
         socket.on('message_sent_from', function(data) {
+            console.log(data);
             var socketid=fetchmesocketid(data.message.receiver);
             for(var x=0;x<socketid.length;x++)
             socketid[x].emit('message_sent_to', data);
