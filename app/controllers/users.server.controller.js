@@ -9,6 +9,7 @@ var mongoose = require('mongoose'),
 	Candidate = mongoose.model('Candidate'),
 	Employer = mongoose.model('Employer'),
 	Company = mongoose.model('Company'),
+	Threads = mongoose.model('Thread'),
 	_ = require('lodash');
 
 /**
@@ -109,6 +110,7 @@ exports.signin = function(req, res, next) {
 			user.password = undefined;
 			user.salt = undefined;
 
+	
 			req.login(user, function(err) {
 				if (err) {
 					res.send(400, err);
@@ -376,6 +378,60 @@ exports.saveOAuthUserProfile = function(req, providerUserProfile, done) {
 // 		res.jsonp(user);
 // 	});
 // };
+exports.getMessages = function(req,res)
+{
+	var userId=req.user._id;
+	
+	var username= User.findOne({_id:userId}).exec(function(err,user){
+
+});
+	var threadsId=req.user.threads;
+console.log('{users}{controller}{getName} Ran USERIDE:'+userId+' df');
+var threadId;
+
+for(var i=0;i<threadsId.length;i++)
+{
+
+	Threads.find({
+    '_id': { $in: threadsId}
+}).populate('messages.author').exec(function(err, docs){//res.setHeader('Content-Type', 'application/json');
+	
+	var gotmessages=[{}];
+ 		  for(var x=0;x<docs.length;x++)
+ 		  {
+ 		  	
+            var lengths=docs[x].messages.length;
+           
+ 		  if(!docs[x].read && !userId.equals(docs[x].messages[lengths-1].author._id))
+ 		  	  {var sendername=docs[x].messages[lengths-1].author.displayName;
+ 		  	  	var messagebody= docs[x].messages[lengths-1].messageBody;
+ 		  	  	var created=docs[x].messages[lengths-1].created;
+ 		  	  	var attr={id: docs[x]._id,senderName : sendername,messageBody:messagebody,created:created};
+ 		  	  	gotmessages.push(attr);
+
+ 		  	  }
+ 	}
+ 	
+ 	  
+ 	if(gotmessages.length>=0)
+ 	{
+ 		
+    res.end(JSON.stringify(gotmessages));
+    return "ended"; 	}
+ 		// res.send(JSON.stringify(gotmessages), null, 2);
+ 	else
+ 		{res.json("nothing");
+ 	return "ended";}
+ 
+ 
+ 
+ 	
+ 		});
+}
+
+
+
+};
 
 exports.sendMessage = function(req, res, next) {
 
@@ -484,3 +540,7 @@ exports.removeOAuthProvider = function(req, res, next) {
 		});
 	}
 };
+
+
+
+

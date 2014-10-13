@@ -35,6 +35,13 @@ var getErrorMessage = function(err) {
 /**
  * Create a Thread
  */
+ exports.setRead = function(req,res)
+
+{
+console.log("works");
+
+
+}
 exports.create = function(req, res) {
 	var thread = new Thread(req.body);
 
@@ -135,6 +142,7 @@ Model.find().populate({
 
 
  */
+ 
 exports.getUserThreads = function(req, res) { 
 
 	// User.find({_id: req.user._id}).populate({path: 'sender threads'}).exec(function(err, users) {
@@ -152,13 +160,13 @@ exports.getUserThreads = function(req, res) {
 	          {sender: req.user._id},
 	          {receiver: req.user._id}
 	      ]
-	  }).populate('sender').exec(function(err, threads){
+	  }).populate('sender').populate('receiver').exec(function(err, threads){
 	  	if (err) {
 			return res.send(400, {
 				message: getErrorMessage(err)
 			});
 		} else {
-			console.log("FETUSERTHREADS"+threads[0].sender+" "+threads[0].receiever);
+			console.log('FETUSERTHREADS'+threads[0].sender+' '+threads[0].receiever);
 						res.jsonp(threads);
 		}
 	  });
@@ -168,13 +176,46 @@ exports.getUserThreads = function(req, res) {
 /**
  * Thread middleware
  */
-exports.threadByID = function(req, res, next, id) { Thread.findById(id).populate('messages.author').exec(function(err, thread) {
+exports.threadByID = function(req, res, next, id) { 
+
+console.log("{THREAD}{CONTROLLER}{THREADBYID}");
+	Thread.findById(id).populate('messages.author').exec(function(err, thread) {
+		//thread.read=true;
+
+       // thread.markModified('read');
+       //  thread.save();
 		if (err) return next(err);
 		if (! thread) return next(new Error('Failed to load Thread ' + id));
 		req.thread = thread ;
 		next();
+
+
 	});
 };
+
+/**
+*Get A single user thread and mark it as Read
+*/
+exports.getUserThread = function(req,res)
+{
+	var id=req.thread._id;
+		Thread.findById(id).populate('messages.author').exec(function(err, thread) {
+		thread.read=true;
+
+        thread.markModified('read');
+         thread.save();
+		if (err) return res.send(err);
+		else
+			return res.send(thread);
+		
+
+
+	});
+
+
+
+
+}
 
 /**
  * Thread authorization middleware
@@ -184,4 +225,34 @@ exports.hasAuthorization = function(req, res, next) {
 		return res.send(403, 'User is not authorized');
 	}
 	next();
+};
+
+exports.updateThread = function (req,res)
+{
+var threadId=req.body.threadId;
+var message=req.body.messageBody;
+var author=req.body.author;
+Thread.findById(threadId).populate('messages.author').exec(function(err, thread) {
+		
+        thread.messages.push({messageBody:message,author:author._id});
+     
+        thread.markModified('messages');
+
+         thread.save();
+           thread.read=false;
+         thread.markModified('read');
+         thread.save();
+		if (err) {return res.send(400, {
+				message: getErrorMessage(err)
+			});
+	}
+	else
+	{
+		console.log('PPP'+thread.receiver);
+	res.json( {'sender':thread.sender,'receiver':thread.receiver});}
+	});
+console.log("{Threads}{Controller} ran"+message+" author name:"+author);
+
+
+
 };

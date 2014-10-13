@@ -1,4 +1,4 @@
-<section data-ng-controller="ThreadsController" data-ng-init="findOne()">
+<section data-ng-controller="ThreadsController" data-ng-init="findOneAndMarkAsRead()">
 	
 	<div class="page-header">
 		<h1 data-ng-bind="thread.subject"></h1>
@@ -11,11 +11,11 @@
 		<span data-ng-bind="message.created | date:'mediumDate'"></span>
 	</div>
 
-	<textarea class="form-control">
+	<textarea data-ng-model="messageBody" class="form-control">
 		
 	</textarea>
 
-	<button data-ng-click="" class="btn btn-primary btn-medium">
+	<button data-ng-click="sendMessage()" class="btn btn-primary btn-medium">
 		Send
 	</button>
 	

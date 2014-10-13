@@ -10,6 +10,7 @@ angular.module('core').controller('HomeController', ['$scope', 'Authentication',
 		if(!user)
 			$state.go('home');
 		else if(user.userType === 'employer'){
+			console.log("EMPLOYER");
 		    Socket.on('applied_on_job', function (data) {
         		    console.log(data.candidate.displayName + ' applied on job : ' + data.job.title);
         		    if(user.userType === 'employer')

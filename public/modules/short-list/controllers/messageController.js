@@ -52,7 +52,8 @@ angular.module('short-list').controller('messageController', [
 				subject:  message.subject,
 				messages: [{
 					messageBody: message.messageBody,
-					author: $scope.user._id
+					author: $scope.user._id,
+					created :Date.now()
 				}]
 			});
 
