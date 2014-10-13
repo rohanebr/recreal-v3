@@ -55,7 +55,7 @@ var ExamSchema = new Schema({
 			},
 			weight: {
 				type: Number,
-				default: 5
+				default: 0
 			},
 			image_url:{
 				type: String
