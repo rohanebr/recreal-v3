@@ -508,6 +508,54 @@ exports.sendMessage = function(req, res, next) {
 
 };
 
+exports.deleteSubscriber =function(req,res)
+{
+
+User.update(
+      { _id: req.body.id },
+      { $pull: { subscribers : req.user._id } },
+      { safe: true },
+      function removeConnectionsCB(err, obj) {
+ 
+      });
+
+
+}
+
+
+
+
+exports.addSubscriber = function(req,res)
+{
+	var addsubscriber=true;
+	
+	User.findById(req.body.id, function(err, user)
+
+		{
+			for(var x=0,b=user.subscribers.length;x<b;x++)
+			{console.log(user.subscribers[x]);
+         
+				if(user.subscribers[x].equals(req.user._id))
+                       {  addsubscriber=false;
+                       	break;
+                       }
+			}
+
+              
+if(addsubscriber)
+User.update(
+      { _id: req.body.id },
+      { $push: { subscribers : req.user._id } },
+      { safe: true },
+      function removeConnectionsCB(err, obj) {
+
+      });
+
+		});
+
+
+
+};
 
 
 /**

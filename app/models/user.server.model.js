@@ -103,7 +103,10 @@ var UserSchema = new Schema({
 		type: Schema.ObjectId,
 		ref: 'Thread'
 	}],
-
+    subscribers: [{
+        type: Schema.ObjectId,
+        ref: 'User' 
+    }],
 	
 	created: {
 		type: Date,

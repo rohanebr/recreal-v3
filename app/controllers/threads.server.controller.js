@@ -225,15 +225,16 @@ console.log("{THREAD}{CONTROLLER}{THREADBYID}");
 */
 exports.getUserThread = function(req,res)
 {
-	var id=req.thread._id;
-		Thread.findById(id).populate('messages.author').exec(function(err, thread) {
+     	var id=req.thread._id;
+ 		Thread.findById(id).populate('sender').populate('receiver').populate('messages.author').exec(function(err, thread) {
 		thread.read=true;
-
         thread.markModified('read');
          thread.save();
 		if (err) return res.send(err);
 		else
 			return res.send(thread);
+			
+			
 		
 
 
