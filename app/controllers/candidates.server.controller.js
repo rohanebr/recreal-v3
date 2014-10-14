@@ -273,6 +273,32 @@ exports.uploadPicture = function(req, res) {
   });
 };
 
+//Add New Project
+exports.addProject=function(req,res)
+{
+var userId=req.user._id;
+if(req.user.userType === 'candidate')
+{
+var c;
+var project=req.body;
+console.log(project);
+Candidate.update(
+      { user: userId },
+      { $push: { projects : project } },
+      { safe: true },
+      function removeConnectionsCB(err, obj) {
+
+      });
+
+}
+
+console.log("add Project function called");
+
+
+};
+
+
+
 //In the image of deleteExperience
 //created @ 6:09 AM 10/4/2014
 //added by:asadullah baig
@@ -302,9 +328,163 @@ Candidate.update(
 
 };
 
+
+
+//UPDATE PROJECT METHOD
+exports.updateProject = function(req, res) {
+
+
+	if(req.user.userType === 'candidate')
+    {
+    var c;
+    var project=req.body;
+var id=req.user._id;
+var cand = Candidate.findOne({user:id}).exec(function(err, candidate){
+candidate.projects.forEach(function (item) {
+if(item._id==project._id)
+      {
+      item.company=project.company;
+      item.name=project.name;
+      item.description=project.description;
+      item.start_date=project.start_date;
+      item.end_date=project.end_date;
+      
+      }
+
+    });
+
+candidate.markModified('projects');
+         candidate.save();
+
+    		});
+
+
+
+    }
+
+    	console.log('method called update skill!!');
+
+};
+
+
+exports.addEducation=function(req,res)
+{
+var userId=req.user._id;
+if(req.user.userType === 'candidate')
+{
+var c;
+var education=req.body;
+console.log(education);
+Candidate.update(
+      { user: userId },
+      { $push: { educations : education } },
+      { safe: true },
+      function removeConnectionsCB(err, obj) {
+
+      });
+
+}
+
+console.log("add Education function called");
+
+
+};
+
+
+exports.deleteEducation=function(req,res)
+{
+var EducationId=req.user._id;
+if(req.user.userType === 'candidate')
+{
+var c;
+var education=req.body;
+console.log(education._id);
+console.log(education.degree);
+Candidate.update(
+      { user: EducationId },
+      { $pull: { educations : { _id : education._id } } },
+      { safe: true },
+      function removeConnectionsCB(err, obj) {
+
+      })
+
+}
+
+
+	console.log('method called delete Education!');
+
+
+};
+
+exports.updateEducation = function(req, res) {
+
+
+	if(req.user.userType === 'candidate')
+    {
+    var c;
+    var education=req.body;
+var id=req.user._id;
+var cand = Candidate.findOne({user:id}).exec(function(err, candidate){
+candidate.educations.forEach(function (item) {
+if(item._id==education._id)
+      {
+      item.degree=education.degree;
+      item.study_feild=education.study_feild;
+      item.notes=education.notes;
+      item.institute=education.institute;
+      item.start_date=education.start_date;
+      item.end_date=education.end_date;
+      
+      }
+
+    });
+
+candidate.markModified('educations');
+         candidate.save();
+
+    		});
+
+
+
+    }
+
+    	console.log('method called update education!!');
+
+
+
+
+};
+
 //In the image of updateSkill
 //created @ 4:55 AM 10/4/2014
 //added by:asadullah baig
+
+exports.addExperience=function(req,res)
+{
+var userId=req.user._id;
+if(req.user.userType === 'candidate')
+{
+var c;
+var position=req.body;
+console.log(position);
+Candidate.update(
+      { user: userId },
+      { $push: { positions : position } },
+      { safe: true },
+      function removeConnectionsCB(err, obj) {
+
+      });
+
+}
+
+console.log("add Experience function called");
+
+
+};
+
+
+//UPDATE EXPERIENCE
+
 exports.updateExperience = function(req, res) {
 
 

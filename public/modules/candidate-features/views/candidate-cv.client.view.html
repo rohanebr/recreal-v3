@@ -30,8 +30,9 @@
                </div>
             </section> <hr>
             <section>
-                <header class="h3">position</header>
-                <a class="pull-right" ng-show="isEditing" ng-click="openExperienceModal(position)" href=""><i class="fa fa-plus"></i></a>
+               
+                <header class="h3">Position</header>
+                <a class="pull-right" ng-show="isEditing" ng-click="openExperienceModal(newExperience)" href=""><i class="fa fa-plus"></i></a>
                 <div>
                     <ul>
                         <li ng-repeat="position in candidate.positions">
@@ -46,7 +47,7 @@
 
             <section>
                 <header class="h3">Projects</header>
-                <a class="pull-right" ng-show="isEditing" ng-click="openProjectModal(project)" href=""><i class="fa fa-plus"></i></a>
+                <a class="pull-right" ng-show="isEditing" ng-click="openProjectModal(newProject)" href=""><i class="fa fa-plus"></i></a>
                 <div>
                     <ul>
                         <li ng-repeat="project in candidate.projects">
@@ -62,12 +63,17 @@
 
             <section>
                 <header class="h3">Education</header>
+                <a class="pull-right" ng-show="isEditing" ng-click="openEducationModal(newEducation)" href=""><i class="fa fa-plus"></i></a>
                 <div>
                      <ul>
-                         <li ng-repeat="edu in candidate.educations">
-                            <h4><strong>{{edu.degree}} , {{edu.study_feild}}</strong></h4>
-                            <h5>{{edu.institute}}</h5>
-                            <h6>{{edu.start_date | date}} - {{edu.end_date | date}}</h6>
+                         <li ng-repeat="education in candidate.educations">
+
+                            <a class="pull-right" ng-show="isEditing" ng-click="openEducationModal(education)" href=""><i class="fa fa-edit"></i></a>
+
+                            <h4><strong>{{education.degree}} , {{education.study_feild}}</strong></h4>
+                            <h5>{{education.institute}}</h5>
+                            <h6>{{education.start_date | date}} - {{education.end_date | date}}</h6>
+                            <p>{{education.notes}}</p>
                         </li>
                      </ul>          
                 </div>

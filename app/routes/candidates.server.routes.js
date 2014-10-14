@@ -21,19 +21,33 @@ module.exports = function(app) {
     		.delete(users.requiresLogin, candidates.hasAuthorization, candidates.delete);
 
 
-    	app.route('/candidates/deleteSkill/:candidateId')
-    		.put(users.requiresLogin, candidates.hasAuthorization, candidates.deleteSkill);
-    		app.route('/candidates/addSkill/:candidateId')
-                		.put(users.requiresLogin, candidates.hasAuthorization, candidates.addSkill);
+    	
+    	app.route('/candidates/addSkill/:candidateId')
+            .put(users.requiresLogin, candidates.hasAuthorization, candidates.addSkill);
+        app.route('/candidates/addExperience/:candidateId')
+            .put(users.requiresLogin, candidates.hasAuthorization, candidates.addExperience);
+        app.route('/candidates/addProject/:candidateId')
+            .put(users.requiresLogin, candidates.hasAuthorization, candidates.addProject);
+        app.route('/candidates/addEducation/:candidateId')
+            .put(users.requiresLogin, candidates.hasAuthorization, candidates.addEducation);
+
+        app.route('/candidates/deleteSkill/:candidateId')
+            .put(users.requiresLogin, candidates.hasAuthorization, candidates.deleteSkill);
         app.route('/candidates/deleteExperience/:candidateId')
-        .put(users.requiresLogin,candidates.hasAuthorization,candidates.deleteExperience);
-         app.route('/candidates/deleteProject/:candidateId')
-                .put(users.requiresLogin,candidates.hasAuthorization,candidates.deleteProject);
+            .put(users.requiresLogin,candidates.hasAuthorization,candidates.deleteExperience);
+        app.route('/candidates/deleteProject/:candidateId')
+            .put(users.requiresLogin,candidates.hasAuthorization,candidates.deleteProject);
+        app.route('/candidates/deleteEducation/:candidateId')
+            .put(users.requiresLogin,candidates.hasAuthorization,candidates.deleteEducation);
+        
         app.route('/candidates/updateExperience/:candidateId')
            .put(users.requiresLogin,candidates.hasAuthorization,candidates.updateExperience);
-    app.route('/candidates/updateSkill/:candidateId')
-    	.put(users.requiresLogin,candidates.hasAuthorization,candidates.updateSkill);
-
+        app.route('/candidates/updateSkill/:candidateId')
+    	   .put(users.requiresLogin,candidates.hasAuthorization,candidates.updateSkill);
+        app.route('/candidates/updateProject/:candidateId')
+           .put(users.requiresLogin,candidates.hasAuthorization,candidates.updateProject);
+        app.route('/candidates/updateEducation/:candidateId')
+           .put(users.requiresLogin,candidates.hasAuthorization,candidates.updateEducation);
     		// Finish by binding the Candidate middleware
             	app.param('candidateId', candidates.candidateByID);
 

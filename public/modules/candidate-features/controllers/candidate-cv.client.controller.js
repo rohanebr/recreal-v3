@@ -93,29 +93,37 @@ angular.module('candidate-features').controller('CandidateCvController', ['$scop
 	    $scope.removeLanguage = function(index) {
 	      $scope.candidate.languages.splice(index, 1);
 	    };
+
+
+
+// $scope.newProject={name:'',company:'',description:''};
+// $scope.openProjectModal=function(project){
+// var modalInstance;
+// 	      modalInstance = $modal.open({
+// 	        templateUrl: '/modules/candidate-features/views/cv-partials/project-partial.html',
+// 	        controller: 'ProjectModalCtrl',
+// 	        resolve: {
+// 	          skill: function() {
+// 	            return angular.copy(skill);
+// 	          }
+// 	        }
+// 	      });
+
+
+
+// };
+  // initialize new project for to pass to the modal when add clicked
 $scope.newProject={name:'',company:'',description:''};
-$scope.openProjectModal=function(project){
-var modalInstance;
-	      modalInstance = $modal.open({
-	        templateUrl: '/modules/candidate-features/views/cv-partials/project-partial.html',
-	        controller: 'ProjectModalCtrl',
-	        resolve: {
-	          skill: function() {
-	            return angular.copy(skill);
-	          }
-	        }
-	      });
 
-
-
-};
-$scope.newProject={name:'',company:'',description:''};
+// cuntino to open new modal
 $scope.openProjectModal=function(project)
 {
  var modalInstance;
 	      modalInstance = $modal.open({
 	        templateUrl: '/modules/candidate-features/views/cv-partials/project-partial.html',
 	        controller: 'ProjectModalCtrl',
+	        
+	        // passes the project to the modal : in case of "add" passes newProject
 	        resolve: {
 	          project: function() {
 	            return angular.copy(project);
@@ -123,16 +131,18 @@ $scope.openProjectModal=function(project)
 	        }
 	      });
 
-
+	      	  //  when modal is closed with updated values result is return that contains the updated values
 	            modalInstance.result.then(function(result) {
           	        var project = result.project;
 
+          	        
+          	         // if delete was clicked to close the modal
           	        if (result.action === 'delete') {
-          	        	angular.forEach($scope.candidate.projects, function(cSkill){
-          		          	if(cSkill._id === project._id ){
-                                   $scope.candidate.projects.splice($scope.candidate.projects.indexOf(cSkill), 1);
+          	        	angular.forEach($scope.candidate.projects, function(cProject){
+          		          	if(cProject._id === project._id ){
+                                   $scope.candidate.projects.splice($scope.candidate.projects.indexOf(cProject), 1);
 
-          						$http.put('/candidates/deleteProject/'+$scope.candidate._id, cSkill).success(function(response) {
+          						$http.put('/candidates/deleteProject/'+$scope.candidate._id, cProject).success(function(response) {
           						}).error(function(response) {
           							$scope.error = response.message;
           					});
@@ -141,30 +151,43 @@ $scope.openProjectModal=function(project)
 
           		          	}
           		          });
+
+
+          	        // else if save was clicked to close the modal : produces two cases: new or update	
           		    } else {
           		        project.name= project.name.trim();
+          		        
+          		        // position has an id means its updating an existing position i.e edit
           		        if (project._id !== undefined) {
-          		          angular.forEach($scope.candidate.projects, function(cSkill){
-          		          	if(cSkill._id === project._id )
+          		          angular.forEach($scope.candidate.projects, function(cProject){
+          		          	if(cProject._id === project._id )
           		          		{
-          		          		cSkill.name = project.name;
-          		          		cSkill.company=project.company;
+          		          		cProject.name = project.name;
+          		          		cProject.company=project.company;
 
-          		          		cSkill.description=project.description;
-          		          		cSkill.start_date=project.start_date;
-          		          		cSkill.end_date=project.end_date;
+          		          		cProject.description=project.description;
+          		          		cProject.start_date=project.start_date;
+          		          		cProject.end_date=project.end_date;
 
-          		          		//  $scope.candidate.positions.splice($scope.candidate.positions.indexOf(cSkill), 1);
-
-                       //   $http.put('/candidates/updateExperience/'+$scope.candidate._id, cSkill).success(function(response) {
-                       //   						}).error(function(response) {
-                       //   							$scope.error = response.message;
-                       //   						});
+          		          		
+                     			$http.put('/candidates/updateProject/'+$scope.candidate._id, cProject).success(function(response) {
+                      									}).error(function(response) {
+                   										$scope.error = response.message;
+                   										});
           		          		}
           		          });
-          		        } else {
+          		        }
+
+          		        // else project does not have an id means its creating a new project i.e add
+          		         else {
           		          $scope.candidate.projects.push(project);
-          		$scope.newProject={name:'',company:'',description:''};
+          		          $http.put('/candidates/addProject/'+ $scope.candidate._id,project).success(function(response) {
+          						// reinitialize the attributes of newProject : in case the user wants to add more projectss
+          						$scope.newProject={name:'',company:'',description:''};
+
+          						}).error(function(response) {
+										$scope.error = response.message;
+									});
 
                            }
           		    }
@@ -174,6 +197,95 @@ $scope.openProjectModal=function(project)
 
 
 };
+
+
+  // initialize new education for to pass to the modal when add clicked
+$scope.newEducation={degree:'',study_feild:'',institute:'',notes:''};
+
+// cuntino to open new modal
+$scope.openEducationModal=function(education)
+{
+ var modalInstance;
+	      modalInstance = $modal.open({
+	        templateUrl: '/modules/candidate-features/views/cv-partials/education-partial.html',
+	        controller: 'EducationModalCtrl',
+	        
+	        // passes the project to the modal : in case of "add" passes newProject
+	        resolve: {
+	          education: function() {
+	            return angular.copy(education);
+	          }
+	        }
+	      });
+
+	      	  //  when modal is closed with updated values result is return that contains the updated values
+	            modalInstance.result.then(function(result) {
+          	        var education = result.education;
+
+          	        
+          	         // if delete was clicked to close the modal
+          	        if (result.action === 'delete') {
+          	        	angular.forEach($scope.candidate.educations, function(cEducation){
+          		          	if(cEducation._id === education._id ){
+                                   $scope.candidate.educations.splice($scope.candidate.educations.indexOf(cEducation), 1);
+
+          						$http.put('/candidates/deleteEducation/'+$scope.candidate._id, cEducation).success(function(response) {
+          						}).error(function(response) {
+          							$scope.error = response.message;
+          					});
+
+
+
+          		          	}
+          		          });
+
+
+          	        // else if save was clicked to close the modal : produces two cases: new or update	
+          		    } else {
+          		        education.degree =  education.degree.trim();
+          		        
+          		        // Education has an id means its updating an existing position i.e edit
+          		        if (education._id !== undefined) {
+          		          angular.forEach($scope.candidate.educations, function(cEducation){
+          		          	if(cEducation._id === education._id )
+          		          		{
+          		          		cEducation.degree = education.degree;
+          		          		cEducation.study_feild=education.study_feild;
+          		          		cEducation.institute=education.institute;
+          		          		cEducation.notes=education.notes;
+          		          		cEducation.start_date=education.start_date;
+          		          		cEducation.end_date=education.end_date;
+          		          		
+          		          		
+                     			$http.put('/candidates/updateEducation/'+$scope.candidate._id, cEducation).success(function(response) {
+                      									}).error(function(response) {
+                   										$scope.error = response.message;
+                   										});
+          		          		}
+          		          });
+          		        }
+
+          		        // else education does not have an id means its creating a new education i.e add
+          		         else {
+          		          $scope.candidate.educations.push(education);
+          		          $http.put('/candidates/addEducation/'+ $scope.candidate._id,education).success(function(response) {
+          						// reinitialize the attributes of newEducation : in case the user wants to add more educations
+          						$scope.newEducation={degree:'',study_feild:'',notes:'',institute:''};
+
+          						}).error(function(response) {
+										$scope.error = response.message;
+									});
+
+                           }
+          		    }
+          	      }, function() {
+          	        // $log.info('Modal dismissed at: ' + new Date());
+          	      });
+
+
+};
+
+
 
 	    $scope.newSkill = { title: '', experience: 1, level: 'Beginner' };
 	    $scope.openSkillModal = function(skill) {
@@ -267,12 +379,20 @@ $scope.openProjectModal=function(project)
 
 	      });
 	    };
-$scope.newExperience={company_name:'',title:'',summary:'',company_location:'',company_industry:'',is_current:false};
+
+
+
+	    // initialize new exp for to pass to the modal when add clicked
+		$scope.newExperience={company_name:'',title:'',summary:'',company_location:'',company_industry:'',is_current:false};
+	    
+		// cuntino to open new modal
 	    $scope.openExperienceModal = function(position){
 	    var modalInstance;
 	    modalInstance=$modal.open({
 	     templateUrl: '/modules/candidate-features/views/cv-partials/experience-partial.html',
          controller: 'ExperienceModalCtrl',
+
+         	// passes the position to the modal : in case of "add" passes newExperience
             resolve: {
          	          position: function() {
          	            return angular.copy(position);
@@ -281,54 +401,66 @@ $scope.newExperience={company_name:'',title:'',summary:'',company_location:'',co
 
 	    });
 
+
+
+	    //  when modal is closed with updated values result is return that contains the updated values
 	      modalInstance.result.then(function(result) {
 	        var position = result.position;
 
+	        // if delete was clicked to close the modal
 	        if (result.action === 'delete') {
-	        	angular.forEach($scope.candidate.positions, function(cSkill){
-		          	if(cSkill._id === position._id ){
-                         $scope.candidate.positions.splice($scope.candidate.positions.indexOf(cSkill), 1);
+	        	angular.forEach($scope.candidate.positions, function(cPosition){
+		          	if(cPosition._id === position._id ){
+                        $scope.candidate.positions.splice($scope.candidate.positions.indexOf(cPosition), 1);
 
-						$http.put('/candidates/deleteExperience/'+$scope.candidate._id, cSkill).success(function(response) {
+						$http.put('/candidates/deleteExperience/'+$scope.candidate._id, cPosition).success(function(response) {
 						}).error(function(response) {
 							$scope.error = response.message;
 						});
-
-
-
 		          	}
-		          });
+		        });
+
+
+		    // else if save was clicked to close the modal : produces two cases: new or update
 		    } else {
 		        position.company_name= position.company_name.trim();
-		        if (position._id !== undefined) {
-		          angular.forEach($scope.candidate.positions, function(cSkill){
-		          	if(cSkill._id === position._id )
-		          		{
-		          		cSkill.company_name = position.company_name;
-		          		cSkill.company_industry=position.company_industry;
-		          		cSkill.company_location=position.company_location;
-		          		cSkill.start_date=position.start_date;
-		          		cSkill.end_date=position.end_date;
-		          		cSkill.is_current=position.is_current;
-		          		cSkill.summary=position.summary;
-		          		cSkill.title=position.title;
-		          		//  $scope.candidate.positions.splice($scope.candidate.positions.indexOf(cSkill), 1);
 
-                $http.put('/candidates/updateExperience/'+$scope.candidate._id, cSkill).success(function(response) {
+		        // position has an id means its updating an existing position i.e edit
+		        if (position._id !== undefined) {
+		            angular.forEach($scope.candidate.positions, function(cPosition){
+		          	if(cPosition._id === position._id )
+		          		{
+		          		cPosition.company_name = position.company_name;
+		          		cPosition.company_industry=position.company_industry;
+		          		cPosition.company_location=position.company_location;
+		          		cPosition.start_date=position.start_date;
+		          		cPosition.end_date=position.end_date;
+		          		cPosition.is_current=position.is_current;
+		          		cPosition.summary=position.summary;
+		          		cPosition.title=position.title;
+		          		
+                		$http.put('/candidates/updateExperience/'+$scope.candidate._id, cPosition).success(function(response) {
                 						}).error(function(response) {
                 							$scope.error = response.message;
                 						});
 		          		}
-		          });
-		        } else {
-		          $scope.candidate.positions.push(position);
-		       $scope.newExperience={company_name:'',title:'',summary:'',company_location:'',company_industry:'',start_date:'0-0-0',end_date:'0-0-0',is_current:false};
+		          	});
+		        } 
 
-                 }
-		    }
-	      }, function() {
-	        // $log.info('Modal dismissed at: ' + new Date());
-	      });
+		  		// else position does not have an id means its creating a new position i.e add
+		        else {
+		        	$scope.candidate.positions.push(position);
+		          	$http.put('/candidates/addExperience/'+ $scope.candidate._id,position).success(function(response) {
+		      			// reinitialize the attributes of newExperience : in case the user wants to add more skills
+		      			$scope.newExperience={company_name:'',title:'',summary:'',company_location:'',company_industry:'',start_date:'0-0-0',end_date:'0-0-0',is_current:false};
+                 	}).error(function(response) {
+						$scope.error = response.message;
+					});
+                }
+            }
+		}, function() {
+		// $log.info('Modal dismissed at: ' + new Date());
+		});
 
 
 
@@ -351,8 +483,21 @@ $scope.newExperience={company_name:'',title:'',summary:'',company_location:'',co
 
    	};
      }
-   ]).
-controller('ProjectModalCtrl', [
+   ]).controller('EducationModalCtrl', [
+  '$scope', '$modalInstance','education', function($scope, $modalInstance,education) {
+
+    $scope.education = education;
+
+	$scope.ok = function (action) {
+	$modalInstance.close({ action: action,education:$scope.education});
+	};
+
+	$scope.cancel = function () {
+	$modalInstance.dismiss('cancel');
+
+	};
+  }
+]).controller('ProjectModalCtrl', [
   '$scope', '$modalInstance','project', function($scope, $modalInstance,project) {
 
     $scope.project = project;
