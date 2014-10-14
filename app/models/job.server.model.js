@@ -135,6 +135,11 @@ var JobSchema = new Schema({
 		type: Schema.ObjectId,
 		ref: 'Company'
 	},
+	exams: [{
+		type: Schema.ObjectId,
+		ref: 'Exam'
+	}],
+
 	candidates: [{
 		type: Schema.ObjectId,
 		ref: 'Candidate'
@@ -148,6 +153,8 @@ var JobSchema = new Schema({
 			type: Schema.ObjectId,
 			ref: 'Employer'
 		}
+		
+
 	}],
 	user: {
 		type: Schema.ObjectId,

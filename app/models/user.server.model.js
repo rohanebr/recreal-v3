@@ -41,6 +41,10 @@ var UserSchema = new Schema({
 		type: String,
 		trim: true
 	},
+	isOnline:{
+        type: Boolean,
+        default: false
+	},
 	picture_url:{
 		type: 'String',
 		default: '/uploads/fullsize/no-image.jpg'

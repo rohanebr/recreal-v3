@@ -5,7 +5,7 @@ angular.module('threads').controller('ThreadsController', ['$scope', '$statePara
 	function($scope, $stateParams, $location, Authentication, Threads, $http,Socket ) {
 		$scope.authentication = Authentication;
         //Incoming thread updates
-
+$scope.color="color:green";
         Socket.on("incoming_thread", function (data) {Threads.get({ 
 				threadId: $stateParams.threadId
 			});

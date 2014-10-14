@@ -302,6 +302,7 @@ exports.hasAuthorization = function(roles) {
  */
 exports.saveOAuthUserProfile = function(req, providerUserProfile, done) {
 	if (!req.user) {
+		console.log("saevO");
 		// Define a search query fields
 		var searchMainProviderIdentifierField = 'providerData.' + providerUserProfile.providerIdentifierField;
 		var searchAdditionalProviderIdentifierField = 'additionalProvidersData.' + providerUserProfile.provider + '.' + providerUserProfile.providerIdentifierField;
@@ -336,7 +337,7 @@ exports.saveOAuthUserProfile = function(req, providerUserProfile, done) {
 							email: providerUserProfile.email,
 							provider: providerUserProfile.provider,
 							providerData: providerUserProfile.providerData,
-							userType: 'employer',
+							userType: 'candidate',
 						});
 
 						// And save the user

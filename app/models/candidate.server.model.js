@@ -213,6 +213,20 @@ var CandidateSchema = new Schema({
 		type: Schema.ObjectId,
 		ref: 'Job'
 	}],
+	examsTaken: [{
+		score:{ 
+             type: Number,
+             default: 0
+		},
+		exam: {	
+			type: Schema.ObjectId,
+			ref: 'Exam'
+		},
+		isPass: {
+			type: Boolean,
+			default: false
+		}
+	}],
 
 	user: {
 		type: Schema.ObjectId,

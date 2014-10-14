@@ -5,7 +5,8 @@
 	</div>
 
 	<div data-ng-repeat="message in thread.messages">
-		<img class="img80_80" src="{{message.author.picture_url}}">
+		<img class="img50_50" src="{{message.author.picture_url}}">
+		<i class="fa fa-suitcase" style="{{color}}"></i>
 		<h3>{{message.author.displayName}}</h3>
 		<p>{{message.messageBody}}</p>
 		<span data-ng-bind="message.created | date:'mediumDate'"></span>
