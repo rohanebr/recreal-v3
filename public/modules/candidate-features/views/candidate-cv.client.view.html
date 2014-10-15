@@ -81,10 +81,14 @@
 
             <section>
                 <header class="h3">Certifications</header>
+                <a class="pull-right" ng-show="isEditing" ng-click="openCertificateModal(newCertificate)" href=""><i class="fa fa-plus"></i></a>
                 <div>
                      <ul>
-                         <li ng-repeat="cert in candidate.certificates">
-                            <h5><strong>{{candidate.certificates}}</strong></h5>
+                         <li ng-repeat="certificate in candidate.certificates">
+
+                            <a class="pull-right" ng-show="isEditing" ng-click="openCertificateModal(certificate)" href=""><i class="fa fa-edit"></i></a>
+
+                            <h5><strong>{{certificate.name}}</strong></h5>
                         </li>
                      </ul>          
                 </div>
@@ -92,9 +96,11 @@
                      
             <section>
                 <header class="h3">Languages</header>
+                <a class="pull-right" ng-show="isEditing" ng-click="openLanguageModal(newLanguage)" href=""><i class="fa fa-plus"></i></a>
                 <div>
                     <ul>
                         <li ng-repeat="language in candidate.languages">
+                            <a class="pull-right" ng-show="isEditing" ng-click="openLanguageModal(language)" href=""><i class="fa fa-edit"></i></a>
                             <strong>{{language.name}}</strong>
                             <sm> - {{language.proficiency}}</sm>
                         </li>

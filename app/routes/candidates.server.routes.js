@@ -30,6 +30,10 @@ module.exports = function(app) {
             .put(users.requiresLogin, candidates.hasAuthorization, candidates.addProject);
         app.route('/candidates/addEducation/:candidateId')
             .put(users.requiresLogin, candidates.hasAuthorization, candidates.addEducation);
+        app.route('/candidates/addLanguage/:candidateId')
+            .put(users.requiresLogin, candidates.hasAuthorization, candidates.addLanguage);
+        app.route('/candidates/addCertificate/:candidateId')
+            .put(users.requiresLogin, candidates.hasAuthorization, candidates.addCertificate);
 
         app.route('/candidates/deleteSkill/:candidateId')
             .put(users.requiresLogin, candidates.hasAuthorization, candidates.deleteSkill);
@@ -39,6 +43,10 @@ module.exports = function(app) {
             .put(users.requiresLogin,candidates.hasAuthorization,candidates.deleteProject);
         app.route('/candidates/deleteEducation/:candidateId')
             .put(users.requiresLogin,candidates.hasAuthorization,candidates.deleteEducation);
+        app.route('/candidates/deleteLanguage/:candidateId')
+            .put(users.requiresLogin,candidates.hasAuthorization,candidates.deleteLanguage);
+        app.route('/candidates/deleteCertificate/:candidateId')
+            .put(users.requiresLogin,candidates.hasAuthorization,candidates.deleteCertificate);
         
         app.route('/candidates/updateExperience/:candidateId')
            .put(users.requiresLogin,candidates.hasAuthorization,candidates.updateExperience);
@@ -48,6 +56,10 @@ module.exports = function(app) {
            .put(users.requiresLogin,candidates.hasAuthorization,candidates.updateProject);
         app.route('/candidates/updateEducation/:candidateId')
            .put(users.requiresLogin,candidates.hasAuthorization,candidates.updateEducation);
+        app.route('/candidates/updateLanguage/:candidateId')
+           .put(users.requiresLogin,candidates.hasAuthorization,candidates.updateLanguage);
+        app.route('/candidates/updateCertificate/:candidateId')
+           .put(users.requiresLogin,candidates.hasAuthorization,candidates.updateCertificate);
     		// Finish by binding the Candidate middleware
             	app.param('candidateId', candidates.candidateByID);
 

@@ -199,6 +199,172 @@ $scope.openProjectModal=function(project)
 };
 
 
+ // initialize new certificate for to pass to the modal when add clicked
+$scope.newCertificate={name:''};
+
+// cuntino to open new modal
+$scope.openCertificateModal=function(certificate)
+{
+ var modalInstance;
+	      modalInstance = $modal.open({
+	        templateUrl: '/modules/candidate-features/views/cv-partials/certificates-partial.html',
+	        controller: 'CertificateModalCtrl',
+	        
+	        // passes the certificate to the modal : in case of "add" passes newCertificate
+	        resolve: {
+	          certificate: function() {
+	            return angular.copy(certificate);
+	          }
+	        }
+	      });
+
+	      	  //  when modal is closed with updated values result is return that contains the updated values
+	            modalInstance.result.then(function(result) {
+          	        var certificate = result.certificate;
+
+          	        
+          	         // if delete was clicked to close the modal
+          	        if (result.action === 'delete') {
+          	        	angular.forEach($scope.candidate.certificates, function(cCertificate){
+          		          	if(cCertificate._id ===certificate._id ){
+                                   $scope.candidate.certificates.splice($scope.candidate.certificates.indexOf(cCertificate), 1);
+
+          						$http.put('/candidates/deleteCertificate/'+$scope.candidate._id, cCertificate).success(function(response) {
+          						}).error(function(response) {
+          							$scope.error = response.message;
+          					});
+
+
+
+          		          	}
+          		          });
+
+
+          	        // else if save was clicked to close the modal : produces two cases: new or update	
+          		    } else {
+          		        certificate.name=  certificate.name.trim();
+          		        
+          		        // Certificate has an id means its updating an existing certificate i.e edit
+          		        if (certificate._id !== undefined) {
+          		          angular.forEach($scope.candidate.certificates, function(cCertificate){
+          		          	if(cCertificate._id === certificate._id )
+          		          		{
+          		          		cCertificate.name = certificate.name;
+          		          		          		          		          		          		
+                     			$http.put('/candidates/updateCertificate/'+$scope.candidate._id, cCertificate).success(function(response) {
+                      									}).error(function(response) {
+                   										$scope.error = response.message;
+                   										});
+          		          		}
+          		          });
+          		        }
+
+          		        // else certificate does not have an id means its creating a new certificate i.e add
+          		         else {
+          		          $scope.candidate.certificates.push(certificate);
+          		          $http.put('/candidates/addCertificate/'+ $scope.candidate._id,certificate).success(function(response) {
+          						// reinitialize the attributes of newCertificate : in case the user wants to add more certificates
+          						$scope.newCertificate={name:''};
+
+          						}).error(function(response) {
+										$scope.error = response.message;
+									});
+
+                           }
+          		    }
+          	      }, function() {
+          	        // $log.info('Modal dismissed at: ' + new Date());
+          	      });
+
+
+};
+
+
+
+ // initialize new language for to pass to the modal when add clicked
+$scope.newLanguage={name:'',proficiency:''};
+
+// cuntino to open new modal
+$scope.openLanguageModal=function(language)
+{
+ var modalInstance;
+	      modalInstance = $modal.open({
+	        templateUrl: '/modules/candidate-features/views/cv-partials/language-partial.html',
+	        controller: 'LanguageModalCtrl',
+	        
+	        // passes the language to the modal : in case of "add" passes newLanguage
+	        resolve: {
+	          language: function() {
+	            return angular.copy(language);
+	          }
+	        }
+	      });
+
+	      	  //  when modal is closed with updated values result is return that contains the updated values
+	            modalInstance.result.then(function(result) {
+          	        var language = result.language;
+
+          	        
+          	         // if delete was clicked to close the modal
+          	        if (result.action === 'delete') {
+          	        	angular.forEach($scope.candidate.languages, function(cLanguages){
+          		          	if(cLanguages._id === language._id ){
+                                   $scope.candidate.languages.splice($scope.candidate.languages.indexOf(cLanguages), 1);
+
+          						$http.put('/candidates/deleteLanguage/'+$scope.candidate._id, cLanguages).success(function(response) {
+          						}).error(function(response) {
+          							$scope.error = response.message;
+          					});
+
+
+
+          		          	}
+          		          });
+
+
+          	        // else if save was clicked to close the modal : produces two cases: new or update	
+          		    } else {
+          		        language.name=  language.name.trim();
+          		        
+          		        // Language has an id means its updating an existing position i.e edit
+          		        if (language._id !== undefined) {
+          		          angular.forEach($scope.candidate.languages, function(cLanguages){
+          		          	if(cLanguages._id === language._id )
+          		          		{
+          		          		cLanguages.name = language.name;
+          		          		cLanguages.proficiency=language.proficiency;
+          		          		          		          		
+                     			$http.put('/candidates/updateLanguage/'+$scope.candidate._id, cLanguages).success(function(response) {
+                      									}).error(function(response) {
+                   										$scope.error = response.message;
+                   										});
+          		          		}
+          		          });
+          		        }
+
+          		        // else language does not have an id means its creating a new language i.e add
+          		         else {
+          		          $scope.candidate.languages.push(language);
+          		          $http.put('/candidates/addLanguage/'+ $scope.candidate._id,language).success(function(response) {
+          						// reinitialize the attributes of newLanguage : in case the user wants to add more languages
+          						$scope.newLanguage={name:'',proficiency:''};
+
+          						}).error(function(response) {
+										$scope.error = response.message;
+									});
+
+                           }
+          		    }
+          	      }, function() {
+          	        // $log.info('Modal dismissed at: ' + new Date());
+          	      });
+
+
+};
+
+
+
+
   // initialize new education for to pass to the modal when add clicked
 $scope.newEducation={degree:'',study_feild:'',institute:'',notes:''};
 
@@ -270,7 +436,7 @@ $scope.openEducationModal=function(education)
           		          $scope.candidate.educations.push(education);
           		          $http.put('/candidates/addEducation/'+ $scope.candidate._id,education).success(function(response) {
           						// reinitialize the attributes of newEducation : in case the user wants to add more educations
-          						$scope.newEducation={degree:'',study_feild:'',notes:'',institute:''};
+          						$scope.newEducation={degree:'',study_feild:'',institute:'',notes:''};
 
           						}).error(function(response) {
 										$scope.error = response.message;
@@ -483,7 +649,35 @@ $scope.openEducationModal=function(education)
 
    	};
      }
-   ]).controller('EducationModalCtrl', [
+   ]).controller('LanguageModalCtrl', [
+  '$scope', '$modalInstance','language', function($scope, $modalInstance,language) {
+
+    $scope.language = language;
+
+	$scope.ok = function (action) {
+	$modalInstance.close({ action: action,language:$scope.language});
+	};
+
+	$scope.cancel = function () {
+	$modalInstance.dismiss('cancel');
+
+	};
+  }
+]).controller('CertificateModalCtrl', [
+  '$scope', '$modalInstance','certificate', function($scope, $modalInstance,certificate) {
+
+    $scope.certificate = certificate;
+
+	$scope.ok = function (action) {
+	$modalInstance.close({ action: action,certificate:$scope.certificate});
+	};
+
+	$scope.cancel = function () {
+	$modalInstance.dismiss('cancel');
+
+	};
+  }
+]).controller('EducationModalCtrl', [
   '$scope', '$modalInstance','education', function($scope, $modalInstance,education) {
 
     $scope.education = education;

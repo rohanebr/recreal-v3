@@ -367,6 +367,171 @@ candidate.markModified('projects');
 };
 
 
+
+exports.addCertificate=function(req,res)
+{
+var userId=req.user._id;
+if(req.user.userType === 'candidate')
+{
+var c;
+var certificate=req.body;
+console.log(certificate);
+Candidate.update(
+      { user: userId },
+      { $push: { certificates : certificate } },
+      { safe: true },
+      function removeConnectionsCB(err, obj) {
+
+      });
+
+}
+
+console.log("add Certificate function called");
+
+
+};
+
+
+exports.deleteCertificate=function(req,res)
+{
+var CertificateId=req.user._id;
+if(req.user.userType === 'candidate')
+{
+var c;
+var certificate=req.body;
+console.log(certificate._id);
+console.log(certificate.name);
+Candidate.update(
+      { user: CertificateId },
+      { $pull: { certificates : { _id : certificate._id } } },
+      { safe: true },
+      function removeConnectionsCB(err, obj) {
+
+      })
+
+}
+
+
+  console.log('method called delete Certificate!');
+
+
+};
+
+exports.updateCertificate = function(req, res) {
+
+
+  if(req.user.userType === 'candidate')
+    {
+    var c;
+    var certificate=req.body;
+var id=req.user._id;
+var cand = Candidate.findOne({user:id}).exec(function(err, candidate){
+candidate.certificates.forEach(function (item) {
+if(item._id==certificate._id)
+      {
+      item.name=certificate.name;
+      }
+
+    });
+
+candidate.markModified('certificates');
+         candidate.save();
+
+        });
+
+
+
+    }
+
+      console.log('method called update certificate!!');
+
+
+
+
+};
+
+exports.addLanguage=function(req,res)
+{
+var userId=req.user._id;
+if(req.user.userType === 'candidate')
+{
+var c;
+var language=req.body;
+console.log(language);
+Candidate.update(
+      { user: userId },
+      { $push: { languages : language } },
+      { safe: true },
+      function removeConnectionsCB(err, obj) {
+
+      });
+
+}
+
+console.log("add Language function called");
+
+
+};
+
+
+exports.deleteLanguage=function(req,res)
+{
+var LanguageId=req.user._id;
+if(req.user.userType === 'candidate')
+{
+var c;
+var language=req.body;
+console.log(language._id);
+console.log(language.name);
+Candidate.update(
+      { user: LanguageId },
+      { $pull: { languages : { _id : language._id } } },
+      { safe: true },
+      function removeConnectionsCB(err, obj) {
+
+      })
+
+}
+
+
+  console.log('method called delete Language!');
+
+
+};
+
+exports.updateLanguage = function(req, res) {
+
+
+  if(req.user.userType === 'candidate')
+    {
+    var c;
+    var language=req.body;
+var id=req.user._id;
+var cand = Candidate.findOne({user:id}).exec(function(err, candidate){
+candidate.languages.forEach(function (item) {
+if(item._id==language._id)
+      {
+      item.name=language.name;
+      item.proficiency=language.proficiency;
+      }
+
+    });
+
+candidate.markModified('languages');
+         candidate.save();
+
+        });
+
+
+
+    }
+
+      console.log('method called update language!!');
+
+};
+
+
+
 exports.addEducation=function(req,res)
 {
 var userId=req.user._id;
