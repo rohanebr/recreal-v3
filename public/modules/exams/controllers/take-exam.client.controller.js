@@ -8,7 +8,6 @@ angular.module('exams').controller('TakeExamController', ['$scope', '$stateParam
 
 		$scope.totalScore = 0;
 		$scope.currentScore = 0;
-		$scope.timeLimit = 3600;
 
 
 
@@ -48,10 +47,18 @@ angular.module('exams').controller('TakeExamController', ['$scope', '$stateParam
 				});
 			});
 			$scope.percentage = ($scope.currentScore / $scope.totalScore) * 100;
+
+
+
 		};
+
+
+
 		$scope.$on('timer-stopped', function (event, data){
             console.log('Timer Stopped - data = ', data);
             $scope.submitExam();
         });
+
+
 	}
 ]);
