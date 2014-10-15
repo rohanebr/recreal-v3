@@ -35,7 +35,6 @@ module.exports = function() {
 				provider: 'linkedin',
 				providerIdentifierField: 'id',
 				providerData: providerData
-
 			};
        console.log(providerUserProfile);
 			// Save the user OAuth profile
