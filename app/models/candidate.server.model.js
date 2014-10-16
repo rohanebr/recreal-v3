@@ -235,6 +235,9 @@ var CandidateSchema = new Schema({
 	}
 });
 
+
+/**
+
 CandidateSchema.set('toJSON', { virtuals: true });
 
 
@@ -246,10 +249,12 @@ CandidateSchema.virtual('displayName').get(function () {
 	return 'Warren Buffet Static';
 });
 
+
 CandidateSchema.virtual('picture_url').get(function () {
   return this.user.picture_url;
 });
 
+**/
 
 CandidateSchema.index({jobs: 1});
 

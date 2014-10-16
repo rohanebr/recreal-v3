@@ -42,7 +42,7 @@ angular.module('short-list').controller('messageController', [
 		// 	});
 		// };
 
-			// Remove from Short List
+		// Remove from Short List
 		$scope.sendMessage = function(message) {
 
 			// Create new Thread object

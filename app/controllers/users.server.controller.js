@@ -66,9 +66,9 @@ exports.signup = function(req, res) {
 			company.save();
 			break;
 	}
-	// typeObject.firstName = user.firstName;
-	// typeObject.lastName = user.lastName;
-	// typeObject.displayName = user.displayName;
+	typeObject.firstName = user.firstName;
+	typeObject.lastName = user.lastName;
+	typeObject.displayName = user.displayName;
 	typeObject.user = user;
 	typeObject.save();
 
@@ -234,6 +234,7 @@ exports.me = function(req, res) {
  * OAuth callback
  */
 exports.oauthCallback = function(strategy) {
+	console.log('oauthCallback');
 	return function(req, res, next) {
 		passport.authenticate(strategy, function(err, user, redirectURL) {
 			if (err || !user) {
@@ -337,7 +338,7 @@ exports.saveOAuthUserProfile = function(req, providerUserProfile, done) {
 							email: providerUserProfile.email,
 							provider: providerUserProfile.provider,
 							providerData: providerUserProfile.providerData,
-							userType: 'candidate',
+							userType: 'employer'
 						});
 
 						// And save the user

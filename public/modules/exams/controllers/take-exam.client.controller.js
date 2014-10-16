@@ -1,14 +1,13 @@
 'use strict';
 
-angular.module('exams').controller('TakeExamController', ['$scope', '$stateParams', 'Exams',
-	function($scope, $stateParams, Exams) {
+angular.module('exams').controller('TakeExamController', ['$scope', '$stateParams', 'Exams', '$http', '$location',
+	function($scope, $stateParams, Exams, $http, $location) {
 		// Controller Logic
 		// ...
 		// Find existing Exam
 
 		$scope.totalScore = 0;
 		$scope.currentScore = 0;
-		$scope.timeLimit = 3600;
 
 
 
@@ -48,10 +47,27 @@ angular.module('exams').controller('TakeExamController', ['$scope', '$stateParam
 				});
 			});
 			$scope.percentage = ($scope.currentScore / $scope.totalScore) * 100;
+
+			$scope.isPass = $scope.percentage > $scope.exam.passScore ? true : false;
+
+			var examsTaken = {
+				score: $scope.percentage,
+				exam: $scope.exam._id,
+				isPass: $scope.isPass
+			};
+
+			$http.put('/exams/saveExam/'+$scope.exam._id, examsTaken).success(function(response) {
+				$location.path('exam-result/' + response._id);
+			}).error(function(response) {
+				$scope.error = response.message;
+			});
 		};
+
 		$scope.$on('timer-stopped', function (event, data){
             console.log('Timer Stopped - data = ', data);
             $scope.submitExam();
         });
+
+
 	}
 ]);

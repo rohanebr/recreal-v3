@@ -11,6 +11,8 @@ var passport = require('passport'),
 
 module.exports = function() {
 	// Use linkedin strategy
+
+	console.log('exports called');
 	
 	passport.use(new LinkedInStrategy({
 			consumerKey: config.linkedin.clientID,
@@ -35,7 +37,6 @@ module.exports = function() {
 				provider: 'linkedin',
 				providerIdentifierField: 'id',
 				providerData: providerData
-
 			};
        console.log(providerUserProfile);
 			// Save the user OAuth profile
