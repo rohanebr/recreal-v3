@@ -234,6 +234,7 @@ exports.me = function(req, res) {
  * OAuth callback
  */
 exports.oauthCallback = function(strategy) {
+	console.log('oauthCallback');
 	return function(req, res, next) {
 		passport.authenticate(strategy, function(err, user, redirectURL) {
 			if (err || !user) {
