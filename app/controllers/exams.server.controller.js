@@ -5,6 +5,7 @@
  */
 var mongoose = require('mongoose'),
 	Exam = mongoose.model('Exam'),
+	Candidate = mongoose.model('Candidate'),
 	_ = require('lodash');
 
 /**
@@ -94,29 +95,22 @@ exports.delete = function(req, res) {
 
 
 exports.saveExam = function(req, res) {
-
     var examTaken=req.body;
 	var id=req.user._id;
 	var cand = Candidate.findOne({user:id}).exec(function(err, candidate){
-	candidate.examsTaken.forEach(function (item) {
-	if(item._id==examTaken._id)
-	      {
-	      item.score=examTaken.score;
-	      item.exam=examTaken.exam;
-	      item.isPass=examTaken.isPass;
-	      }
-
-	    });
-
+		candidate.examsTaken.push(examTaken);
 		candidate.markModified('examsTaken');
 	    candidate.save();
 
-	    		});
-
-	    	console.log('method called update examTaken!!');
-
-
-	};
+	    candidate.examsTaken.forEach(function (item) {
+			if(item.exam==examTaken.exam){
+				return res.jsonp(item);
+			}
+	    });
+	    
+	});
+	console.log('method called update examTaken!!');
+};
 
 
 /**
@@ -133,10 +127,31 @@ exports.list = function(req, res) { Exam.find().sort('-created').populate('user'
 	});
 };
 
+exports.getResult = function(req, res) {
+	res.jsonp(req.examTaken);
+};
+
+
+/**
+ * Exam Result middleware
+ */
+exports.examResultByID = function(req, res, next, id) { 
+	var userId=req.user._id;
+	var cand = Candidate.findOne({user:userId}).populate('examsTaken.exam').exec(function(err, candidate){
+	    candidate.examsTaken.forEach(function (item) {
+			if(item._id==id){
+				req.examTaken = item ;
+				next();
+			}
+	    });
+	});
+};
+
 /**
  * Exam middleware
  */
-exports.examByID = function(req, res, next, id) { Exam.findById(id).populate('user', 'displayName').exec(function(err, exam) {
+exports.examByID = function(req, res, next, id) { 
+	Exam.findById(id).populate('user', 'displayName').exec(function(err, exam) {
 		if (err) return next(err);
 		if (! exam) return next(new Error('Failed to load Exam ' + id));
 		req.exam = exam ;
