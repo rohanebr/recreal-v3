@@ -22,7 +22,7 @@ module.exports = function() {
 			consumerSecret: config.linkedin.clientSecret,
 			callbackURL: config.linkedin.callbackURL,
 			passReqToCallback: true,
-			profileFields: ['id', 'first-name', 'last-name', 'email-address', 'headline', 'industry', 'summary', 'specialities', 'positions', 'picture-url']
+			profileFields: ['id', 'first-name', 'last-name', 'email-address']
 		},
 		function(req, access_token, refreshToken, profile, done) {
 			// Set the provider data and include tokens
