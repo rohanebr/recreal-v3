@@ -167,6 +167,7 @@ console.log(data);
 //       poll.save(function(err, doc) {
 //         var theDoc = { 
 //           question: doc.question, _id: doc._id, choices: doc.choices, 
+
 //           userVoted: false, totalVotes: 0 
 //         };
 //         for(var i = 0, ln = doc.choices.length; i < ln; i++) {

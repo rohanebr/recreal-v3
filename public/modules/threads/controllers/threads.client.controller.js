@@ -24,7 +24,8 @@ angular.module('threads').controller('ThreadsController', ['$scope', '$statePara
             	                         messageBody:data.messageBody,
 						                 author:{
 						                 	     displayName:data.author,
-						                 	     picture_url:data.authordp },
+						                 	     picture_url:data.authordp,
+						                 	     isOnline:true },
 							             created:data.created
 							           });
 		
@@ -104,7 +105,7 @@ angular.module('threads').controller('ThreadsController', ['$scope', '$statePara
       var thread = {
       	idc: threadId,
        sender : {displayName: $scope.authentication.user.displayName},
-       receiver: $scope.thread.receiver_id,
+       receiver: $scope.thread.receiver._id,
        messages:[{created: Date.now()}]
        
 

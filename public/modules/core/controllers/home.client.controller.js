@@ -8,7 +8,7 @@ angular.module('core').controller('HomeController', ['$scope', 'Authentication',
 		var user = $scope.authentication.user;
 //starting angular-charts
 $scope.data1 = {
-		series: ['Sales', 'Income', '<i>Expense</i>', 'Laptops', 'Keyboards'],
+		series: ['Sales', 'Income', 'Expense', 'Laptops', 'Keyboards'],
 		data: [{
 			x: "Sales",
 			y: [100, 500, 0],
@@ -26,7 +26,7 @@ $scope.data1 = {
 	};
 
 	$scope.data2 = {
-		series: ['<em>500</em> Keyboards', '<em>105</em> Laptops', '<em>100</em> TVs'],
+		series: ['500 Keyboards', '105 Laptops', '100 TVs'],
 		data: [{
 			x: "Sales",
 			y: [100, 500, 0],
