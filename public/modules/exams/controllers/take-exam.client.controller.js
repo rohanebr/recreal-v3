@@ -48,6 +48,19 @@ angular.module('exams').controller('TakeExamController', ['$scope', '$stateParam
 			});
 			$scope.percentage = ($scope.currentScore / $scope.totalScore) * 100;
 
+			$scope.isPass = $scope.percentage > $scope.exam.passScore ? true : false;
+
+			var examsTaken = {
+				score: $score.percentage,
+				exam: $scope.exam._id,
+				isPass: $scope.isPass
+			};
+
+			$http.put('/exams/saveExam/'+$scope.candidate._id, examsTaken).success(function(response) {
+      									}).error(function(response) {
+   										$scope.error = response.message;
+   										});
+
 
 
 		};

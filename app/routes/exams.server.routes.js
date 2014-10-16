@@ -14,6 +14,9 @@ module.exports = function(app) {
 		.put(users.requiresLogin, exams.hasAuthorization, exams.update)
 		.delete(users.requiresLogin, exams.hasAuthorization, exams.delete);
 
+	app.route('/exams/saveExam/:examId')
+         .put(users.requiresLogin,exams.hasAuthorization,exams.saveExam);	
+
 	// Finish by binding the Exam middleware
 	app.param('examId', exams.examByID);
 };

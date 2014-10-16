@@ -92,6 +92,33 @@ exports.delete = function(req, res) {
 	});
 };
 
+
+exports.saveExam = function(req, res) {
+
+    var examTaken=req.body;
+	var id=req.user._id;
+	var cand = Candidate.findOne({user:id}).exec(function(err, candidate){
+	candidate.examsTaken.forEach(function (item) {
+	if(item._id==examTaken._id)
+	      {
+	      item.score=examTaken.score;
+	      item.exam=examTaken.exam;
+	      item.isPass=examTaken.isPass;
+	      }
+
+	    });
+
+		candidate.markModified('examsTaken');
+	    candidate.save();
+
+	    		});
+
+	    	console.log('method called update examTaken!!');
+
+
+	};
+
+
 /**
  * List of Exams
  */

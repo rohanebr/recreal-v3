@@ -23,16 +23,16 @@ module.exports = function(app) {
 
     	app.route('/candidates/deleteSkill/:candidateId')
     		.put(users.requiresLogin, candidates.hasAuthorization, candidates.deleteSkill);
-    		app.route('/candidates/addSkill/:candidateId')
-                		.put(users.requiresLogin, candidates.hasAuthorization, candidates.addSkill);
+    	app.route('/candidates/addSkill/:candidateId')
+            .put(users.requiresLogin, candidates.hasAuthorization, candidates.addSkill);
         app.route('/candidates/deleteExperience/:candidateId')
-        .put(users.requiresLogin,candidates.hasAuthorization,candidates.deleteExperience);
-         app.route('/candidates/deleteProject/:candidateId')
-                .put(users.requiresLogin,candidates.hasAuthorization,candidates.deleteProject);
+            .put(users.requiresLogin,candidates.hasAuthorization,candidates.deleteExperience);
+        app.route('/candidates/deleteProject/:candidateId')
+            .put(users.requiresLogin,candidates.hasAuthorization,candidates.deleteProject);
         app.route('/candidates/updateExperience/:candidateId')
-           .put(users.requiresLogin,candidates.hasAuthorization,candidates.updateExperience);
-    app.route('/candidates/updateSkill/:candidateId')
-    	.put(users.requiresLogin,candidates.hasAuthorization,candidates.updateSkill);
+            .put(users.requiresLogin,candidates.hasAuthorization,candidates.updateExperience);
+        app.route('/candidates/updateSkill/:candidateId')
+    	   .put(users.requiresLogin,candidates.hasAuthorization,candidates.updateSkill);
 
     		// Finish by binding the Candidate middleware
             	app.param('candidateId', candidates.candidateByID);
