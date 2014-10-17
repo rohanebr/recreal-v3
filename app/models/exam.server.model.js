@@ -16,6 +16,9 @@ var ExamSchema = new Schema({
 		required: 'Please fill Exam name',
 		trim: true
 	},
+	generic:{
+        type: Boolean
+	},
 	description:{
 		type: String
 	},

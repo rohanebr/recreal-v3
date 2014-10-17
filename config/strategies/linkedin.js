@@ -11,12 +11,15 @@ var passport = require('passport'),
 
 module.exports = function() {
 	// Use linkedin strategy
+
+	console.log('exports called');
+	
 	passport.use(new LinkedInStrategy({
 			consumerKey: config.linkedin.clientID,
 			consumerSecret: config.linkedin.clientSecret,
 			callbackURL: config.linkedin.callbackURL,
 			passReqToCallback: true,
-			profileFields: ['id', 'first-name', 'last-name', 'email-address', 'headline', 'industry', 'summary', 'specialties', 'positions', 'picture-url']
+			profileFields: ['id', 'first-name', 'last-name', 'email-address']
 		},
 		function(req, accessToken, refreshToken, profile, done) {
 			// Set the provider data and include tokens
@@ -35,7 +38,7 @@ module.exports = function() {
 				providerIdentifierField: 'id',
 				providerData: providerData
 			};
-
+       console.log(providerUserProfile);
 			// Save the user OAuth profile
 			users.saveOAuthUserProfile(req, providerUserProfile, done);
 		}

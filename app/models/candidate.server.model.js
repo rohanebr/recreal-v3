@@ -213,6 +213,20 @@ var CandidateSchema = new Schema({
 		type: Schema.ObjectId,
 		ref: 'Job'
 	}],
+	examsTaken: [{
+		score:{ 
+             type: Number,
+             default: 0
+		},
+		exam: {	
+			type: Schema.ObjectId,
+			ref: 'Exam'
+		},
+		isPass: {
+			type: Boolean,
+			default: false
+		}
+	}],
 
 	user: {
 		type: Schema.ObjectId,
@@ -220,6 +234,9 @@ var CandidateSchema = new Schema({
 		required: true
 	}
 });
+
+
+/**
 
 CandidateSchema.set('toJSON', { virtuals: true });
 
@@ -232,10 +249,12 @@ CandidateSchema.virtual('displayName').get(function () {
 	return 'Warren Buffet Static';
 });
 
+
 CandidateSchema.virtual('picture_url').get(function () {
   return this.user.picture_url;
 });
 
+**/
 
 CandidateSchema.index({jobs: 1});
 

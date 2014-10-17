@@ -41,6 +41,10 @@ var UserSchema = new Schema({
 		type: String,
 		trim: true
 	},
+	isOnline:{
+        type: Boolean,
+        default: false
+	},
 	picture_url:{
 		type: 'String',
 		default: '/uploads/fullsize/no-image.jpg'
@@ -82,7 +86,7 @@ var UserSchema = new Schema({
 	userType: {
 		type: String,
 		required: 'Please specify if you want to signup as an employer or a candidate',
-		enum: ['employer', 'candidate', 'admin']
+		enum: ['employer', 'candidate', 'transition', 'admin']
 	},
 	candidate: {
 		type: Schema.ObjectId,
@@ -99,7 +103,10 @@ var UserSchema = new Schema({
 		type: Schema.ObjectId,
 		ref: 'Thread'
 	}],
-
+    subscribers: [{
+        type: Schema.ObjectId,
+        ref: 'User' 
+    }],
 	
 	created: {
 		type: Date,
