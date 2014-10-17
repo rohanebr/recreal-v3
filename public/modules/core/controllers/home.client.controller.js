@@ -81,7 +81,7 @@ $scope.data1 = {
 
                   		     Socket.on('entrance_response',function(data)
                                   		  {
-                                  		  console.log(data);
+                                  		  console.log('Entrance_response'+data);
 
                                   		  }
                                   		  );
@@ -95,20 +95,13 @@ $scope.data1 = {
 			$state.go('employerDashboard');
 		}
 		else if(user.userType === 'candidate'){
-		Socket.on('entrance', function (data) {
-        		    console.log(data);
+		
+        		    
                     Socket.emit('user_data',user);
-        		  });
-
-        		   Socket.on('entrance_response',function(data)
-        		  {
-        		  console.log(data);
-
-        		  }
-        		  );
-			$scope.candidate = Candidates.get({
+        		 $rootScope.candidate = Candidates.get({
 					candidate: $scope.authentication.user.candidate
 				});
+        	
 			$state.go('candidate-home');
 		}
 	}

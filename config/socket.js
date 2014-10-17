@@ -42,8 +42,7 @@ exports.create = function(server){
           var mongoose = require('mongoose'),
           User = mongoose.model('User'),
           Thread = mongoose.model('Thread');
-          console.log("USER_DATA:"+data);
-          User.findById(data._id).exec(function(err, user) {
+         User.findById(data._id).exec(function(err, user) {
           user.isOnline=true;
           user.markModified('isOnline');  //moongoose
           user.save();
