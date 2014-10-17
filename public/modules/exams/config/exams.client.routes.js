@@ -5,6 +5,10 @@ angular.module('exams').config(['$stateProvider',
 	function($stateProvider) {
 		// Exams state routing
 		$stateProvider.
+		state('exam-result', {
+			url: '/exam-result/:examTakenId',
+			templateUrl: 'modules/exams/views/exam-result.client.view.html'
+		}).
 		state('takeExam', {
 			url: '/takeExam/:examId',
 			templateUrl: 'modules/exams/views/take-exam.client.view.html'

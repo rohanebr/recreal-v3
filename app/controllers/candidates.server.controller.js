@@ -150,7 +150,6 @@ Candidate.update(
       function removeConnectionsCB(err, obj) {
 
       })
-
 }
 
 

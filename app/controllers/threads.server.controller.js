@@ -166,8 +166,7 @@ exports.getUserThreads = function(req, res) {
 				message: getErrorMessage(err)
 			});
 		} else {
-			console.log('FETUSERTHREADS'+threads[0].sender+' '+threads[0].receiever);
-						res.jsonp(threads);
+			res.jsonp(threads);
 		}
 	  });
 
@@ -195,46 +194,47 @@ console.log("{THREAD}{CONTROLLER}{THREADBYID}");
 };
 
 
-exports.updateThread = function (req,res)
-{
-var threadId=req.thread._id;
+// exports.updateThread = function (req,res)
+// {
+// var threadId=req.thread._id;
 
-console.log(threadId);
-var message=req.body.messageBody;
+// console.log(threadId);
+// var message=req.body.messageBody;
 
-console.log("{Threads}{Controller} ran");
-
-
- Thread.update(
-       { _id: threadId },
-       { $push: { messages : {messageBody:message} } },
-      { safe: true },
-       function (err, obj) {
-if (err) {
-			return res.send(400, {
-				message: getErrorMessage(err)
-			});
-		} else {
-			res.jsonp(message);
-		}
-       });
+// console.log("{Threads}{Controller} ran");
 
 
-}
+//  Thread.update(
+//        { _id: threadId },
+//        { $push: { messages : {messageBody:message} } },
+//       { safe: true },
+//        function (err, obj) {
+// if (err) {
+// 			return res.send(400, {
+// 				message: getErrorMessage(err)
+// 			});
+// 		} else {
+// 			res.jsonp(message);
+// 		}
+//        });
+
+
+// }
 /**
 *Get A single user thread and mark it as Read
 */
 exports.getUserThread = function(req,res)
 {
-	var id=req.thread._id;
-		Thread.findById(id).populate('messages.author').exec(function(err, thread) {
+     	var id=req.thread._id;
+ 		Thread.findById(id).populate('sender').populate('receiver').populate('messages.author').exec(function(err, thread) {
 		thread.read=true;
-
         thread.markModified('read');
          thread.save();
 		if (err) return res.send(err);
 		else
 			return res.send(thread);
+			
+			
 		
 
 
@@ -265,7 +265,7 @@ Thread.findById(threadId).populate('messages.author').exec(function(err, thread)
         thread.messages.push({messageBody:message,author:author._id});
      
         thread.markModified('messages');
-
+        thread.markModified('author');
          thread.save();
            thread.read=false;
          thread.markModified('read');
@@ -276,8 +276,7 @@ Thread.findById(threadId).populate('messages.author').exec(function(err, thread)
 	}
 	else
 	{
-		console.log('PPP'+thread.receiver);
-	res.json( {'sender':thread.sender,'receiver':thread.receiver});}
+		res.json( {'sender':thread.sender,'receiver':thread.receiver});}
 	});
 console.log("{Threads}{Controller} ran"+message+" author name:"+author);
 
