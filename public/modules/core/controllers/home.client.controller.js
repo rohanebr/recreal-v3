@@ -111,5 +111,8 @@ $scope.data1 = {
 				});
 			$state.go('candidate-home');
 		}
+		else if(user.userType === 'transition'){
+			$state.go('transition');
+		}
 	}
 ]);
