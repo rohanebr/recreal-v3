@@ -14,7 +14,7 @@ exports.create = function(server){
         socket.on('update_threads',function(data)
         {
 
-      var leastamountofdata={messageBody:data.messageBody,author:data.author.displayName,created:data.created,authordp : data.authordp };
+      var leastamountofdata={messageBody:data.messageBody,id:data.author._id,author:data.author.displayName,created:data.created,authordp : data.authordp };
             var socketid=fetchmesocketid(data.receiver);
             for(var x=0;x<socketid.length;x++)
           {socketid[x].emit('watched_thread','nothg');
