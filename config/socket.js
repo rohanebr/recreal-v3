@@ -42,8 +42,7 @@ exports.create = function(server){
           var mongoose = require('mongoose'),
           User = mongoose.model('User'),
           Thread = mongoose.model('Thread');
-          console.log("USER_DATA:"+data);
-          User.findById(data._id).exec(function(err, user) {
+         User.findById(data._id).exec(function(err, user) {
           user.isOnline=true;
           user.markModified('isOnline');  //moongoose
           user.save();
@@ -167,6 +166,7 @@ console.log(data);
 //       poll.save(function(err, doc) {
 //         var theDoc = { 
 //           question: doc.question, _id: doc._id, choices: doc.choices, 
+
 //           userVoted: false, totalVotes: 0 
 //         };
 //         for(var i = 0, ln = doc.choices.length; i < ln; i++) {
