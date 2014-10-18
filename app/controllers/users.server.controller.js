@@ -121,7 +121,51 @@ exports.signin = function(req, res, next) {
 		}
 	})(req, res, next);
 };
+exports.setUserType = function (req,res)
+{
+console.log(req.body.userType);
+console.log(req.user._id);
+User.findById(req.user.id, function(err, user) {
+user.userType=req.body.userType;
+        user.markModified('userType');
+       
+	    user.displayName = user.firstName + ' ' + user.lastName;
+	    var typeObject;
+     	switch(req.body.userType){
+		case 'candidate':
+			typeObject = new Candidate();
+			user.candidate = typeObject;
 
+			break;
+		case 'employer':
+			typeObject = new Employer();
+			user.employer = typeObject;
+			var company = new Company();
+			typeObject.company = company;
+			company.employers.push(typeObject);
+			company.save();
+			break;
+	}
+	    typeObject.firstName = user.firstName;
+	    typeObject.lastName = user.lastName;
+	    typeObject.displayName = user.displayName;
+	    typeObject.user = user;
+	    typeObject.save();
+
+         user.save();
+
+
+
+
+         if (err) return res.send(err);
+		else
+			return res.send(user);
+
+
+});
+
+
+};
 /**
  * Update user details
  */

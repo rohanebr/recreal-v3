@@ -225,6 +225,12 @@ var CandidateSchema = new Schema({
 		isPass: {
 			type: Boolean,
 			default: false
+		},
+		state:  {
+			type:String,
+			enum: ['notTaken', 'taken', 'incomplete'],
+			default: 'notTaken'
+
 		}
 	}],
 
