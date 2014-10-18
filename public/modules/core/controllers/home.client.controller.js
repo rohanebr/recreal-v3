@@ -74,17 +74,11 @@ $scope.data1 = {
         		    if(user.userType === 'employer')
         		    	alert(data.candidate.displayName + ' applied on job : ' + data.job.title);
         		  });
-        		  Socket.on('entrance', function (data) {
+        		 
 
                             Socket.emit('user_data',user);
-                  		  });
+                  		  
 
-                  		     Socket.on('entrance_response',function(data)
-                                  		  {
-                                  		  console.log('Entrance_response'+data);
-
-                                  		  }
-                                  		  );
 			$rootScope.employer = Employers.get({
 				employerId: $scope.authentication.user.employer
 			}, function(employer){
