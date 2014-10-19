@@ -62,20 +62,33 @@ angular.module('core').controller('HeaderController', ['$scope', 'Authentication
                  
 				if(data.message.receiver === $scope.authentication.user._id )
 					{
+						var alreadyexists=false;
 console.log(data.message);
 			
 						var thread = {
 							id: data.message.idc,
 						senderName: data.message.sender.displayName,
 						//subject: data.message.subject,
-						created: data.message.messages.created    //wrong this shldnt be Data.now()
+						created: data.message.messages.created ,  //wrong this shldnt be Data.now()
+						count:1
 						//messages: [{
 					//		messageBody: data.message.messageBody,
 					//	}]
 					}
+				for(var d=0,h=$scope.threads.length;d<h;d++)
+				{
+                   if($scope.threads[d].id==thread.id)
+                   	   {
+                   	   	  $scope.threads[d].count++;
+                   	   	  alreadyexists=true;
+                   	   	  break;
+                   	   }
 				}
-					$scope.threads.push(thread);
-					$scope.$apply();
+                 if(!alreadyexists)
+					{$scope.threads.push(thread);
+					$scope.$apply();}
+				}
+					
 					// alert(data.message.subject + ' --------------> ' + data.message.messageBody);
 			});
 		}

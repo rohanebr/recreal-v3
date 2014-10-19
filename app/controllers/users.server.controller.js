@@ -447,9 +447,23 @@ var threadId;
 	var gotmessages=[{}];
  		  for(var x=0;x<docs.length;x++)
  		  {
- 		  	
+ 		  	var isRead=false;
+ 		  	if(docs[x].sender.equals(userId))
+ 		  	{
+                if(docs[x].readBySender==true)
+                	isRead=true;
+
+ 		  	}	
+ 		  	else
+ 		  	if(docs[x].receiver.equals(userId))
+ 		  	{
+                if(docs[x].readByReceiver==true)
+                	isRead=true;
+
+ 		  	}	  	
             var lengths=docs[x].messages.length;
- 		  if(!docs[x].read && !userId.equals(docs[x].messages[lengths-1].author._id))
+
+ 		  if(!isRead && !userId.equals(docs[x].messages[lengths-1].author._id))
  		  	  {var sendername=docs[x].messages[lengths-1].author.displayName;
  		  	  	var messagebody= docs[x].messages[lengths-1].messageBody;
  		  	  	var created=docs[x].messages[lengths-1].created;
