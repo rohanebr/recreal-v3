@@ -1,28 +1,19 @@
-<div style="padding: 10px;">
-
-
-    <h1 ng-show="language._id">Edit Language</h1>
-    <h1 ng-hide="language._id">Add Language</h1>
+<article style="padding: 10px;">
+    <header>
+        <h1 ng-show="language._id">Edit Language</h1>
+        <h1 ng-hide="language._id">Add Language</h1>
+    </header>
+    
     <form ng-submit="ok('save')">
-    	 <table>
-
-    	 	<tr>
-
-                    <div class="col-sm-3">
+    	 <section class="form-group">
                     	<label for="title">Language Name</label>
-                    </div>
-                    <div class="col-sm-8">
-                    	<input required id="name" type="text" placeholder="e.g Arabic" data-ng-model="language.name" class="form-control">
-             		</div>
-             </tr>
+                    	<input required id="name" type="text" placeholder="e.g Arabic" data-ng-model="language.name" class="form-control" style="width: 250px";>
+        </section>
 
-			<tr>
-	                <div class="col-sm-3">
+			<section class="form-group">
 	                    <label for="">Location</label>
-	                </div>
-	                <div class="col-sm-8">
                         <span class="ui-select">
-                            <select data-ng-model="language.proficiency">
+                            <select data-ng-model="language.proficiency" class="form-control" style="width: 250px";>
                                 <option>Elementry</option>
                                 <option>Limited Working</option>
                                 <option>Professional Working</option>
@@ -30,14 +21,11 @@
                                 <option>Native or Bilingual</option>
                             </select>
                         </span>
-	                </div>
-            </tr>
-
-    	 <table>
+	        </section>
 
         <button class="btn btn-primary" type="submit">Save</button>
         <button class="btn btn-danger" ng-click="ok('delete')" ng-show="language._id">Delete</button>
         <button class="btn btn-success" ng-click="cancel()">Cancel</button>
 
    </form>
-</div>
+</article>

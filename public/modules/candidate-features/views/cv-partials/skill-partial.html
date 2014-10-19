@@ -1,43 +1,32 @@
-<div style="padding: 20px;">
-	
-
+<article style="padding: 20px;">
+	<header>
 		<h1 ng-show="skill._id">Edit Skill</h1>
 		<h1 ng-hide="skill._id">New Skill</h1>
-		<form ng-submit="ok('save')">	
+	</header>
+		
 
-		<table>
+	<form ng-submit="ok('save')">	
 
-			<tr>
-				<td>
-					<label for="title">Title</label>
-				</td>
-				<td>
-					<input required id="title" type="text" placeholder="e.g Communications" data-ng-model="skill.title"class="form-control">
-				</td>
-			</tr>
+		<section class="form-group">
+			<div><label for="title">Title</label></div>
+			<div><input required id="title" type="text" placeholder="e.g Communications" data-ng-model="skill.title"class="form-control" style="width: 250px;" /></div>
+		</section>
 
-			<tr>
-				<td>
-					<label for="level">Level</label>
-				</td>
-				<td>
-					<span id="level" class="ui-select">
-		            <select required data-ng-model="skill.level"  style="width: 150px;">
+		<section class="form-group">
+			<div><label for="level">Level</label></div>
+			<div><span id="level" class="ui-select">
+		            <select required data-ng-model="skill.level" class="form-control" style="width: 150px;">
 		                    <option>Beginner</option>
 		                    <option>Intermidiate</option>
 		                    <option>Expert</option>
 		            </select>
-		        </span>
-				</td>
-			</tr>
+		        </span></div>
+		</section>
 
-			<tr>
-				<td>
-					<label for="xp">Experience in years</label>
-				</td>
-				<td>
-					<span id="xp" class="ui-select" >
-		            <select required data-ng-model="skill.experience" style="width: 50px;">
+		<section class="form-group">
+			<div><label for="xp">Experience in years</label></div>
+			<div><span id="xp" class="ui-select" >
+		            <select required data-ng-model="skill.experience" class="form-control" style="width: 150px;">
 		                    <option>1</option>
 		                    <option>2</option>
 		                    <option>3</option>
@@ -49,26 +38,15 @@
 		                    <option>9</option>
 		                    <option>10</option>
 		            </select>
-		        </span>
-				</td>
-			</tr>
+		        </span></div>
+		</section>
 
-			<tr>
-				<td>
-					<label for="lastUsed">Last used on:</label>
-				</td>
-				<td>
-					<!-- <input  type="date"
-		        class="form-control"
-		        required
-		        id="lastUsed"
-		        data-ng-model="skill.last_used"
-		        > -->
-		         <input ui-date ui-date-format class="form-control" ng-model="skill.last_used" />
-				</td>
-			</tr>
+		<section class="form-group">
+			<div><label for="lastUsed">Last used on</label></div>
+			<div><input ui-date ui-date-format class="form-control" ng-model="skill.last_used" style="width: 250px"; /></div>
+		         
 
-		</table>
+		</section>
 
 		
 				<button class="btn btn-primary" type="submit">Save</button>
@@ -78,4 +56,4 @@
 		
 		
 	</form>
-</div>
+</article>
