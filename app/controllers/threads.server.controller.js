@@ -166,12 +166,8 @@ exports.getUserThreads = function(req, res) {
 				message: getErrorMessage(err)
 			});
 		} else {
-<<<<<<< HEAD
 			res.jsonp(threads);
-=======
-			// console.log('FETUSERTHREADS'+threads[0].sender+' '+threads[0].receiever);
-						res.jsonp(threads);
->>>>>>> partials
+
 		}
 	  });
 
