@@ -57,22 +57,20 @@ angular.module('short-list').controller('messageController', [
 					created :Date.now()
 				}]
 			});
-			var thread1={
-				idc:thread._id,
-                sender: $scope.user._id,
-				receiver: $scope.reciever.user,
-				subject:  message.subject,
-				readBySender: true,
-				messages: [{
-					messageBody: message.messageBody,
-					author: $scope.user._id,
-					created :Date.now()
-				}]
+         
+		
+			thread.$save(function(response) {
+				console.log(response.receiver);
+                	var thread1={
+				idc:response._id,
+				receiver: response.receiver,
+                sender: {displayName:$scope.user.displayName},
+				
+				messages: [{created :Date.now()}]
 
 			};
-			// Redirect after save
-			thread.$save(function(response) {
-				Socket.emit('message_sent_from', {message: thread1});
+            console.log(thread1);
+		        Socket.emit('message_sent_from', {message: thread1});
 				$modalInstance.dismiss('cancel');
 				
 			}, function(errorResponse) {

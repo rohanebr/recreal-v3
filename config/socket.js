@@ -142,11 +142,10 @@ console.log(data);
             socketid[x].emit('watched_thread_to', data);
   
     console.log("WATCHED THREAD");
-}
+});
 
-        );
         socket.on('message_sent_from', function(data) {
-            console.log(data);
+            console.log(data.message);
             var socketid=fetchmesocketid(data.message.receiver);
             for(var x=0;x<socketid.length;x++)
             socketid[x].emit('message_sent_to', data);
