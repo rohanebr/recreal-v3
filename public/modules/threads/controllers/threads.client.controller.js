@@ -12,6 +12,10 @@ angular.module('threads').controller('ThreadsController', ['$scope', '$statePara
         	   {
                     if($scope.thread.messages[x].author._id===data.userId)
                     	     $scope.thread.messages[x].author.isOnline=data.isOnline;
+                  
+                    	if($scope.thread.messages[x].author.authorid==data.userId)
+                    		$scope.thread.messages[x].author.isOnline=data.isOnline;
+                    		
 
         	   }
             
@@ -19,10 +23,12 @@ angular.module('threads').controller('ThreadsController', ['$scope', '$statePara
 
         //socket incoming_thread start
         Socket.on("incoming_thread", function (data) {
-        	
+        	   $http.get('/threads/getUserThread/' + $stateParams.threadId).success(function(thread) {
+								Socket.emit('watched_thread',$scope.authentication.user._id);
+             	});
             $scope.thread.messages.push({
             	                         messageBody:data.messageBody,
-						                 author:{
+						                 author:{authorid:data.id,
 						                 	     displayName:data.author,
 						                 	     picture_url:data.authordp,
 						                 	     isOnline:true },
