@@ -23,7 +23,7 @@ angular.module('threads').controller('ThreadsController', ['$scope', '$statePara
 
         //socket incoming_thread start
         Socket.on("incoming_thread", function (data) {
-        	   $http.get('/threads/getUserThread/' + $stateParams.threadId).success(function(thread) {
+        	   $http.put('/threads/getUserThread/' + $stateParams.threadId,{id:$scope.authentication.user._id}).success(function(thread) {
 								Socket.emit('watched_thread',$scope.authentication.user._id);
              	});
             $scope.thread.messages.push({
@@ -201,24 +201,16 @@ Socket.emit('message_sent_from', {message: thread});
 
 		//chatting html view aka view-thread.client.view.html
 			$scope.findOneAndMarkAsRead = function() {
-			//	socket.join('chatroom');
+			
 				
-			    $http.get('/threads/getUserThread/' + $stateParams.threadId).success(function(thread) {
+			    $http.put('/threads/getUserThread/' + $stateParams.threadId,{id:$scope.authentication.user._id}).success(function(thread) {
 				    $scope.thread= thread;
 				    console.log(thread.sender._id);
 				    if(thread.sender._id===$scope.authentication.user._id)
-				    
-                      
-                       $http.put('/users/addSubscriber/'+$scope.authentication.user._id,{id:thread.receiver._id}).success(function(){});                     
-                
-
+				       $http.put('/users/addSubscriber/'+$scope.authentication.user._id,{id:thread.receiver._id}).success(function(){});                     
                     else
                        $http.put('/users/addSubscriber/'+$scope.authentication.user._id,{id:thread.sender._id}).success(function(){});                     
-                   
-				    
-				   
-				  
-					Socket.emit('watched_thread',$scope.authentication.user._id);
+                  Socket.emit('watched_thread',$scope.authentication.user._id);
              	});
 			
 		

@@ -35,11 +35,11 @@ module.exports = {
 	google: {
 		clientID: process.env.GOOGLE_ID || '775079096211-k74j9b4l6j294rhqudifddsnnam499dr.apps.googleusercontent.com',
 		clientSecret: process.env.GOOGLE_SECRET || 'aLUCNiviRoTkF943I0okuksj',
-		callbackURL: 'http://localhost:3000/auth/google/callback'
+		callbackURL: 'http://recreal.com/auth/google/callback'
 	},
 	linkedin: {
 		clientID: process.env.LINKEDIN_ID || 'cheq81slu4pe',
 		clientSecret: process.env.LINKEDIN_SECRET || 'mbCnZofMsah7ilQc',
-		callbackURL: 'http://localhost:3000/auth/linkedin/callback'
+		callbackURL: 'http://recreal.com/auth/linkedin/callback'
 	}
 };
