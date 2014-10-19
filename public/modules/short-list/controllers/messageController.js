@@ -66,10 +66,10 @@ angular.module('short-list').controller('messageController', [
 				receiver: response.receiver,
                 sender: {displayName:$scope.user.displayName},
 				
-				messages: [{created :Date.now()}]
+				messages: {created :Date.now()}
 
 			};
-            console.log(thread1);
+            console.log(Date.now());
 		        Socket.emit('message_sent_from', {message: thread1});
 				$modalInstance.dismiss('cancel');
 				

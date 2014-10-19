@@ -112,7 +112,7 @@ angular.module('threads').controller('ThreadsController', ['$scope', '$statePara
       	idc: threadId,
        sender : {displayName: $scope.authentication.user.displayName},
        receiver: $scope.thread.receiver._id,
-       messages:[{created: Date.now()}]
+       messages:{created: Date.now()}
        
 
 

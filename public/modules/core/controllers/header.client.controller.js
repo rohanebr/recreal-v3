@@ -63,7 +63,7 @@ angular.module('core').controller('HeaderController', ['$scope', 'Authentication
 				if(data.message.receiver === $scope.authentication.user._id )
 					{
 						var alreadyexists=false;
-console.log(data.message);
+                   console.log(data);
 			
 						var thread = {
 							id: data.message.idc,
