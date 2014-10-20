@@ -24,9 +24,7 @@ angular.module('core').factory('Socket', ['$rootScope',
           });
         })
       }
+      
     };
-
   }
-
-
 ]);
