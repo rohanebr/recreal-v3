@@ -8,7 +8,7 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
 		$scope.visaFilters = [];
 		$scope.employeetypeFilters = [];
 		$scope.employeestatusFilters = [];
-
+		
 		$scope.isShortListed = function(candidate){
 			// job.candidates = [];
 			// job.shortListedCandidates = [];
@@ -25,6 +25,7 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
 			populateVisaFilters();
 			populateEmployeetypeFilters();
 			populateEmployeestatusFilters();
+			
 
 		});
 		// $http.get('jobs/candidates/' + $stateParams.jobId).success(function(job) {
@@ -168,6 +169,7 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
 			}
 		};
 
+		
 		var populateEmployeetypeFilters = function(){
 			
 			$scope.candidates = $filter('orderBy')($scope.candidates, 'employee_type');
