@@ -7,7 +7,7 @@ var online_users = [];
 exports.create = function(server){
   
     io = require('socket.io').listen(server);
-    io.on('connection', function(socket) {
+    io.on ('connection', function(socket) {
  
         console.log('connected'+socket.id);
         sock = socket;

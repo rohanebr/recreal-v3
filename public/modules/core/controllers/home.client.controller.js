@@ -76,7 +76,7 @@ $scope.data1 = {
         		  });
         		 
 
-                            Socket.emit('user_data',user);
+                            
                   		  
 
 			$rootScope.employer = Employers.get({
@@ -91,7 +91,7 @@ $scope.data1 = {
 		else if(user.userType === 'candidate'){
 		
         		    
-                    Socket.emit('user_data',user);
+                  
         		 $rootScope.candidate = Candidates.get({
 					candidate: $scope.authentication.user.candidate
 				});
