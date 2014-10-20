@@ -3,32 +3,44 @@
             <h1>{{company.company_name}}</h1>
     </header>
 
-<article class="col-md-3">
+<aside class="col-md-3">
     <section>
-        <article class="col-md-6">
-            <label for="searchBox">Search Job:</label>
+        <article class="col-sm-4">
+            <label for="searchBox">Search:</label>
         </article>
-        <article class="col-md-6">
-            <input id="searchBox" class="col-md-8 form-control" type="text" data-ng-model="searchText" />
+        <article class="col-sm-8">
+            <input id="searchBox" class="col-sm-12 form-control" type="text" style="width: 170px" data-ng-model="searchText" />
         </article><Br>
-        <Br>
+        <Br><hr>
     </section> 
     <section>
-           <a href="/#!/company-open-jobs"{{ orderBy_closedate | orderBy : job.due_date : true}}><h5>Order By Closed Date</h5></a> 
-            <hr>
+           <article class="col-sm-4">
+                 <label for="">Sort By:</label>
+            </article>
+            <article class="col-sm-8">
+                        <div>
+                            <span class="ui-select">
+                                <select style="width: 170px">
+                                    <option>Close Date Dsc</option>
+                                    <option>Close Date Asc</option>
+                                    <option>Maximum Candidates</option>
+                                    <option>Maximum ShortListed</option>
+                                    <option>Minimum Candidates</option>
+                                    <option>Minimum Shortlisted</option>
+                                </select>
+                            </span>
+                        </div>
+            </article><Br><Br><hr>
     </section>
+   
      <section>
-        <a href="/#!/company-open-jobs"{{ orderBy_maximumCandidate | orderBy : job.candidates.length : true}}><h5>Order By Maximum Candidates</h5></a> <hr>
-    </section>
-    <section>
-         <a href="/#!/company-open-jobs"{{ orderBy_maximumShortlisted | orderBy : job.shortListedCandidates.length : true}} ><h5>Order By Maximum Shortlisted</h5></a><hr>
-    </section>
-     <section>
-         <h5>Job Posted By</h5>
+        <article class="col-sm-12">
+          <label for="">Posted By:</label><Br>
           {{employer.displayName.toUpperCase()}},({{employer.jobs.length}})
          <hr>
+         </article>
     </section>
-   </article>
+   </aside>
 
 
 
@@ -44,18 +56,25 @@
              <p><span class="pull-left"> Posted By: {{employer.displayName.toUpperCase()}}</span></p>
             <div class="pull-right">
               
-                     
+                     <section class="col-md-4">
                         <a href="/#!/employer-job-candidates/{{job._id}}" class="btn btn-small btn-success">Candidates ({{job.candidates.length}})</a>
-                   
+                    </section>
+                     <section class="col-md-4">
                          <a href="/#!/shortlisted-candidates/{{job._id}}" class="btn btn-small btn-success">Shortlisted ({{job.shortListedCandidates.length}})</a>
-                   
-                         <span class="ui-select" >Options
-                                <select data-ng-model="job._id" style="width: 100px;">
-                                        <option>Close Job</option>
-                                        <option>Cancel Job</option>
-                                        <option>Removed Job</option>
-                                </select>
-                            </span>                                          
+                    </section>
+                    <section class="col-md-2">
+                         <div class="dropdown">
+                          <button class="btn btn-small btn-success" type="button" id="dropdownMenu1" data-toggle="dropdown">
+                           <span class="glyphicon glyphicon-plus"></span>
+                            <span class="caret"></span>
+                          </button>
+                          <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Close Job</a></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Cancle Job</a></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Remove Job</a></li>
+                          </ul>
+                        </div>
+                       </section>                                         
              </div>
             <br>
             <hr>
