@@ -23,8 +23,8 @@
 </section> --> 
 
 
-<!-- <section data-ng-controller="ThreadsController" data-ng-init="findUserThreads()"> -->
-<!--    This is the List user messages view
+<!-- <section data-ng-controller="ThreadsController" data-ng-init="findUserThreads()">
+   This is the List user messages view
     <div data-ng-repeat="thread in user.threads">
         <h2>{{thread.subject}}</h2>
         <p>{{thread.created | date}}</p>
@@ -32,13 +32,7 @@
             <h3>{{message.messageBody}}</h3>
             <p>{{message.created | date}}</p>
         </div>
-    </div>
-
-
-
-
-
- -->
+    </div> -->
 
 
 
@@ -124,24 +118,8 @@
                 <h5 class="italic">Messege Subject</h5>
                 <p>this is body</p>
             </section> -->
-        <!-- 
-            <strong>
-                <span class="glyphicon glyphicon-th">    
-                </span> Inbox</strong></div>
-                <div class="mail-options">
-                    <label class="ui-checkbox"><input name="checkbox1" type="checkbox" value="option1" ><span>Toggle All</span></label>
-                </div>
-                <table class="table table-hover">
-                    <tr class="mail-unread" data-ng-repeat="thread in threads">
-                        
-                            <td><label class="ui-checkbox"><input name="checkbox1" type="checkbox" value="option1" ><span></span></label></td>
-                            <td><a data-ng-href="#!/threads/{{thread._id}}">{{thread.sender.displayName}}</a></td>
-                            <td>{{thread.subject}}</td>
-                            <td>{{thread.created | date}}</td>
-                            <td><i class="fa fa-star-o"></i></td>
-                        
-                    </tr>
-                </table> -->
+        
+            
 
 <!--         </div>
     </div>
@@ -149,6 +127,17 @@
 
 
 </section> -->
+<section data-ng-controller="ThreadsController" data-ng-init="findUserThreads()">
+   This is the List user messages view
+    <div data-ng-repeat="thread in user.threads">
+        <h2>{{thread.subject}}</h2>
+        <p>{{thread.created | date}}</p>
+        <div data-ng-repeat="message in thread.messages">
+            <h3>{{message.messageBody}}</h3>
+            <p>{{message.created | date}}</p>
+        </div>
+    </div>
+
 <section class="col-md-3">
     <section class="panel panel-default mail-categories">
         <div class="panel-heading">
@@ -210,80 +199,53 @@
             </div>
         </div>   
 
-    <section class="col-md-12">
-            <div class="col-md-12">  
-                <italic><h3>Ahsin Anwar</h3></italic>
-            </div>
-            <div class="col-md-6">       
-                <italic><h5>Messege subject</h5></italic> 
-            </div>
-            <div class="col-md-4"> 
-                <span class="pull-right">
-                    <italic><h5>Date:12-07-2014</h5></italic> 
-                </span> 
-            </div>   
-            <div class="col-md-2">
+<!--         <strong>
+                <span class="glyphicon glyphicon-th">    
+                </span> Inbox</strong></div>
+                <div class="mail-options">
+                    <label class="ui-checkbox"><input name="checkbox1" type="checkbox" value="option1" ><span>Toggle All</span></label>
+                </div>
+                <table class="table table-hover">
+                    <tr class="mail-unread" data-ng-repeat="thread in threads">
+                        
+                            <td><label class="ui-checkbox"><input name="checkbox1" type="checkbox" value="option1" ><span></span></label></td>
+                            <td><a data-ng-href="#!/threads/{{thread._id}}">{{thread.sender.displayName}}</a></td>
+                            <td>{{thread.subject}}</td>
+                            <td>{{thread.created | date}}</td>
+                            <td><i class="fa fa-star-o"></i></td>
+                        
+                    </tr>
+                </table> -->
+
+    <section class="mail-unread" data-ng-repeat="thread in threads">
+            <div class="col-md-12"> 
+                
                 <span class="pull-left">
                     <input type="checkbox" value=""> 
                 </span>
-            </div>
-           
-            <div class="col-md-11">      
-                <p>Checkboxes are used if you want the user to select any number of options from a list of preset options.
-
-                The following example contains three checkboxes. The last option is disabled:
-                </p>
-            </div>
-    </section> 
-
-    <section class="col-md-12">
-            <div class="col-md-12">  
-                <italic><h3>Ahsin Anwar</h3></italic>
-            </div>
-            <div class="col-md-6">       
-                <italic><h5>Messege subject</h5></italic> 
-            </div>
-            <div class="col-md-4"> 
+                
+                <div class="col-sm-1"><img alt=""class="img64_64" src="{{thread.sender.picture_url}}"></div> 
+                <div class="col-sm-10">
+                <div class="col-md-10"><italic><h3><a data-ng-href="#!/threads/{{thread._id}}">{{thread.sender.displayName}}</a></h3></italic></div>
+                <div class="col-md-2"> 
                 <span class="pull-right">
-                    <italic><h5>Date:12-07-2014</h5></italic> 
+                    <italic><h5>{{thread.created | date}}</h5></italic> 
                 </span> 
-            </div>   
-            <div class="col-md-2">
-                <span class="pull-left">
-                    <input type="checkbox" value=""> 
-                </span>
             </div>
-           
+            
+            <div class="col-md-12">       
+                <italic><h5>{{thread.subject}}</h5></italic> 
+            </div>
             <div class="col-md-11">      
-                <p>Checkboxes are used if you want the user to select any number of options from a list of preset options.
-
-                The following example contains three checkboxes. The last option is disabled:
+                <p>{{thread.messages.messagebody._id}}
                 </p>
             </div>
-    </section> 
-    <section class="col-md-12">
-            <div class="col-md-12">  
-                <italic><h3>Ahsin Anwar</h3></italic>
-            </div>
-            <div class="col-md-6">       
-                <italic><h5>Messege subject</h5></italic> 
-            </div>
-            <div class="col-md-4"> 
-                <span class="pull-right">
-                    <italic><h5>Date:12-07-2014</h5></italic> 
-                </span> 
             </div>   
-            <div class="col-md-2">
-                <span class="pull-left">
-                    <input type="checkbox" value=""> 
-                </span>
-            </div>
-           
-            <div class="col-md-11">      
-                <p>Checkboxes are used if you want the user to select any number of options from a list of preset options.
-
-                The following example contains three checkboxes. The last option is disabled:
-                </p>
-            </div>
+            
+            
+            
     </section> 
-</section>    
+
+   
+</section>
+</section>

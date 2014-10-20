@@ -4,6 +4,7 @@
  * Module dependencies.
  */
 var mongoose = require('mongoose'),
+Candidate = mongoose.model('Candidate'),
 	Schema = mongoose.Schema;
 
 /**
