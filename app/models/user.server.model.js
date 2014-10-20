@@ -86,7 +86,8 @@ var UserSchema = new Schema({
 	userType: {
 		type: String,
 		required: 'Please specify if you want to signup as an employer or a candidate',
-		enum: ['employer', 'candidate', 'transition', 'admin']
+		enum: ['employer', 'candidate', 'transition', 'admin'],
+		default: 'transition'
 	},
 	candidate: {
 		type: Schema.ObjectId,

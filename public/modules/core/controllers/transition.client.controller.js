@@ -1,23 +1,27 @@
 'use strict';
 
-angular.module('core').controller('TransitionController', ['$scope','Authentication', '$http','$state', '$rootScope','Employers', 'Companies', 'Candidates', 'Socket',
-	function($scope,Authentication,$http, $state, $rootScope, Employers, Companies, Candidates , Socket) {
+angular.module('core').controller('TransitionController', ['$scope','Authentication', '$http','$state', '$rootScope','Employers', 'Companies', 'Candidates', 'Socket','$location',
+	function($scope,Authentication,$http, $state, $rootScope, Employers, Companies, Candidates , Socket,$location) {
 		$scope.authentication = Authentication;
-		console.log(Socket.gai);
-		console.log($rootScope.gai);
-		Socket.gai="this is changed now";
-        $rootScope.gai="this is also changed now";
-      
+		
 
-
-
+$scope.formData = {userType:''};
+	
+	// function to process the form
+	
+$scope.$watch('formData.userType', function() {
+	if($scope.formData.userType=="Employer")
+	{
+		becomeEmployer();
+	}
+console.log($scope.formData.userType);
+       });
        
 
 
 
-
-$scope.becomeEmployer=function (){
-	
+var becomeEmployer=function (){
+	console.log($scope.authentication.user.userType);
 if($scope.authentication.user.userType=='transition'){
 	
   $http.put('/users/setUserType/' + $scope.authentication.user._id,{userType:'employer'}).success(function(user) {
@@ -29,7 +33,7 @@ if($scope.authentication.user.userType=='transition'){
         		  });
         		 
 
-                            Socket.emit('user_data',user);
+                           
                   		  
 
 			$rootScope.employer = Employers.get({
@@ -39,7 +43,9 @@ if($scope.authentication.user.userType=='transition'){
 					companyId: employer.company
 				});
 			});
-			$state.go('employerDashboard');					
+			
+
+			$location.path('/company-profile');					
              	});
 }
 	};
@@ -49,12 +55,12 @@ if($scope.authentication.user.userType=='transition'){
 								console.log(user);
              	});
    
-                    Socket.emit('user_data',user);
+                  
         		 $rootScope.candidate = Candidates.get({
 					candidate: $scope.authentication.user.candidate
 				});
         	
-			$state.go('candidate-home');
+     		 $state.go('candidate-home');
 }
 	};
 
