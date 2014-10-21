@@ -7,8 +7,10 @@ var online_users = [];
 exports.create = function(server){
   
     io = require('socket.io').listen(server);
-    io.on ('connection', function(socket) {
- 
+    exports.socket_io = io;
+    
+    io.on ('connection', function(socket) 
+    {
         console.log('connected'+socket.id);
         sock = socket;
         socket.on('update_threads',function(data)
@@ -131,9 +133,7 @@ exports.create = function(server){
                       }
         });
 
-        socket.on('applied_on_job', function(data) {
-            io.sockets.emit('applied_on_job', data);
-        });
+        
      socket.on('watched_thread',function(data)
 {
 console.log(data);
@@ -153,6 +153,7 @@ console.log(data);
 
     });
 };
+
 
 
 // // Socket API for saving a vote
@@ -187,7 +188,7 @@ console.log(data);
 //   });
 // };
 
-exports.socket_io = io;
+
 
 function fetchmesocketid(data)
 {
@@ -211,4 +212,6 @@ function containsObject(socket) {
     }
     return false;
 }
+
+
 

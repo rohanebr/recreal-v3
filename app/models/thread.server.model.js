@@ -25,7 +25,6 @@ var ThreadSchema = new Schema({
 	readBySender: {
         type: Boolean,
 		default: false
-
 	},
 	sender: {
 		type: Schema.ObjectId,
