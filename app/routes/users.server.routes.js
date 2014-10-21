@@ -38,8 +38,14 @@ module.exports = function(app) {
 
 	app.route('/users/sendMessage/:userId')
 		.put(users.sendMessage);
+		app.route('/users/addSubscriber/:userId')
+		.put(users.addSubscriber);
+			app.route('/users/deleteSubscriber/:userId')
+		.put(users.deleteSubscriber);
 	app.route('/users/getMessages/:userId')
 		.get(users.getMessages);
+		app.route('/users/setUserType/:userId')
+		.put(users.setUserType);
 
 
 	// app.route('/users/thread/:userId')

@@ -1,105 +1,79 @@
-<div style="padding: 10px;">
+<article style="padding: 10px;">
+    <header>
+        <h1 ng-show="education._id">Edit Education</h1>
+        <h1 ng-hide="education._id">Add Education</h1>
+    </header>
+    
+    <form ng-submit="ok('save')" >
+        <section class="form-group">
+            <div><label for="">Degree</label></div>
+            <div><span class="ui-select" >
+                <select data-ng-model="education.degree" class="form-control" style="width: 250px;">
+                    <option>Pre-Matriculation</option>
+                    <option>O-level/Matriculation</option>
+                    <option>Intermediate/A-Level</option>
+                    <option>Bachelor's Degree</option>
+                    <option>Master's Degree</option>
+                    <option>Doctorate</option>
+                    <option>Certificate</option>
+                    <option>Diploma</option>
+                </select>
+            </span></div>
+        </section>
 
+        <section class="form-group">
+            <div><label for="">Study Feild</label></div>
+            <div><span class="ui-select">
+                <select data-ng-model="education.study_feild" class="form-control" style="width: 250px";>
+                    <option>Electrical Engineering</option>
+                    <option>Computer Engineering</option>
+                    <option>Civil Engineering</option>
+                    <option>MBA</option>
+                    <option>BBA</option>
+                    <option>Physics</option>
+                    <option>Mathematics</option>
+                    <option>Chemistry</option>
+                </select>
+            </span></div>
+        </section>
 
-    <h1 ng-show="education._id">Edit Education</h1>
-    <h1 ng-hide="education._id">Add Education</h1>
-    <form ng-submit="ok('save')">
-    	 <table>
-    		<tr>
-                <div class="col-sm-3">
-                    <label for="">Degree</label>
-                </div>
-                <div class="col-sm-9">
-                                    <span class="ui-select">
-                                        <select data-ng-model="education.degree">
-                                            <option>Pre-Matriculation</option>
-                                            <option>O-level/Matriculation</option>
-                                            <option>Intermediate/A-Level</option>
-                                            <option>Bachelor's Degree</option>
-                                            <option>Master's Degree</option>
-                                            <option>Doctorate</option>
-                                            <option>Certificate</option>
-                                            <option>Diploma</option>
-                                        </select>
-                                    </span>
-                </div>
+        <section class="form-group">
+            <div><label for="">Institute Name</label></div>
+            <div><span class="ui-select">
+                <select data-ng-model="education.institute" class="form-control" style="width: 250px";>
+                    <option>Comsats</option>
+                    <option>Air University</option>
+                    <option>NUST</option>
+                    <option>NDU</option>
+                    <option>Bahria University</option>
+                    <option>IIUI</option>
+                    <option>Iqra University</option>
+                    <option>MAJU</option>
+                </select>
+            </span></div>
+        </section>
 
-            </tr>
+        <section class="form-group">
+            <label for="">Start Date</label>
+            <input ui-date ui-date-format class="form-group" ng-model="education.start_date" />
+        
 
-            <tr>
-                <div class="col-sm-3">
-                    <label for="">Study Feild</label>
-                </div>
-                <div class="col-sm-9">
-                                    <span class="ui-select">
-                                        <select data-ng-model="education.study_feild">
-                                            <option>Electrical Engineering</option>
-                                            <option>Computer Engineering</option>
-                                            <option>Civil Engineering</option>
-                                            <option>MBA</option>
-                                            <option>BBA</option>
-                                            <option>Physics</option>
-                                            <option>Mathematics</option>
-                                            <option>Chemistry</option>
-                                        </select>
-                                    </span>
-                </div>
-            </tr>
+        <span class="form-group">
+            <label for="">End Date</label>
+            <input ui-date ui-date-format class="form-group" ng-model="education.end_date" />
+        </span></section>
 
-			<tr>
-                <div class="col-sm-3">
-                    <label for="">Institute Name</label>
-                </div>
-                <div class="col-sm-9">
-                                    <span class="ui-select">
-                                        <select data-ng-model="education.institute">
-                                            <option>Comsats</option>
-                                            <option>Air University</option>
-                                            <option>NUST</option>
-                                            <option>NDU</option>
-                                            <option>Bahria University</option>
-                                            <option>IIUI</option>
-                                            <option>Iqra University</option>
-                                            <option>MAJU</option>
-                                        </select>
-                                    </span>
-                </div>
-            </tr>
-
-            <tr>
-	            <div class="col-sm-3" style="padding-top: 2%">
-	                  <label for="">Start Date</label>
-	            </div>
-                <div class="col-sm-3">
-                    <input ui-date ui-date-format class="form-control" ng-model="education.start_date" />
-                </div>
-            </tr>
-            
-            <tr>
-                <div class="col-sm-3" style="padding-top: 2%">
-                	<label for="">End Date</label>
-            	</div>
-                <div class="col-sm-3">
-                    <input ui-date ui-date-format class="form-control" ng-model="education.end_date" />
-                </div>
-            </tr>
-            
-            <tr>
-                <div class="col-sm-3" style="padding-top: 2%">
-                <label for="">Notes</label>
-            </div>
-                <div class="col-sm-9">
-                    <textarea class="form-control"
+        <section class="form-group">
+            <label for="">Notes</label>
+            <textarea class="form-control"
                               rows="3"
                               required
                               data-ng-model="education.notes"></textarea>
-            	</div>
-            </tr>
-         <table>
+        </section>
 
         <button class="btn btn-primary" type="submit">Save</button>
         <button class="btn btn-danger" ng-click="ok('delete')" ng-show="education._id">Delete</button>
         <button class="btn btn-success" ng-click="cancel()">Cancel</button>
 
    </form>
-</div>
+</article>

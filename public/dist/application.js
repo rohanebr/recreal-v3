@@ -10,7 +10,9 @@ var ApplicationConfiguration = function () {
         'ui.utils',
         'ui.date',
         'angularFileUpload',
-        'textAngular'
+        'textAngular',
+        'timer',
+        'angularCharts'
       ];
     // Add a new vertical module
     var registerModule = function (moduleName) {
@@ -59,6 +61,8 @@ ApplicationConfiguration.registerModule('employers');'use strict';
 // Use applicaion configuration module to register a new module
 ApplicationConfiguration.registerModule('empoyer-jobs');'use strict';
 // Use applicaion configuration module to register a new module
+ApplicationConfiguration.registerModule('exams');'use strict';
+// Use applicaion configuration module to register a new module
 ApplicationConfiguration.registerModule('jobs');'use strict';
 // Use applicaion configuration module to register a new module
 ApplicationConfiguration.registerModule('messages');'use strict';
@@ -66,6 +70,8 @@ ApplicationConfiguration.registerModule('messages');'use strict';
 ApplicationConfiguration.registerModule('short-list');'use strict';
 // Use applicaion configuration module to register a new module
 ApplicationConfiguration.registerModule('static-factories');'use strict';
+// Use applicaion configuration module to register a new module
+ApplicationConfiguration.registerModule('threads');'use strict';
 // Use Applicaion configuration module to register a new module
 ApplicationConfiguration.registerModule('users');'use strict';
 //Setting up route
@@ -160,12 +166,280 @@ angular.module('candidate-features').controller('CandidateCvController', [
     $scope.removeLanguage = function (index) {
       $scope.candidate.languages.splice(index, 1);
     };
+    // $scope.newProject={name:'',company:'',description:''};
+    // $scope.openProjectModal=function(project){
+    // var modalInstance;
+    // 	      modalInstance = $modal.open({
+    // 	        templateUrl: '/modules/candidate-features/views/cv-partials/project-partial.html',
+    // 	        controller: 'ProjectModalCtrl',
+    // 	        resolve: {
+    // 	          skill: function() {
+    // 	            return angular.copy(skill);
+    // 	          }
+    // 	        }
+    // 	      });
+    // };
+    // initialize new project for to pass to the modal when add clicked
+    $scope.newProject = {
+      name: '',
+      company: '',
+      description: ''
+    };
+    // cuntino to open new modal
+    $scope.openProjectModal = function (project) {
+      var modalInstance;
+      modalInstance = $modal.open({
+        templateUrl: '/modules/candidate-features/views/cv-partials/project-partial.html',
+        controller: 'ProjectModalCtrl',
+        resolve: {
+          project: function () {
+            return angular.copy(project);
+          }
+        }
+      });
+      //  when modal is closed with updated values result is return that contains the updated values
+      modalInstance.result.then(function (result) {
+        var project = result.project;
+        // if delete was clicked to close the modal
+        if (result.action === 'delete') {
+          angular.forEach($scope.candidate.projects, function (cProject) {
+            if (cProject._id === project._id) {
+              $scope.candidate.projects.splice($scope.candidate.projects.indexOf(cProject), 1);
+              $http.put('/candidates/deleteProject/' + $scope.candidate._id, cProject).success(function (response) {
+              }).error(function (response) {
+                $scope.error = response.message;
+              });
+            }
+          });  // else if save was clicked to close the modal : produces two cases: new or update	
+        } else {
+          project.name = project.name.trim();
+          // position has an id means its updating an existing position i.e edit
+          if (project._id !== undefined) {
+            angular.forEach($scope.candidate.projects, function (cProject) {
+              if (cProject._id === project._id) {
+                cProject.name = project.name;
+                cProject.company = project.company;
+                cProject.description = project.description;
+                cProject.start_date = project.start_date;
+                cProject.end_date = project.end_date;
+                $http.put('/candidates/updateProject/' + $scope.candidate._id, cProject).success(function (response) {
+                }).error(function (response) {
+                  $scope.error = response.message;
+                });
+              }
+            });
+          }  // else project does not have an id means its creating a new project i.e add
+          else {
+            $scope.candidate.projects.push(project);
+            $http.put('/candidates/addProject/' + $scope.candidate._id, project).success(function (response) {
+              // reinitialize the attributes of newProject : in case the user wants to add more projectss
+              $scope.newProject = {
+                name: '',
+                company: '',
+                description: ''
+              };
+            }).error(function (response) {
+              $scope.error = response.message;
+            });
+          }
+        }
+      }, function () {
+      });
+    };
+    // initialize new certificate for to pass to the modal when add clicked
+    $scope.newCertificate = { name: '' };
+    // cuntino to open new modal
+    $scope.openCertificateModal = function (certificate) {
+      var modalInstance;
+      modalInstance = $modal.open({
+        templateUrl: '/modules/candidate-features/views/cv-partials/certificates-partial.html',
+        controller: 'CertificateModalCtrl',
+        resolve: {
+          certificate: function () {
+            return angular.copy(certificate);
+          }
+        }
+      });
+      //  when modal is closed with updated values result is return that contains the updated values
+      modalInstance.result.then(function (result) {
+        var certificate = result.certificate;
+        // if delete was clicked to close the modal
+        if (result.action === 'delete') {
+          angular.forEach($scope.candidate.certificates, function (cCertificate) {
+            if (cCertificate._id === certificate._id) {
+              $scope.candidate.certificates.splice($scope.candidate.certificates.indexOf(cCertificate), 1);
+              $http.put('/candidates/deleteCertificate/' + $scope.candidate._id, cCertificate).success(function (response) {
+              }).error(function (response) {
+                $scope.error = response.message;
+              });
+            }
+          });  // else if save was clicked to close the modal : produces two cases: new or update	
+        } else {
+          certificate.name = certificate.name.trim();
+          // Certificate has an id means its updating an existing certificate i.e edit
+          if (certificate._id !== undefined) {
+            angular.forEach($scope.candidate.certificates, function (cCertificate) {
+              if (cCertificate._id === certificate._id) {
+                cCertificate.name = certificate.name;
+                $http.put('/candidates/updateCertificate/' + $scope.candidate._id, cCertificate).success(function (response) {
+                }).error(function (response) {
+                  $scope.error = response.message;
+                });
+              }
+            });
+          }  // else certificate does not have an id means its creating a new certificate i.e add
+          else {
+            $scope.candidate.certificates.push(certificate);
+            $http.put('/candidates/addCertificate/' + $scope.candidate._id, certificate).success(function (response) {
+              // reinitialize the attributes of newCertificate : in case the user wants to add more certificates
+              $scope.newCertificate = { name: '' };
+            }).error(function (response) {
+              $scope.error = response.message;
+            });
+          }
+        }
+      }, function () {
+      });
+    };
+    // initialize new language for to pass to the modal when add clicked
+    $scope.newLanguage = {
+      name: '',
+      proficiency: ''
+    };
+    // cuntino to open new modal
+    $scope.openLanguageModal = function (language) {
+      var modalInstance;
+      modalInstance = $modal.open({
+        templateUrl: '/modules/candidate-features/views/cv-partials/language-partial.html',
+        controller: 'LanguageModalCtrl',
+        resolve: {
+          language: function () {
+            return angular.copy(language);
+          }
+        }
+      });
+      //  when modal is closed with updated values result is return that contains the updated values
+      modalInstance.result.then(function (result) {
+        var language = result.language;
+        // if delete was clicked to close the modal
+        if (result.action === 'delete') {
+          angular.forEach($scope.candidate.languages, function (cLanguages) {
+            if (cLanguages._id === language._id) {
+              $scope.candidate.languages.splice($scope.candidate.languages.indexOf(cLanguages), 1);
+              $http.put('/candidates/deleteLanguage/' + $scope.candidate._id, cLanguages).success(function (response) {
+              }).error(function (response) {
+                $scope.error = response.message;
+              });
+            }
+          });  // else if save was clicked to close the modal : produces two cases: new or update	
+        } else {
+          language.name = language.name.trim();
+          // Language has an id means its updating an existing position i.e edit
+          if (language._id !== undefined) {
+            angular.forEach($scope.candidate.languages, function (cLanguages) {
+              if (cLanguages._id === language._id) {
+                cLanguages.name = language.name;
+                cLanguages.proficiency = language.proficiency;
+                $http.put('/candidates/updateLanguage/' + $scope.candidate._id, cLanguages).success(function (response) {
+                }).error(function (response) {
+                  $scope.error = response.message;
+                });
+              }
+            });
+          }  // else language does not have an id means its creating a new language i.e add
+          else {
+            $scope.candidate.languages.push(language);
+            $http.put('/candidates/addLanguage/' + $scope.candidate._id, language).success(function (response) {
+              // reinitialize the attributes of newLanguage : in case the user wants to add more languages
+              $scope.newLanguage = {
+                name: '',
+                proficiency: ''
+              };
+            }).error(function (response) {
+              $scope.error = response.message;
+            });
+          }
+        }
+      }, function () {
+      });
+    };
+    // initialize new education for to pass to the modal when add clicked
+    $scope.newEducation = {
+      degree: '',
+      study_feild: '',
+      institute: '',
+      notes: ''
+    };
+    // cuntino to open new modal
+    $scope.openEducationModal = function (education) {
+      var modalInstance;
+      modalInstance = $modal.open({
+        templateUrl: '/modules/candidate-features/views/cv-partials/education-partial.html',
+        controller: 'EducationModalCtrl',
+        resolve: {
+          education: function () {
+            return angular.copy(education);
+          }
+        }
+      });
+      //  when modal is closed with updated values result is return that contains the updated values
+      modalInstance.result.then(function (result) {
+        var education = result.education;
+        // if delete was clicked to close the modal
+        if (result.action === 'delete') {
+          angular.forEach($scope.candidate.educations, function (cEducation) {
+            if (cEducation._id === education._id) {
+              $scope.candidate.educations.splice($scope.candidate.educations.indexOf(cEducation), 1);
+              $http.put('/candidates/deleteEducation/' + $scope.candidate._id, cEducation).success(function (response) {
+              }).error(function (response) {
+                $scope.error = response.message;
+              });
+            }
+          });  // else if save was clicked to close the modal : produces two cases: new or update	
+        } else {
+          education.degree = education.degree.trim();
+          // Education has an id means its updating an existing position i.e edit
+          if (education._id !== undefined) {
+            angular.forEach($scope.candidate.educations, function (cEducation) {
+              if (cEducation._id === education._id) {
+                cEducation.degree = education.degree;
+                cEducation.study_feild = education.study_feild;
+                cEducation.institute = education.institute;
+                cEducation.notes = education.notes;
+                cEducation.start_date = education.start_date;
+                cEducation.end_date = education.end_date;
+                $http.put('/candidates/updateEducation/' + $scope.candidate._id, cEducation).success(function (response) {
+                }).error(function (response) {
+                  $scope.error = response.message;
+                });
+              }
+            });
+          }  // else education does not have an id means its creating a new education i.e add
+          else {
+            $scope.candidate.educations.push(education);
+            $http.put('/candidates/addEducation/' + $scope.candidate._id, education).success(function (response) {
+              // reinitialize the attributes of newEducation : in case the user wants to add more educations
+              $scope.newEducation = {
+                degree: '',
+                study_feild: '',
+                institute: '',
+                notes: ''
+              };
+            }).error(function (response) {
+              $scope.error = response.message;
+            });
+          }
+        }
+      }, function () {
+      });
+    };
     $scope.newSkill = {
       title: '',
       experience: 1,
       level: 'Beginner'
     };
     $scope.openSkillModal = function (skill) {
+      console.log('OPENSKILLMODAL RUNNING');
       var modalInstance;
       modalInstance = $modal.open({
         templateUrl: '/modules/candidate-features/views/cv-partials/skill-partial.html',
@@ -181,7 +455,7 @@ angular.module('candidate-features').controller('CandidateCvController', [
         if (result.action === 'delete') {
           angular.forEach($scope.candidate.skills, function (cSkill) {
             if (cSkill._id === skill._id) {
-              $http.post('/candidates/deleteSkill', cSkill).success(function (response) {
+              $http.put('/candidates/deleteSkill/' + $scope.candidate._id, cSkill).success(function (response) {
                 //If successful we assign the response to the global user model
                 // $scope.authentication.user = response;
                 alert(response);  //And redirect to the index page
@@ -196,16 +470,29 @@ angular.module('candidate-features').controller('CandidateCvController', [
           skill.title = skill.title.trim();
           if (skill._id !== undefined) {
             angular.forEach($scope.candidate.skills, function (cSkill) {
-              if (cSkill._id === skill._id)
+              if (cSkill._id === skill._id) {
                 cSkill.title = skill.title;
+                cSkill.level = skill.level;
+                cSkill.experience = skill.experience;
+                cSkill.last_used = skill.last_used;
+                $http.put('/candidates/updateSkill/' + $scope.candidate._id, cSkill).success(function (response) {
+                }).error(function (response) {
+                  $scope.error = response.message;
+                });
+              }
             });
           } else {
+            console.log('addskill clicked');
             $scope.candidate.skills.push(skill);
-            $scope.newSkill = {
-              title: '',
-              experience: 1,
-              level: 'Beginner'
-            };
+            $http.put('/candidates/addSkill/' + $scope.candidate._id, skill).success(function (response) {
+              $scope.newSkill = {
+                title: '',
+                experience: 1,
+                level: 'Beginner'
+              };  //alert(response);
+            }).error(function (response) {
+              $scope.error = response.message;
+            });
           }
         }
       }, function () {
@@ -222,6 +509,84 @@ angular.module('candidate-features').controller('CandidateCvController', [
       }, function () {
       });
     };
+    // initialize new exp for to pass to the modal when add clicked
+    $scope.newExperience = {
+      company_name: '',
+      title: '',
+      summary: '',
+      company_location: '',
+      company_industry: '',
+      is_current: false
+    };
+    // cuntino to open new modal
+    $scope.openExperienceModal = function (position) {
+      var modalInstance;
+      modalInstance = $modal.open({
+        templateUrl: '/modules/candidate-features/views/cv-partials/experience-partial.html',
+        controller: 'ExperienceModalCtrl',
+        resolve: {
+          position: function () {
+            return angular.copy(position);
+          }
+        }
+      });
+      //  when modal is closed with updated values result is return that contains the updated values
+      modalInstance.result.then(function (result) {
+        var position = result.position;
+        // if delete was clicked to close the modal
+        if (result.action === 'delete') {
+          angular.forEach($scope.candidate.positions, function (cPosition) {
+            if (cPosition._id === position._id) {
+              $scope.candidate.positions.splice($scope.candidate.positions.indexOf(cPosition), 1);
+              $http.put('/candidates/deleteExperience/' + $scope.candidate._id, cPosition).success(function (response) {
+              }).error(function (response) {
+                $scope.error = response.message;
+              });
+            }
+          });  // else if save was clicked to close the modal : produces two cases: new or update
+        } else {
+          position.company_name = position.company_name.trim();
+          // position has an id means its updating an existing position i.e edit
+          if (position._id !== undefined) {
+            angular.forEach($scope.candidate.positions, function (cPosition) {
+              if (cPosition._id === position._id) {
+                cPosition.company_name = position.company_name;
+                cPosition.company_industry = position.company_industry;
+                cPosition.company_location = position.company_location;
+                cPosition.start_date = position.start_date;
+                cPosition.end_date = position.end_date;
+                cPosition.is_current = position.is_current;
+                cPosition.summary = position.summary;
+                cPosition.title = position.title;
+                $http.put('/candidates/updateExperience/' + $scope.candidate._id, cPosition).success(function (response) {
+                }).error(function (response) {
+                  $scope.error = response.message;
+                });
+              }
+            });
+          }  // else position does not have an id means its creating a new position i.e add
+          else {
+            $scope.candidate.positions.push(position);
+            $http.put('/candidates/addExperience/' + $scope.candidate._id, position).success(function (response) {
+              // reinitialize the attributes of newExperience : in case the user wants to add more skills
+              $scope.newExperience = {
+                company_name: '',
+                title: '',
+                summary: '',
+                company_location: '',
+                company_industry: '',
+                start_date: '0-0-0',
+                end_date: '0-0-0',
+                is_current: false
+              };
+            }).error(function (response) {
+              $scope.error = response.message;
+            });
+          }
+        }
+      }, function () {
+      });
+    };
   }
 ]).controller('SkillModalCtrl', [
   '$scope',
@@ -233,6 +598,86 @@ angular.module('candidate-features').controller('CandidateCvController', [
       $modalInstance.close({
         action: action,
         skill: $scope.skill
+      });
+    };
+    $scope.cancel = function () {
+      $modalInstance.dismiss('cancel');
+    };
+  }
+]).controller('LanguageModalCtrl', [
+  '$scope',
+  '$modalInstance',
+  'language',
+  function ($scope, $modalInstance, language) {
+    $scope.language = language;
+    $scope.ok = function (action) {
+      $modalInstance.close({
+        action: action,
+        language: $scope.language
+      });
+    };
+    $scope.cancel = function () {
+      $modalInstance.dismiss('cancel');
+    };
+  }
+]).controller('CertificateModalCtrl', [
+  '$scope',
+  '$modalInstance',
+  'certificate',
+  function ($scope, $modalInstance, certificate) {
+    $scope.certificate = certificate;
+    $scope.ok = function (action) {
+      $modalInstance.close({
+        action: action,
+        certificate: $scope.certificate
+      });
+    };
+    $scope.cancel = function () {
+      $modalInstance.dismiss('cancel');
+    };
+  }
+]).controller('EducationModalCtrl', [
+  '$scope',
+  '$modalInstance',
+  'education',
+  function ($scope, $modalInstance, education) {
+    $scope.education = education;
+    $scope.ok = function (action) {
+      $modalInstance.close({
+        action: action,
+        education: $scope.education
+      });
+    };
+    $scope.cancel = function () {
+      $modalInstance.dismiss('cancel');
+    };
+  }
+]).controller('ProjectModalCtrl', [
+  '$scope',
+  '$modalInstance',
+  'project',
+  function ($scope, $modalInstance, project) {
+    $scope.project = project;
+    $scope.ok = function (action) {
+      $modalInstance.close({
+        action: action,
+        project: $scope.project
+      });
+    };
+    $scope.cancel = function () {
+      $modalInstance.dismiss('cancel');
+    };
+  }
+]).controller('ExperienceModalCtrl', [
+  '$scope',
+  '$modalInstance',
+  'position',
+  function ($scope, $modalInstance, position) {
+    $scope.position = position;
+    $scope.ok = function (action) {
+      $modalInstance.close({
+        action: action,
+        position: $scope.position
       });
     };
     $scope.cancel = function () {
@@ -298,14 +743,15 @@ angular.module('candidate-features').controller('CandidateHomeController', [
     // If user is not signed in then redirect back home
     if (!$scope.user)
       $location.path('/signin');
+    console.log($scope.user.candidate);
     $scope.candidate = Candidates.get({ candidateId: $scope.user.candidate });
     $scope.jobs = Jobs.query();
     $scope.hasApplied = function (job) {
-      if ($scope.candidate.jobs.indexOf(job._id) > -1) {
-        return true;
-      } else {
-        return false;
+      for (var d = 0, x = $scope.candidate.jobs.length; d < x; d++) {
+        if ($scope.candidate.jobs[d] === job._id)
+          return true;
       }
+      return false;
     };
     // Apply for a Job
     $scope.apply = function (job) {
@@ -603,7 +1049,10 @@ angular.module('core').config([
     // Redirect to home view when route not found
     $urlRouterProvider.otherwise('/');
     // Home state routing
-    $stateProvider.state('home', {
+    $stateProvider.state('transition', {
+      url: '/transition',
+      templateUrl: 'modules/core/views/transition.client.view.html'
+    }).state('home', {
       url: '/',
       templateUrl: 'modules/core/views/landing-page/index.html'
     }).state('employerDashboard', {
@@ -617,24 +1066,63 @@ angular.module('core').config([
 ]);'use strict';
 angular.module('core').controller('HeaderController', [
   '$scope',
-  'Socket',
   'Authentication',
   'Menus',
-  function ($scope, Socket, Authentication, Menus) {
+  'Socket',
+  '$http',
+  function ($scope, Authentication, Menus, Socket, $http) {
     $scope.authentication = Authentication;
     $scope.isCollapsed = false;
     $scope.menu = Menus.getMenu('topbar');
-    Socket.on('message_sent', function (data) {
-      if (data.message.recieverId === $scope.authentication.user._id)
-        var thread = {
-            senderName: 'Ch. Rehmat Ali',
-            subject: data.message.subject,
-            created: Date.now(),
-            messages: [{ messageBody: data.message.messageBody }]
-          };
-      $scope.authentication.user.threads.push(thread);
-      $scope.$apply();  // alert(data.message.subject + ' --------------> ' + data.message.messageBody);
-    });
+    $scope.threads = [];
+    var thread = [];
+    //add code to refresh the header if thread is coming through the socket
+    if ($scope.authentication.user) {
+      Socket.on('watched_thread_to', function (event, args) {
+        $scope.threads = [];
+        console.log('wactched_thread_to works');
+        $http.get('/users/getMessages/' + $scope.authentication.user._id).success(function (res) {
+          if (res.length > 1) {
+            for (var x = 1; x < res.length; x++)
+              $scope.threads.push(res[x]);
+          }
+        }).error(function (data, status, headers, confige) {
+          console.log('Shouldnt have happened');
+        });
+      });
+      $http.get('/users/getMessages/' + $scope.authentication.user._id).success(function (res) {
+        console.log(res + 'weird');
+        if (res.length > 1) {
+          for (var x = 1; x < res.length; x++)
+            $scope.threads.push(res[x]);
+        }
+      }).error(function (data, status, headers, confige) {
+        console.log('Shouldnt have happened');
+      });
+      Socket.on('message_sent_to', function (data) {
+        if (data.message.receiver === $scope.authentication.user._id) {
+          var alreadyexists = false;
+          console.log(data);
+          var thread = {
+              id: data.message.idc,
+              senderName: data.message.sender.displayName,
+              created: data.message.messages.created,
+              count: 1
+            };
+          for (var d = 0, h = $scope.threads.length; d < h; d++) {
+            if ($scope.threads[d].id == thread.id) {
+              $scope.threads[d].count++;
+              alreadyexists = true;
+              break;
+            }
+          }
+          if (!alreadyexists) {
+            $scope.threads.push(thread);
+            $scope.$apply();
+          }
+        }  // alert(data.message.subject + ' --------------> ' + data.message.messageBody);
+      });
+    }
     $scope.toggleCollapsibleMenu = function () {
       $scope.isCollapsed = !$scope.isCollapsed;
     };
@@ -657,31 +1145,164 @@ angular.module('core').controller('HomeController', [
     // This provides Authentication context.
     $scope.authentication = Authentication;
     var user = $scope.authentication.user;
-    Socket.emit('message', { message: 'message' });
-    Socket.on('entrance', function (data) {
-      console.log(data);
-      Socket.emit('my other event', { my: 'data' });
-    });
-    Socket.on('exit', function (data) {
-      console.log(data);
-      Socket.emit('my other event', { my: 'data' });
-    });
-    Socket.on('applied_on_job', function (data) {
-      console.log(data.candidate.displayName + ' applied on job : ' + data.job.title);
-      if (user.userType === 'employer')
-        alert(data.candidate.displayName + ' applied on job : ' + data.job.title);
-    });
+    //starting angular-charts
+    $scope.data1 = {
+      series: [
+        'Sales',
+        'Income',
+        'Expense',
+        'Laptops',
+        'Keyboards'
+      ],
+      data: [
+        {
+          x: 'Sales',
+          y: [
+            100,
+            500,
+            0
+          ],
+          tooltip: 'this is tooltip'
+        },
+        {
+          x: 'Not Sales',
+          y: [
+            300,
+            100,
+            100
+          ]
+        },
+        {
+          x: 'Tax',
+          y: [351]
+        },
+        {
+          x: 'Not Tax',
+          y: [
+            54,
+            0,
+            879
+          ]
+        }
+      ]
+    };
+    $scope.data2 = {
+      series: [
+        '500 Keyboards',
+        '105 Laptops',
+        '100 TVs'
+      ],
+      data: [
+        {
+          x: 'Sales',
+          y: [
+            100,
+            500,
+            0
+          ],
+          tooltip: 'this is tooltip'
+        },
+        {
+          x: 'Income',
+          y: [
+            300,
+            100,
+            100
+          ]
+        },
+        {
+          x: 'Expense',
+          y: [
+            351,
+            50,
+            25
+          ]
+        }
+      ]
+    };
+    $scope.chartType = 'bar';
+    $scope.config1 = {
+      labels: false,
+      title: 'Products',
+      legend: {
+        display: true,
+        position: 'left'
+      },
+      innerRadius: 0
+    };
+    $scope.config2 = {
+      labels: false,
+      title: 'HTML-enabled legend',
+      legend: {
+        display: true,
+        htmlEnabled: true,
+        position: 'right'
+      },
+      lineLegend: 'traditional'
+    };
+    //ending angular-charts
     if (!user)
       $state.go('home');
     else if (user.userType === 'employer') {
+      console.log('EMPLOYER');
+      Socket.on('applied_on_job', function (data) {
+        console.log(data.candidate.displayName + ' applied on job : ' + data.job.title);
+        if (user.userType === 'employer')
+          alert(data.candidate.displayName + ' applied on job : ' + data.job.title);
+      });
+      Socket.emit('user_data', user);
       $rootScope.employer = Employers.get({ employerId: $scope.authentication.user.employer }, function (employer) {
         $rootScope.company = Companies.get({ companyId: employer.company });
       });
       $state.go('employerDashboard');
     } else if (user.userType === 'candidate') {
-      $scope.candidate = Candidates.get({ candidate: $scope.authentication.user.candidate });
+      Socket.emit('user_data', user);
+      $rootScope.candidate = Candidates.get({ candidate: $scope.authentication.user.candidate });
       $state.go('candidate-home');
+    } else if (user.userType === 'transition') {
+      $state.go('transition');
     }
+  }
+]);'use strict';
+angular.module('core').controller('TransitionController', [
+  '$scope',
+  'Authentication',
+  '$http',
+  '$state',
+  '$rootScope',
+  'Employers',
+  'Companies',
+  'Candidates',
+  'Socket',
+  function ($scope, Authentication, $http, $state, $rootScope, Employers, Companies, Candidates, Socket) {
+    $scope.authentication = Authentication;
+    //add code for nasty people who can do localhost:3000/#!/transition 
+    $scope.becomeEmployer = function () {
+      if ($scope.authentication.user.userType == 'transition') {
+        $http.put('/users/setUserType/' + $scope.authentication.user._id, { userType: 'employer' }).success(function (user) {
+          Socket.on('applied_on_job', function (data) {
+            console.log(data.candidate.displayName + ' applied on job : ' + data.job.title);
+            if (user.userType === 'employer')
+              alert(data.candidate.displayName + ' applied on job : ' + data.job.title);
+          });
+          Socket.emit('user_data', user);
+          $rootScope.employer = Employers.get({ employerId: $scope.authentication.user.employer }, function (employer) {
+            $rootScope.company = Companies.get({ companyId: employer.company });
+          });
+          $state.go('employerDashboard');
+        });
+      }
+    };
+    $scope.becomeEmployee = function () {
+      if ($scope.authentication.user.userType == 'transition') {
+        $http.put('/users/setUserType/' + $scope.authentication.user._id, { userType: 'candidate' }).success(function (user) {
+          console.log(user);
+        });
+        Socket.emit('user_data', user);
+        $rootScope.candidate = Candidates.get({ candidate: $scope.authentication.user.candidate });
+        $state.go('candidate-home');
+      }
+    };
   }
 ]);'use strict';
 angular.module('core').directive('collapseNav', [function () {
@@ -1026,10 +1647,32 @@ angular.module('core').service('Menus', [function () {
     //Adding the topbar menu
     this.addMenu('topbar');
   }]);'use strict';
-angular.module('core').factory('Socket', [function () {
-    var socket = io.connect('http://muddaser-pc:3000');
-    return socket;
-  }]);'use strict';
+angular.module('core').factory('Socket', [
+  '$rootScope',
+  function ($rootScope) {
+    var socket = io.connect('http://localhost:3000');
+    return {
+      on: function (eventName, callback) {
+        socket.on(eventName, function () {
+          var args = arguments;
+          $rootScope.$apply(function () {
+            callback.apply(socket, args);
+          });
+        });
+      },
+      emit: function (eventName, data, callback) {
+        socket.emit(eventName, data, function () {
+          var args = arguments;
+          $rootScope.$apply(function () {
+            if (callback) {
+              callback.apply(socket, args);
+            }
+          });
+        });
+      }
+    };
+  }
+]);'use strict';
 //Setting up route
 angular.module('employer-company').config([
   '$stateProvider',
@@ -1542,6 +2185,198 @@ angular.module('empoyer-jobs').controller('PostJobController', [
     };
   }
 ]);'use strict';
+//Setting up route
+angular.module('exams').config([
+  '$stateProvider',
+  function ($stateProvider) {
+    // Exams state routing
+    $stateProvider.state('exam-result', {
+      url: '/exam-result/:examTakenId',
+      templateUrl: 'modules/exams/views/exam-result.client.view.html'
+    }).state('takeExam', {
+      url: '/takeExam/:examId',
+      templateUrl: 'modules/exams/views/take-exam.client.view.html'
+    }).state('listExams', {
+      url: '/exams',
+      templateUrl: 'modules/exams/views/list-exams.client.view.html'
+    }).state('createExam', {
+      url: '/exams/create',
+      templateUrl: 'modules/exams/views/create-exam.client.view.html'
+    }).state('viewExam', {
+      url: '/exams/:examId',
+      templateUrl: 'modules/exams/views/view-exam.client.view.html'
+    }).state('editExam', {
+      url: '/exams/:examId/edit',
+      templateUrl: 'modules/exams/views/edit-exam.client.view.html'
+    });
+  }
+]);'use strict';
+angular.module('exams').controller('ExamResultController', [
+  '$scope',
+  '$stateParams',
+  '$http',
+  function ($scope, $stateParams, $http) {
+    // Controller Logic
+    // ...
+    // Find existing Exam
+    $scope.findOne = function () {
+      $http.get('/examResult/' + $stateParams.examTakenId).success(function (data) {
+        $scope.examTaken = data;
+      });
+    };
+  }
+]);'use strict';
+// Exams controller
+angular.module('exams').controller('ExamsController', [
+  '$scope',
+  '$stateParams',
+  '$location',
+  'Authentication',
+  'Exams',
+  function ($scope, $stateParams, $location, Authentication, Exams) {
+    $scope.authentication = Authentication;
+    // Create new Exam
+    $scope.create = function () {
+      // Create new Exam object
+      var exam = new Exams({ name: this.name });
+      // Redirect after save
+      exam.$save(function (response) {
+        $location.path('exams/' + response._id);
+      }, function (errorResponse) {
+        $scope.error = errorResponse.data.message;
+      });
+      // Clear form fields
+      this.name = '';
+    };
+    // Remove existing Exam
+    $scope.remove = function (exam) {
+      if (exam) {
+        exam.$remove();
+        for (var i in $scope.exams) {
+          if ($scope.exams[i] === exam) {
+            $scope.exams.splice(i, 1);
+          }
+        }
+      } else {
+        $scope.exam.$remove(function () {
+          $location.path('exams');
+        });
+      }
+    };
+    // Update existing Exam
+    $scope.update = function () {
+      var exam = $scope.exam;
+      exam.$update(function () {
+        $location.path('exams/' + exam._id);
+      }, function (errorResponse) {
+        $scope.error = errorResponse.data.message;
+      });
+    };
+    // Find a list of Exams
+    $scope.find = function () {
+      $scope.exams = Exams.query();
+    };
+    // Find existing Exam
+    $scope.findOne = function () {
+      $scope.exam = Exams.get({ examId: $stateParams.examId });
+    };
+  }
+]);'use strict';
+angular.module('exams').controller('TakeExamController', [
+  '$scope',
+  '$stateParams',
+  'Exams',
+  '$http',
+  '$location',
+  '$rootScope',
+  function ($scope, $stateParams, Exams, $http, $location, $rootScope) {
+    // Controller Logic
+    // 
+    // Find ...existing Exam
+    $rootScope.preventNavigation = true;
+    $scope.totalScore = 0;
+    $scope.currentScore = 0;
+    $scope.findOne = function () {
+      Exams.get({ examId: $stateParams.examId }).$promise.then(function (data) {
+        $scope.exam = data;
+        $scope.currentQuestion = data.questions[0];
+        $scope.questionIndex = 0;
+        $scope.timeLimit = $scope.exam.timeLimit * 60;
+        $scope.$broadcast('timer-add-cd-seconds', $scope.timeLimit - 3);
+        angular.forEach($scope.exam.questions, function (question) {
+          angular.forEach(question.answers, function (answer) {
+            $scope.totalScore += answer.weight;
+          });
+        });
+      }, function (error) {
+      });
+    };
+    $scope.nextQuestion = function () {
+      $scope.questionIndex++;
+      $scope.currentQuestion = $scope.exam.questions[$scope.questionIndex];
+    };
+    $scope.prevQuestion = function () {
+      $scope.questionIndex--;
+      $scope.currentQuestion = $scope.exam.questions[$scope.questionIndex];
+    };
+    $scope.submitExam = function () {
+      $scope.currentScore = 0;
+      angular.forEach($scope.exam.questions, function (question) {
+        angular.forEach(question.answers, function (answer) {
+          if (answer.body === question.selectedAnswer)
+            $scope.currentScore += answer.weight;
+        });
+      });
+      $scope.percentage = $scope.currentScore / $scope.totalScore * 100;
+      $scope.isPass = $scope.percentage > $scope.exam.passScore ? true : false;
+      var examsTaken = {
+          score: $scope.percentage,
+          exam: $scope.exam._id,
+          isPass: $scope.isPass
+        };
+      $http.put('/exams/saveExam/' + $scope.exam._id, examsTaken).success(function (response) {
+        $location.path('exam-result/' + response._id);
+      }).error(function (response) {
+        $scope.error = response.message;
+      });
+    };
+    $scope.$on('timer-stopped', function (event, data) {
+      console.log('Timer Stopped - data = ', data);
+      $scope.submitExam();
+    });
+    $scope.$on('$destroy', function () {
+      console.log('DESTRUCTION');
+      window.onbeforeunload = undefined;
+    });
+    window.onbeforeunload = function (event) {
+      //Check if there was any change, if no changes, then simply let the user leave
+      var message = 'You are about to leave this will cause the test to submit';
+      if (typeof event == 'undefined') {
+        event = window.event;
+      }
+      if (event) {
+        event.returnValue = message;
+      }
+      return message;
+    };
+    //This works only when user changes routes, not when user refreshes the browsers, goes to previous page or try to close the browser
+    $scope.$on('$locationChangeStart', function (event) {
+      if (!$scope.form.$dirty)
+        return;
+      var answer = confirm('If you leave this page you are going to lose all unsaved changes, are you sure you want to leave?');
+      if (!answer) {
+        event.preventDefault();
+      }
+    });
+  }
+]);'use strict';
+//Exams service used to communicate Exams REST endpoints
+angular.module('exams').factory('Exams', [
+  '$resource',
+  function ($resource) {
+    return $resource('exams/:examId', { examId: '@_id' }, { update: { method: 'PUT' } });
+  }
+]);'use strict';
 // Configuring the Articles module
 angular.module('jobs').run([
   'Menus',
@@ -1680,6 +2515,69 @@ angular.module('messages').controller('ListUserMessagesController', [
       $location.path('/signin');
   }
 ]);'use strict';
+// Messages controller
+angular.module('messages').controller('MessagesController', [
+  '$scope',
+  '$stateParams',
+  '$location',
+  'Authentication',
+  'Messages',
+  function ($scope, $stateParams, $location, Authentication, Messages) {
+    $scope.authentication = Authentication;
+    // Create new Message
+    $scope.create = function () {
+      // Create new Message object
+      var message = new Messages({ name: this.name });
+      // Redirect after save
+      message.$save(function (response) {
+        $location.path('messages/' + response._id);
+      }, function (errorResponse) {
+        $scope.error = errorResponse.data.message;
+      });
+      // Clear form fields
+      this.name = '';
+    };
+    // Remove existing Message
+    $scope.remove = function (message) {
+      if (message) {
+        message.$remove();
+        for (var i in $scope.messages) {
+          if ($scope.messages[i] === message) {
+            $scope.messages.splice(i, 1);
+          }
+        }
+      } else {
+        $scope.message.$remove(function () {
+          $location.path('messages');
+        });
+      }
+    };
+    // Update existing Message
+    $scope.update = function () {
+      var message = $scope.message;
+      message.$update(function () {
+        $location.path('messages/' + message._id);
+      }, function (errorResponse) {
+        $scope.error = errorResponse.data.message;
+      });
+    };
+    // Find a list of Messages
+    $scope.find = function () {
+      $scope.messages = Messages.query();
+    };
+    // Find existing Message
+    $scope.findOne = function () {
+      $scope.message = Messages.get({ messageId: $stateParams.messageId });
+    };
+  }
+]);'use strict';
+//Messages service used to communicate Messages REST endpoints
+angular.module('messages').factory('Messages', [
+  '$resource',
+  function ($resource) {
+    return $resource('messages/:messageId', { messageId: '@_id' }, { update: { method: 'PUT' } });
+  }
+]);'use strict';
 //Setting up route
 angular.module('short-list').config([
   '$stateProvider',
@@ -1697,8 +2595,9 @@ angular.module('short-list').controller('messageController', [
   '$modalInstance',
   '$http',
   'reciever',
+  'Threads',
   'Authentication',
-  function ($scope, Socket, $modalInstance, $http, reciever, Authentication) {
+  function ($scope, Socket, $modalInstance, $http, reciever, Threads, Authentication) {
     $scope.authentication = Authentication;
     $scope.user = Authentication.user;
     $scope.ok = function (action) {
@@ -1709,18 +2608,49 @@ angular.module('short-list').controller('messageController', [
     };
     $scope.recieverId = reciever._id;
     $scope.reciever = reciever;
+    // 	// Remove from Short List
+    // $scope.sendMessage = function(message) {
+    // 	var attribute = {
+    // 		recieverId: $scope.reciever.user,
+    // 		sender: $scope.user,
+    // 		subject: message.subject,
+    // 		messageBody: message.messageBody
+    // 	};
+    // 	$http.put('/users/sendMessage/' + $scope.user._id , attribute).success(function(response) {
+    // 		Socket.emit('message_sent_from', {message: attribute});
+    // 		$modalInstance.dismiss('cancel');
+    // 		// $location.path('jobs/' + job._id);
+    // 	}).error(function(response) {
+    // 		$scope.error = response.message;
+    // 	});
+    // };
     // Remove from Short List
     $scope.sendMessage = function (message) {
-      var attribute = {
-          recieverId: $scope.reciever.user,
+      // Create new Thread object
+      var thread = new Threads({
+          sender: $scope.user._id,
+          receiver: $scope.reciever.user,
           subject: message.subject,
-          messageBody: message.messageBody
-        };
-      $http.put('/users/sendMessage/' + $scope.user._id, attribute).success(function (response) {
-        Socket.emit('message_sent', { message: attribute });
-        $modalInstance.dismiss('cancel');  // $location.path('jobs/' + job._id);
-      }).error(function (response) {
-        $scope.error = response.message;
+          readBySender: true,
+          messages: [{
+              messageBody: message.messageBody,
+              author: $scope.user._id,
+              created: Date.now()
+            }]
+        });
+      thread.$save(function (response) {
+        console.log(response.receiver);
+        var thread1 = {
+            idc: response._id,
+            receiver: response.receiver,
+            sender: { displayName: $scope.user.displayName },
+            messages: { created: Date.now() }
+          };
+        console.log(Date.now());
+        Socket.emit('message_sent_from', { message: thread1 });
+        $modalInstance.dismiss('cancel');
+      }, function (errorResponse) {
+        $scope.error = errorResponse.data.message;
       });
     };
   }
@@ -3809,6 +4739,199 @@ angular.module('static-factories').factory('Studyfields', [function () {
     };
     return factory;
   }]);'use strict';
+//Setting up route
+angular.module('threads').config([
+  '$stateProvider',
+  function ($stateProvider) {
+    // Threads state routing
+    $stateProvider.state('listThreads', {
+      url: '/threads',
+      templateUrl: 'modules/threads/views/list-threads.client.view.html'
+    }).state('createThread', {
+      url: '/threads/create',
+      templateUrl: 'modules/threads/views/create-thread.client.view.html'
+    }).state('viewThread', {
+      url: '/threads/:threadId',
+      templateUrl: 'modules/threads/views/view-thread.client.view.html'
+    }).state('editThread', {
+      url: '/threads/:threadId/edit',
+      templateUrl: 'modules/threads/views/edit-thread.client.view.html'
+    });
+  }
+]);'use strict';
+// Threads controller
+angular.module('threads').controller('ThreadsController', [
+  '$scope',
+  '$stateParams',
+  '$location',
+  'Authentication',
+  'Threads',
+  '$http',
+  'Socket',
+  function ($scope, $stateParams, $location, Authentication, Threads, $http, Socket) {
+    $scope.authentication = Authentication;
+    $scope.color = 'color:green';
+    $scope.color2 = 'color:red';
+    Socket.on('i_am_here', function (data) {
+      for (var x = 0, b = $scope.thread.messages.length; x < b; x++) {
+        if ($scope.thread.messages[x].author._id === data.userId)
+          $scope.thread.messages[x].author.isOnline = data.isOnline;
+        if ($scope.thread.messages[x].author.authorid == data.userId)
+          $scope.thread.messages[x].author.isOnline = data.isOnline;
+      }
+    });
+    //socket incoming_thread start
+    Socket.on('incoming_thread', function (data) {
+      $http.put('/threads/getUserThread/' + $stateParams.threadId, { id: $scope.authentication.user._id }).success(function (thread) {
+        Socket.emit('watched_thread', $scope.authentication.user._id);
+      });
+      $scope.thread.messages.push({
+        messageBody: data.messageBody,
+        author: {
+          authorid: data.id,
+          displayName: data.author,
+          picture_url: data.authordp,
+          isOnline: true
+        },
+        created: data.created
+      });
+    });
+    //socket incoming_thread end
+    // $scope.$on("$destroy", function handler() 
+    //    {
+    //     if($scope.thread.sender._id===$scope.authentication.user._id)
+    //         $http.put('/users/deleteSubscriber/'+$scope.authentication.user._id,{id:$scope.thread.receiver._id}).success(function(){});                     
+    //     else
+    //           $http.put('/users/deleteSubscriber/'+$scope.authentication.user._id,{id:$scope.thread.sender._id}).success(function(){});                     
+    //    });
+    $scope.showOnline = function (data) {
+      if (data.author.isOnline)
+        return true;
+      else
+        return false;
+    };
+    $scope.showOffline = function (data) {
+      if (data.author.isOnline)
+        return false;
+      else
+        return true;
+    };
+    // Create new Thread
+    $scope.create = function () {
+      // Create new Thread object
+      var thread = new Threads({ name: this.name });
+      // Redirect after save
+      thread.$save(function (response) {
+        $location.path('threads/' + response._id);
+      }, function (errorResponse) {
+        $scope.error = errorResponse.data.message;
+      });
+      // Clear form fields
+      this.name = '';
+    };
+    // Remove existing Thread
+    $scope.remove = function (thread) {
+      if (thread) {
+        thread.$remove();
+        for (var i in $scope.threads) {
+          if ($scope.threads[i] === thread) {
+            $scope.threads.splice(i, 1);
+          }
+        }
+      } else {
+        $scope.thread.$remove(function () {
+          $location.path('threads');
+        });
+      }
+    };
+    $scope.sendMessage = function () {
+      var threadId = $scope.thread._id;
+      console.log('{Thread} {SendMessage} running' + ' THREAD ID' + threadId);
+      var message = {
+          threadId: $scope.thread._id,
+          messageBody: $scope.messageBody,
+          author: $scope.authentication.user
+        };
+      console.log('USER ID:' + $scope.authentication.user._id + ' Sender ID' + $scope.thread.sender + ' Receiver ID:' + $scope.thread.receiver);
+      //
+      if ($scope.authentication.user._id == $scope.thread.sender._id) {
+        var thread = {
+            idc: threadId,
+            sender: { displayName: $scope.authentication.user.displayName },
+            receiver: $scope.thread.receiver._id,
+            messages: { created: Date.now() }
+          };
+        Socket.emit('message_sent_from', { message: thread });
+      } else {
+        var thread = {
+            idc: threadId,
+            sender: { displayName: $scope.authentication.user.displayName },
+            receiver: $scope.thread.sender._id,
+            messages: [{ created: Date.now() }]
+          };
+        Socket.emit('message_sent_from', { message: thread });
+      }
+      $http.put('/threads/updateThread/' + $scope.thread._id, message).success(function (messageBody) {
+        Socket.emit('update_threads', {
+          sender: messageBody.sender,
+          receiver: messageBody.receiver,
+          threadId: $scope.thread._id,
+          messageBody: $scope.messageBody,
+          author: $scope.authentication.user,
+          authordp: $scope.authentication.user.picture_url,
+          created: Date.now()
+        });
+        $scope.messageBody = '';
+      });
+    };
+    // Update existing Thread
+    $scope.update = function () {
+      var thread = $scope.thread;
+      thread.$update(function () {
+        $location.path('threads/' + thread._id);
+      }, function (errorResponse) {
+        $scope.error = errorResponse.data.message;
+      });
+    };
+    // Find a list of Threads
+    $scope.find = function () {
+      $scope.threads = Threads.query();
+    };
+    // Find a list of Threads
+    $scope.findUserThreads = function () {
+      console.log('FINDUSERTHREADS RAN');
+      $http.get('/threads/getUserThreads/' + $scope.authentication.user._id).success(function (threads) {
+        $scope.threads = threads;
+      });
+    };
+    // Find existing Thread
+    $scope.findOne = function () {
+      $scope.thread = Threads.get({ threadId: $stateParams.threadId });
+      Socket.emit('watched_thread', 'iraq');
+    };
+    //chatting html view aka view-thread.client.view.html
+    $scope.findOneAndMarkAsRead = function () {
+      $http.put('/threads/getUserThread/' + $stateParams.threadId, { id: $scope.authentication.user._id }).success(function (thread) {
+        $scope.thread = thread;
+        console.log(thread.sender._id);
+        if (thread.sender._id === $scope.authentication.user._id)
+          $http.put('/users/addSubscriber/' + $scope.authentication.user._id, { id: thread.receiver._id }).success(function () {
+          });
+        else
+          $http.put('/users/addSubscriber/' + $scope.authentication.user._id, { id: thread.sender._id }).success(function () {
+          });
+        Socket.emit('watched_thread', $scope.authentication.user._id);
+      });
+    };
+  }
+]);'use strict';
+//Threads service used to communicate Threads REST endpoints
+angular.module('threads').factory('Threads', [
+  '$resource',
+  function ($resource) {
+    return $resource('threads/:threadId', { threadId: '@_id' }, { update: { method: 'PUT' } });
+  }
+]);'use strict';
 // Config HTTP Error Handling
 angular.module('users').config([
   '$httpProvider',

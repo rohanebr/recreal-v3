@@ -4,9 +4,13 @@
 	<div class="page-header">
 		<h1 data-ng-bind="thread.subject"></h1>
 	</div>
-	<div data-ng-repeat="message in thread.messages">
 
-		
+	<div data-ng-repeat="message in thread.messages">
+		<img class="img50_50" src="{{message.author.picture_url}}">
+		<div ng-if="showOnline(message)">
+		<i class="fa fa-suitcase" style="color:green"></i></div>
+		<div ng-if="showOffline(message)">
+		<i class="fa fa-suitcase" style="color:red"></i></div>
 		<h3>{{message.author.displayName}}</h3>
 		<p>{{message.messageBody}}</p>
 		<span data-ng-bind="message.created | date:'mediumDate'"></span>
@@ -16,22 +20,17 @@
 		
 	</textarea>
 
-<<<<<<< HEAD
-	<button data-ng-click="" class="btn btn-primary btn-md">
-	<button data-ng-click="sendMessage()" class="btn btn-primary btn-md">
-=======
 	<button data-ng-click="sendMessage()" class="btn btn-primary btn-medium">
->>>>>>> 5a7e6e43ad006486d272e6ea6aef148448833ee0
 		Send
 	</button>
 	
 	<small>
 		<em class="text-muted">
 			Posted on
-			<span data-ng-bind="thread.created | date:'mediumDate'"></span>
-			by    
-
-			<span data-ng-bind="thread.sender.displayName"></span>
+			<span data-ng-bind="thread.messages[thread.messages.length-1].created | date:'mediumDate'"></span>
+			by 
+  <!--good mudz -->
+			<span data-ng-bind="thread.messages[thread.messages.length-1].author.displayName"></span>
 		</em>
 	</small>
 </section>

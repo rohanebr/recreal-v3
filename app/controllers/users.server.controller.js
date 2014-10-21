@@ -32,7 +32,6 @@ var getErrorMessage = function(err) {
 			if (err.errors[errName].message) message = err.errors[errName].message;
 		}
 	}
-
 	return message;
 };
 
@@ -66,9 +65,9 @@ exports.signup = function(req, res) {
 			company.save();
 			break;
 	}
-	// typeObject.firstName = user.firstName;
-	// typeObject.lastName = user.lastName;
-	// typeObject.displayName = user.displayName;
+	typeObject.firstName = user.firstName;
+	typeObject.lastName = user.lastName;
+	typeObject.displayName = user.displayName;
 	typeObject.user = user;
 	typeObject.save();
 
@@ -121,7 +120,51 @@ exports.signin = function(req, res, next) {
 		}
 	})(req, res, next);
 };
+exports.setUserType = function (req,res)
+{
+console.log(req.body.userType);
+console.log(req.user._id);
+User.findById(req.user.id, function(err, user) {
+user.userType=req.body.userType;
+        user.markModified('userType');
+       
+	    user.displayName = user.firstName + ' ' + user.lastName;
+	    var typeObject;
+     	switch(req.body.userType){
+		case 'candidate':
+			typeObject = new Candidate();
+			user.candidate = typeObject;
 
+			break;
+		case 'employer':
+			typeObject = new Employer();
+			user.employer = typeObject;
+			var company = new Company();
+			typeObject.company = company;
+			company.employers.push(typeObject);
+			company.save();
+			break;
+	}
+	    typeObject.firstName = user.firstName;
+	    typeObject.lastName = user.lastName;
+	    typeObject.displayName = user.displayName;
+	    typeObject.user = user;
+	    typeObject.save();
+
+         user.save();
+
+
+
+
+         if (err) return res.send(err);
+		else
+			return res.send(user);
+
+
+});
+
+
+};
 /**
  * Update user details
  */
@@ -234,6 +277,7 @@ exports.me = function(req, res) {
  * OAuth callback
  */
 exports.oauthCallback = function(strategy) {
+	console.log('oauthCallback');
 	return function(req, res, next) {
 		passport.authenticate(strategy, function(err, user, redirectURL) {
 			if (err || !user) {
@@ -336,7 +380,7 @@ exports.saveOAuthUserProfile = function(req, providerUserProfile, done) {
 							email: providerUserProfile.email,
 							provider: providerUserProfile.provider,
 							providerData: providerUserProfile.providerData,
-							userType: 'employer',
+							userType: 'transition'
 						});
 
 						// And save the user
@@ -383,13 +427,17 @@ exports.getMessages = function(req,res)
 	
 	var username= User.findOne({_id:userId}).exec(function(err,user){
 
+
+
+
+
+
 });
 	var threadsId=req.user.threads;
-console.log('{users}{controller}{getName} Ran USERIDE:'+userId+' df');
+console.log('{users}{controller}{getName} Ran USERIDE:'+' df');
 var threadId;
 
-for(var i=0;i<threadsId.length;i++)
-{
+
 
 	Threads.find({
     '_id': { $in: threadsId}
@@ -398,10 +446,23 @@ for(var i=0;i<threadsId.length;i++)
 	var gotmessages=[{}];
  		  for(var x=0;x<docs.length;x++)
  		  {
- 		  	
+ 		  	var isRead=false;
+ 		  	if(docs[x].sender.equals(userId))
+ 		  	{
+                if(docs[x].readBySender==true)
+                	isRead=true;
+
+ 		  	}	
+ 		  	else
+ 		  	if(docs[x].receiver.equals(userId))
+ 		  	{
+                if(docs[x].readByReceiver==true)
+                	isRead=true;
+
+ 		  	}	  	
             var lengths=docs[x].messages.length;
-           
- 		  if(!docs[x].read && !userId.equals(docs[x].messages[lengths-1].author._id))
+
+ 		  if(!isRead && !userId.equals(docs[x].messages[lengths-1].author._id))
  		  	  {var sendername=docs[x].messages[lengths-1].author.displayName;
  		  	  	var messagebody= docs[x].messages[lengths-1].messageBody;
  		  	  	var created=docs[x].messages[lengths-1].created;
@@ -426,7 +487,7 @@ for(var i=0;i<threadsId.length;i++)
  
  	
  		});
-}
+
 
 
 
@@ -504,6 +565,54 @@ exports.sendMessage = function(req, res, next) {
 
 };
 
+exports.deleteSubscriber =function(req,res)
+{
+
+User.update(
+      { _id: req.body.id },
+      { $pull: { subscribers : req.user._id } },
+      { safe: true },
+      function removeConnectionsCB(err, obj) {
+ 
+      });
+
+
+}
+
+
+
+
+exports.addSubscriber = function(req,res)
+{
+	var addsubscriber=true;
+	
+	User.findById(req.body.id, function(err, user)
+
+		{
+			for(var x=0,b=user.subscribers.length;x<b;x++)
+			{console.log(user.subscribers[x]);
+         
+				if(user.subscribers[x].equals(req.user._id))
+                       {  addsubscriber=false;
+                       	break;
+                       }
+			}
+
+              
+if(addsubscriber)
+User.update(
+      { _id: req.body.id },
+      { $push: { subscribers : req.user._id } },
+      { safe: true },
+      function removeConnectionsCB(err, obj) {
+
+      });
+
+		});
+
+
+
+};
 
 
 /**

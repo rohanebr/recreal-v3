@@ -4,25 +4,64 @@
 angular.module('threads').controller('ThreadsController', ['$scope', '$stateParams','$location', 'Authentication', 'Threads', '$http','Socket',
 	function($scope, $stateParams, $location, Authentication, Threads, $http,Socket ) {
 		$scope.authentication = Authentication;
-        //Incoming thread updates
+        $scope.color="color:green";
+        $scope.color2="color:red";
+        Socket.on("i_am_here", function (data){
 
-        Socket.on("incoming_thread", function (data) {Threads.get({ 
-				threadId: $stateParams.threadId
-			});
-        //Now i should call the header controller again 
-        	console.log(data.messageBody+" "+data.author+" "+data.created);
-$scope.thread.messages.push({messageBody:data.messageBody,
-						author:{displayName:data.author,picture_url:data.authordp},
-							created:data.created
-							});
+        	   for(var x=0,b=$scope.thread.messages.length;x<b;x++)
+        	   {
+                    if($scope.thread.messages[x].author._id===data.userId)
+                    	     $scope.thread.messages[x].author.isOnline=data.isOnline;
+                  
+                    	if($scope.thread.messages[x].author.authorid==data.userId)
+                    		$scope.thread.messages[x].author.isOnline=data.isOnline;
+                    		
+
+        	   }
+            
+        }); 
+
+        //socket incoming_thread start
+        Socket.on("incoming_thread", function (data) {
+        	   $http.put('/threads/getUserThread/' + $stateParams.threadId,{id:$scope.authentication.user._id}).success(function(thread) {
+								Socket.emit('watched_thread',$scope.authentication.user._id);
+             	});
+            $scope.thread.messages.push({
+            	                         messageBody:data.messageBody,
+						                 author:{authorid:data.id,
+						                 	     displayName:data.author,
+						                 	     picture_url:data.authordp,
+						                 	     isOnline:true },
+							             created:data.created
+							           });
 		
-$scope.$digest();
-
-	
-
-
-
         });
+        //socket incoming_thread end
+
+        // $scope.$on("$destroy", function handler() 
+        //    {
+       
+        //     if($scope.thread.sender._id===$scope.authentication.user._id)
+     	  //         $http.put('/users/deleteSubscriber/'+$scope.authentication.user._id,{id:$scope.thread.receiver._id}).success(function(){});                     
+        //     else
+        //           $http.put('/users/deleteSubscriber/'+$scope.authentication.user._id,{id:$scope.thread.sender._id}).success(function(){});                     
+        //    });
+
+
+        $scope.showOnline=function(data)
+        {
+             if(data.author.isOnline)
+             	return true;
+             else
+             	return false;
+        }
+        $scope.showOffline=function(data)
+        {
+             if(data.author.isOnline)
+             	return false;
+             else
+             	return true;
+        }
 		// Create new Thread
 		$scope.create = function() {
 			// Create new Thread object
@@ -66,14 +105,14 @@ $scope.$digest();
           var message={threadId:$scope.thread._id,messageBody : $scope.messageBody,author:$scope.authentication.user};
            console.log("USER ID:"+$scope.authentication.user._id+' Sender ID'+$scope.thread.sender+' Receiver ID:'+$scope.thread.receiver);
 //
-      if($scope.authentication.user._id == $scope.thread.sender)
+      if($scope.authentication.user._id == $scope.thread.sender._id)
       {
 
       var thread = {
       	idc: threadId,
        sender : {displayName: $scope.authentication.user.displayName},
-       receiver: $scope.thread.receiver,
-       messages:[{created: Date.now()}]
+       receiver: $scope.thread.receiver._id,
+       messages:{created: Date.now()}
        
 
 
@@ -87,8 +126,9 @@ Socket.emit('message_sent_from', {message: thread});
       {
 
       var thread = {
+      	idc: threadId,
        sender : {displayName: $scope.authentication.user.displayName},
-       receiver: $scope.thread.sender,
+       receiver: $scope.thread.sender._id,
        messages:[{created: Date.now()}]
 
 
@@ -100,19 +140,16 @@ Socket.emit('message_sent_from', {message: thread});
 
       }
            $http.put('/threads/updateThread/' + $scope.thread._id,message).success(function(messageBody) {
+                Socket.emit('update_threads', { sender : messageBody.sender,
+	                                            receiver :messageBody.receiver,
+ 	                                            threadId: $scope.thread._id,
+ 	                                            messageBody: $scope.messageBody,
+								                author: $scope.authentication.user,
+								                authordp: $scope.authentication.user.picture_url,
+								                created: Date.now()
 
-
-Socket.emit('update_threads', { sender : messageBody.sender,
-	                            receiver :messageBody.receiver,
- 	                            threadId:$scope.thread._id,
- 	                            messageBody:$scope.messageBody,
-								author: $scope.authentication.user,
-								authordp: $scope.authentication.user.picture_url,
-								created: Date.now()
-
-
-
- });		 $scope.messageBody="";
+                     });
+            $scope.messageBody="";
 
              
              });
@@ -144,25 +181,12 @@ Socket.emit('update_threads', { sender : messageBody.sender,
 			console.log("FINDUSERTHREADS RAN");
 				$http.get('/threads/getUserThreads/' + $scope.authentication.user._id).success(function(threads) {
 				$scope.threads = threads;
+
 			});
 		};
 
 		
-		$scope.sendMessage=function(){
-             console.log("{Thread} {SendMessage} running");
-            var message={messageBody : $scope.messageBody};
 
-           $http.put('/threads/updateThread/' + $scope.thread._id,message).success(function(messageBody) {
-
-$scope.thread.messages.push({messageBody:messageBody,
-								author: $scope.user,
-								created: Date.now()});
-
-             
-             });
-				
- $scope.messageBody="";
-		};
 
 
 		// Find existing Thread
@@ -174,16 +198,20 @@ $scope.thread.messages.push({messageBody:messageBody,
 	
 
 		};
+
+		//chatting html view aka view-thread.client.view.html
 			$scope.findOneAndMarkAsRead = function() {
-				console.log($stateParams.threadId);
-				//Can change to get
-						$http.get('/threads/getUserThread/' + $stateParams.threadId).success(function(thread) {
-						 	 
-                   $scope.thread= thread;
-					Socket.emit('watched_thread',$scope.authentication.user._id);
-       
-				   
-			});
+			
+				
+			    $http.put('/threads/getUserThread/' + $stateParams.threadId,{id:$scope.authentication.user._id}).success(function(thread) {
+				    $scope.thread= thread;
+				    console.log(thread.sender._id);
+				    if(thread.sender._id===$scope.authentication.user._id)
+				       $http.put('/users/addSubscriber/'+$scope.authentication.user._id,{id:thread.receiver._id}).success(function(){});                     
+                    else
+                       $http.put('/users/addSubscriber/'+$scope.authentication.user._id,{id:thread.sender._id}).success(function(){});                     
+                  Socket.emit('watched_thread',$scope.authentication.user._id);
+             	});
 			
 		
 	

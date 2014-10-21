@@ -35,13 +35,7 @@ var getErrorMessage = function(err) {
 /**
  * Create a Thread
  */
- exports.setRead = function(req,res)
 
-{
-console.log("works");
-
-
-}
 exports.create = function(req, res) {
 	var thread = new Thread(req.body);
 
@@ -166,8 +160,8 @@ exports.getUserThreads = function(req, res) {
 				message: getErrorMessage(err)
 			});
 		} else {
-			// console.log('FETUSERTHREADS'+threads[0].sender+' '+threads[0].receiever);
-						res.jsonp(threads);
+			res.jsonp(threads);
+
 		}
 	  });
 
@@ -176,6 +170,7 @@ exports.getUserThreads = function(req, res) {
 /**
  * Thread middleware
  */
+
 
 exports.threadByID = function(req, res, next, id) { 
 
@@ -195,54 +190,60 @@ console.log("{THREAD}{CONTROLLER}{THREADBYID}");
 };
 
 
-exports.updateThread = function (req,res)
-{
-var threadId=req.thread._id;
+// exports.updateThread = function (req,res)
+// {
+// var threadId=req.thread._id;
 
-console.log(threadId);
-var message=req.body.messageBody;
+// console.log(threadId);
+// var message=req.body.messageBody;
 
-console.log("{Threads}{Controller} ran");
-
-
- Thread.update(
-       { _id: threadId },
-       { $push: { messages : {messageBody:message} } },
-      { safe: true },
-       function (err, obj) {
-if (err) {
-			return res.send(400, {
-				message: getErrorMessage(err)
-			});
-		} else {
-			res.jsonp(message);
-		}
-       });
+// console.log("{Threads}{Controller} ran");
 
 
-}
+//  Thread.update(
+//        { _id: threadId },
+//        { $push: { messages : {messageBody:message} } },
+//       { safe: true },
+//        function (err, obj) {
+// if (err) {
+// 			return res.send(400, {
+// 				message: getErrorMessage(err)
+// 			});
+// 		} else {
+// 			res.jsonp(message);
+// 		}
+//        });
+
+
+// }
 /**
 *Get A single user thread and mark it as Read
 */
+exports.setRead = function(req,res)
+
+{
+}
 exports.getUserThread = function(req,res)
 {
-	var id=req.thread._id;
-		Thread.findById(id).populate('messages.author').exec(function(err, thread) {
-		thread.read=true;
-
-        thread.markModified('read');
-         thread.save();
+	var idofuser=req.body.id;
+     	var id=req.thread._id;
+ 		Thread.findById(id).populate('sender').populate('receiver').populate('messages.author').exec(function(err, thread) {
+	if(thread.sender._id==idofuser)
+		 {
+		 	thread.readBySender=true;
+            thread.markModified('readBySender');
+		 }
+		else
+			if(thread.receiver._id==idofuser)
+				{
+					thread.readByReceiver=true;
+					thread.markModified('readByReceiver');
+				}
+        thread.save();
 		if (err) return res.send(err);
 		else
 			return res.send(thread);
-		
-
-
 	});
-
-
-
-
 }
 
 /**
@@ -255,6 +256,7 @@ exports.hasAuthorization = function(req, res, next) {
 	next();
 };
 
+
 exports.updateThread = function (req,res)
 {
 var threadId=req.body.threadId;
@@ -265,7 +267,7 @@ Thread.findById(threadId).populate('messages.author').exec(function(err, thread)
         thread.messages.push({messageBody:message,author:author._id});
      
         thread.markModified('messages');
-
+        thread.markModified('author');
          thread.save();
            thread.read=false;
          thread.markModified('read');
@@ -276,8 +278,7 @@ Thread.findById(threadId).populate('messages.author').exec(function(err, thread)
 	}
 	else
 	{
-		console.log('PPP'+thread.receiver);
-	res.json( {'sender':thread.sender,'receiver':thread.receiver});}
+		res.json( {'sender':thread.sender,'receiver':thread.receiver});}
 	});
 console.log("{Threads}{Controller} ran"+message+" author name:"+author);
 

@@ -96,6 +96,7 @@ exports.getJobCandidates = function(req, res) {
  */
 exports.getShortListedCandidates = function(req, res) {
 	Job.findOne({_id: req.job._id}).populate('shortListedCandidates').populate('shortListedCandidates.candidate').exec(function(err, job){
+		// User.findOne({_id: job.})
 		res.jsonp(job);
 	});
 };

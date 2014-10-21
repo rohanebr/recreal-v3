@@ -21,6 +21,7 @@ module.exports = function(app) {
     		.delete(users.requiresLogin, candidates.hasAuthorization, candidates.delete);
 
 
+
     	
     	app.route('/candidates/addSkill/:candidateId')
             .put(users.requiresLogin, candidates.hasAuthorization, candidates.addSkill);
@@ -37,10 +38,12 @@ module.exports = function(app) {
 
         app.route('/candidates/deleteSkill/:candidateId')
             .put(users.requiresLogin, candidates.hasAuthorization, candidates.deleteSkill);
+
         app.route('/candidates/deleteExperience/:candidateId')
             .put(users.requiresLogin,candidates.hasAuthorization,candidates.deleteExperience);
         app.route('/candidates/deleteProject/:candidateId')
             .put(users.requiresLogin,candidates.hasAuthorization,candidates.deleteProject);
+
         app.route('/candidates/deleteEducation/:candidateId')
             .put(users.requiresLogin,candidates.hasAuthorization,candidates.deleteEducation);
         app.route('/candidates/deleteLanguage/:candidateId')
@@ -60,6 +63,7 @@ module.exports = function(app) {
            .put(users.requiresLogin,candidates.hasAuthorization,candidates.updateLanguage);
         app.route('/candidates/updateCertificate/:candidateId')
            .put(users.requiresLogin,candidates.hasAuthorization,candidates.updateCertificate);
+
     		// Finish by binding the Candidate middleware
             	app.param('candidateId', candidates.candidateByID);
 

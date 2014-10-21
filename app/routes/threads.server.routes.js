@@ -16,11 +16,11 @@ module.exports = function(app) {
 		.get(threads.read)
 		.put(users.requiresLogin, threads.hasAuthorization, threads.update)
 		.delete(users.requiresLogin, threads.hasAuthorization, threads.delete);
-		app.route('/threads/setRead/:threadId').get(threads.setRead);
+		app.route('/threads/setRead/:threadId').put(threads.setRead);
 
 	// Finish by binding the Thread middleware
 	app.param('threadId', threads.threadByID);
 
 	app.route('/threads/updateThread/:threadId').put(users.requiresLogin,  threads.updateThread);
-    app.route('/threads/getUserThread/:threadId').get(threads.getUserThread);
+    app.route('/threads/getUserThread/:threadId').put(threads.getUserThread);
 };
