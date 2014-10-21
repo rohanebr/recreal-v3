@@ -112,6 +112,7 @@ exports.apply = function(req, res, next)
 		Job.findOne({_id: req.job._id})
 			.exec(function(err, doc)
 				{
+					
 				job = doc;
 				Candidate.findOne({user: req.user._id}).exec(function(err, candidate)
 					{
