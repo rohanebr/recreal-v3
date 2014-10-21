@@ -27,7 +27,8 @@ module.exports = {
 				'public/lib/socket.io-client/socket.io.js',
 				'public/lib/angular-timer/dist/angular-timer.js',
 				'public/lib/angular-charts/dist/angular-charts.js',
-				'public/lib/d3/d3.js'
+				'public/lib/d3/d3.js',
+				'public/lib/angularjs-geolocation/src/geolocation.js'
 			]
 		},
 		css: [

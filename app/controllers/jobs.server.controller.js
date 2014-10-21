@@ -63,6 +63,7 @@ exports.create = function(req, res) {
 					});
 				} else {
 					employers[0].save();
+						JobSocket.jobPosted({job: job});
 					res.jsonp(job);
 				}
 			});
@@ -122,7 +123,7 @@ exports.apply = function(req, res, next)
 							{
 								//doc.apply(candidate);
 								job.apply(candidate);
-								JobSocket.applicationReceived({job: job, candidate: candidate});
+								JobSocket.applicationReceived({job: job});
 								res.jsonp(req.job);
 							}
 						});			

@@ -49,6 +49,9 @@ var UserSchema = new Schema({
 		type: 'String',
 		default: '/uploads/fullsize/no-image.jpg'
 	},
+	notifications:{
+		type: 'String'
+	},
 	email: {
 		type: String,
 		trim: true,

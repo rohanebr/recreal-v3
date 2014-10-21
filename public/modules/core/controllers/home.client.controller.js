@@ -5,6 +5,7 @@ angular.module('core').controller('HomeController', ['$scope', 'Authentication',
 	function($scope, Authentication, $state, $rootScope, Employers, Companies, Candidates , Socket) {
 		// This provides Authentication context.
 		$scope.authentication = Authentication;
+		
 		var user = $scope.authentication.user;
 		console.log(user);
 //starting angular-charts
@@ -70,11 +71,7 @@ $scope.data1 = {
 			$state.go('home');
 		else if(user.userType === 'employer'){
 			console.log("EMPLOYER");
-		    Socket.on('applied_on_job', function (data) {
-        		    console.log(data.candidate.displayName + ' applied on job : ' + data.job.title);
-        		    if(user.userType === 'employer')
-        		    	alert(data.candidate.displayName + ' applied on job : ' + data.job.title);
-        		  });
+		   
         		 
 
                             
@@ -90,7 +87,7 @@ $scope.data1 = {
 			$state.go('employerDashboard');
 		}
 		else if(user.userType === 'candidate'){
-		
+		     
         		    
                   
         		 $rootScope.candidate = Candidates.get({
