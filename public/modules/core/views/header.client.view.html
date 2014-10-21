@@ -242,7 +242,8 @@
                                 <span class="round-icon sm bg-info"><i class="fa fa-comment-o"></i></span>
                             </span>
                             <div class="media-body">
-                                <span class="block">{{thread.senderName}} sent you a message</span>
+                                <span class="block">
+                                <div><img alt=""class="img30_30" src="{{thread.sender.picture_url}}">{{thread.senderName}}</div></span>
                                 <span class="text-muted">at {{thread.created | date}}</span>
                             </div>
                         </a>

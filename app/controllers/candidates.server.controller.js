@@ -272,6 +272,32 @@ exports.uploadPicture = function(req, res) {
   });
 };
 
+//Add New Project
+exports.addProject=function(req,res)
+{
+var userId=req.user._id;
+if(req.user.userType === 'candidate')
+{
+var c;
+var project=req.body;
+console.log(project);
+Candidate.update(
+      { user: userId },
+      { $push: { projects : project } },
+      { safe: true },
+      function removeConnectionsCB(err, obj) {
+
+      });
+
+}
+
+console.log("add Project function called");
+
+
+};
+
+
+
 //In the image of deleteExperience
 //created @ 6:09 AM 10/4/2014
 //added by:asadullah baig
@@ -301,9 +327,328 @@ Candidate.update(
 
 };
 
+
+
+//UPDATE PROJECT METHOD
+exports.updateProject = function(req, res) {
+
+
+	if(req.user.userType === 'candidate')
+    {
+    var c;
+    var project=req.body;
+var id=req.user._id;
+var cand = Candidate.findOne({user:id}).exec(function(err, candidate){
+candidate.projects.forEach(function (item) {
+if(item._id==project._id)
+      {
+      item.company=project.company;
+      item.name=project.name;
+      item.description=project.description;
+      item.start_date=project.start_date;
+      item.end_date=project.end_date;
+      
+      }
+
+    });
+
+candidate.markModified('projects');
+         candidate.save();
+
+    		});
+
+
+
+    }
+
+    	console.log('method called update skill!!');
+
+};
+
+
+
+exports.addCertificate=function(req,res)
+{
+var userId=req.user._id;
+if(req.user.userType === 'candidate')
+{
+var c;
+var certificate=req.body;
+console.log(certificate);
+Candidate.update(
+      { user: userId },
+      { $push: { certificates : certificate } },
+      { safe: true },
+      function removeConnectionsCB(err, obj) {
+
+      });
+
+}
+
+console.log("add Certificate function called");
+
+
+};
+
+
+exports.deleteCertificate=function(req,res)
+{
+var CertificateId=req.user._id;
+if(req.user.userType === 'candidate')
+{
+var c;
+var certificate=req.body;
+console.log(certificate._id);
+console.log(certificate.name);
+Candidate.update(
+      { user: CertificateId },
+      { $pull: { certificates : { _id : certificate._id } } },
+      { safe: true },
+      function removeConnectionsCB(err, obj) {
+
+      })
+
+}
+
+
+  console.log('method called delete Certificate!');
+
+
+};
+
+exports.updateCertificate = function(req, res) {
+
+
+  if(req.user.userType === 'candidate')
+    {
+    var c;
+    var certificate=req.body;
+var id=req.user._id;
+var cand = Candidate.findOne({user:id}).exec(function(err, candidate){
+candidate.certificates.forEach(function (item) {
+if(item._id==certificate._id)
+      {
+      item.name=certificate.name;
+      }
+
+    });
+
+candidate.markModified('certificates');
+         candidate.save();
+
+        });
+
+
+
+    }
+
+      console.log('method called update certificate!!');
+
+
+
+
+};
+
+exports.addLanguage=function(req,res)
+{
+var userId=req.user._id;
+if(req.user.userType === 'candidate')
+{
+var c;
+var language=req.body;
+console.log(language);
+Candidate.update(
+      { user: userId },
+      { $push: { languages : language } },
+      { safe: true },
+      function removeConnectionsCB(err, obj) {
+
+      });
+
+}
+
+console.log("add Language function called");
+
+
+};
+
+
+exports.deleteLanguage=function(req,res)
+{
+var LanguageId=req.user._id;
+if(req.user.userType === 'candidate')
+{
+var c;
+var language=req.body;
+console.log(language._id);
+console.log(language.name);
+Candidate.update(
+      { user: LanguageId },
+      { $pull: { languages : { _id : language._id } } },
+      { safe: true },
+      function removeConnectionsCB(err, obj) {
+
+      })
+
+}
+
+
+  console.log('method called delete Language!');
+
+
+};
+
+exports.updateLanguage = function(req, res) {
+
+
+  if(req.user.userType === 'candidate')
+    {
+    var c;
+    var language=req.body;
+var id=req.user._id;
+var cand = Candidate.findOne({user:id}).exec(function(err, candidate){
+candidate.languages.forEach(function (item) {
+if(item._id==language._id)
+      {
+      item.name=language.name;
+      item.proficiency=language.proficiency;
+      }
+
+    });
+
+candidate.markModified('languages');
+         candidate.save();
+
+        });
+
+
+
+    }
+
+      console.log('method called update language!!');
+
+};
+
+
+
+exports.addEducation=function(req,res)
+{
+var userId=req.user._id;
+if(req.user.userType === 'candidate')
+{
+var c;
+var education=req.body;
+console.log(education);
+Candidate.update(
+      { user: userId },
+      { $push: { educations : education } },
+      { safe: true },
+      function removeConnectionsCB(err, obj) {
+
+      });
+
+}
+
+console.log("add Education function called");
+
+
+};
+
+
+exports.deleteEducation=function(req,res)
+{
+var EducationId=req.user._id;
+if(req.user.userType === 'candidate')
+{
+var c;
+var education=req.body;
+console.log(education._id);
+console.log(education.degree);
+Candidate.update(
+      { user: EducationId },
+      { $pull: { educations : { _id : education._id } } },
+      { safe: true },
+      function removeConnectionsCB(err, obj) {
+
+      })
+
+}
+
+
+	console.log('method called delete Education!');
+
+
+};
+
+exports.updateEducation = function(req, res) {
+
+
+	if(req.user.userType === 'candidate')
+    {
+    var c;
+    var education=req.body;
+var id=req.user._id;
+var cand = Candidate.findOne({user:id}).exec(function(err, candidate){
+candidate.educations.forEach(function (item) {
+if(item._id==education._id)
+      {
+      item.degree=education.degree;
+      item.study_feild=education.study_feild;
+      item.notes=education.notes;
+      item.institute=education.institute;
+      item.start_date=education.start_date;
+      item.end_date=education.end_date;
+      
+      }
+
+    });
+
+candidate.markModified('educations');
+         candidate.save();
+
+    		});
+
+
+
+    }
+
+    	console.log('method called update education!!');
+
+
+
+
+};
+
 //In the image of updateSkill
 //created @ 4:55 AM 10/4/2014
 //added by:asadullah baig
+
+exports.addExperience=function(req,res)
+{
+var userId=req.user._id;
+if(req.user.userType === 'candidate')
+{
+var c;
+var position=req.body;
+console.log(position);
+Candidate.update(
+      { user: userId },
+      { $push: { positions : position } },
+      { safe: true },
+      function removeConnectionsCB(err, obj) {
+
+      });
+
+}
+
+console.log("add Experience function called");
+
+
+};
+
+
+//UPDATE EXPERIENCE
+
 exports.updateExperience = function(req, res) {
 
 

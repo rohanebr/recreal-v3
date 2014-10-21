@@ -166,7 +166,12 @@ exports.getUserThreads = function(req, res) {
 				message: getErrorMessage(err)
 			});
 		} else {
+<<<<<<< HEAD
 			res.jsonp(threads);
+=======
+			// console.log('FETUSERTHREADS'+threads[0].sender+' '+threads[0].receiever);
+						res.jsonp(threads);
+>>>>>>> 33c093656bfa041e27607497e3558a3b176ee750
 		}
 	  });
 

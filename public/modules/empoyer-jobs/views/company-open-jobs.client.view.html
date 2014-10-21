@@ -1,21 +1,81 @@
 <section data-ng-controller="CompanyOpenJobsController" class="container">
     <header class="text-center">
-            <h1>Open Jobs</h1>
+            <h1>{{company.company_name}}</h1>
     </header>
 
-    <article class="col-md-8">
-    	<section ng-repeat="job in jobs">
-        	<a href="/#!/employer-job-candidates/{{job._id}}" ><h2>{{job.title}}</h2></a>
+<aside class="col-md-3">
+    <section>
+        <article class="col-sm-4">
+            <label for="searchBox">Search:</label>
+        </article>
+        <article class="col-sm-8">
+            <input id="searchBox" class="col-sm-12 form-control" type="text" style="width: 170px" data-ng-model="searchText" />
+        </article><Br>
+        <Br><hr>
+    </section> 
+    <section>
+           <article class="col-sm-4">
+                 <label for="">Sort By:</label>
+            </article>
+            <article class="col-sm-8">
+                        <div>
+                            <span class="ui-select">
+                                <select style="width: 170px">
+                                    <option>Close Date Dsc</option>
+                                    <option>Close Date Asc</option>
+                                    <option>Maximum Candidates</option>
+                                    <option>Maximum ShortListed</option>
+                                    <option>Minimum Candidates</option>
+                                    <option>Minimum Shortlisted</option>
+                                </select>
+                            </span>
+                        </div>
+            </article><Br><Br><hr>
+    </section>
+   
+     <section>
+        <article class="col-sm-12">
+          <label for="">Posted By:</label><Br>
+          {{employer.displayName.toUpperCase()}},({{employer.jobs.length}})
+         <hr>
+         </article>
+    </section>
+   </aside>
+
+
+
+
+    <article class="col-md-9">
+    	<section ng-repeat="job in jobs ">
+        	<a href="#!/jobs/{{job._id}}" ><h2>{{job.title}}</h2></a> 
         	<span class="pull-right"> Close Date: {{job.due_date | date}}</span>
         	<p><h4>{{job.location}} , {{job.country}}</h4></p>
         	<p><span><strong>Description:</strong>
                 <div ng-bind-html="job.description | truncate:270"></div>
              </span></p> 
+             <p><span class="pull-left"> Posted By: {{employer.displayName.toUpperCase()}}</span></p>
             <div class="pull-right">
-                <a data-ng-href="#!/jobs/{{job._id}}" class="btn btn-small btn-success">View Job</a> 
-                <a href="/#!/employer-job-candidates/{{job._id}}" class="btn btn-small btn-success">View Candidates ({{job.candidates.length}})</a>
-                <a href="/#!/shortlisted-candidates/{{job._id}}" class="btn btn-small btn-success">View Shortlisted Candidates ({{job.shortListedCandidates.length}})</a>
-            </div>
+              
+                     <section class="col-md-4">
+                        <a href="/#!/employer-job-candidates/{{job._id}}" class="btn btn-small btn-success">Candidates ({{job.candidates.length}})</a>
+                    </section>
+                     <section class="col-md-4">
+                         <a href="/#!/shortlisted-candidates/{{job._id}}" class="btn btn-small btn-success">Shortlisted ({{job.shortListedCandidates.length}})</a>
+                    </section>
+                    <section class="col-md-2">
+                         <div class="dropdown">
+                          <button class="btn btn-small btn-success" type="button" id="dropdownMenu1" data-toggle="dropdown">
+                           <span class="glyphicon glyphicon-plus"></span>
+                            <span class="caret"></span>
+                          </button>
+                          <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Close Job</a></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Cancle Job</a></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Remove Job</a></li>
+                          </ul>
+                        </div>
+                       </section>                                         
+             </div>
             <br>
             <hr>
     	</section>
