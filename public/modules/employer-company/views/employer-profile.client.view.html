@@ -2,149 +2,145 @@
 	This is the Employer profile view
 </section> -->
 
-<section data-ng-controller="EmployerProfileController" data-ng-init="findOne()">
-    <article>
-        <header class="text-center col-md-12">
-                <span class="header-page">Employer Profile</span>
-        </header>
+<section data-ng-controller="EmployerProfileController" data-ng-init="findOne()" class="container">
+    <header class="text-center col-md-8">
+            <h1>Employer Profile</h1>
+    </header>
+    <article class="col-md-6" >
+        <form name="form_employer_profile" data-ng-submit="update()" class="form-horizontal" >
+            <fieldset>
+                 <section class="form-group">
+                    <div class="col-sm-3">
+                        <label for="">Job Title</label>
+                    </div>
+                    <div class="col-sm-9">
+                        <input  type="text"
+                                class="form-control"
+                                data-ng-model="employer.title">
+                    </div>
+                </section>
+
+                <section class="form-group">
+                    <div class="col-sm-3">
+                        <label for="">Division</label>
+                    </div>
+                    <div class="col-sm-9">
+                        <span class="ui-select">
+                            <select data-ng-model="employer.division">
+                                <option>Accounts</option>
+                                <option>Sales</option>
+                                <option>Business</option>
+                                <option>Marketing</option>
+                            </select>
+                        </span>
+                    </div>
+                </section>
+
+                <section class="form-group">
+                    <div class="col-sm-3">
+                        <label for="">Department</label>
+                    </div>
+                    <div class="col-sm-9">
+                        <span class="ui-select">
+                            <select data-ng-model="employer.department">
+                                <option>Admin</option>
+                                <option>Software</option>
+                                <option>HR</option>
+                                <option>Finance</option>
+                            </select>
+                        </span>
+                    </div>
+                </section>
+
+                <section class="form-group">
+                    <div class="col-sm-3">
+                        <label for="">Office No</label>
+                    </div>
+                    <div class="col-sm-9">
+                        <input  type="text"
+                                class="form-control"
+                                data-ng-model="employer.office_no">
+                    </div>
+                </section>
+
+                <section class="form-group">
+                    <div class="col-sm-3">
+                        <label for="">Personal No</label>
+                    </div>
+                    <div class="col-sm-9">
+                        <input  type="text"
+                                class="form-control"
+                                data-ng-model="employer.personal_no">
+                    </div>
+                </section>
+
+                <section class="form-group">
+                    <div class="col-sm-3">
+                        <label for="">E-mail</label>
+                    </div>
+                    <div class="col-sm-9">
+                        <input  type="text"
+                                class="form-control"
+                                data-ng-model="employer.contact_email">
+                    </div>
+                </section>
+
+                <section class="form-group">
+                    <div class="col-sm-3">
+                        <label for="">Skype ID</label>
+                    </div>
+                    <div class="col-sm-9">
+                        <input  type="text"
+                                class="form-control"
+                                data-ng-model="employer.skype_id">
+                    </div>
+                </section>
+
+                <section class="form-group">
+                    <div class="col-sm-3">
+                        <label for="">Country</label>
+                    </div>
+                    <div class="col-sm-9">
+                        <span class="ui-select">
+                                <select ng-model="country">
+                                    <option data-ng-repeat="count in countries">{{count.name}}</option>
+                                </select>
+                            </span>
+                    </div>
+                </section>
+
+                <section class="form-group">
+                    <div class="col-sm-3">
+                        <label for="">Location</label>
+                    </div>
+                    <div class="col-sm-9">
+                        <input  type="text"
+                                class="form-control"
+                                data-ng-model="employer.location">
+                    </div>
+                </section>
+
+                <section class="form-group">
+                    <div class="col-sm-3">
+                        <label for="">Picture</label>
+                    </div>
+                    <div class="col-sm-9">
+                        <input  type="text"
+                                class="form-control"
+                                data-ng-model="employer.picture_url">
+                    </div>
+                </section>
+
+                <button type="submit"
+                    class="btn btn-sucess btn-block btn-lg"
+                    ng-click="update()"
+                    >Sumbit</button>                            
+                <section data-ng-show="error" class="text-danger">
+                    <strong data-ng-bind="error"></strong>
+                </section>
+            </fieldset>
+        </form>
     </article>
-    <section class="col-md-6" >
-        <article class="panel panel-default">
-                <form name="form_employeer_profile" data-ng-submit="update()" class="form-horizontal" >
-                    <fieldset>
-                         <div class="form-group">
-                            <div class="col-sm-3">
-                                <label for="">Job Title</label>
-                            </div>
-                            <div class="col-sm-9">
-                                <input  type="text"
-                                        class="form-control"
-                                        data-ng-model="employer.title">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-sm-3">
-                                <label for="">Division</label>
-                            </div>
-                            <div class="col-sm-9">
-                                <span class="ui-select">
-                                    <select data-ng-model="employer.division">
-                                        <option>Accounts</option>
-                                        <option>Sales</option>
-                                        <option>Business</option>
-                                        <option>Marketing</option>
-                                    </select>
-                                </span>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-sm-3">
-                                <label for="">Department</label>
-                            </div>
-                            <div class="col-sm-9">
-                                <span class="ui-select">
-                                    <select data-ng-model="employer.department">
-                                        <option>Admin</option>
-                                        <option>Software</option>
-                                        <option>HR</option>
-                                        <option>Finance</option>
-                                    </select>
-                                </span>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-sm-3">
-                                <label for="">Office No</label>
-                            </div>
-                            <div class="col-sm-9">
-                                <input  type="text"
-                                        class="form-control"
-                                        data-ng-model="employer.office_no">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-sm-3">
-                                <label for="">Personal No</label>
-                            </div>
-                            <div class="col-sm-9">
-                                <input  type="text"
-                                        class="form-control"
-                                        data-ng-model="employer.personal_no">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-sm-3">
-                                <label for="">E-mail</label>
-                            </div>
-                            <div class="col-sm-9">
-                                <input  type="text"
-                                        class="form-control"
-                                        data-ng-model="employer.contact_email">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-sm-3">
-                                <label for="">Skype ID</label>
-                            </div>
-                            <div class="col-sm-9">
-                                <input  type="text"
-                                        class="form-control"
-                                        data-ng-model="employer.skype_id">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-sm-3">
-                                <label for="">Country</label>
-                            </div>
-                            <div class="col-sm-9">
-                                <span class="ui-select">
-                                        <select ng-model="country">
-                                            <option data-ng-repeat="count in countries">{{count.name}}</option>
-                                        </select>
-                                    </span>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-sm-3">
-                                <label for="">Location</label>
-                            </div>
-                            <div class="col-sm-9">
-                                <input  type="text"
-                                        class="form-control"
-                                        data-ng-model="employer.location">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-sm-3">
-                                <label for="">Picture</label>
-                            </div>
-                            <div class="col-sm-9">
-                                <input  type="text"
-                                        class="form-control"
-                                        data-ng-model="employer.picture_url">
-                            </div>
-                        </div>
-
-                        <button type="submit"
-                            class="btn btn-sucess btn-block btn-lg"
-                            ng-click="update()"
-                            >Sumbit</button>                            
-                        <div data-ng-show="error" class="text-danger">
-                            <strong data-ng-bind="error"></strong>
-                        </div>
-                    </fieldset>
-                </form>
-        </article>
-    </section>
  </section>  
 
  <style>

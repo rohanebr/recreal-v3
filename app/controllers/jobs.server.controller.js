@@ -91,26 +91,43 @@ exports.getJobCandidates = function(req, res) {
 	});
 };
 
-exports.apply = function(req, res, next) {
+/**
+ * Show the current Job
+ */
+exports.getShortListedCandidates = function(req, res) {
+	Job.findOne({_id: req.job._id}).populate('shortListedCandidates').populate('shortListedCandidates.candidate').exec(function(err, job){
+		res.jsonp(job);
+	});
+};
 
-	if(req.user.userType === 'candidate'){
+exports.apply = function(req, res, next) 
+
+{
+
+	if(req.user.userType === 'candidate')
+
+	{
 		var job = req.job;
 
 
-		Job.findOne({_id: req.job._id}).exec(function(err, doc){
-			job = doc;
-			Candidate.findOne({user: req.user._id}).exec(function(err, candidate){
-				Job.findOne({_id: job._id})
-				.where({candidates: candidate._id})
-				.exec(function(err, doc){
-					if(!doc)
+		Job.findOne({_id: req.job._id})
+			.exec(function(err, doc)
+				{
+				job = doc;
+				Candidate.findOne({user: req.user._id}).exec(function(err, candidate)
 					{
-						//doc.apply(candidate);
-						job.apply(candidate);
-						res.jsonp(req.job);
-					}
-				});			
-			});
+					Job.findOne({_id: job._id})
+					.where({candidates: candidate._id})
+					.exec(function(err, doc)
+						{
+							if(!doc)
+							{
+								//doc.apply(candidate);
+								job.apply(candidate);
+								res.jsonp(req.job);
+							}
+						});			
+				});
 		});
 
 		
@@ -157,7 +174,8 @@ exports.delete = function(req, res) {
 /**
  * List of Jobs
  */
-exports.list = function(req, res) { Job.find().sort('-created').populate('user', 'displayName').populate('company').exec(function(err, jobs) {
+exports.list = function(req, res) { 
+	Job.find().sort('-created').populate('user', 'displayName').populate('company').exec(function(err, jobs) {
 		if (err) {
 			return res.send(400, {
 				message: getErrorMessage(err)
@@ -179,6 +197,60 @@ exports.jobByID = function(req, res, next, id) { Job.findById(id).populate('user
 	});
 };
 
+exports.addToShortList = function(req, res, next) {
+
+	if(req.user.userType === 'employer'){
+
+		var jobId = req.body.jobId;
+		var candidateId = req.body.candidateId;
+
+
+
+
+			Job.findOne({_id: jobId}).exec(function(err, job){
+
+				var exists = false;
+				job.shortListedCandidates.forEach(function(slc){
+					if(slc.candidate == candidateId)
+					{
+						exists = true;
+					}
+				});
+
+				if(!exists){
+					Employer.findOne({user: req.user._id}).exec(function(err, employer){
+						Candidate.findOne({_id: candidateId}).exec(function(err, candidate)
+							{
+							job.addToShortList(candidate, employer);
+							res.jsonp(job);
+						});
+					});
+				}
+		});
+		
+	}	
+};
+
+
+exports.removeFromShortList = function(req, res, next) {
+
+	if(req.user.userType === 'employer'){
+		var jobId = req.body.jobId;
+		var candidateId = req.body.candidateId;
+
+
+		Job.findByIdAndUpdate(jobId, {
+		  $pull: {
+		    shortListedCandidates: {candidate: candidateId}
+		  }
+		}, function(err, job){
+			res.jsonp(job);
+		});
+			
+	}	
+};
+
+
 /**
  * Job authorization middleware
  */
@@ -188,3 +260,5 @@ exports.hasAuthorization = function(req, res, next) {
 	}
 	next();
 };
+
+

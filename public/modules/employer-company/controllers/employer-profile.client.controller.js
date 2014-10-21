@@ -20,7 +20,7 @@ angular.module('employer-company').controller('EmployerProfileController', ['$sc
 			var employer = $scope.employer ;
 
 			employer.$update(function() {
-				$location.path('employers/' + employer._id);
+				$location.path('employer-profile-view');
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
 			});

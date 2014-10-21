@@ -1,5 +1,5 @@
 .content {
-	margin-top: 50px;
+	margin-top: 0px;
 }
 .undecorated-link:hover {
 	text-decoration: none;
@@ -9,8 +9,76 @@
 }
 
 
+body {
+  margin-top: 0px;
+}
+
+.required-css
+{
+    color: red;
+}
+
+select {
+  width: 395px;
+  height: 40px;
+  border-color: #e0e0e0;
+  border-radius: 4px;
+}
+
+.nav-secondary{
+  margin-top: -25px;
+}
+
+img.img30_30 {
+  width: 30px;
+  height: 30px;
+}
+img.img64_64 {
+  width: 64px;
+  height: 64px;
+}
+img.img80_80 {
+  width: 80px;
+  height: 80px;
+}
+
+img.img100_100 {
+  width: 100px;
+  position: absolute;
+    top: 0; bottom:0; left: 0; right:0;
+    margin: auto;
+}
+
+
+img.img150_150 {
+  width: 150px;
+  position: absolute;
+    top: 0; bottom:0; left: 0; right:0;
+    margin: auto;
+}
+img.img180_180 {
+  max-width: 180px;
+}
+
+
+
+
+/*h1 {font-size: 40px; letter-spacing: -3px; color: #727171; font-weight: 700;}
+*/
+
+
+
+
+
+/*.site-wrapper{
+  margin-top: -100px;
+}*/
+
 
 /*	css from main.css of the admin-iflat-theme -- converted from less to css in one big file	*/
+
+
+
 
 /*
 .btn-primary {

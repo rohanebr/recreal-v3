@@ -20,6 +20,17 @@ module.exports = function(app) {
 	app.route('/jobs/candidates/:jobId')
 		.get(jobs.getJobCandidates);
 
+	app.route('/jobs/addToShortList/:jobId')
+		.put(jobs.addToShortList);
+
+	app.route('/jobs/removeFromShortList/:jobId')
+		.put(jobs.removeFromShortList);
+
+
+	app.route('/jobs/shortListedCandidates/:jobId')
+		.get(jobs.getShortListedCandidates);
+
+	
 	// Finish by binding the Job middleware
 	app.param('jobId', jobs.jobByID);
 };

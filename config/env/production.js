@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = {
-	db: process.env.MONGOHQ_URL || process.env.MONGOLAB_URI || 'mongodb://localhost/recreal',
+	db: process.env.MONGOHQ_URL || process.env.MONGOLAB_URI || 'mongodb://muddaserahmed:sqlserver1@ds041380.mongolab.com:41380/recreal',
 	assets: {
 		lib: {
 			css: [
@@ -13,7 +13,10 @@ module.exports = {
 				'public/lib/angular-resource/angular-resource.js', 
 				'public/lib/angular-ui-router/release/angular-ui-router.min.js',
 				'public/lib/angular-ui-utils/ui-utils.min.js',
-				'public/lib/angular-bootstrap/ui-bootstrap-tpls.min.js'
+				'public/lib/angular-bootstrap/ui-bootstrap-tpls.min.js',
+				'public/lib/bootstrap/dist/js/bootstrap.js',
+				'public/lib/angular-socket-io/socket.js',
+				'public/lib/socket.io-client/socket.io.js'
 			]
 		},
 		css: 'public/dist/application.min.css',

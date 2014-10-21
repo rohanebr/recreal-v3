@@ -1,39 +1,33 @@
-<section data-ng-controller="CandidateAppliedJobsController">
-	<article>
-        <header class="text-center col-md-6">
-                <span class="header-page">Applied Jobs</span>
-        </header>
-    </article>
-    <section class="row">
-        <section class="col-md-8">
-            <article class="panel-body" ng-repeat="job in jobs" data-ng-show="hasApplied(job)">
-                <div class="media">
-                    <a class="pull-left" href="#">
-                        <img alt="" src="http://cns.com.pk/wp-content/uploads/2012/06/CNS-Logo.bmp" class="img-rounded img64_64">
-                    </a>
-                    <div class="media-body">
-                        <a data-ng-href="#!/jobs/{{job._id}}"><h3 class="media-heading">{{job.title}}</h3></a>
-                        <h5 >at <a data-ng-href="#!/companies/{{job.company._id}}">{{job.company.company_name}}</a></h5>                   
-                        <p>{{job.description | truncate:270}}</p>
-                        <div>
-                            <span  class="skill-div" data-ng-repeat="skill in job.skills">{{skill.title}}</span>
-                        </div>
+<section data-ng-controller="CandidateAppliedJobsController" class="container">
+    <header class="text-center col-md-12">
+            <h2 >Applied Jobs</h2>
+    </header>
+        <article class="col-md-8">
+            <section class="media" ng-repeat="job in jobs" data-ng-show="hasApplied(job)">
+                <a class="pull-left" href="#">
+                    <img alt="" src="http://cns.com.pk/wp-content/uploads/2012/06/CNS-Logo.bmp" class="img-rounded img64_64">
+                </a>
+                <section class="media-body">
+                    <a data-ng-href="#!/jobs/{{job._id}}"><h3 class="media-heading">{{job.title}}</h3></a>
+                    <h5 ><a data-ng-href="#!/companies/{{job.company._id}}">at {{job.company.company_name}}</a></h5>                   
+                    <p>{{job.description | truncate:270}}</p>
+                    <div>
+                        <span  class="skill-div" data-ng-repeat="skill in job.skills">{{skill.title}}</span>
                     </div>
-                    <div>    
-                        <label>{{job.dueDate | date}}</label>
-                        <!-- <strong><a class="btn btn-sm btn-success" ng-click="apply(job)">Apply Now</a></strong> -->
-                    </div>
-                </div>
-            </article>
-        </section>
+                </section>
+                <section>    
+                    <label>{{job.dueDate | date}}</label>
+                    <!-- <strong><a class="btn btn-sm btn-success" ng-click="apply(job)">Apply Now</a></strong> -->
+                </section>
+            </section>
+        </article>
         <aside class="col-md-4">
             <header> <h2>Title</h2></header>
-            <article class="caption">
+            <section class="caption">
                 <h3>Thumbnail label</h3>
                 <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-            </article>
+            </section>
         </aside>
-    </section>
 </section>
 
 <style>

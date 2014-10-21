@@ -9,6 +9,7 @@ var mongoose = require('mongoose'),
 	Candidate = mongoose.model('Candidate'),
 	Employer = mongoose.model('Employer'),
 	Company = mongoose.model('Company'),
+	Threads = mongoose.model('Thread'),
 	_ = require('lodash');
 
 /**
@@ -65,9 +66,9 @@ exports.signup = function(req, res) {
 			company.save();
 			break;
 	}
-	typeObject.firstName = user.firstName;
-	typeObject.lastName = user.lastName;
-	typeObject.displayName = user.displayName;
+	// typeObject.firstName = user.firstName;
+	// typeObject.lastName = user.lastName;
+	// typeObject.displayName = user.displayName;
 	typeObject.user = user;
 	typeObject.save();
 
@@ -97,7 +98,6 @@ exports.signup = function(req, res) {
 };
 
 
-
 /**
  * Signin after passport authentication
  */
@@ -110,6 +110,7 @@ exports.signin = function(req, res, next) {
 			user.password = undefined;
 			user.salt = undefined;
 
+	
 			req.login(user, function(err) {
 				if (err) {
 					res.send(400, err);
@@ -174,7 +175,6 @@ exports.changePassword = function(req, res, next) {
 				if (user.authenticate(passwordDetails.currentPassword)) {
 					if (passwordDetails.newPassword === passwordDetails.verifyPassword) {
 						user.password = passwordDetails.newPassword;
-
 						user.save(function(err) {
 							if (err) {
 								return res.send(400, {
@@ -277,6 +277,7 @@ exports.requiresLogin = function(req, res, next) {
 	next();
 };
 
+
 /**
  * User authorizations routing middleware
  */
@@ -371,6 +372,140 @@ exports.saveOAuthUserProfile = function(req, providerUserProfile, done) {
 	}
 };
 
+// exports.getthread = function(req, res) {
+// 	user.findOne({_id: req.usser._id}).populate('thread').populate('thread.message').exec(function(err, user){
+// 		res.jsonp(user);
+// 	});
+// };
+exports.getMessages = function(req,res)
+{
+	var userId=req.user._id;
+	
+	var username= User.findOne({_id:userId}).exec(function(err,user){
+
+});
+	var threadsId=req.user.threads;
+console.log('{users}{controller}{getName} Ran USERIDE:'+userId+' df');
+var threadId;
+
+for(var i=0;i<threadsId.length;i++)
+{
+
+	Threads.find({
+    '_id': { $in: threadsId}
+}).populate('messages.author').exec(function(err, docs){//res.setHeader('Content-Type', 'application/json');
+	
+	var gotmessages=[{}];
+ 		  for(var x=0;x<docs.length;x++)
+ 		  {
+ 		  	
+            var lengths=docs[x].messages.length;
+           
+ 		  if(!docs[x].read && !userId.equals(docs[x].messages[lengths-1].author._id))
+ 		  	  {var sendername=docs[x].messages[lengths-1].author.displayName;
+ 		  	  	var messagebody= docs[x].messages[lengths-1].messageBody;
+ 		  	  	var created=docs[x].messages[lengths-1].created;
+ 		  	  	var attr={id: docs[x]._id,senderName : sendername,messageBody:messagebody,created:created};
+ 		  	  	gotmessages.push(attr);
+
+ 		  	  }
+ 	}
+ 	
+ 	  
+ 	if(gotmessages.length>=0)
+ 	{
+ 		
+    res.end(JSON.stringify(gotmessages));
+    return "ended"; 	}
+ 		// res.send(JSON.stringify(gotmessages), null, 2);
+ 	else
+ 		{res.json("nothing");
+ 	return "ended";}
+ 
+ 
+ 
+ 	
+ 		});
+}
+
+
+
+};
+
+exports.sendMessage = function(req, res, next) {
+
+
+
+	var user = req.user;
+	var recieverId = req.body.recieverId; // reciever is a user
+	var subject= req.body.subject;
+	var messageBody= req.body.messageBody;
+
+	// User.findOne({_id: userId}).exec(function(err, user){
+	// 	Candidate.findOne({_id: candidateId}).exec(function(err, candidate){
+	// 		Subject.findOne({subject: subject}).exec(function(err, subject){
+	// 			Message.findOne({message: message.text}){
+	// 			user.sendMessage(candidate,subject,message.text);
+	// 			res.jsonp(user);});
+	// 		});
+	// 	});
+	// });
+
+
+	if (req.user) {
+		User.findById(req.user.id, function(err, sender) {
+			User.findById(recieverId, function(err, reciever){
+				var thread = {
+					sender: sender._id,
+					reciever: recieverId,
+					subject: subject,
+					senderName: sender.displayName,
+					messages: []
+				};
+
+				var message = {
+					messageBody: messageBody
+				};
+
+				thread.messages.push(message);
+
+				sender.threads.push(thread);
+				reciever.threads.push(thread);
+
+				sender.save(function(err) {
+					if (err) {
+						return res.send(400, {
+							message: getErrorMessage(err)
+						});
+					} else {
+						res.send({
+							message: 'Message sent successfully'
+						});
+					}
+				});
+
+				reciever.save(function(err) {
+					if (err) {
+						return res.send(400, {
+							message: getErrorMessage(err)
+						});
+					} else {
+						res.send({
+							message: 'Message sent successfully'
+						});
+					}
+				});
+			});
+
+			
+		});
+	}
+		
+
+};
+
+
+
 /**
  * Remove OAuth provider
  */
@@ -404,3 +539,7 @@ exports.removeOAuthProvider = function(req, res, next) {
 		});
 	}
 };
+
+
+
+

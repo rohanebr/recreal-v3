@@ -1,0 +1,37 @@
+<section data-ng-controller="ThreadsController" data-ng-init="findOneAndMarkAsRead()">
+	
+	
+	<div class="page-header">
+		<h1 data-ng-bind="thread.subject"></h1>
+	</div>
+	<div data-ng-repeat="message in thread.messages">
+
+		
+		<h3>{{message.author.displayName}}</h3>
+		<p>{{message.messageBody}}</p>
+		<span data-ng-bind="message.created | date:'mediumDate'"></span>
+	</div>
+
+	<textarea data-ng-model="messageBody" class="form-control">
+		
+	</textarea>
+
+<<<<<<< HEAD
+	<button data-ng-click="" class="btn btn-primary btn-md">
+	<button data-ng-click="sendMessage()" class="btn btn-primary btn-md">
+=======
+	<button data-ng-click="sendMessage()" class="btn btn-primary btn-medium">
+>>>>>>> 5a7e6e43ad006486d272e6ea6aef148448833ee0
+		Send
+	</button>
+	
+	<small>
+		<em class="text-muted">
+			Posted on
+			<span data-ng-bind="thread.created | date:'mediumDate'"></span>
+			by    
+
+			<span data-ng-bind="thread.sender.displayName"></span>
+		</em>
+	</small>
+</section>
