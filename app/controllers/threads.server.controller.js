@@ -238,22 +238,11 @@ exports.getUserThread = function(req,res)
 					thread.readByReceiver=true;
 					thread.markModified('readByReceiver');
 				}
-		
-        
-         thread.save();
+        thread.save();
 		if (err) return res.send(err);
 		else
 			return res.send(thread);
-			
-			
-		
-
-
 	});
-
-
-
-
 }
 
 /**

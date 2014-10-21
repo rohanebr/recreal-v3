@@ -213,10 +213,14 @@ Socket.emit('message_sent_from', {message: thread});
                        $http.put('/users/addSubscriber/'+$scope.authentication.user._id,{id:thread.sender._id}).success(function(){});                     
                   Socket.emit('watched_thread',$scope.authentication.user._id);
              	});
-			
-		
-	
-
 		};
+
+
+		$scope.cancelCompose = function(){
+			$scope.isCompose = false;
+		}
+		$scope.startCompose = function(){
+			$scope.isCompose = true;
+		}
 	}
 ]);

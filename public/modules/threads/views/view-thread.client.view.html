@@ -1,19 +1,33 @@
 <section data-ng-controller="ThreadsController" data-ng-init="findOneAndMarkAsRead()">
 	
+	
 	<div class="page-header">
 		<h1 data-ng-bind="thread.subject"></h1>
 	</div>
-
-	<div data-ng-repeat="message in thread.messages">
-		<img class="img50_50" src="{{message.author.picture_url}}">
-		<div ng-if="showOnline(message)">
-		<i class="fa fa-suitcase" style="color:green"></i></div>
-		<div ng-if="showOffline(message)">
-		<i class="fa fa-suitcase" style="color:red"></i></div>
-		<h3>{{message.author.displayName}}</h3>
-		<p>{{message.messageBody}}</p>
-		<span data-ng-bind="message.created | date:'mediumDate'"></span>
-	</div>
+	
+		<div data-ng-repeat="message in thread.messages">
+		<section class="row">
+			<section class="col-md-1">	
+			<img class="img50_50" src="{{message.author.picture_url}}">
+			</section>
+		<section class="col-md-11">
+			<section class="row">
+			<section class="col-md-1">
+			<div ng-if="showOnline(message)">
+				<i class="fa fa-circle" style="color:green"></i>
+			</div>
+			<div ng-if="showOffline(message)">
+				<i class="fa fa-circle" style="color:red"></i>
+			</div>
+			</section>
+			<section class="col-md-8">
+			<h5>{{message.author.displayName}}</h5>
+			<p>{{message.messageBody}}</p>
+			</section>
+			<section class="col-md-3">
+			<span data-ng-bind="message.created | date:'mediumDate'"></span>
+			</section></section></section></section>
+		</div>
 
 	<textarea data-ng-model="messageBody" class="form-control">
 		
@@ -32,4 +46,5 @@
 			<span data-ng-bind="thread.messages[thread.messages.length-1].author.displayName"></span>
 		</em>
 	</small>
+	</section>
 </section>

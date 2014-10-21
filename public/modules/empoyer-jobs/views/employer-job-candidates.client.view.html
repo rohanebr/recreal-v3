@@ -41,8 +41,11 @@
                         <label>Locations</label>
                         <ul>
                             <li data-ng-repeat="locationFilter in locationFilters">
-                            <input type="checkbox" value="locationFilter.value" data-ng-model="locationFilter.value" id="{{locationFilter.name}}" />
-                            <label for="{{locationFilter.name}}" >{{locationFilter.name}} ({{locationFilter.count}})</label>
+                            <input type="checkbox" value="locationFilter.value" data-ng-model="locationFilter.value" id="{{'location'+ locationFilter.name}}" />
+                            <!-- <label for="{{locationFilter.name}}" >{{locationFilter.name}} ({{locationFilter.count}})</label> -->
+
+                             <label ng-if="locationFilter.name" for="{{'location' + locationFilter.name}}" >{{locationFilter.name}} ({{locationFilter.count}})</label>
+                            <label ng-if="!locationFilter.name" for="{{'location' + locationFilter.name}}" >Not Mentioned ({{locationFilter.count}})</label>
                                 
                             </li>
                         </ul>
@@ -102,7 +105,9 @@
                                 
                             </li>
                         </ul>
-                    </article>                     
+                    </article> 
+
+                                                
 
                 </div>          
             </section>

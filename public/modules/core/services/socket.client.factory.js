@@ -38,9 +38,7 @@ socket.emit("user_data",Authentication.user);
           });
         })
       }
+      
     };
-
   }
-
-
 ]);

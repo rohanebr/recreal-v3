@@ -66,22 +66,10 @@
 		var user = {{ user | json | safe }};
 	</script>
 
-
-	<script type="text/javascript" src="/lib/jquery/dist/jquery.js"></script>
-	<script type="text/javascript" src="/lib/jquery-slimscroll/jquery.slimscroll.js"></script>
-	<script type="text/javascript" src="/lib/jquery-ui/jquery-ui.js"></script>
 	<!--Application JavaScript Files-->
 	{% for jsFile in jsFiles %}<script type="text/javascript" src="{{jsFile}}"></script>
 	{% endfor %} 
-	<script type="text/javascript" src="/lib/angular-ui-date/src/date.js"></script>
-
-	<script type="text/javascript" src="/lib/ng-file-upload/angular-file-upload-shim.js"></script>
-	<script type="text/javascript" src="/lib/ng-file-upload/angular-file-upload-html5-shim.js"></script>
-	<script type="text/javascript" src="/lib/ng-file-upload/angular-file-upload.js"></script>
-
-	<!-- textangular rich text editor -->
-	<script src='/lib/textAngular/dist/textAngular-sanitize.min.js'></script>
-	<script src='/lib/textAngular/dist/textAngular.min.js'></script>
+	
 
 	{% if process.env.NODE_ENV === 'development' %}
 	<!--Livereload script rendered -->
