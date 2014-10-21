@@ -44,6 +44,8 @@ module.exports = function(app) {
 		.put(users.deleteSubscriber);
 	app.route('/users/getMessages/:userId')
 		.get(users.getMessages);
+		app.route('/users/setUserType/:userId')
+		.put(users.setUserType);
 
 
 	// app.route('/users/thread/:userId')

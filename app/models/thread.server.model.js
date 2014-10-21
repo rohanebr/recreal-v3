@@ -18,8 +18,12 @@ var ThreadSchema = new Schema({
 		type: Date,
 		default: Date.now
 	},
-	read: {
+	readByReceiver: {
 		type: Boolean,
+		default: false
+	},
+	readBySender: {
+        type: Boolean,
 		default: false
 	},
 	sender: {

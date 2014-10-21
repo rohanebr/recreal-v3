@@ -35,13 +35,7 @@ var getErrorMessage = function(err) {
 /**
  * Create a Thread
  */
- exports.setRead = function(req,res)
 
-{
-console.log("works");
-
-
-}
 exports.create = function(req, res) {
 	var thread = new Thread(req.body);
 
@@ -176,6 +170,7 @@ exports.getUserThreads = function(req, res) {
  * Thread middleware
  */
 
+
 exports.threadByID = function(req, res, next, id) { 
 
 console.log("{THREAD}{CONTROLLER}{THREADBYID}");
@@ -223,12 +218,28 @@ console.log("{THREAD}{CONTROLLER}{THREADBYID}");
 /**
 *Get A single user thread and mark it as Read
 */
+exports.setRead = function(req,res)
+
+{
+}
 exports.getUserThread = function(req,res)
 {
+	var idofuser=req.body.id;
      	var id=req.thread._id;
  		Thread.findById(id).populate('sender').populate('receiver').populate('messages.author').exec(function(err, thread) {
-		thread.read=true;
-        thread.markModified('read');
+	if(thread.sender._id==idofuser)
+		 {
+		 	thread.readBySender=true;
+            thread.markModified('readBySender');
+		 }
+		else
+			if(thread.receiver._id==idofuser)
+				{
+					thread.readByReceiver=true;
+					thread.markModified('readByReceiver');
+				}
+		
+        
          thread.save();
 		if (err) return res.send(err);
 		else
@@ -254,6 +265,11 @@ exports.hasAuthorization = function(req, res, next) {
 	}
 	next();
 };
+/*
+*  This function only updates specific
+*  parts of the thread plus sends only ids of 
+*  sender and receiver which is optimum for really really big threads
+*/
 
 exports.updateThread = function (req,res)
 {
