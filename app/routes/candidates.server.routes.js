@@ -21,7 +21,16 @@ module.exports = function(app) {
     		.delete(users.requiresLogin, candidates.hasAuthorization, candidates.delete);
 
 
+<<<<<<< HEAD
 
+=======
+<<<<<<< HEAD
+    	app.route('/candidates/deleteSkill/:candidateId')
+    		.put(users.requiresLogin, candidates.hasAuthorization, candidates.deleteSkill);
+    	app.route('/candidates/addSkill/:candidateId')
+            .put(users.requiresLogin, candidates.hasAuthorization, candidates.addSkill);
+=======
+>>>>>>> bc7c08f54384832ddf2b2ddd3743aa1399c98768
     	
     	app.route('/candidates/addSkill/:candidateId')
             .put(users.requiresLogin, candidates.hasAuthorization, candidates.addSkill);
@@ -38,11 +47,23 @@ module.exports = function(app) {
 
         app.route('/candidates/deleteSkill/:candidateId')
             .put(users.requiresLogin, candidates.hasAuthorization, candidates.deleteSkill);
+<<<<<<< HEAD
 
+=======
+>>>>>>> 33c093656bfa041e27607497e3558a3b176ee750
+>>>>>>> bc7c08f54384832ddf2b2ddd3743aa1399c98768
         app.route('/candidates/deleteExperience/:candidateId')
             .put(users.requiresLogin,candidates.hasAuthorization,candidates.deleteExperience);
         app.route('/candidates/deleteProject/:candidateId')
             .put(users.requiresLogin,candidates.hasAuthorization,candidates.deleteProject);
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+        app.route('/candidates/updateExperience/:candidateId')
+            .put(users.requiresLogin,candidates.hasAuthorization,candidates.updateExperience);
+        app.route('/candidates/updateSkill/:candidateId')
+    	   .put(users.requiresLogin,candidates.hasAuthorization,candidates.updateSkill);
+>>>>>>> bc7c08f54384832ddf2b2ddd3743aa1399c98768
 
         app.route('/candidates/deleteEducation/:candidateId')
             .put(users.requiresLogin,candidates.hasAuthorization,candidates.deleteEducation);
@@ -63,7 +84,11 @@ module.exports = function(app) {
            .put(users.requiresLogin,candidates.hasAuthorization,candidates.updateLanguage);
         app.route('/candidates/updateCertificate/:candidateId')
            .put(users.requiresLogin,candidates.hasAuthorization,candidates.updateCertificate);
+<<<<<<< HEAD
 
+=======
+>>>>>>> 33c093656bfa041e27607497e3558a3b176ee750
+>>>>>>> bc7c08f54384832ddf2b2ddd3743aa1399c98768
     		// Finish by binding the Candidate middleware
             	app.param('candidateId', candidates.candidateByID);
 
