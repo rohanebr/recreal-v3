@@ -138,12 +138,14 @@ exports.getResult = function(req, res) {
 exports.examResultByID = function(req, res, next, id) { 
 	var userId=req.user._id;
 	var cand = Candidate.findOne({user:userId}).populate('examsTaken.exam').exec(function(err, candidate){
-	    candidate.examsTaken.forEach(function (item) {
-			if(item._id==id){
-				req.examTaken = item ;
-				next();
-			}
-	    });
+		if(candidate){
+		    candidate.examsTaken.forEach(function (item) {
+				if(item._id==id){
+					req.examTaken = item ;
+					next();
+				}
+		    });
+		}
 	});
 };
 
