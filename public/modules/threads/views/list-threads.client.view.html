@@ -141,16 +141,40 @@
 <section class="col-md-3">
     <section class="panel panel-default mail-categories">
         <div class="panel-heading">
-            <a href="#/mail/compose" class="btn btn-block btn-lg btn-primary ">Compose</a>
+            <a data-ng-click="startCompose()" class="btn btn-block btn-lg btn-primary ">Compose</a>
+
+            <div class="modal-content"  data-ng-show="isCompose">
+  
+  <div class="modal-body">
+    <label>To:</label>
+    <input class="form-control" data-ng-model="message.subject"></input>
+    <!-- <label class="label label-primary label-large " type="text" >{{reciever.displayName}}</label> -->
+    <br>
+    <label>Subject:</label>
+    <input class="form-control" data-ng-model="message.subject"></input>
+    <label>Message:</label>
+    <textarea class="form-control" data-ng-model="message.messageBody"></textarea>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-default" ng-click="cancelCompose()">Close</button>
+    <button type="button" ng-click="sendMessage(message)" class="btn btn-primary">Send</button>
+  </div>
+</div><!-- modal-content -->
+
+
+
         </div>
         <!-- <div class="modal-content">
         </div> -->
         <ul class="list-group">
-            <li class="list-group-item"><a href="javascript:;">
+            <li class="list-group-item"><a href="javascript:;"><a href="/#!/threads">
                 <i class="fa fa-inbox"></i>Inbox
-                <span class="badge badge-info pull-right">6</span>
+                <spam class="badge badge-danger pull-right">
+                    {{threads.length}}
+                </spam>
             </a></li>
-            <li class="list-group-item"><a href="javascript:;">
+            <li class="list-group-item"><a href="javascript:;"><a href="/#!/threads/:threadId">
                 <i class="fa fa-envelope-o"></i>Send mail
             </a></li>
             <li class="list-group-item"><a href="javascript:;">

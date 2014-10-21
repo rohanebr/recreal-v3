@@ -1,12 +1,17 @@
 <section data-ng-controller="ExamResultController" data-ng-init="findOne()">
 	
-	<section class="col-md-12">
-		<bold><h2>C# Test</h2></bold>
-	</section>
-
-	<section class="col-md-12">
-		<bold><h4>you have completed the tests</h4></bold>
-		<div class="col-md-2">
+	<aside class="col-md-2">
+		
+	</aside>
+	
+	<article class="col-md-10">
+		<aside 
+			<bold><h2>C# Test</h2></bold>
+		</aside>
+	<section>	
+	<section class="col-md-12 col-md-offset-2">
+		<bold><h4>You have completed the tests</h4></bold>
+		<div class="col-md-2 ">
 			<h6>Total Questions</h6>
 		</div>
 		<div class="col-md-1">
@@ -14,7 +19,7 @@
 		</div>
 	</section>
 
-	<section class="col-md-12">
+	<section class="col-md-12 col-md-offset-2">
 		<div class="col-md-2">
 			<h6>Attemped Questios</h6>
 		</div>
@@ -23,7 +28,7 @@
 		</div>
 	</section>
 
-	<section class="col-md-12">
+	<section class="col-md-12 col-md-offset-2">
 		<div class="col-md-2">
 			<h6>Correct Answers</h6>
 		</div>
@@ -32,7 +37,7 @@
 		</div>
 	</section>
 
-	<section class="col-md-12">
+	<section class="col-md-12 col-md-offset-2">
 		<div class="col-md-2">
 			<h6>False Answers</h6>
 		</div>
@@ -41,7 +46,7 @@
 		</div>
 	</section>
 
-	<section class="col-md-12">
+	<section class="col-md-12 col-md-offset-2">
 		<div class="col-md-2">
 			<h6>Percentage</h6>
 		</div>
@@ -49,8 +54,10 @@
 			<h6>30%</h6>
 		</div>
 	</section>
-
 </section>
+</article>
+</section>
+
 	<!-- Exam Taken : {{examTaken.exam.title}},
 	Score: {{examTaken.score}},
 	Passing Score:{{examTaken.exam.passScore}},
