@@ -213,8 +213,6 @@ if(req.user.userType === 'candidate')
 {
 var c;
 var experience=req.body;
-console.log(experience._id);
-console.log(experience.company_name);
 Candidate.update({ user: userId },{ $pull: { positions : { _id : experience._id } } }, { safe: true }, function removeConnectionsCB(err, obj) { })}console.log('method called delete Experience!');
 };
 

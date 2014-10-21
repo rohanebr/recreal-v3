@@ -42,6 +42,7 @@ angular.module('core').controller('HeaderController', ['$scope', 'Authentication
 
     
     	$http.get('/users/getMessages/' + $scope.authentication.user._id).success(function(res) {
+    		
     		 	console.log(res+"weird");
           	if(res.length>1)
           	{

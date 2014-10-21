@@ -6,6 +6,7 @@ angular.module('core').controller('HomeController', ['$scope', 'Authentication',
 		// This provides Authentication context.
 		$scope.authentication = Authentication;
 		var user = $scope.authentication.user;
+		console.log(user);
 //starting angular-charts
 $scope.data1 = {
 		series: ['Sales', 'Income', 'Expense', 'Laptops', 'Keyboards'],
@@ -76,7 +77,7 @@ $scope.data1 = {
         		  });
         		 
 
-                            Socket.emit('user_data',user);
+                            
                   		  
 
 			$rootScope.employer = Employers.get({
@@ -91,7 +92,7 @@ $scope.data1 = {
 		else if(user.userType === 'candidate'){
 		
         		    
-                    Socket.emit('user_data',user);
+                  
         		 $rootScope.candidate = Candidates.get({
 					candidate: $scope.authentication.user.candidate
 				});
