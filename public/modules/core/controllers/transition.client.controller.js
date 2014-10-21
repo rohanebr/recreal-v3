@@ -17,6 +17,23 @@ $scope.$watch('formData.userType', function() {
 console.log($scope.formData.userType);
        });
        
+       $scope.$watch('formData.importCV',function(){
+       if($scope.formData.importCV=='import')
+       {
+
+
+
+       	
+       }
+   else if($scope.formData.importCV=='dontimport')
+   {
+
+   	becomeEmployee();
+   }
+
+
+
+       });
 
 
 
@@ -44,12 +61,12 @@ if($scope.authentication.user.userType=='transition'){
 				});
 			});
 			
-
+$scope.authentication.user.userType="employer";
 			$location.path('/company-profile');					
              	});
 }
 	};
-	$scope.becomeEmployee=function(){
+	var becomeEmployee=function(){
 	if($scope.authentication.user.userType=='transition'){	
 		  $http.put('/users/setUserType/' + $scope.authentication.user._id,{userType:'candidate'}).success(function(user) {
 								console.log(user);
@@ -59,7 +76,7 @@ if($scope.authentication.user.userType=='transition'){
         		 $rootScope.candidate = Candidates.get({
 					candidate: $scope.authentication.user.candidate
 				});
-        	
+        	$scope.authentication.user.userType="employee";
      		 $state.go('candidate-home');
 }
 	};

@@ -18,7 +18,7 @@ angular.module('core').config(['$stateProvider', '$urlRouterProvider',
 			templateUrl: 'modules/core/views/transition-userType.client.view.html'
 			
 		}).state('transition.importCv', {
-			url: '/userType',
+			url: '/importCv',
 			templateUrl: 'modules/core/views/transition-importCv.client.view.html'
 			
 		}).
