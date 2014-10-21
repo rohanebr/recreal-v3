@@ -36,7 +36,7 @@
      <section>
         <article class="col-sm-12">
           <label for="">Posted By:</label><Br>
-          {{employer.displayName.toUpperCase()}},({{employer.jobs.length}})
+        <span style="color:gray; font-style: italic">   {{employer.displayName.toUpperCase()}},({{employer.jobs.length}})</span>
          <hr>
          </article>
     </section>
@@ -48,12 +48,12 @@
     <article class="col-md-9">
     	<section ng-repeat="job in jobs ">
         	<a href="#!/jobs/{{job._id}}" ><h2>{{job.title}}</h2></a> 
-        	<span class="pull-right"> Close Date: {{job.due_date | date}}</span>
+        	<span class="pull-right" style="color:gray; font-style: italic"> Close Date: {{job.due_date | date}}</span>
         	<p><h4>{{job.location}} , {{job.country}}</h4></p>
-        	<p><span><strong>Description:</strong>
+        	<p><span><!-- <strong>Description:</strong> -->
                 <div ng-bind-html="job.description | truncate:270"></div>
              </span></p> 
-             <p><span class="pull-left"> Posted By: {{employer.displayName.toUpperCase()}}</span></p>
+             <p><span class="pull-left" style="color:gray; font-style: italic"> Posted By: {{employer.displayName.toUpperCase()}}</span></p>
             <div class="pull-right">
               
                      <section class="col-md-4">
