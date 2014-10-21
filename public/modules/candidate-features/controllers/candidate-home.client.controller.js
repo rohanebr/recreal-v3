@@ -7,7 +7,7 @@ angular.module('candidate-features').controller('CandidateHomeController', ['$sc
 
 		// If user is not signed in then redirect back home
 		if (!$scope.user) $location.path('/signin');
-
+        console.log($scope.user.candidate);
 		$scope.candidate = Candidates.get({ 
 			candidateId: $scope.user.candidate
 		});	
@@ -16,11 +16,15 @@ angular.module('candidate-features').controller('CandidateHomeController', ['$sc
 		$scope.jobs = Jobs.query();
 
 		$scope.hasApplied = function(job){
-			if ($scope.candidate.jobs.indexOf(job._id) > -1) {
-			    return true;
-			} else {
-			   	return false;
+
+			for(var d=0,x=$scope.candidate.jobs.length;d<x;d++)
+			{
+                if($scope.candidate.jobs[d]===job._id)
+                	 return true;
+
 			}
+			return false;
+			
 		};
 
 		// Apply for a Job
