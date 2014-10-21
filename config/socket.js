@@ -9,7 +9,7 @@ exports.create = function(server) {
     io = require('socket.io').listen(server);
     exports.socket_io = io;
 
-<<<<<<< HEAD
+
     io.on('connection', function(socket) {
         console.log('connected' + socket.id);
         sock = socket;
@@ -31,17 +31,7 @@ exports.create = function(server) {
                 for (var x = 0; x < socketid.length; x++) {
                     socketid[x].emit('watched_thread', 'nothg');
                     socketid[x].emit('incoming_thread', leastamountofdata);
-=======
-          var leastamountofdata={messageBody:data.messageBody,id:data.author._id,author:data.author.displayName,created:data.created,authordp : data.authordp };
-            var socketid=fetchmesocketid(data.receiver);
-            for(var x=0;x<socketid.length;x++)
-          {socketid[x].emit('watched_thread','nothg');
-            socketid[x].emit('incoming_thread', leastamountofdata);}
-           var socketid=fetchmesocketid(data.sender);
-            for(var x=0;x<socketid.length;x++)
-           { socketid[x].emit('watched_thread','nothg');
-            socketid[x].emit('incoming_thread', leastamountofdata);
->>>>>>> 936fba541823783c94761669ebb8f4abb02b0cb0
+
 
 
                 }
