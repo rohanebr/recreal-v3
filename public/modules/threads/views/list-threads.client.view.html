@@ -128,7 +128,6 @@
 
 </section> -->
 <section data-ng-controller="ThreadsController" data-ng-init="findUserThreads()">
-   This is the List user messages view
     <div data-ng-repeat="thread in user.threads">
         <h2>{{thread.subject}}</h2>
         <p>{{thread.created | date}}</p>
@@ -199,7 +198,7 @@
 <section class="col-md-9">
         <div class="col-md-10">
             <div class="pull-right">
-                <div class="btn-group">  
+                <div class="dropdown">  
                     <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
                         More<span class="caret"></span>
                     </button>
