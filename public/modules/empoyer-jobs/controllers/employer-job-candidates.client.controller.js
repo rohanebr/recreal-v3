@@ -10,9 +10,12 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
 		$scope.employeestatusFilters = [];
 		
 		$scope.isShortListed = function(candidate){
-			// job.candidates = [];
-			// job.shortListedCandidates = [];
-			return false;
+			var ans = false;
+			angular.forEach($scope.job.shortListedCandidates, function(item){
+				if (item.candidate == candidate._id)
+					ans = true;
+			});
+			return ans;
 		};
 		
 		$http.get('jobs/candidates/' + $stateParams.jobId).success(function(job) {

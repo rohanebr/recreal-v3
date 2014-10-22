@@ -153,8 +153,6 @@ var JobSchema = new Schema({
 			type: Schema.ObjectId,
 			ref: 'Employer'
 		}
-		
-
 	}],
 	user: {
 		type: Schema.ObjectId,
