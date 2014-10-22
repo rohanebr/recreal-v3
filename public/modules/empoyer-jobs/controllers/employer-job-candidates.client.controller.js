@@ -74,6 +74,7 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
 			});
 		};
 
+
 		// });
 		// $scope.search.name = 'Rawalpindi';
 
@@ -208,4 +209,5 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
 
 }
 ]);
+
 
