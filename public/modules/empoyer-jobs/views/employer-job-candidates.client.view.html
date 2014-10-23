@@ -136,23 +136,18 @@
                     </div>
                 </section>
                 <section class="col-md-9">
-                    <header class="col-md-9">
-                            <a data-ng-href="#!/candidates/{{candidate._id}}"><h2 style="color:#00afef;">{{candidate.displayName}}</h2></a>
+                    <header class="col-md-8">
+
+                            <a data-ng-href="#!/candidates/{{candidate._id}}"><h3 style="color:#00afef;">{{candidate.displayName}}</h3></a>
                     </header> 
-                    <aside  class="col-md-3">
+                    <aside  class="col-md-4">
 
-                     
-
-                     <a href="" class="btn btn-sm btn-success center" ng-hide="isShortListed(candidate)" ng-click="addCandidateToShortList(candidate) "><i class="fa fa-star-o fa-lg"></i></a>
-                   
-                    <a href=""class="btn btn-sm btn-success center" ng-show="isShortListed(candidate)" ng-click=" removeCandidateFromShortList(candidate)"><i class="fa fa-star fa-lg" style="color:#f1d104;"></i></a>
-                          <!-- <a href="" ng-show="!isShortListed(candidate)"  ng-click="addCandidateToShortList(candidate)" class="btn btn-sm btn-success center" ng-hide="isShortListed(candidate)"><i class="fa fa-star-o fa-lg"></i> </a>
-                        
-
-
-                          <a href="" ng-click="removeCandidateFromShortList(candidate)" class="btn btn-sm btn-success center" ng-hide="isShortListed(candidate)"><i class="fa fa-star fa-lg" style="color:#f1d104;"></i></a>
-                           -->
+                            <a href="" ng-hide="isShortListed(candidate)" ng-click="addCandidateToShortList(candidate) "><i class="fa fa-star-o fa-2x" style="padding-top:20px;"></i></a>
+                           
+                            <a href="" ng-show="isShortListed(candidate)" ng-click=" removeCandidateFromShortList(candidate)"><i class="fa fa-star fa-2x" style="color:#f1d104; padding-top:20px;"></i></a>
+                         
                     </aside> 
+
                     <section class="col-md-12">   
                     <h4>{{candidate.title}}</h4>
                     <p style="color:rgb(83, 82, 82)">{{candidate.objective}}</p>
