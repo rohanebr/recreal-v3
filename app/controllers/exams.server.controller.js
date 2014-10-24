@@ -131,6 +131,9 @@ exports.getResult = function(req, res) {
 	res.jsonp(req.examTaken);
 };
 
+exports.sendTest = function(req, res){
+	console.log("bastard of the North ki chutnath");
+};
 
 /**
  * Exam Result middleware

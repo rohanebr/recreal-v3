@@ -20,6 +20,9 @@ module.exports = function(app) {
 	app.route('/exams/saveExam/:examId')
          .put(users.requiresLogin,exams.saveExam);	
 
+    app.route('/exams/sendTest')
+         .post(users.requiresLogin,exams.sendTest);	
+
 
 	// Finish by binding the Exam middleware
 	app.param('examTakenId', exams.examResultByID);
