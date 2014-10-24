@@ -24,6 +24,17 @@ var JobSchema = new Schema({
 	  description:{
 	    type: 'String'
 	  },
+	  coordinates:{
+            latitude:{
+         	type:Number,
+           	default:0
+           },
+           longitude:{
+           	type:Number,
+           	default:0
+           }
+
+	  },
 	  requirement:{
 	    type: 'String',
 	    trim: true

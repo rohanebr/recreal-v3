@@ -1,18 +1,16 @@
 'use strict';
 
-angular.module('empoyer-jobs').controller('PostJobController', ['$scope', 'Industries','Countries','Studyfields', '$location', 'Authentication', 'Jobs',
-	function($scope, Industries, Countries,Studyfields, $location, Authentication, Jobs) {
+angular.module('empoyer-jobs').controller('PostJobController', ['$scope', 'Industries','Countries','Studyfields', '$location', 'Authentication', 'Jobs','$rootScope',
+	function($scope, Industries, Countries,Studyfields, $location, Authentication, Jobs,$rootScope) {
 		$scope.user = Authentication.user;
 		// If user is not signed in then redirect back home
 		if (!$scope.user) $location.path('/signin');
 
 		$scope.industries = Industries.getIndustries();
-		// $scope.industry =$scope.industries[0].name;
+		
 		$scope.countries = Countries.getCountries();
 		$scope.studyFields = Studyfields.getStudyFields();
-
-		// $scope.texting = IndustriesFactory.sayHello('world');
-
+   
 		$scope.skills = [];
 		$scope.skills.push({
 		        title: ''
@@ -23,6 +21,8 @@ angular.module('empoyer-jobs').controller('PostJobController', ['$scope', 'Indus
 		      });
 		// Create new Job
 		$scope.create = function() {
+			$scope.position=$scope.map.markers[0].position;
+		
 			// Create new Job object
 			var job = new Jobs ({
 				title: this.title,
@@ -45,7 +45,13 @@ angular.module('empoyer-jobs').controller('PostJobController', ['$scope', 'Indus
 				study_field: this.study_field,
 				travel_required: this.travel_required,
 				skills: this.skills,
-				certificates: this.certificates
+				certificates: this.certificates,
+				//k = latitude
+				//B = longitude
+				coordinates: {
+					latitude:$scope.position.k,
+					longitude:$scope.position.B
+				}
 			});
 
 			// Redirect after save
@@ -81,5 +87,16 @@ angular.module('empoyer-jobs').controller('PostJobController', ['$scope', 'Indus
 	    $scope.removeCertificate = function(index) {
 	      $scope.certificates.splice(index, 1);
 	    };
+
+
+	    $scope.bootupmapaccordingtogeolocation=function()
+	    {
+          $scope.lat=$rootScope.coords.lat;
+          $scope.longi=$rootScope.coords.longi;
+
+console.log($scope.lat);
+	    }
+
+
 	}
 ]);

@@ -2,6 +2,7 @@
 
 angular.module('candidate-jobs').controller('CandidateOpenJobsController', ['$scope', 'Jobs', '$http', 'Authentication', 'Candidates', '$location','Socket','$rootScope',
 	function($scope, Jobs, $http, Authentication, Candidates, $location,Socket,$rootScope) {
+console.log( $rootScope.coords.lat+","+ $rootScope.coords.longi);
 
 		$scope.user = Authentication.user;
  
