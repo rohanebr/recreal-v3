@@ -10,6 +10,7 @@ $scope.formData = {userType:''};
 	// function to process the form
 	
 $scope.$watch('formData.userType', function() {
+	console.log($scope.formData.userType);
 	if($scope.formData.userType=="Employer")
 	{
 		becomeEmployer();
