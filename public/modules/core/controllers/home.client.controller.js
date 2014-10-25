@@ -5,12 +5,6 @@ angular.module('core').controller('HomeController', ['$scope', 'Authentication',
 	function($scope, Authentication, $state, $rootScope, Employers, Companies, Candidates , Socket) {
 		// This provides Authentication context.
 		$scope.authentication = Authentication;
-Matrix.Distance(function(results){
-    alert(JSON.stringify(results));
-},function(error){
-    alert(JSON.stringify(error));
-});
-
 		var user = $scope.authentication.user;
 		console.log(user);
 //starting angular-charts
