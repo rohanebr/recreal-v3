@@ -6,11 +6,15 @@ angular.module('core').controller('HeaderController', ['$scope', 'Authentication
 		$scope.isCollapsed = false;
 		$scope.menu = Menus.getMenu('topbar');
 		$scope.threads=[];
+		$scope.notifications=[];
        var thread=[];
 		
    //add code to refresh the header if thread is coming through the socket
 		if($scope.authentication.user){
-			
+			Socket.on('take_the_test_notification',function(data){
+$scope.notifications.push({generalmessage:data.generalmessage,hiddendata:data.hiddendata,created:data.created});
+
+			});
 	 Socket.on('watched_thread_to', function(event, args) {
 			$scope.threads=[];
 		 	console.log("wactched_thread_to works");

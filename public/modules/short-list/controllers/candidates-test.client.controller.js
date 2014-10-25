@@ -1,5 +1,6 @@
-angular.module('short-list').controller('CandidatesTestController', ['$scope', '$http', '$stateParams', '$modal','$rootScope', 'Exams',
-	function($scope, $http, $stateParams, $modal,$rootScope, Exams) {
+angular.module('short-list').controller('CandidatesTestController', ['$scope', '$http', '$stateParams', '$modal','$rootScope', 'Exams','Authentication',
+	function($scope, $http, $stateParams, $modal,$rootScope, Exams,Authentication) {
+$scope.user=Authentication.user;
 
 
 
@@ -17,13 +18,22 @@ angular.module('short-list').controller('CandidatesTestController', ['$scope', '
 		$scope.sendTest = function(){
 			var tests = [];
 			angular.forEach($scope.tests, function(test){
+				console.log(test);
 				if(test.selected){
 					tests.push(test._id);
 				}
 			});
 			var candidates =$rootScope.selectedCandidates;
-			$http.post('exams/sendTest', {candidates: candidates, tests: tests }).success(function(response){
-				alert('test sent');
+			console.log(candidates);
+			$http.put('/exams/sendTest/'+$scope.user._id, {candidates: candidates, tests: tests }).success(function(response){
+				console.log(response);
+				if(response.data=="none have given test")
+				{
+					alert("None have given the test ");
+
+				}
+				if(response.data=="already given test")
+					{alert("well it looks like someone has given the test already");}
 			}).error(function(err){
 
 			});	
