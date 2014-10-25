@@ -20,7 +20,7 @@ $scope.formData = {userType:''};
  		console.log(f.selected);
           if(f.selected)
          { 
-          $rootScope.selectedCandidates.push($scope.shortListedObjects[d]);
+          $rootScope.selectedCandidates.push($scope.shortListedObjects[d].candidate._id);
           console.log("WTF");
       }
 
