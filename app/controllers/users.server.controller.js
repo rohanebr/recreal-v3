@@ -12,6 +12,10 @@ var mongoose = require('mongoose'),
 	Threads = mongoose.model('Thread'),
 	_ = require('lodash');
 
+exports = _.extend(
+	require('./users/users.password')
+);
+
 /**
  * Get the error message from error object
  */
