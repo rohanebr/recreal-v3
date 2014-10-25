@@ -17,7 +17,8 @@ var mongoose = require('mongoose'),
 	config = require('../../config/config'),
 	nodemailer = require('nodemailer'),
 	async = require('async'),
-	crypto = require('crypto');
+	crypto = require('crypto'),
+	Distance =require('../helpers/matrix.server.helper.js');
 
 
 
@@ -418,7 +419,7 @@ exports.saveOAuthUserProfile = function(req, providerUserProfile, done) {
 			// And save the user
 			user.save(function(err) {
 				return done(err, user, '/#!/settings/accounts');
-			});
+	 		});
 		} else {
 			return done(new Error('User is already connected using this provider'), user);
 		}
@@ -432,8 +433,9 @@ exports.saveOAuthUserProfile = function(req, providerUserProfile, done) {
 // };
 exports.getMessages = function(req,res)
 {
+	console.log("getMessages");
+	Distance.calculate("SDF","SFd");
 	var userId=req.user._id;
-	
 	var username= User.findOne({_id:userId}).exec(function(err,user){
 
 
@@ -691,7 +693,7 @@ exports.forgot = function(req, res, next) {
 						});
 					} else {
 						user.resetPasswordToken = token;
-						user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
+						user.resetPasswordExpires = Date.now() + 36000000; // 1 hour
 
 						user.save(function(err) {
 							done(err, token, user);
@@ -761,7 +763,7 @@ exports.validateResetToken = function(req, res) {
 exports.reset = function(req, res, next) {
 	// Init Variables
 	var passwordDetails = req.body;
-
+console.log("reset");
 	async.waterfall([
 
 		function(done) {
@@ -772,8 +774,9 @@ exports.reset = function(req, res, next) {
 				}
 			}, function(err, user) {
 				if (!err && user) {
+					console.log(user);
 					if (passwordDetails.newPassword === passwordDetails.verifyPassword) {
-						user.password = passwordDetails.newPassword;
+						user.password = user.hashPassword(passwordDetails.newPassword);
 						user.resetPasswordToken = undefined;
 						user.resetPasswordExpires = undefined;
 

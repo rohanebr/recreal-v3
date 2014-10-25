@@ -8,6 +8,7 @@ var mongoose = require('mongoose'),
 	Candidate = mongoose.model('Candidate'),
 	ExamSocket = require('../sockets/exams.server.socket.js'),
 	_ = require('lodash');
+	
 
 /**
  * Get the error message from error object
@@ -156,19 +157,19 @@ var candidatesalreadygiventest=[];
                                 	{ 
                                 	  console.log(tests[q]);
                                       examstaken.push({score:0,exam:tests[q],isPass:false,state:"notTaken"});
-                                      console.log(docs[h].displayName);
-                                 ExamSocket.notifyCandidateToGiveTest({generalmessage: "Please click on the link to give the test",hiddendata:"/takeExam/"+tests[q],created:Date.now()});
+                                      console.log("SENTTEST"+docs[h].user);
+                                 ExamSocket.notifyCandidateToGiveTest({userid:docs[h].user,generalmessage: "Please click on the link to give the test",hiddendata:"/takeExam/"+tests[q],created:Date.now()});
               //ExamSocket.notifyCandidateToGiveTest({generalmessage: "asdaf"});
 
                                 	}
 
               	        }
               	        if(examstaken.length==0)
-              	        {console.log("TESTS"+tests[0]);
+              	        {  console.log("SENTTEST"+docs[h].user);
               	    for(var hh=0,dd=tests.length;hh<dd;hh++)
                          {
                          	examstaken.push({score:0,exam:tests[hh],isPass:false,state:"notTaken"});
-                            ExamSocket.notifyCandidateToGiveTest({generalmessage: "Please click on the link to give the test",hiddendata:"/takeExam/"+tests[hh],created:Date.now()});
+                            ExamSocket.notifyCandidateToGiveTest({userid:docs[h].user,generalmessage: "Please click on the link to give the test",hiddendata:"/takeExam/"+tests[hh],created:Date.now()});
                          }
                           console.log(docs[h].displayName);
 
