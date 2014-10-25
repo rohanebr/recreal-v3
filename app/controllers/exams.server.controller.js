@@ -130,7 +130,7 @@ exports.list = function(req, res) { Exam.find().sort('-created').populate('user'
 exports.getResult = function(req, res) {
 	res.jsonp(req.examTaken);
 };
-
+//need to add notifications in the database when the employer sends the Test
 exports.sendTest = function(req, res){
 
 	var candidates=req.body.candidates;

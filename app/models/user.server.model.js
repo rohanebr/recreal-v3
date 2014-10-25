@@ -50,8 +50,20 @@ var UserSchema = new Schema({
 		default: '/uploads/fullsize/no-image.jpg'
 	},
 	notifications:[{
-		type: 'String'
-	}],
+		     generalmessage:{
+		     	type:'String',
+		     	default:''
+		     },
+             hiddendata:{
+             	type:'String',
+             	default:''
+             },
+             created:{
+             	type:Date,
+             	default:Date.now()
+             }
+             }
+		],
 	email: {
 		type: String,
 		trim: true,
