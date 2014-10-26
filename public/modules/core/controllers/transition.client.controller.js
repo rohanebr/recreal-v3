@@ -28,7 +28,6 @@ console.log($scope.formData.userType);
        }
    else if($scope.formData.importCV=='dontimport')
    {
-
    	becomeEmployee();
    }
 
