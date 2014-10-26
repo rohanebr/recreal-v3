@@ -51,7 +51,8 @@ module.exports = function(app) {
 		.get(users.getMessages);
 		app.route('/users/setUserType/:userId')
 		.put(users.setUserType);
-
+app.route('/users/readNotification/:userId')
+		.post(users.readNotification);
 
 	// app.route('/users/thread/:userId')
 	// 	.get(user.getthreads);
