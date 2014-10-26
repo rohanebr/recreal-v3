@@ -12,6 +12,9 @@ angular.module('core').controller('HeaderController', ['$scope', 'Authentication
    //add code to refresh the header if thread is coming through the socket
 		if($scope.authentication.user){
 			Socket.on('take_the_test_notification',function(data){
+				console.log("DTA"+data.userid);
+				console.log("AUTH"+$scope.authentication.user._id);
+				if(data.userid==$scope.authentication.user._id)
 $scope.notifications.push({generalmessage:data.generalmessage,hiddendata:data.hiddendata,created:data.created});
 
 			});

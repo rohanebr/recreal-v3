@@ -5,7 +5,9 @@
 /**
  * Module dependencies.
  */
-var mongoose = require('mongoose'),Candidate = mongoose.model('Candidate'),_ = require('lodash');
+var mongoose = require('mongoose'),
+Candidate = mongoose.model('Candidate'),
+_ = require('lodash');
 
 
 /**
@@ -76,6 +78,7 @@ exports.delete = function(req, res) {
  * List of Candidates
  */
 exports.list = function(req, res) { 
+
 	Candidate.find().sort('-created').populate('user', 'displayName').exec(function(err, candidates) {
 		if (err) {
 			return res.send(400, {
