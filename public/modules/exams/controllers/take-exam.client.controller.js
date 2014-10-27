@@ -68,7 +68,7 @@ angular.module('exams').controller('TakeExamController', ['$scope', '$stateParam
         });
 
 $scope.$on('$destroy', function() {
-	console.log("DESTRUCTION");
+
    window.onbeforeunload = undefined;
 });
 window.onbeforeunload = function (event) {        

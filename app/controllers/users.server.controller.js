@@ -9,8 +9,18 @@ var mongoose = require('mongoose'),
 	Candidate = mongoose.model('Candidate'),
 	Employer = mongoose.model('Employer'),
 	Company = mongoose.model('Company'),
-	Threads = mongoose.model('Thread'),
-	_ = require('lodash');
+	Threads = mongoose.model('Thread'), 
+	_ = require('lodash'),
+	mongoose = require('mongoose'),
+	passport = require('passport'),
+	User = mongoose.model('User'),
+	config = require('../../config/config'),
+	nodemailer = require('nodemailer'),
+	async = require('async'),
+	crypto = require('crypto'),
+	Distance =require('../helpers/matrix.server.helper.js');
+
+
 
 /**
  * Get the error message from error object
@@ -96,7 +106,37 @@ exports.signup = function(req, res) {
 	});
 };
 
+exports.readNotification=function(req,res)
 
+
+{
+	var g=req.body;
+	
+	var id = mongoose.Types.ObjectId(g._id);
+	   User.findById(req.user.id,function(err,user){
+var len=user.notifications.length;
+            for(var g=0;g<len;g++)
+            {
+               if(id.equals(user.notifications[g]._id))
+               	user.notifications[g].isRead=true;
+
+
+            }
+
+            user.markModified('notifications');
+            user.save();
+
+
+
+	   });
+// 	var notification=req.user.notifications[0];
+	
+// 	console.log(id);
+// 	if(id.equals(notification._id))
+// console.log(notification._id.id);
+
+
+};
 /**
  * Signin after passport authentication
  */
@@ -409,7 +449,7 @@ exports.saveOAuthUserProfile = function(req, providerUserProfile, done) {
 			// And save the user
 			user.save(function(err) {
 				return done(err, user, '/#!/settings/accounts');
-			});
+	 		});
 		} else {
 			return done(new Error('User is already connected using this provider'), user);
 		}
@@ -423,8 +463,9 @@ exports.saveOAuthUserProfile = function(req, providerUserProfile, done) {
 // };
 exports.getMessages = function(req,res)
 {
+	console.log("getMessages");
+	Distance.calculate("SDF","SFd");
 	var userId=req.user._id;
-	
 	var username= User.findOne({_id:userId}).exec(function(err,user){
 
 
@@ -652,3 +693,273 @@ exports.removeOAuthProvider = function(req, res, next) {
 
 
 
+// module.exports = _.extend(
+// 	require('./users/users.password')
+// );
+
+exports.forgot = function(req, res, next) {
+	console.log("RAN FORGET");
+		async.waterfall([
+		// Generate random token
+		function(done) {
+			crypto.randomBytes(20, function(err, buffer) {
+				var token = buffer.toString('hex');
+				done(err, token);
+			});
+		},
+		// Lookup user by username
+		function(token, done) {
+			if (req.body.username) {
+				User.findOne({
+					username: req.body.username
+				}, '-salt -password', function(err, user) {
+					if (!user) {
+						return res.status(400).send({
+							message: 'No account with that username has been found'
+						});
+					} else if (user.provider !== 'local') {
+						return res.status(400).send({
+							message: 'It seems like you signed up using your ' + user.provider + ' account'
+						});
+					} else {
+						user.resetPasswordToken = token;
+						user.resetPasswordExpires = Date.now() + 36000000; // 1 hour
+
+						user.save(function(err) {
+							done(err, token, user);
+						});
+					}
+				});
+			} else {
+				return res.status(400).send({
+					message: 'Username field must not be blank'
+				});
+			}
+		},
+		function(token, user, done) {
+			res.render('templates/reset-password-email', {
+				name: user.displayName,
+				appName: config.app.title,
+				url: 'http://' + req.headers.host + '/auth/reset/' + token
+			}, function(err, emailHTML) {
+				done(err, emailHTML, user);
+			});
+		},
+		// If valid email, send reset email using service
+		function(emailHTML, user, done) {
+			var smtpTransport = nodemailer.createTransport(config.mailer.options);
+			var mailOptions = {
+				to: user.email,
+				from: config.mailer.from,
+				subject: 'Password Reset',
+				html: emailHTML
+			};
+			smtpTransport.sendMail(mailOptions, function(err) {
+				if (!err) {
+					res.send({
+						message: 'An email has been sent to ' + user.email + ' with further instructions.'
+					});
+				}
+
+				done(err);
+			});
+		}
+	], function(err) {
+		if (err) return next(err);
+	});
+};
+
+/**
+ * Reset password GET from email token
+ */
+exports.validateResetToken = function(req, res) {
+	User.findOne({
+		resetPasswordToken: req.params.token,
+		resetPasswordExpires: {
+			$gt: Date.now()
+		}
+	}, function(err, user) {
+		if (!user) {
+			return res.redirect('/#!/password/reset/invalid');
+		}
+
+		res.redirect('/#!/password/reset/' + req.params.token);
+	});
+};
+
+/**
+ * Reset password POST from email token
+ */
+exports.reset = function(req, res, next) {
+	// Init Variables
+	var passwordDetails = req.body;
+console.log("reset");
+	async.waterfall([
+
+		function(done) {
+			User.findOne({
+				resetPasswordToken: req.params.token,
+				resetPasswordExpires: {
+					$gt: Date.now()
+				}
+			}, function(err, user) {
+				if (!err && user) {
+					console.log(user);
+					if (passwordDetails.newPassword === passwordDetails.verifyPassword) {
+						user.password = user.hashPassword(passwordDetails.newPassword);
+						user.resetPasswordToken = undefined;
+						user.resetPasswordExpires = undefined;
+
+						user.save(function(err) {
+							if (err) {
+								return res.status(400).send({
+									message: errorHandler.getErrorMessage(err)
+								});
+							} else {
+								req.login(user, function(err) {
+									if (err) {
+										res.status(400).send(err);
+									} else {
+										// Return authenticated user 
+										res.jsonp(user);
+
+										done(err, user);
+									}
+								});
+							}
+						});
+					} else {
+						return res.status(400).send({
+							message: 'Passwords do not match'
+						});
+					}
+				} else {
+					return res.status(400).send({
+						message: 'Password reset token is invalid or has expired.'
+					});
+				}
+			});
+		},
+		function(user, done) {
+			res.render('templates/reset-password-confirm-email', {
+				name: user.displayName,
+				appName: config.app.title
+			}, function(err, emailHTML) {
+				done(err, emailHTML, user);
+			});
+		},
+		// If valid email, send reset email using service
+		function(emailHTML, user, done) {
+			var smtpTransport = nodemailer.createTransport(config.mailer.options);
+			var mailOptions = {
+				to: user.email,
+				from: config.mailer.from,
+				subject: 'Your password has been changed',
+				html: emailHTML
+			};
+			
+			smtpTransport.sendMail(mailOptions, function(err) {
+				done(err, 'done');
+			});
+		}
+	], function(err) {
+		if (err) return next(err);
+	});
+};
+
+/**
+ * Change Password
+ */
+exports.changePassword = function(req, res) {
+	// Init Variables
+	var passwordDetails = req.body;
+
+	if (req.user) {
+		if (passwordDetails.newPassword) {
+			User.findById(req.user.id, function(err, user) {
+				if (!err && user) {
+					if (user.authenticate(passwordDetails.currentPassword)) {
+						if (passwordDetails.newPassword === passwordDetails.verifyPassword) {
+							user.password = passwordDetails.newPassword;
+
+							user.save(function(err) {
+								if (err) {
+									return res.status(400).send({
+										message: errorHandler.getErrorMessage(err)
+									});
+								} else {
+									req.login(user, function(err) {
+										if (err) {
+											res.status(400).send(err);
+										} else {
+											res.send({
+												message: 'Password changed successfully'
+											});
+										}
+									});
+								}
+							});
+						} else {
+							res.status(400).send({
+								message: 'Passwords do not match'
+							});
+						}
+					} else {
+						res.status(400).send({
+							message: 'Current password is incorrect'
+						});
+					}
+				} else {
+					res.status(400).send({
+						message: 'User is not found'
+					});
+				}
+			});
+		} else {
+			res.status(400).send({
+				message: 'Please provide a new password'
+			});
+		}
+	} else {
+		res.status(400).send({
+			message: 'User is not signed in'
+		});
+	}
+};
+var getUniqueErrorMessage = function(err) {
+	var output;
+
+	try {
+		var fieldName = err.err.substring(err.err.lastIndexOf('.$') + 2, err.err.lastIndexOf('_1'));
+		output = fieldName.charAt(0).toUpperCase() + fieldName.slice(1) + ' already exists';
+
+	} catch(ex) {
+		output = 'Unique field already exists';
+	}
+
+	return output;
+};
+
+/**
+ * Get the error message from error object
+ */
+exports.getErrorMessage = function(err) {
+	var message = '';
+	
+	if (err.code) {
+		switch (err.code) {
+			case 11000:
+			case 11001:
+				message = getUniqueErrorMessage(err);
+				break;
+			default:
+				message = 'Something went wrong';
+		}
+	} else {
+		for (var errName in err.errors) {
+			if (err.errors[errName].message) message = err.errors[errName].message;
+		}
+	}
+
+	return message;
+};
