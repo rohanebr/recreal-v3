@@ -7,7 +7,8 @@ var mongoose = require('mongoose'),
 	Exam = mongoose.model('Exam'),
 	Candidate = mongoose.model('Candidate'),
 	ExamSocket = require('../sockets/exams.server.socket.js'),
-	_ = require('lodash');
+	_ = require('lodash'),
+	User= mongoose.model('User');
 	
 
 /**
@@ -157,7 +158,12 @@ var candidatesalreadygiventest=[];
                                 	{ 
                                 	  console.log(tests[q]);
                                       examstaken.push({score:0,exam:tests[q],isPass:false,state:"notTaken"});
-                                      console.log("SENTTEST"+docs[h].user);
+
+                                      User.findById(docs[h].user).exec(function(err, user) {
+                                         user.notifications.push({generalmessage:"Please click on the link to give the test",hiddendata:"/takeExam/"+tests[q],created:Date.now(),isRead:false});
+                                         user.markModified('notifications');
+                                         user.save();
+                                      });
                                  ExamSocket.notifyCandidateToGiveTest({userid:docs[h].user,generalmessage: "Please click on the link to give the test",hiddendata:"/takeExam/"+tests[q],created:Date.now()});
               //ExamSocket.notifyCandidateToGiveTest({generalmessage: "asdaf"});
 
@@ -165,10 +171,15 @@ var candidatesalreadygiventest=[];
 
               	        }
               	        if(examstaken.length==0)
-              	        {  console.log("SENTTEST"+docs[h].user);
+              	        { 
               	    for(var hh=0,dd=tests.length;hh<dd;hh++)
                          {
                          	examstaken.push({score:0,exam:tests[hh],isPass:false,state:"notTaken"});
+                         	  User.findById(docs[h].user).exec(function(err, user) {
+                                         user.notifications.push({generalmessage:"Please click on the link to give the test",hiddendata:"/takeExam/"+tests[hh],created:Date.now(),isRead:false});
+                                         user.markModified('notifications');
+                                         user.save();
+                                      });
                             ExamSocket.notifyCandidateToGiveTest({userid:docs[h].user,generalmessage: "Please click on the link to give the test",hiddendata:"/takeExam/"+tests[hh],created:Date.now()});
                          }
                           console.log(docs[h].displayName);

@@ -236,7 +236,7 @@
                     You have {{threads.length}} messages.
                 </div>
                 <ul class="list-group">
-                    <li class="list-group-item" data-ng-repeat="thread in threads">
+                    <li class="list-group-item" data-ng-repeat="thread in threads" >
                         <a href="#!/threads/{{thread.id}}" class="media">
                             <span class="pull-left media-icon">
                                 <span class="round-icon sm bg-info"><i class="fa fa-comment-o"></i></span>
@@ -257,15 +257,15 @@
         <li class="dropdown">
             <a href="javascript:;" class="dropdown-toggle">
                 <i class="fa fa-bell-o nav-icon"></i>
-                <span class="badge badge-warning">{{notifications.length}}</span>
+                <span class="badge badge-warning">{{unreadnotificationslength}}</span>
             </a>
             <div class="dropdown-menu panel panel-default">
                 <div class="panel-heading">
-                    You have {{notifications.length}} notifications.
+                    You have {{unreadnotificationslength}} notifications.
                 </div>
                 <ul class="list-group">
                     <li class="list-group-item" data-ng-repeat="notification in notifications">
-                        <a href="#!{{notification.hiddendata}}" class="media">
+                        <a href="#!{{notification.hiddendata}}" class="media" ng-click="notificationRead(notification)">
                             <span class="pull-left media-icon">
                                 <span class="round-icon sm bg-success"><i class="fa fa-bell-o"></i></span>
                             </span>

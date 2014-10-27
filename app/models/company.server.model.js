@@ -79,7 +79,13 @@ var CompanySchema = new Schema({
 	user: {
 		type: Schema.ObjectId,
 		ref: 'User'
-	}
+	},
+  views:{
+      type:Number,
+      default:0
+
+
+  }
 });
 
 mongoose.model('Company', CompanySchema);

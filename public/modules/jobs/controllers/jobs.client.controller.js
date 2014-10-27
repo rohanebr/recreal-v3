@@ -12,7 +12,8 @@ angular.module('jobs').controller('JobsController', ['$http', '$scope', '$stateP
 
 
 
-
+        //Add one to view if the job was seen by the candidate
+     
 		
 
 
@@ -95,7 +96,16 @@ angular.module('jobs').controller('JobsController', ['$http', '$scope', '$stateP
 				});	
 
 			});
+    
 
+            $http.put('jobs/onePlusView/' + $stateParams.jobId , {user:$scope.user}).success(function(response) {
+
+				
+			 }).error(function(response) {
+			$scope.error = response.message;
+			 });
+
+         
 		};
 	}
 ]);

@@ -16,7 +16,8 @@ module.exports = function(app) {
 
 	app.route('/jobs/apply/:jobId')
 		.put(jobs.apply);
-
+    app.route('/jobs/onePlusView/:jobId')
+		.put(jobs.onePlusView);
 	app.route('/jobs/candidates/:jobId')
 		.get(jobs.getJobCandidates);
 

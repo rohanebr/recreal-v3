@@ -9,7 +9,7 @@ var mongoose = require('mongoose'),
 	Candidate = mongoose.model('Candidate'),
 	Employer = mongoose.model('Employer'),
 	Company = mongoose.model('Company'),
-	Threads = mongoose.model('Thread'),
+	Threads = mongoose.model('Thread'), 
 	_ = require('lodash'),
 	mongoose = require('mongoose'),
 	passport = require('passport'),
@@ -106,7 +106,37 @@ exports.signup = function(req, res) {
 	});
 };
 
+exports.readNotification=function(req,res)
 
+
+{
+	var g=req.body;
+	
+	var id = mongoose.Types.ObjectId(g._id);
+	   User.findById(req.user.id,function(err,user){
+var len=user.notifications.length;
+            for(var g=0;g<len;g++)
+            {
+               if(id.equals(user.notifications[g]._id))
+               	user.notifications[g].isRead=true;
+
+
+            }
+
+            user.markModified('notifications');
+            user.save();
+
+
+
+	   });
+// 	var notification=req.user.notifications[0];
+	
+// 	console.log(id);
+// 	if(id.equals(notification._id))
+// console.log(notification._id.id);
+
+
+};
 /**
  * Signin after passport authentication
  */
