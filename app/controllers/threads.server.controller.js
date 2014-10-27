@@ -161,7 +161,6 @@ exports.getUserThreads = function(req, res) {
 			});
 		} else {
 			res.jsonp(threads);
-
 		}
 	  });
 
@@ -255,7 +254,11 @@ exports.hasAuthorization = function(req, res, next) {
 	}
 	next();
 };
-
+/*
+*  This function only updates specific
+*  parts of the thread plus sends only ids of 
+*  sender and receiver which is optimum for really really big threads
+*/
 
 exports.updateThread = function (req,res)
 {

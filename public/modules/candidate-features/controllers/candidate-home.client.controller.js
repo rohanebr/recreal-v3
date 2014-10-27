@@ -32,7 +32,7 @@ angular.module('candidate-features').controller('CandidateHomeController', ['$sc
 
 			$http.put('jobs/apply/' + job._id , job).success(function(response) {
 
-				Socket.emit('applied_on_job', {job: job, candidate: $scope.candidate});
+				// Socket.emit('applied_on_job', {job: job, candidate: $scope.candidate});
 
 				$scope.candidate.jobs.push(job);
 				$scope.jobs.splice($scope.jobs.indexOf(job), 1);

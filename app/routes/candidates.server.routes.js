@@ -1,29 +1,29 @@
 'use strict';
 
 module.exports = function(app) {
-	var users = require('../../app/controllers/users');
-	var candidates = require('../../app/controllers/candidates');
+    var users = require('../../app/controllers/users');
+    var candidates = require('../../app/controllers/candidates');
 
-	// Candidates Routes
-
-
-
-
-	app.route('/uploadpicture').post(users.requiresLogin, candidates.uploadPicture);
-	app.route('/uploads/fullsize/:file').get(candidates.getImage);
-		app.route('/candidates')
-    		.get(candidates.list);
-    		// .post(users.requiresLogin, candidates.create);
-
-    	app.route('/candidates/:candidateId')
-    		.get(candidates.read)
-    		.put(users.requiresLogin, candidates.hasAuthorization, candidates.update)
-    		.delete(users.requiresLogin, candidates.hasAuthorization, candidates.delete);
+    // Candidates Routes
 
 
 
-    	
-    	app.route('/candidates/addSkill/:candidateId')
+
+    app.route('/uploadpicture').post(users.requiresLogin, candidates.uploadPicture);
+    app.route('/uploads/fullsize/:file').get(candidates.getImage);
+        app.route('/candidates')
+            .get(candidates.list);
+            // .post(users.requiresLogin, candidates.create);
+
+        app.route('/candidates/:candidateId')
+            .get(candidates.read)
+            .put(users.requiresLogin, candidates.hasAuthorization, candidates.update)
+            .delete(users.requiresLogin, candidates.hasAuthorization, candidates.delete);
+
+
+
+        
+        app.route('/candidates/addSkill/:candidateId')
             .put(users.requiresLogin, candidates.hasAuthorization, candidates.addSkill);
         app.route('/candidates/addExperience/:candidateId')
             .put(users.requiresLogin, candidates.hasAuthorization, candidates.addExperience);
@@ -54,7 +54,7 @@ module.exports = function(app) {
         app.route('/candidates/updateExperience/:candidateId')
            .put(users.requiresLogin,candidates.hasAuthorization,candidates.updateExperience);
         app.route('/candidates/updateSkill/:candidateId')
-    	   .put(users.requiresLogin,candidates.hasAuthorization,candidates.updateSkill);
+           .put(users.requiresLogin,candidates.hasAuthorization,candidates.updateSkill);
         app.route('/candidates/updateProject/:candidateId')
            .put(users.requiresLogin,candidates.hasAuthorization,candidates.updateProject);
         app.route('/candidates/updateEducation/:candidateId')
@@ -64,7 +64,7 @@ module.exports = function(app) {
         app.route('/candidates/updateCertificate/:candidateId')
            .put(users.requiresLogin,candidates.hasAuthorization,candidates.updateCertificate);
 
-    		// Finish by binding the Candidate middleware
-            	app.param('candidateId', candidates.candidateByID);
+            // Finish by binding the Candidate middleware
+                app.param('candidateId', candidates.candidateByID);
 
 };
