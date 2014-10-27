@@ -1,8 +1,5 @@
-<!-- form-profile.html -->
-
-<div class="form-group">
-    
-       <article class="row ">
+<section data-ng-controller="ShortlistedCandidatesController">
+    <article class="row ">
         <section class="logo text-center col-md-8" >
             <h2> {{job.title}}</h2>
         </section>  
@@ -19,7 +16,7 @@
 
         <section class="col-md-4">
             <h4>Employer features 1</h4>
-            <h3> <button class="btn btn-sm btn-success pull-left"  ui-sref="shortlisted-candidates-test" >Send Test</button></h3>
+            <h3> <button class="btn btn-sm btn-success pull-left" ng-click="removeCandidateFromShortList(shortlist.candidate)">Send Test</button></h3>
 
                        
         </section>
@@ -29,8 +26,8 @@
             <section ng-repeat="shortlist in shortListedObjects">
 
                 <section class="col-md-4" style="padding-top:20px;">
- <input type="checkbox" value="{{shortlist.candidate}}" ng-model="shortlist.selected"></input>
-                        <a data-ng-href="#!/candidates/{{shortlist.candidate._id}}">
+ <input type="checkbox" value="{{shortlist.candidate}}" ng-model="formData.userType"></input>
+                        <a data-ng-href="#!/candidates/{{shortlist.candidate}}">
                             <img width="150" src="{{shortlist.candidate.picture_url}}">
                         </a>
                 </section>
@@ -60,4 +57,4 @@
                     
             
     </section>
-</div>
+</section>

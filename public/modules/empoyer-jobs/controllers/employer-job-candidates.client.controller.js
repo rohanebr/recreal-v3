@@ -10,8 +10,7 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
 		$scope.employeestatusFilters = [];
 		
 		$scope.isShortListed = function(candidate){
-			// job.candidates = [];
-			// job.shortListedCandidates = [];
+			
 			return false;
 		};
 		

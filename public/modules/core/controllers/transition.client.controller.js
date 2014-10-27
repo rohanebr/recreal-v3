@@ -10,11 +10,12 @@ $scope.formData = {userType:''};
 	// function to process the form
 	
 $scope.$watch('formData.userType', function() {
+
 	if($scope.formData.userType=="Employer")
 	{
 		becomeEmployer();
 	}
-console.log($scope.formData.userType);
+
        });
        
        $scope.$watch('formData.importCV',function(){
@@ -27,7 +28,6 @@ console.log($scope.formData.userType);
        }
    else if($scope.formData.importCV=='dontimport')
    {
-
    	becomeEmployee();
    }
 
@@ -76,7 +76,7 @@ $scope.authentication.user.userType="employer";
         		 $rootScope.candidate = Candidates.get({
 					candidate: $scope.authentication.user.candidate
 				});
-        	$scope.authentication.user.userType="employee";
+        	$scope.authentication.user.userType="candidate";
      		 $state.go('candidate-home');
 }
 	};
