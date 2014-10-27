@@ -6,6 +6,7 @@ angular.module('core').controller('HeaderController', ['$scope', 'Authentication
         $scope.isCollapsed = false;
         $scope.menu = Menus.getMenu('topbar');
         $scope.threads = [];
+        $scope.unreadnotificationslength=0;
         $scope.notifications = [];
         var thread = [];
 $scope.notificationRead=function(data){
@@ -35,6 +36,7 @@ $scope.notificationRead=function(data){
                     		$scope.notifications=$scope.authentication.user.notifications[x];
                     		count++;
                     	}
+                        $scope.unreadnotificationslength=count--;
             
               if(count<10 && y>=10)
               {var x=0;
