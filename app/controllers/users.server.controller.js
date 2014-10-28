@@ -959,6 +959,9 @@ exports.getLinkedInProfile = function(req, res){
 	var linkedin = Linkedin.init(req.user.providerData.accessToken);
 	linkedin.people.me(function(err, $in) {
 	    // Loads the profile of access token owner.
+	    linkedin.companies.name('logica', function(err, company) {
+    console.log(company);
+});
 		res.json( $in);
 	});
 

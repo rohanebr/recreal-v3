@@ -256,7 +256,12 @@ var CandidateSchema = new Schema({
            	default:0
            }
 
-	  }
+	  },
+	  interested:
+	 [ {
+
+
+	  }]
 });
 
 
