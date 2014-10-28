@@ -24,28 +24,36 @@
         </section>
     </article>
 
-    <section class="col-md-4 pull-right panel">
+    <!-- <section class="col-md-4 pull-right panel">
         <article class="col-md-4">
             <label class="col-md-3" for="searchBox">Search</label>
         </article>
         <article class="col-md-8">
             <input id="searchBox" class="col-md-8 form-control" type="text" data-ng-model="searchText" />
         </article>
-    </section>
+    </section> -->
         
         <aside class="col-md-3">
+
+            <section>
+                    <label class="col-sm-3" for="searchBox">Search</label>
+                <article class="col-sm-9">
+                    <input id="searchBox" class="col-md-9 form-control" style="width:145px" type="text" data-ng-model="searchText" />
+                </article><br>
+                <hr class="col-sm-9">
+            </section>
             <!-- Filters -->
-            <section class="panel-body">
+            <section >
                 <div class="col-sm-12">
                     <article class="thumbnail">
+                      
                         <label>Locations</label>
                         <ul>
                             <li data-ng-repeat="locationFilter in locationFilters">
-                            <input type="checkbox" value="locationFilter.value" data-ng-model="locationFilter.value" id="{{'location'+ locationFilter.name}}" />
-                            <!-- <label for="{{locationFilter.name}}" >{{locationFilter.name}} ({{locationFilter.count}})</label> -->
-
-                             <label ng-if="locationFilter.name" for="{{'location' + locationFilter.name}}" >{{locationFilter.name}} ({{locationFilter.count}})</label>
-                            <label ng-if="!locationFilter.name" for="{{'location' + locationFilter.name}}" >Not Mentioned ({{locationFilter.count}})</label>
+                            <input type="checkbox" value="locationFilter.value"  data-ng-model="locationFilter.value" id="{{'location'+ locationFilter.name}}" />
+                            
+                             <label ng-if="locationFilter.name" for="{{'location' + locationFilter.name}}" >{{locationFilter.name}}({{locationFilter.count}})</label>
+                            <label ng-if="!locationFilter.name" for="{{'location' + locationFilter.name}}" >Not Mentioned({{locationFilter.count}}) </label>
                                 
                             </li>
                         </ul>
@@ -53,8 +61,10 @@
 
                     <article class="thumbnail">
                         <label>Salary Range</label>
+
                         <ul>
                             <li data-ng-repeat="salaryFilter in salaryFilters">
+
                             <input type="checkbox" value="salaryFilter.value" data-ng-model="salaryFilter.value" id="{{'salary' + salaryFilter.name}}" />
 
                             <label ng-if="salaryFilter.name" for="{{'salary' + salaryFilter.name}}" >{{salaryFilter.name}} ({{salaryFilter.count}})</label>
@@ -66,7 +76,7 @@
                     </article> 
 
                      <article class="thumbnail">
-                        <label>Visa</label>
+                       <label>Visa</label>
                         <ul>
                             <li data-ng-repeat="visaFilter in visaFilters">
                             <input type="checkbox" value="visaFilter.value" data-ng-model="visaFilter.value" id="{{'visa' + visaFilter.name}}" />
@@ -94,7 +104,7 @@
                     </article> 
 
                     <article class="thumbnail">
-                        <label>Employment Status</label>
+                       <label>Employment Status</label>
                         <ul>
                             <li data-ng-repeat="employeestatusFilter in employeestatusFilters">
                             <input type="checkbox" value="employeestatusFilter.value" data-ng-model="employeestatusFilter.value" id="{{'employeestatus' + employeestatusFilter.name}}" />
@@ -107,6 +117,20 @@
                         </ul>
                     </article> 
 
+                    <!-- <article class="thumbnail">
+                      
+                        <label>Skills</label>
+                        <ul>
+                            <li data-ng-repeat="skillFilter in skillFilters">
+                            <input type="checkbox" value="skillFilter.value" data-ng-model="skillFilter.value" id="{{'skill' + skillFilter.title}}" />
+
+                            <label ng-if="skillFilter.title" for="{{'skill' + skillFilter.title}}" >{{skillFilter.title}} ({{skillFilter.count}})</label>
+                            <label ng-if="!skillFilter.title" for="{{'skill' + skill.title}}" >Not Mentioned ({{skillFilter.count}})</label>
+
+
+                            </li>
+                        </ul>
+                    </article> -->
                                                 
 
                 </div>          
@@ -117,31 +141,45 @@
             
 
 
+        <!-- <article class="col-md-9"> -->
         <article class="col-md-9">
-        <article class="col-md-9">
-            <section class="panel-body" data-ng-repeat="candidate in candidates | locationFilter:locationFilters:true | salaryFilter:salaryFilters:true | visaFilter:visaFilters:true | employeetypeFilter:employeetypeFilters:true | employeestatusFilter:employeestatusFilters:true | filter:searchText">
-                <section class="col-md-4" style="padding-top:20px;">
+            <section class="panel-body" data-ng-repeat="candidate in candidates | locationFilter:locationFilters:true | salaryFilter:salaryFilters:true | visaFilter:visaFilters:true | employeetypeFilter:employeetypeFilters:true | employeestatusFilter:employeestatusFilters:true |filter:searchText">
+                <section class="col-md-3 " style="padding-top:20px;">
+                    
                     <a data-ng-href="#!/candidates/{{candidate._id}}">
                         <img width="150" src="{{candidate.picture_url}}">
                     </a>
+                    </div>
                 </section>
-                <section class="col-md-8">
-                    <a data-ng-href="#!/candidates/{{candidate._id}}"><h2 style="color:#00afef;">{{candidate.displayName}}</h2></a>
-                   
+                <section class="col-md-9">
+                    <header class="col-md-8">
+
+                            <a data-ng-href="#!/candidates/{{candidate._id}}"><h3 style="color:#00afef;">{{candidate.displayName}}</h3></a>
+                    </header> 
+                    <aside  class="col-md-4">
+
+                            <a href="" ng-hide="isShortListed(candidate)" ng-click="addCandidateToShortList(candidate) "><i class="fa fa-star-o fa-2x" style="padding-top:20px;"></i></a>
+                           
+                            <a href="" ng-show="isShortListed(candidate)" ng-click=" removeCandidateFromShortList(candidate)"><i class="fa fa-star fa-2x" style="color:#f1d104; padding-top:20px;"></i></a>
+                         
+                    </aside> 
+
+                    <section class="col-md-12">   
                     <h4>{{candidate.title}}</h4>
                     <p style="color:rgb(83, 82, 82)">{{candidate.objective}}</p>
                     <div style="line-height: 2">
                         <span  class="skill-div" data-ng-repeat="skill in candidate.skills">{{skill.title}}</span>
                     </div>
                         
-                    <h6 style="padding-top:15px">Rating : 5  &nbsp;&nbsp;|&nbsp;&nbsp;  Location : {{candidate.location}}  &nbsp;&nbsp;|&nbsp;&nbsp;  Salary Range : {{candidate.salary_expectation}}  &nbsp;&nbsp;|&nbsp;&nbsp;Visa : {{candidate.visa_status}}  &nbsp;&nbsp;|&nbsp;&nbsp; Employee Type : {{candidate.employee_type}}  &nbsp;&nbsp;|&nbsp;&nbsp; Employee Status : {{candidate.employee_status}}  &nbsp;&nbsp;|&nbsp;&nbsp; 1 Test</h6>
+                    <h6 style="padding-top:15px">Rating : 5  &nbsp;&nbsp;|&nbsp;&nbsp;  Location : {{candidate.location}}  &nbsp;&nbsp;|&nbsp;&nbsp;  Salary Range : {{candidate.salary_expectation}}  &nbsp;&nbsp;|&nbsp;&nbsp;Visa : {{candidate.visa_status}}  &nbsp;&nbsp;|&nbsp;&nbsp; Employee Type : {{candidate.employee_type}}  &nbsp;&nbsp;|&nbsp;&nbsp; Employee Status : {{candidate.employee_status}}  &nbsp;&nbsp;|&nbsp;&nbsp; 1 Test</h6> <hr>
+                    </section>
                     
-                    <button class="btn btn-sm btn-success center" ng-hide="isShortListed(candidate)"  ng-click="addCandidateToShortList(candidate)">Add to Favorites</button>
+                    <br> 
                    
-                    <button class="btn btn-sm btn-success center" ng-show="isShortListed(candidate)" ng-click="removeCandidateFromShortList(candidate)">Remove From Favorites</button><br>
-                    <hr>
                 </section>
+
             </section>
+
         </article>
 
 </section>

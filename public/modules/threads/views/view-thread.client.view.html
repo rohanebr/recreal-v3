@@ -1,8 +1,31 @@
-<section data-ng-controller="ThreadsController" data-ng-init="findOneAndMarkAsRead()">
+<section data-ng-controller="ThreadsController" data-ng-init="findOneAndMarkAsRead()" class="container">
 	
-	
+	<!-- <button data-ng-click="sendMessage()" class="btn btn-default btn-medium"> -->
+	    
+	    	<a href="/#!/threads">Back</a>
+	    	<div class="pull-right">
+            <div class="dropdown">
+                <i class="fa fa-cog fa-2x dropdown-toggle" data-toggle="dropdown" style="margin-left: 6px">
+                        
+                </i>
+                  <ul class="dropdown-menu pull-right" role="menu">
+                    <li><a href="#">Reply</a></li>
+                    <li><a href="#">Forward</a></li>
+                    <li><a href="#">Delete</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#">Leave Conversation</a></li>
+                    <li><a href="#">Add Prople</a></li>
+                  </ul>
+            </div>
+            </div>
+
+            
+  				<button class="glyphicon glyphicon-forward fa-1x pull-right" style="text-align: center; padding: 5px; margin-left: 6px"></button>
+    			<button class="glyphicon glyphicon-backward fa-1x pull-right" style="text-align: center; padding: 5px"></button>
+  				
 	<div class="page-header">
 		<h1 data-ng-bind="thread.subject"></h1>
+		
 	</div>
 	
 		<div data-ng-repeat="message in thread.messages">
@@ -20,25 +43,26 @@
 				<i class="fa fa-circle" style="color:red"></i>
 			</div>
 			</section>
-			<section class="col-md-8">
-			<h5>{{message.author.displayName}}</h5>
+			<section class="col-md-7">
+			<h4>{{message.author.displayName}}</h4>
 			<p>{{message.messageBody}}</p>
 			</section>
-			<section class="col-md-3">
+			<section class="col-md-4">
 			<span data-ng-bind="message.created | date:'mediumDate'"></span>
 			</section></section></section></section>
-		</div>
+		</div><br>
 
-	<textarea data-ng-model="messageBody" class="form-control">
+	<textarea data-ng-model="messageBody" class="form-control" style="width: 900px">
 		
 	</textarea>
 
+	<br>
 	<button data-ng-click="sendMessage()" class="btn btn-primary btn-medium">
 		Send
 	</button>
 	
 	<small>
-		<em class="text-muted">
+		<em class="text-muted" style="margin-left: 30px">
 			Posted on
 			<span data-ng-bind="thread.messages[thread.messages.length-1].created | date:'mediumDate'"></span>
 			by 
