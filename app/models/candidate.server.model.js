@@ -246,7 +246,17 @@ var CandidateSchema = new Schema({
 		type: Schema.ObjectId,
 		ref: 'User',
 		required: true
-	}
+	},coordinates:{
+            latitude:{
+         	type:Number,
+           	default:0
+           },
+           longitude:{
+           	type:Number,
+           	default:0
+           }
+
+	  }
 });
 
 

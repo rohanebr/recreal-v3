@@ -36,6 +36,10 @@ var CompanySchema = new Schema({
     type: 'String',
     trim: true
   },
+  description:{
+    type: 'String',
+    trim: true
+  },
   company_type:{
     type: 'String',
     trim: true
