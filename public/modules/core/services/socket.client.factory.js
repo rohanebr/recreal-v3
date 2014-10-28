@@ -7,12 +7,10 @@ angular.module('core').factory('Socket', ['$rootScope','Authentication','geoloca
 //console.log(Authentication.user);
 if(Authentication.user && !socket)
 {
-  geolocation.getLocation().then(function(data){
-     $rootScope.coords = geolocation.getLocation().then(function(data){
-     console.log(data.coords.latitude+","+data.coords.longitude);
-      return {lat:data.coords.latitude, longi:data.coords.longitude};
-    });
-  
+  $rootScope.coords={lat:0,longi:0};
+geolocation.getLocation().then(function(data){
+      $rootScope.coords = {lat:data.coords.latitude, longi:data.coords.longitude};
+      console.log($rootScope.coords.lat+","+$rootScope.coords.longi);
     });
 	var socket = io.connect('http://localhost:3000');
 socket.emit("user_data",Authentication.user);

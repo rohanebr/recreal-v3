@@ -21,8 +21,23 @@ var JobSchema = new Schema({
 	    type: 'String',
 	    trim: true
 	  },
+	views: [{
+       type:Schema.ObjectId,
+       ref: 'User'
+    }],
 	  description:{
 	    type: 'String'
+	  },
+	  coordinates:{
+            latitude:{
+         	type:Number,
+           	default:0
+           },
+           longitude:{
+           	type:Number,
+           	default:0
+           }
+
 	  },
 	  requirement:{
 	    type: 'String',
@@ -160,6 +175,9 @@ var JobSchema = new Schema({
 		type: Schema.ObjectId,
 		ref: 'User'
 	}
+
+
+	
 });
 
 JobSchema.index({candidates: 1});

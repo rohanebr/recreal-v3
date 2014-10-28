@@ -18,6 +18,12 @@
         <section class="col-md-12">
            <section>
                <header class="h3">Skills</header>
+
+               <ng-pluralize count="candidate.skills.length"
+                when="{'0': 'You have not added any skills yet. Click Edit profile and start adding skills.',
+                    'one': '',
+                    'other': ''}">
+                </ng-pluralize>
                <a class="pull-right" ng-show="isEditing" ng-click="openSkillModal(newSkill)" href=""><i class="fa fa-plus"></i></a>
                <div>
                    <ul>
