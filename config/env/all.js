@@ -18,7 +18,7 @@ module.exports = {
 			],
 			js: [
 				'public/lib/jquery/dist/jquery.js',
-				'public/lib/jquery-slimscroll/jquery.slimscroll.js',
+				// 'public/lib/jquery-slimscroll/jquery.slimscroll.js',
 				'public/lib/jquery-ui/jquery-ui.js',
 				'public/lib/angular/angular.min.js',
 				'public/lib/angular-resource/angular-resource.js', 
@@ -40,9 +40,6 @@ module.exports = {
 				'public/lib/textAngular/dist/textAngular.min.js',
 				'public/lib/ngmap/build/scripts/ng-map.js',
 				'http://maps.google.com/maps/api/js'
-
-				
-
 			]
 		},
 		css: [

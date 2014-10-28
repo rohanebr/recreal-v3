@@ -22,7 +22,8 @@ $scope.$watch('formData.userType', function() {
        if($scope.formData.importCV=='import')
        {
 
-
+       		// $location.go();
+       		$location.path('/linkedin-cv');	
 
        	
        }
@@ -43,27 +44,27 @@ if($scope.authentication.user.userType=='transition'){
 	
   $http.put('/users/setUserType/' + $scope.authentication.user._id,{userType:'employer'}).success(function(user) {
 
-		Socket.on('applied_on_job', function (data) {
-        		    console.log(data.candidate.displayName + ' applied on job : ' + data.job.title);
-        		    if(user.userType === 'employer')
-        		    	alert(data.candidate.displayName + ' applied on job : ' + data.job.title);
-        		  });
+		// Socket.on('applied_on_job', function (data) {
+  //       		    console.log(data.candidate.displayName + ' applied on job : ' + data.job.title);
+  //       		    if(user.userType === 'employer')
+  //       		    	alert(data.candidate.displayName + ' applied on job : ' + data.job.title);
+  //       		  });
         		 
 
                            
                   		  
 
 			$rootScope.employer = Employers.get({
-				employerId: $scope.authentication.user.employer
+				employerId: user.employer
 			}, function(employer){
 				$rootScope.company = Companies.get({
 					companyId: employer.company
 				});
 			});
 			
-$scope.authentication.user.userType="employer";
+			$scope.authentication.user.userType="employer";
 			$location.path('/company-profile');					
-             	});
+        });
 }
 	};
 	var becomeEmployee=function(){

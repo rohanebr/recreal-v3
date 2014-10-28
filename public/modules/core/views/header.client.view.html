@@ -232,8 +232,9 @@
                 <span class="badge badge-success">{{threads.length}}</span>
             </a>
             <div class="dropdown-menu panel panel-default">
-                <div class="panel-heading">
+                <div class="panel-heading" style="width: 250px">
                     You have {{threads.length}} messages.
+                    <a href="" class="pull-right">Compose</a>
                 </div>
                 <ul class="list-group">
                     <li class="list-group-item" data-ng-repeat="thread in threads" >

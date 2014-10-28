@@ -1,5 +1,6 @@
 'use strict';
 
+
 angular.module('empoyer-jobs').controller('CompanyOpenJobsController', ['$scope', 'Authentication', 'Jobs', 'Employers', 'Companies', '$location', 'Socket',
     function($scope, Authentication, Jobs, Employers, Companies, $location, Socket) {
         $scope.user = Authentication.user;
@@ -39,4 +40,5 @@ angular.module('empoyer-jobs').controller('CompanyOpenJobsController', ['$scope'
 
         });
     }
+
 ]);

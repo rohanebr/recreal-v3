@@ -20,6 +20,15 @@ var mongoose = require('mongoose'),
 	crypto = require('crypto'),
 	Distance =require('../helpers/matrix.server.helper.js');
 
+	// var config = require('../config');
+
+	// var LinkedInStrategy = require('passport-linkedin').Strategy,
+	// passport = require('passport');
+
+	var Linkedin = require('node-linkedin')(config.linkedin.clientID, config.linkedin.clientSecret, config.linkedin.callbackURL);
+
+
+
 
 
 /**
@@ -191,14 +200,19 @@ user.userType=req.body.userType;
 	    typeObject.user = user;
 	    typeObject.save();
 
-         user.save();
+	    typeObject.save(function (err, typeObject) {
+		  if (err) return res.send(err);
+				else{
+					user.save(function (err, user) {
+					  if (err) return res.send(err);
+							else
+								return res.send(user);
+					});
+				}
+		});
+        
+		
 
-
-
-
-         if (err) return res.send(err);
-		else
-			return res.send(user);
 
 
 });
@@ -926,6 +940,39 @@ exports.changePassword = function(req, res) {
 		});
 	}
 };
+
+exports.getLinkedInProfile = function(req, res){
+
+// 	console.log(req);
+	// Linkedin.auth.getAccessToken(res, req.query.code, function(err, results) {
+ //        if ( err )
+ //            return console.error(err);
+
+ //        /**
+ //         * Results have something like:
+ //         * {"expires_in":5184000,"access_token":". . . ."}
+ //         */
+
+ //        console.log(results);
+ //        return res.redirect('/');
+ //    });
+	var linkedin = Linkedin.init(req.user.providerData.accessToken);
+	linkedin.people.me(function(err, $in) {
+	    // Loads the profile of access token owner.
+		res.json( $in);
+	});
+
+	// passport.authenticate('linkedin');
+	// passport.authenticate('linkedin');
+
+
+	
+};
+
+
+/**
+ * Get linkedin Profile for the user
+ */
 var getUniqueErrorMessage = function(err) {
 	var output;
 
@@ -963,3 +1010,5 @@ exports.getErrorMessage = function(err) {
 
 	return message;
 };
+
+

@@ -60,8 +60,15 @@ app.route('/users/readNotification/:userId')
 	app.route('/auth/google/callback').get(users.oauthCallback('google'));
 
 		// Setting the linkedin oauth routes
-	app.route('/auth/linkedin').get(passport.authenticate('linkedin'));
+	app.route('/auth/linkedin').get(passport.authenticate('linkedin', {state: 'some state'}));
 	app.route('/auth/linkedin/callback').get(users.oauthCallback('linkedin'));
+
+
+
+        // get candidate's linkedin profile
+
+    app.route('/users/linkedInProfile/:userId')
+    	.get(users.getLinkedInProfile);
 
 	// Finish by binding the user middleware
 	app.param('userId', users.userByID);

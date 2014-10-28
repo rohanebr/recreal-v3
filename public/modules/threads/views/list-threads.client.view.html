@@ -128,7 +128,6 @@
 
 </section> -->
 <section data-ng-controller="ThreadsController" data-ng-init="findUserThreads()">
-   This is the List user messages view
     <div data-ng-repeat="thread in user.threads">
         <h2>{{thread.subject}}</h2>
         <p>{{thread.created | date}}</p>
@@ -147,7 +146,7 @@
   
   <div class="modal-body">
     <label>To:</label>
-    <input class="form-control" data-ng-model="message.subject"></input>
+    <input class="form-control" data-ng-model="message.receiver"></input>
     <!-- <label class="label label-primary label-large " type="text" >{{reciever.displayName}}</label> -->
     <br>
     <label>Subject:</label>
@@ -155,11 +154,13 @@
     <label>Message:</label>
     <textarea class="form-control" data-ng-model="message.messageBody"></textarea>
   </div>
-
+       
   <div class="modal-footer">
     <button type="button" class="btn btn-default" ng-click="cancelCompose()">Close</button>
-    <button type="button" ng-click="sendMessage(message)" class="btn btn-primary">Send</button>
+    <button type="button" ng-click="sendMessage(message)" class="btn btn-primary" >Send </button>
+     
   </div>
+  
 </div><!-- modal-content -->
 
 
@@ -175,7 +176,7 @@
                 </spam>
             </a></li>
             <li class="list-group-item"><a href="javascript:;"><a href="/#!/threads/:threadId">
-                <i class="fa fa-envelope-o"></i>Send mail
+                <i class="fa fa-envelope-o" style= margin></i>Send mail
             </a></li>
             <li class="list-group-item"><a href="javascript:;">
                 <i class="fa fa-star"></i>Starred
@@ -199,7 +200,7 @@
 <section class="col-md-9">
         <div class="col-md-10">
             <div class="pull-right">
-                <div class="btn-group">  
+                <div class="dropdown">  
                     <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
                         More<span class="caret"></span>
                     </button>
