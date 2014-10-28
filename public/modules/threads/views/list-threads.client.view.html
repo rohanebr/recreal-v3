@@ -146,7 +146,7 @@
   
   <div class="modal-body">
     <label>To:</label>
-    <input class="form-control" data-ng-model="message.subject"></input>
+    <input class="form-control" data-ng-model="message.receiver"></input>
     <!-- <label class="label label-primary label-large " type="text" >{{reciever.displayName}}</label> -->
     <br>
     <label>Subject:</label>
@@ -154,11 +154,13 @@
     <label>Message:</label>
     <textarea class="form-control" data-ng-model="message.messageBody"></textarea>
   </div>
-
+       
   <div class="modal-footer">
     <button type="button" class="btn btn-default" ng-click="cancelCompose()">Close</button>
-    <button type="button" ng-click="sendMessage(message)" class="btn btn-primary">Send</button>
+    <button type="button" ng-click="sendMessage(message)" class="btn btn-primary" >Send </button>
+     
   </div>
+  
 </div><!-- modal-content -->
 
 

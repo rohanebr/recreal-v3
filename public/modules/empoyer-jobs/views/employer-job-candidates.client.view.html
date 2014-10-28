@@ -43,17 +43,17 @@
                 <hr class="col-sm-9">
             </section>
             <!-- Filters -->
-            <section class="panel-body">
+            <section >
                 <div class="col-sm-12">
                     <article class="thumbnail">
+                      
                         <label>Locations</label>
                         <ul>
                             <li data-ng-repeat="locationFilter in locationFilters">
-                            <input type="checkbox" value="locationFilter.value" data-ng-model="locationFilter.value" id="{{'location'+ locationFilter.name}}" />
-                            <!-- <label for="{{locationFilter.name}}" >{{locationFilter.name}} ({{locationFilter.count}})</label> -->
-
-                             <label ng-if="locationFilter.name" for="{{'location' + locationFilter.name}}" >{{locationFilter.name}} ({{locationFilter.count}})</label>
-                            <label ng-if="!locationFilter.name" for="{{'location' + locationFilter.name}}" >Not Mentioned ({{locationFilter.count}})</label>
+                            <input type="checkbox" value="locationFilter.value"  data-ng-model="locationFilter.value" id="{{'location'+ locationFilter.name}}" />
+                            
+                             <label ng-if="locationFilter.name" for="{{'location' + locationFilter.name}}" >{{locationFilter.name}}({{locationFilter.count}})</label>
+                            <label ng-if="!locationFilter.name" for="{{'location' + locationFilter.name}}" >Not Mentioned({{locationFilter.count}}) </label>
                                 
                             </li>
                         </ul>
@@ -61,8 +61,10 @@
 
                     <article class="thumbnail">
                         <label>Salary Range</label>
+
                         <ul>
                             <li data-ng-repeat="salaryFilter in salaryFilters">
+
                             <input type="checkbox" value="salaryFilter.value" data-ng-model="salaryFilter.value" id="{{'salary' + salaryFilter.name}}" />
 
                             <label ng-if="salaryFilter.name" for="{{'salary' + salaryFilter.name}}" >{{salaryFilter.name}} ({{salaryFilter.count}})</label>
@@ -74,7 +76,7 @@
                     </article> 
 
                      <article class="thumbnail">
-                        <label>Visa</label>
+                       <label>Visa</label>
                         <ul>
                             <li data-ng-repeat="visaFilter in visaFilters">
                             <input type="checkbox" value="visaFilter.value" data-ng-model="visaFilter.value" id="{{'visa' + visaFilter.name}}" />
@@ -102,7 +104,7 @@
                     </article> 
 
                     <article class="thumbnail">
-                        <label>Employment Status</label>
+                       <label>Employment Status</label>
                         <ul>
                             <li data-ng-repeat="employeestatusFilter in employeestatusFilters">
                             <input type="checkbox" value="employeestatusFilter.value" data-ng-model="employeestatusFilter.value" id="{{'employeestatus' + employeestatusFilter.name}}" />
@@ -115,6 +117,20 @@
                         </ul>
                     </article> 
 
+                    <!-- <article class="thumbnail">
+                      
+                        <label>Skills</label>
+                        <ul>
+                            <li data-ng-repeat="skillFilter in skillFilters">
+                            <input type="checkbox" value="skillFilter.value" data-ng-model="skillFilter.value" id="{{'skill' + skillFilter.title}}" />
+
+                            <label ng-if="skillFilter.title" for="{{'skill' + skillFilter.title}}" >{{skillFilter.title}} ({{skillFilter.count}})</label>
+                            <label ng-if="!skillFilter.title" for="{{'skill' + skill.title}}" >Not Mentioned ({{skillFilter.count}})</label>
+
+
+                            </li>
+                        </ul>
+                    </article> -->
                                                 
 
                 </div>          
@@ -127,7 +143,7 @@
 
         <!-- <article class="col-md-9"> -->
         <article class="col-md-9">
-            <section class="panel-body" data-ng-repeat="candidate in candidates | locationFilter:locationFilters:true | salaryFilter:salaryFilters:true | visaFilter:visaFilters:true | employeetypeFilter:employeetypeFilters:true | employeestatusFilter:employeestatusFilters:true | filter:searchText">
+            <section class="panel-body" data-ng-repeat="candidate in candidates | locationFilter:locationFilters:true | salaryFilter:salaryFilters:true | visaFilter:visaFilters:true | employeetypeFilter:employeetypeFilters:true | employeestatusFilter:employeestatusFilters:true |filter:searchText">
                 <section class="col-md-3 " style="padding-top:20px;">
                     
                     <a data-ng-href="#!/candidates/{{candidate._id}}">

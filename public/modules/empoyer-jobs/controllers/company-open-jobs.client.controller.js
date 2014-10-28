@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('empoyer-jobs').controller('CompanyOpenJobsController', ['$scope', 'Authentication', 'Jobs', 'Employers', 'Companies', '$location',
-	function($scope, Authentication, Jobs, Employers, Companies, $location) {
+angular.module('empoyer-jobs').controller('CompanyOpenJobsController', ['$scope', '$filter', 'Authentication', 'Jobs', 'Employers', 'Companies', '$location',
+	function($scope, $filter, Authentication, Jobs, Employers, Companies, $location) {
 		$scope.user = Authentication.user;
 
 		// If user is not signed in then redirect back home
@@ -9,8 +9,7 @@ angular.module('empoyer-jobs').controller('CompanyOpenJobsController', ['$scope'
 
 //		$scope.employer = $rootScope.employer;
 //		$scope.company = $rootScope.company;
-
-		$scope.jobs = [];
+        $scope.jobs = [];
 
 		$scope.employer = Employers.get({
 				employerId: $scope.user.employer
