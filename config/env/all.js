@@ -18,7 +18,7 @@ module.exports = {
 			],
 			js: [
 				'public/lib/jquery/dist/jquery.js',
-				'public/lib/jquery-slimscroll/jquery.slimscroll.js',
+				// 'public/lib/jquery-slimscroll/jquery.slimscroll.js',
 				'public/lib/jquery-ui/jquery-ui.js',
 				'public/lib/angular/angular.min.js',
 				'public/lib/angular-resource/angular-resource.js', 
