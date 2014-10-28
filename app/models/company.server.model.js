@@ -20,6 +20,11 @@ var CompanySchema = new Schema({
     type: 'String',
     trim: true
   },
+  description:
+  {
+    type: 'String',
+    trim: true
+  },
   logo_url:{
     type: 'String'
   },
