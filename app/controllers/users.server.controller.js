@@ -958,10 +958,11 @@ exports.getLinkedInProfile = function(req, res){
  //    });
 	var linkedin = Linkedin.init(req.user.providerData.accessToken);
 	linkedin.people.me(function(err, $in) {
-	    // Loads the profile of access token owner.
-	    linkedin.companies.name('logica', function(err, company) {
+		var h=req.user.providerData.following.companies.values.length;
+	 for(var d=0;d<h;d++)
+	{    linkedin.companies.name("ZTE", function(err, company) {
     console.log(company);
-});
+});}
 		res.json( $in);
 	});
 

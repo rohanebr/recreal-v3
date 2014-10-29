@@ -8,7 +8,75 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
 		$scope.visaFilters = [];
 		$scope.employeetypeFilters = [];
 		$scope.employeestatusFilters = [];
-				
+		 $scope.itemsPerPage =10;
+  $scope.currentPage = 0;
+
+  $scope.range = function() {
+    var rangeSize = 5;
+    var ret = [];
+    var start;
+
+    start = $scope.currentPage;
+    if ( start > $scope.pageCount()-rangeSize ) {
+      start = $scope.pageCount()-rangeSize;
+    }
+
+    for (var i=start; i<start+rangeSize; i++) {
+    	if(i>=0)
+      ret.push(i);
+    }
+    return ret;
+  };
+
+
+  $scope.prevPage = function() {
+    if ($scope.currentPage > 0) {
+      $scope.currentPage--;
+    }
+  };
+
+  $scope.prevPageDisabled = function() {
+    return $scope.currentPage === 0 ? "disabled" : "";
+  };
+
+  $scope.nextPage = function() {
+    if ($scope.currentPage < $scope.pageCount() - 1) {
+      $scope.currentPage++;
+    }
+  };
+
+  $scope.nextPageDisabled = function() {
+    return $scope.currentPage === $scope.pageCount() - 1 ? "disabled" : "";
+  };
+
+  $scope.pageCount = function() {
+  	console.log($scope.total+" "+$scope.itemsPerPage);
+  	 console.log($scope.total/$scope.itemsPerPage);
+    return Math.ceil($scope.total/$scope.itemsPerPage);
+
+  };
+
+  $scope.setPage = function(n) {
+  	console.log("EVERYTIME ITS CALLED");
+    if (n > 0 && n < $scope.pageCount()) {
+
+      $scope.currentPage = n;
+      console.log($scope.currentPage);
+    }
+  };
+
+  $scope.$watch("currentPage", function(newValue, oldValue) {
+console.log("CURRENT PAGE");
+  		$http.put('jobs/getPaginatedCandidates/' + $stateParams.jobId,{skip:newValue*$scope.itemsPerPage,limit:$scope.itemsPerPage}).success(function(job) {
+			
+			$scope.pagedItems=$scope.job.candidates;
+			$scope.total=$scope.job.candidates.length;
+
+			$scope.candidates = job.candidates;
+			$scope.filteredCandidates = $scope.candidates;
+		});
+   
+  });		
 		$scope.isShortListed = function(candidate){
 
 			var ans = false;
@@ -18,20 +86,17 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
 			});
 			return ans;
 		};
-		
-		$http.get('jobs/candidates/' + $stateParams.jobId).success(function(job) {
-			$scope.job = job;
-			$scope.candidates = job.candidates;
-			$scope.filteredCandidates = $scope.candidates;
 
-			populateLocationFilters();
-			populateSalaryFilters();
-			populateVisaFilters();
-			populateEmployeetypeFilters();
-			populateEmployeestatusFilters();
+		$scope.findCandidates=function(){
 		
+		$http.put('jobs/getPaginatedCandidates/' + $stateParams.jobId,{skip:0,limit:$scope.itemsPerPage}).success(function(job) {
+			$scope.job = job.job;
+			$scope.candidates=$scope.job.candidates;
+			   $scope.total=job.totalentries;
+            console.log($scope.total);
+			
 
-		});
+		});}
 		// $http.get('jobs/candidates/' + $stateParams.jobId).success(function(job) {
 		// 	$scope.job = job;
 		// 	$scope.candidates = job.candidates;

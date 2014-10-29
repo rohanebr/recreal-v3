@@ -89,6 +89,12 @@ exports.read = function(req, res) {
  */
 exports.getJobCandidates = function(req, res) {
 	Job.findOne({_id: req.job._id}).populate('candidates').exec(function(err, job){
+
+
+
+
+
+		
 		res.jsonp(job);
 	});
 };
@@ -301,3 +307,37 @@ job.save();
 
 
 };
+
+
+exports.getPaginatedCandidates=function(req,res)
+{
+
+		Job.findById(req.job.id)
+			.exec(function(err, job)
+				{
+					var candidates=job.candidates;
+					var totallength=job.candidates.length;
+				Candidate.find({"_id":{$in:candidates}},'displayName title objective picture_url location salary_expectation visa_status employee_type employee_status',{ skip: req.body.skip, limit: req.body.limit }).exec(function(err,candidate){
+              
+res.jsonp({candidates:candidate,totalentries:totallength,job:job});
+
+
+
+
+				}
+                   
+
+
+
+
+
+
+
+					);
+						
+				
+		});
+
+
+
+};  

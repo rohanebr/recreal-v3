@@ -58,12 +58,13 @@ var CandidateSchema = new Schema({
 		trim: true
 	},
 	xp:{
-		type: 'Number'
+		type: Number
 	},
 	rating:{
-		type: 'String',
+		type: Number,
 		trim: true
 	},
+
 	target_job_title:{
 		type: 'String',
 		trim: true

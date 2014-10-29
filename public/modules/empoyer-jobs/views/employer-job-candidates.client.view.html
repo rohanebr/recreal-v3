@@ -5,8 +5,6 @@
     </div>
 </section>
  -->
-<section data-ng-controller="EmployerJobCandidatesController" class="container">
-    <article class="row ">
 <!-- <section data-ng-controller="EmployerJobCandidatesController">
     <h2>{{job.title}}</h2>
     <div data-ng-repeat="candidate in candidates">
@@ -14,7 +12,9 @@
     </div>
 </section>
  -->
-<section data-ng-controller="EmployerJobCandidatesController" class="container">
+
+
+<section data-ng-controller="EmployerJobCandidatesController" data-ng-init="findCandidates()" class="container">
     <article class="row ">
         <header class="col-md-3">
                 
@@ -137,13 +137,74 @@
             </section>
                 <!-- end Filters -->
         </aside>
+  <article class="col-md-9">
+            <table class="table table-striped">
+           <tbody>
+          <tr ng-repeat="candidate in candidates">
+            <td>
+                 <section class="col-md-3 " style="padding-top:20px;">
+                    
+                    <a data-ng-href="#!/candidates/{{candidate._id}}">
+                        <img width="150" src="{{candidate.picture_url}}">
+                    </a>
+                    </div>
+                </section>
+                <section class="col-md-9">
+                    <header class="col-md-8">
 
+                            <a data-ng-href="#!/candidates/{{candidate._id}}"><h3 style="color:#00afef;">{{candidate.displayName}}</h3></a>
+                    </header> 
+                    <aside  class="col-md-4">
+
+                            <a href="" ng-hide="isShortListed(candidate)" ng-click="addCandidateToShortList(candidate) "><i class="fa fa-star-o fa-2x" style="padding-top:20px;"></i></a>
+                           
+                            <a href="" ng-show="isShortListed(candidate)" ng-click=" removeCandidateFromShortList(candidate)"><i class="fa fa-star fa-2x" style="color:#f1d104; padding-top:20px;"></i></a>
+                         
+                    </aside> 
+
+                    <section class="col-md-12">   
+                    <h4>{{candidate.title}}</h4>
+                    <p style="color:rgb(83, 82, 82)">{{candidate.objective}}</p>
+                    <div style="line-height: 2">
+                        <span  class="skill-div" data-ng-repeat="skill in candidate.skills">{{skill.title}}</span>
+                    </div>
+                        
+                    <h6 style="padding-top:15px">Rating : 5  &nbsp;&nbsp;|&nbsp;&nbsp;  Location : {{candidate.location}}  &nbsp;&nbsp;|&nbsp;&nbsp;  Salary Range : {{candidate.salary_expectation}}  &nbsp;&nbsp;|&nbsp;&nbsp;Visa : {{candidate.visa_status}}  &nbsp;&nbsp;|&nbsp;&nbsp; Employee Type : {{candidate.employee_type}}  &nbsp;&nbsp;|&nbsp;&nbsp; Employee Status : {{candidate.employee_status}}  &nbsp;&nbsp;|&nbsp;&nbsp;Test</h6> <hr>
+                    </section>
+                    
+                    <br> 
+                   
+                </section>
+
+
+
+            </td>
             
+          </tr>
+        </tbody>
+        <tfoot>
+    
+              <ul class="pagination">
+                <li ng-class="prevPageDisabled()">
+                  <a href ng-click="prevPage()">« Prev</a>
+                </li>
+                <li ng-repeat="n in range()" ng-class="{active: n == currentPage}" ng-click="setPage(n)">
+                  <a href="#">{{n+1}}</a>
+                </li>
+                <li ng-class="nextPageDisabled()">
+                  <a href ng-click="nextPage()">Next »</a>
+                </li>
+              </ul>
+            
+          </td>
+        </tfoot>
+      </table>
+  </article>
 
 
         <!-- <article class="col-md-9"> -->
-        <article class="col-md-9">
-            <section class="panel-body" data-ng-repeat="candidate in candidates | locationFilter:locationFilters:true | salaryFilter:salaryFilters:true | visaFilter:visaFilters:true | employeetypeFilter:employeetypeFilters:true | employeestatusFilter:employeestatusFilters:true |filter:searchText">
+      
+           <!--  <section class="panel-body" data-ng-repeat="candidate in candidates | locationFilter:locationFilters:true | salaryFilter:salaryFilters:true | visaFilter:visaFilters:true | employeetypeFilter:employeetypeFilters:true | employeestatusFilter:employeestatusFilters:true |filter:searchText">
                 <section class="col-md-3 " style="padding-top:20px;">
                     
                     <a data-ng-href="#!/candidates/{{candidate._id}}">
@@ -178,9 +239,9 @@
                    
                 </section>
 
-            </section>
+            </section> -->
 
-        </article>
+       
 
 </section>
 <!-- style="margin: 5px; padding:5px;background-color:#DBDBDB" -->
