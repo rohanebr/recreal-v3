@@ -1,11 +1,12 @@
 'use strict';
 
 // Threads controller
-angular.module('threads').controller('ThreadsController', ['$scope', '$stateParams','$location', 'Authentication', 'Threads', '$http','Socket',
-	function($scope, $stateParams, $location, Authentication, Threads, $http,Socket ) {
+angular.module('threads').controller('ThreadsController', ['$scope', '$stateParams','$location', 'Authentication', 'Threads', '$http','Socket','$rootScope',
+	function($scope, $stateParams, $location, Authentication, Threads, $http,Socket,$rootScope) {
 		$scope.authentication = Authentication;
         $scope.color="color:green";
         $scope.color2="color:red";
+       
         Socket.on("i_am_here", function (data){
 
         	   for(var x=0,b=$scope.thread.messages.length;x<b;x++)

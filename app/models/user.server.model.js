@@ -49,6 +49,25 @@ var UserSchema = new Schema({
 		type: 'String',
 		default: '/uploads/fullsize/no-image.jpg'
 	},
+	notifications:[{
+		     generalmessage:{
+		     	type:'String',
+		     	default:''
+		     },
+             hiddendata:{
+             	type:'String',
+             	default:''
+             },
+             created:{
+             	type:Date,
+             	default:Date.now()
+             },
+             isRead:{
+             	type:Boolean,
+             	default:false
+             }
+             }
+		],
 	email: {
 		type: String,
 		trim: true,
@@ -86,7 +105,8 @@ var UserSchema = new Schema({
 	userType: {
 		type: String,
 		required: 'Please specify if you want to signup as an employer or a candidate',
-		enum: ['employer', 'candidate', 'transition', 'admin']
+		enum: ['employer', 'candidate', 'transition', 'admin'],
+		default: 'transition'
 	},
 	candidate: {
 		type: Schema.ObjectId,
@@ -111,7 +131,14 @@ var UserSchema = new Schema({
 	created: {
 		type: Date,
 		default: Date.now
-	}
+	},
+	/* For reset password */
+	resetPasswordToken: {
+		type: String
+	},
+  	resetPasswordExpires: {
+  		type: Date
+  	}
 });
 
 

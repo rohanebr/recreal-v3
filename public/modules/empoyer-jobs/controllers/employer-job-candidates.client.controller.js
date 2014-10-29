@@ -10,6 +10,7 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
 		$scope.employeestatusFilters = [];
 				
 		$scope.isShortListed = function(candidate){
+
 			var ans = false;
 			angular.forEach($scope.job.shortListedCandidates, function(item){
 				if (item.candidate == candidate._id)

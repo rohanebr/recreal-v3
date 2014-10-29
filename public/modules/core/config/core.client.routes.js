@@ -10,7 +10,17 @@ angular.module('core').config(['$stateProvider', '$urlRouterProvider',
 		$stateProvider.
 		state('transition', {
 			url: '/transition',
-			templateUrl: 'modules/core/views/transition.client.view.html'
+			templateUrl: 'modules/core/views/transition.client.view.html',
+			controller: 'TransitionController'
+		}).
+		state('transition.userType', {
+			url: '/userType',
+			templateUrl: 'modules/core/views/transition-userType.client.view.html'
+			
+		}).state('transition.importCv', {
+			url: '/importCv',
+			templateUrl: 'modules/core/views/transition-importCv.client.view.html'
+			
 		}).
 		state('home', {
 			url: '/',

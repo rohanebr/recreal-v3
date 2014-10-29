@@ -5,6 +5,10 @@ angular.module('candidate-features').config(['$stateProvider',
 	function($stateProvider) {
 		// Candidate features state routing
 		$stateProvider.
+		state('linkedin-cv', {
+			url: '/linkedin-cv',
+			templateUrl: 'modules/candidate-features/views/linkedin-cv.client.view.html'
+		}).
 		state('edit-cv', {
 			url: '/edit-cv',
 			templateUrl: 'modules/candidate-features/views/edit-cv.client.view.html'

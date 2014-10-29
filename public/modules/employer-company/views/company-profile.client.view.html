@@ -16,6 +16,20 @@
                     </div>
                 </section>
 
+ <div class="form-group">
+                        <div class="col-md-3">
+                            <label for="">Company Description <span class="required-css">*</span></label>
+
+                        </div>    
+                        <div class="col-md-9">    
+                            <div style="border: 1px solid #eee; background-color: #eee">
+                                <text-angular 
+                                     required
+                                    data-ng-model="company.description"></text-angular>
+                            </div>
+                        </div>
+                    </div>
+
                 <section class="form-group">
                     <div class="col-sm-3">
                         <label for="">Industry</label>
@@ -165,7 +179,7 @@
                 <button type="submit"
                     class="btn btn-primary btn-block btn-lg"
                     ng-click="update()"
-                    >Sumbit</button>                             
+                    >Submit</button>                             
                 <section data-ng-show="error" class="text-danger">
                     <strong data-ng-bind="error"></strong>
                 </section>

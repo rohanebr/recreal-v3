@@ -1,7 +1,9 @@
+
 <section data-ng-controller="ShortlistedCandidatesController">
     <article class="row ">
         <section class="logo text-center col-md-8 col-md-offset-1" >
             <h2>Short Listed Candidates for {{job.title}}</h2>
+
         </section>  
        
         <article class="col-md-3">
@@ -13,23 +15,31 @@
     </article>
 
     <section class="container">
-        <section class="col-md-2">
-            <h5>Employer features 1</h5>
-            <h5>Employer features 2</h5>
-            <h5>Employer features 3</h5>
-            <h5>Employer features 4</h5>
+
+
+        <section class="col-md-4">
+            <h4>Employer features 1</h4>
+            <h3> <button class="btn btn-sm btn-success pull-left"  ui-sref="shortlisted-candidates-test" >Send Test</button></h3>
+
+
+                       
         </section>
 
 
-        <section class="col-md-10"> 
+        <section class="col-md-8"> 
+
             <section ng-repeat="shortlist in shortListedObjects">
-                <section class="col-md-3" style="padding-top:20px;">
-                        <a data-ng-href="#!/candidates/{{shortlist.candidate}}">
+
+                <section class="col-md-4" style="padding-top:20px;">
+ <input type="checkbox" value="{{shortlist.candidate}}" ng-model="shortlist.selected"></input>
+                        <a data-ng-href="#!/candidates/{{shortlist.candidate._id}}">
                             <img width="150" src="{{shortlist.candidate.picture_url}}">
                         </a>
                 </section>
-                <section class="col-md-9" style="padding-top:20px;">
-                        <h2>{{shortlist.candidate.displayName}}</h2>
+                <section class="col-md-8" style="padding-top:20px;">
+
+                        <h1>{{shortlist.candidate.displayName}}</h1>
+
                          <h4>{{shortlist.candidate.title}}</h4>
                             <p style="color:rgb(83, 82, 82)">{{shortlist.candidate.objective}}</p>
                             <div style="line-height: 2">
@@ -58,4 +68,4 @@
                     
             
     </section>
-</section>
+</div>

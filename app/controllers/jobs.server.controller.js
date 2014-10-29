@@ -7,6 +7,7 @@ var mongoose = require('mongoose'),
 	Job = mongoose.model('Job'),
 	Employer = mongoose.model('Employer'),
 	Candidate = mongoose.model('Candidate'),
+	JobSocket = require('../sockets/job.server.socket.js'),
 	_ = require('lodash');
 
 /**
@@ -62,6 +63,7 @@ exports.create = function(req, res) {
 					});
 				} else {
 					employers[0].save();
+						JobSocket.jobPosted({job: job});
 					res.jsonp(job);
 				}
 			});
@@ -104,16 +106,13 @@ exports.getShortListedCandidates = function(req, res) {
 exports.apply = function(req, res, next) 
 
 {
-
 	if(req.user.userType === 'candidate')
-
 	{
 		var job = req.job;
-
-
 		Job.findOne({_id: req.job._id})
 			.exec(function(err, doc)
 				{
+					
 				job = doc;
 				Candidate.findOne({user: req.user._id}).exec(function(err, candidate)
 					{
@@ -125,13 +124,12 @@ exports.apply = function(req, res, next)
 							{
 								//doc.apply(candidate);
 								job.apply(candidate);
+								JobSocket.applicationReceived({job: job});
 								res.jsonp(req.job);
 							}
 						});			
 				});
 		});
-
-		
 	}	
 };
 
@@ -263,3 +261,43 @@ exports.hasAuthorization = function(req, res, next) {
 };
 
 
+exports.onePlusView=function(req,res){
+
+
+var numberofviews=req.job.views;
+var alreadyviewedbytheuser=false;
+
+Job.findById(req.job._id).exec(function(err,job){
+	console.log(job);
+	if(req.job.views.length==0)
+      job.views.push(req.body.user._id);
+if(req.job.views.length>0)
+{
+    for(var d=0;d<numberofviews.length;d++)
+    	   {
+             var views=job.views[d];
+             if(views.equals(req.user.id))
+             	alreadyviewedbytheuser=true;
+
+    	   }
+
+   if(!alreadyviewedbytheuser) 	
+     job.views.push(req.body.user._id);   
+
+
+
+}
+
+job.markModified('views');
+job.save();
+
+
+});
+
+
+
+
+
+
+
+};

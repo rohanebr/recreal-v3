@@ -14,6 +14,14 @@ var CandidateSchema = new Schema({
 		type: 'String',
 		trim: true
 	},
+	displayName:{
+		type: String,
+		trim: true
+	},
+	picture_url:{
+		type: 'String',
+		default: '/uploads/fullsize/no-image.jpg'
+	},
 	objective:{
 		type: 'String',
 		trim: true
@@ -238,7 +246,22 @@ var CandidateSchema = new Schema({
 		type: Schema.ObjectId,
 		ref: 'User',
 		required: true
-	}
+	},coordinates:{
+            latitude:{
+         	type:Number,
+           	default:0
+           },
+           longitude:{
+           	type:Number,
+           	default:0
+           }
+
+	  },
+	  interested:
+	 [ {
+
+
+	  }]
 });
 
 

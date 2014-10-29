@@ -5,7 +5,9 @@
 /**
  * Module dependencies.
  */
-var mongoose = require('mongoose'),Candidate = mongoose.model('Candidate'),_ = require('lodash');
+var mongoose = require('mongoose'),
+Candidate = mongoose.model('Candidate'),
+_ = require('lodash');
 
 
 /**
@@ -75,8 +77,8 @@ exports.delete = function(req, res) {
 /**
  * List of Candidates
  */
-
 exports.list = function(req, res) { 
+
 	Candidate.find().sort('-created').populate('user', 'displayName').exec(function(err, candidates) {
 		if (err) {
 			return res.send(400, {
@@ -213,8 +215,6 @@ if(req.user.userType === 'candidate')
 {
 var c;
 var experience=req.body;
-console.log(experience._id);
-console.log(experience.company_name);
 Candidate.update({ user: userId },{ $pull: { positions : { _id : experience._id } } }, { safe: true }, function removeConnectionsCB(err, obj) { })}console.log('method called delete Experience!');
 };
 

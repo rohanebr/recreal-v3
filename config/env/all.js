@@ -17,9 +17,9 @@ module.exports = {
 				'public/lib/bootstrap/dist/css/bootstrap-theme.css'
 			],
 			js: [
-				'pulic/lib/jquery/dist/jquery.js',
-				'public/lib/jquery-slimscroll/jquery.slimscroll.js',
-				'public/lib/jquery-ui/jquery-ui.j',
+				'public/lib/jquery/dist/jquery.js',
+				// 'public/lib/jquery-slimscroll/jquery.slimscroll.js',
+				'public/lib/jquery-ui/jquery-ui.js',
 				'public/lib/angular/angular.min.js',
 				'public/lib/angular-resource/angular-resource.js', 
 				'public/lib/angular-ui-router/release/angular-ui-router.min.js',
@@ -31,12 +31,15 @@ module.exports = {
 				'public/lib/angular-timer/dist/angular-timer.js',
 				'public/lib/angular-charts/dist/angular-charts.js',
 				'public/lib/d3/d3.js',
+				'public/lib/angularjs-geolocation/src/geolocation.js',
 				'public/lib/angular-ui-date/src/date.js',
 				'public/lib/ng-file-upload/angular-file-upload-shim.js',
 				'public/lib/ng-file-upload/angular-file-upload-html5-shim.js',
 				'public/lib/ng-file-upload/angular-file-upload.js',
 				'public/lib/textAngular/dist/textAngular-sanitize.min.js',
-				'public/lib/textAngular/dist/textAngular.min.js'
+				'public/lib/textAngular/dist/textAngular.min.js',
+				'public/lib/ngmap/build/scripts/ng-map.js',
+				'http://maps.google.com/maps/api/js'
 			]
 		},
 		css: [
