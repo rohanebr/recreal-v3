@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('employer-company').controller('EmployerProfileController', ['$scope','$http', 'Countries', 'Authentication','Employers', '$location','$modal',
-	function($scope,Countries,$http, Authentication, Employers, $location, $modal) {
+	function($scope,$http, Countries, Authentication, Employers, $location, $modal) {
 		$scope.user = Authentication.user;
 		$scope.countries = Countries.getCountries();
 		$scope.isEditing = false;
