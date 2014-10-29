@@ -8,7 +8,7 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
 		$scope.visaFilters = [];
 		$scope.employeetypeFilters = [];
 		$scope.employeestatusFilters = [];
-		 $scope.itemsPerPage =10;
+		 $scope.itemsPerPage =2;
   $scope.currentPage = 0;
 
   $scope.range = function() {
@@ -58,7 +58,7 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
 
   $scope.setPage = function(n) {
   	console.log("EVERYTIME ITS CALLED");
-    if (n > 0 && n < $scope.pageCount()) {
+    if (n >= 0 && n < $scope.pageCount()) {
 
       $scope.currentPage = n;
       console.log($scope.currentPage);
@@ -89,7 +89,7 @@ console.log("CURRENT PAGE");
 
 		$scope.findCandidates=function(){
 		
-		$http.put('jobs/getPaginatedCandidates/' + $stateParams.jobId,{skip:0,limit:$scope.itemsPerPage}).success(function(job) {
+		$http.put('jobs/getPaginatedCandidates/' + $stateParams.jobId,{skip:0,limit:$scope.itemsPerPage,filter:"general"}).success(function(job) {
 			$scope.job = job.job;
 			$scope.candidates=$scope.job.candidates;
 			   $scope.total=job.totalentries;
