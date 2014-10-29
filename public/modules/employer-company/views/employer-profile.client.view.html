@@ -124,11 +124,10 @@
                     <div class="col-sm-3">
                         <label for="">Picture</label>
                     </div>
-                    <div class="col-sm-9">
-                        <input  type="text"
-                                class="form-control"
-                                data-ng-model="employer.picture_url">
-                    </div>
+                    <div class="col-md-3 text-center">
+                    <a href="" class="pull-right" ng-show="isEditing" ng-click="openPictureModal()" ><i class="fa fa-edit"></i></a>
+                    <img alt=""class="img180_180" src="{{employer.picture_url}}">
+            </div>
                 </section>
 
                 <button type="submit"
