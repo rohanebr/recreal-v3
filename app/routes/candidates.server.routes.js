@@ -64,6 +64,7 @@ module.exports = function(app) {
         app.route('/candidates/updateCertificate/:candidateId')
            .put(users.requiresLogin,candidates.hasAuthorization,candidates.updateCertificate);
 
+
             // Finish by binding the Candidate middleware
                 app.param('candidateId', candidates.candidateByID);
 

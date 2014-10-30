@@ -1,6 +1,10 @@
 'use strict';
 
 <<<<<<< HEAD
+
+=======
+<<<<<<< HEAD
+>>>>>>> ea2345263f06b679953098d4c29d82dcc91479fd
 angular.module('empoyer-jobs').controller('CompanyOpenJobsController', ['$scope', 'Authentication', 'Jobs', 'Employers', 'Companies', '$location', 'Socket',
     function($scope, Authentication, Jobs, Employers, Companies, $location, Socket) {
         $scope.user = Authentication.user;
@@ -40,18 +44,9 @@ angular.module('empoyer-jobs').controller('CompanyOpenJobsController', ['$scope'
 
         });
     }
+
+<<<<<<< HEAD
 =======
-angular.module('empoyer-jobs').controller('CompanyOpenJobsController', ['$scope', '$filter', 'Authentication', 'Jobs', 'Employers', 'Companies', '$location',
-	function($scope, $filter, Authentication, Jobs, Employers, Companies, $location) {
-		$scope.user = Authentication.user;
-
-		// If user is not signed in then redirect back home
-		if (!$scope.user) $location.path('/signin');
-
-//		$scope.employer = $rootScope.employer;
-//		$scope.company = $rootScope.company;
-        $scope.jobs = [];
-
 		$scope.employer = Employers.get({
 				employerId: $scope.user.employer
 			}, function(employer){
@@ -69,4 +64,5 @@ angular.module('empoyer-jobs').controller('CompanyOpenJobsController', ['$scope'
 			});
 	}
 >>>>>>> d82155aabf49e8b2395b5419e1eb7c922b31c079
+>>>>>>> ea2345263f06b679953098d4c29d82dcc91479fd
 ]);

@@ -49,9 +49,25 @@ var UserSchema = new Schema({
 		type: 'String',
 		default: '/uploads/fullsize/no-image.jpg'
 	},
-	notifications:{
-		type: 'String'
-	},
+	notifications:[{
+		     generalmessage:{
+		     	type:'String',
+		     	default:''
+		     },
+             hiddendata:{
+             	type:'String',
+             	default:''
+             },
+             created:{
+             	type:Date,
+             	default:Date.now()
+             },
+             isRead:{
+             	type:Boolean,
+             	default:false
+             }
+             }
+		],
 	email: {
 		type: String,
 		trim: true,
@@ -115,7 +131,14 @@ var UserSchema = new Schema({
 	created: {
 		type: Date,
 		default: Date.now
-	}
+	},
+	/* For reset password */
+	resetPasswordToken: {
+		type: String
+	},
+  	resetPasswordExpires: {
+  		type: Date
+  	}
 });
 
 

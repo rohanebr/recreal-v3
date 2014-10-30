@@ -20,6 +20,11 @@ var CompanySchema = new Schema({
     type: 'String',
     trim: true
   },
+  description:
+  {
+    type: 'String',
+    trim: true
+  },
   logo_url:{
     type: 'String'
   },
@@ -79,7 +84,13 @@ var CompanySchema = new Schema({
 	user: {
 		type: Schema.ObjectId,
 		ref: 'User'
-	}
+	},
+  views:{
+      type:Number,
+      default:0
+
+
+  }
 });
 
 mongoose.model('Company', CompanySchema);
