@@ -124,25 +124,24 @@
                     <div class="col-sm-3">
                         <label for="">Picture</label>
                     </div>
-<<<<<<< HEAD
-                    <div class="col-sm-9">
+
+                    <!-- <div class="col-sm-9">
                         <input  type="text"
                                 class="form-control"
-                                data-ng-model="employer.picture_url">
-                    </div>
-                </section><br>
-=======
-                    <div class="col-md-3 text-center">
+                                data-ng-model="employer.picture_url"> -->
+                    <!-- </div> -->
+                    <div class="col-md-3">
                     <a href="" class="pull-right" ng-click="openPictureModal()" ><i class="fa fa-edit"></i></a>
                     <img alt=""class="img180_180" src="{{employer.picture_url}}">
-            </div>
+                    </div>
                 </section>
->>>>>>> d82155aabf49e8b2395b5419e1eb7c922b31c079
 
-                <button type="submit"
-                    class="btn btn-primary btn-block btn-lg"
-                    ng-click="update()"
-                    >Sumbit</button>                            
+                <section class="col-sm-9">
+                    <button type="submit"
+                        class="btn btn-primary btn-block btn-lg"
+                        ng-click="update()"
+                    >Sumbit</button> 
+                </section>                           
                 <section data-ng-show="error" class="text-danger">
                     <strong data-ng-bind="error"></strong>
                 </section><br>
