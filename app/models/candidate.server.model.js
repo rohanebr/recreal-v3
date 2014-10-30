@@ -51,7 +51,8 @@ var CandidateSchema = new Schema({
 	},
 	visa_status:{
 		type: 'String',
-		trim: true
+		trim: true,
+		default: 'Not mentioned'
 	},
 	driving_license_issued:{
 		type: 'String',
@@ -75,15 +76,18 @@ var CandidateSchema = new Schema({
 	},
 	employee_type:{
 		type: 'String',
-		trim: true
+		trim: true,
+		default: 'Not mentioned'
 	},
 	employee_status:{
 		type: 'String',
-		trim: true
+		trim: true,
+		default:'Not mentioned'
 	},
 	salary_expectation:{
 		type: 'String',
-		trim: true
+		trim: true,
+		default: "Not mentioned"
 	},
 	notice_period:{
 		type: 'String',
@@ -98,7 +102,8 @@ var CandidateSchema = new Schema({
 	target_locations: [{
 		name:{
 			type: 'String',
-			trim: true
+			trim: true,
+			default: 'Not Mentioned'
 	  	}
 	}],
 	educations:[{

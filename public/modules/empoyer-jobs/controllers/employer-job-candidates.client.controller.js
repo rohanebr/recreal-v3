@@ -93,7 +93,11 @@ console.log("CURRENT PAGE");
 			$scope.job = job.job;
 			$scope.locationFilters=job.filters.locationFilters;
 			$scope.salaryFilters = job.filters.salaryFilters;
+			$scope.visaFilters=job.filters.visaFilters;
+			$scope.employeetypeFilters=job.filters.employeetypeFilters;
+				$scope.employeestatusFilters=job.filters.employeestatusFilters;
 			$scope.candidates=$scope.job.candidates;
+
 			$scope.total=job.totalentries;
             console.log($scope.total);
 		});

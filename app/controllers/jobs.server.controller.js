@@ -330,8 +330,8 @@ var filters={
     locationFilters:[],
     salaryFilters:[],
     visaFilters:[],
-    employeeTypeFilters:[],
-    EmployementStatusFilters:[]
+    employeetypeFilters:[],
+   employeestatusFilters:[]
 };
 
 
@@ -344,27 +344,32 @@ var filters={
 
             // populate filters to be sent
             Candidate.find({"_id": {$in: candidates}}, 
-            'displayName title objective picture_url location salary_expectation visa_status employee_type employee_status skills')
+            'title location salary_expectation visa_status employee_type target_locations employee_status skills')
             .exec(function(err, candidates){
 
 
                 // populate Location Filter
 
                 candidates.sort(function(a, b){
-                    if(a.location && b.location)
-                 var locationA=a.location.toLowerCase(), locationB=b.location.toLowerCase()
+                    console.log(a.target_locations[0]+" "+b.target_locations[0]);
+                    if(a.target_locations && b.target_locations)
+                var locationA=a.target_locations[0].name.toLowerCase(), locationB=b.target_locations[0].name.toLowerCase();
+
                  if (locationA < locationB) //sort string ascending
                   return -1 
                  if (locationA > locationB)
                   return 1
                  return 0 //default return value (no sorting)
+             
+                
                 });
 
                 var filterValue = 'invalid_value';
                for (var i = 0, len = candidates.length; i < len; i++) {              
                     var candidate = candidates[i];
-                    if(candidate.location !== filterValue){
-                        filterValue = candidate.location;
+                    console.log(candidate);
+                    if(candidate.target_locations[0].name !== filterValue){
+                        filterValue = candidate.target_locations[0].name;
                         filters.locationFilters.push({
                             name: filterValue,
                             count: 0
@@ -403,11 +408,11 @@ var filters={
 
                 //Populate Visa Filter
                     candidates.sort(function(a, b){
-                    if(a.salary_expectation && b.salary_expectation)
-                 var salaryA=a.salary_expectation.toLowerCase(), salaryB=b.salary_expectation.toLowerCase()
-                 if (salaryA < salaryB) //sort string ascending
+                    if(a.visa_status && b.visa_status)
+                 var visaA=a.visa_status.toLowerCase(), visaB=b.visa_status.toLowerCase()
+                 if (visaA < visaB) //sort string ascending
                   return -1 
-                 if (salaryA > salaryB)
+                 if (visaA > visaB)
                   return 1
                  return 0 //default return value (no sorting)
                 });
@@ -415,14 +420,62 @@ var filters={
                 var filterValue = 'invalid_value';
                for (var i = 0, len = candidates.length; i < len; i++) {              
                     var candidate = candidates[i];
-                    if(candidate.salary_expectation !== filterValue){
-                        filterValue = candidate.salary_expectation;
-                        filters.salaryFilters.push({
+                    if(candidate.visa_status !== filterValue){
+                        filterValue = candidate.visa_status;
+                        filters.visaFilters.push({
                             name: filterValue,
                             count: 0
                         });
                     }
-                    filters.salaryFilters[filters.salaryFilters.length - 1].count++;
+                    filters.visaFilters[filters.visaFilters.length - 1].count++;
+                }
+
+
+                //Employee Type Filter
+                      candidates.sort(function(a, b){
+                    if(a.employee_type && b.employee_type)
+                 var employee_typeA=a.employee_type.toLowerCase(), employee_typeB=b.employee_type.toLowerCase()
+                 if (employee_typeA < employee_typeB) //sort string ascending
+                  return -1 
+                 if (employee_typeA > employee_typeB)
+                  return 1
+                 return 0 //default return value (no sorting)
+                });
+
+                var filterValue = 'invalid_value';
+               for (var i = 0, len = candidates.length; i < len; i++) {              
+                    var candidate = candidates[i];
+                    if(candidate.employee_type !== filterValue){
+                        filterValue = candidate.employee_type;
+                        filters.employeetypeFilters.push({
+                            name: filterValue,
+                            count: 0
+                        });
+                    }
+                    filters.employeetypeFilters[filters.employeetypeFilters.length - 1].count++;
+                }
+           //Employmentstatus FIlter
+                     candidates.sort(function(a, b){
+                    if(a.employee_status && b.employee_status)
+                 var employee_statusA=a.employee_status.toLowerCase(), employee_statusB=b.employee_status.toLowerCase()
+                 if (employee_statusA < employee_statusB) //sort string ascending
+                  return -1 
+                 if (employee_statusA > employee_statusB)
+                  return 1
+                 return 0 //default return value (no sorting)
+                });
+
+                var filterValue = 'invalid_value';
+               for (var i = 0, len = candidates.length; i < len; i++) {              
+                    var candidate = candidates[i];
+                    if(candidate.employee_status !== filterValue){
+                        filterValue = candidate.employee_status;
+                        filters.employeestatusFilters.push({
+                            name: filterValue,
+                            count: 0
+                        });
+                    }
+                    filters.employeestatusFilters[filters.employeestatusFilters.length - 1].count++;
                 }
 
             });
