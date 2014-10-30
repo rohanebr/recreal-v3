@@ -102,7 +102,7 @@
                     </div>
                     <div class="col-sm-9">
                         <span class="ui-select">
-                                <select ng-model="country">
+                                <select ng-model="employer.country" class="form-control">
                                     <option data-ng-repeat="count in countries">{{count.name}}</option>
                                 </select>
                             </span>
@@ -135,6 +135,11 @@
                     <img alt=""class="img180_180" src="{{employer.picture_url}}">
                     </div>
                 </section>
+                   <!--  <div class="col-md-3 text-center">
+                    <a href="" class="pull-right" ng-click="openPictureModal()" ><i class="fa fa-edit"></i></a>
+                    <img alt=""class="img180_180" src="{{employer.picture_url}}">
+                    </div>
+                </section><br> -->
 
                 <section class="col-sm-9">
                     <button type="submit"

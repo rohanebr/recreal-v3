@@ -6,7 +6,8 @@ module.exports = function(app) {
 
 	app.route('/uploadpicture').post(users.requiresLogin, employers.uploadPicture);
 	app.route('/uploads/fullsize/:file').get(employers.getImage);
-	// Employers Routes
+
+		// Employers Routes
 	app.route('/employers')
 		.get(employers.list);
 		// .post(users.requiresLogin, employers.create);
