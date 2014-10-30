@@ -1,6 +1,10 @@
 'use strict';
 
+<<<<<<< HEAD
 
+=======
+<<<<<<< HEAD
+>>>>>>> ea2345263f06b679953098d4c29d82dcc91479fd
 angular.module('empoyer-jobs').controller('CompanyOpenJobsController', ['$scope', 'Authentication', 'Jobs', 'Employers', 'Companies', '$location', 'Socket',
     function($scope, Authentication, Jobs, Employers, Companies, $location, Socket) {
         $scope.user = Authentication.user;
@@ -41,4 +45,24 @@ angular.module('empoyer-jobs').controller('CompanyOpenJobsController', ['$scope'
         });
     }
 
+<<<<<<< HEAD
+=======
+		$scope.employer = Employers.get({
+				employerId: $scope.user.employer
+			}, function(employer){
+				$scope.company = Companies.get({
+					companyId: employer.company
+				}, function(company){
+					angular.forEach(company.jobs, function(job, key){
+						Jobs.get({
+							jobId: job
+						}, function(job){
+							$scope.jobs.push(job);
+						});
+					});
+				});
+			});
+	}
+>>>>>>> d82155aabf49e8b2395b5419e1eb7c922b31c079
+>>>>>>> ea2345263f06b679953098d4c29d82dcc91479fd
 ]);

@@ -21,7 +21,7 @@
                         <div class="col-md-9">
                             <input  type="text"class="form-control" required data-ng-model="title">
                         </div>
-                    </div>                   
+                    </div><br>                   
                     <div class="form-group">
                         <div class="col-md-3">
                             <label for="">Description <span class="required-css">*</span></label>
@@ -33,7 +33,7 @@
                                     data-ng-model="description"></text-angular>
                             </div>
                         </div>
-                    </div>
+                    </div><br>
                     <div class="form-group">
                        <div class="col-md-3">
                             <label for="">Requirements <span class="required-css">*</span></label>
@@ -59,7 +59,7 @@
                         <td><input type="text" ng-model="skill.title"class="form-control"></td>
                         <td>
                             <span class="ui-select">
-                                <select data-ng-model="skill.level"  style="width: 150px;">
+                                <select data-ng-model="skill.level"  style="width: 150px;" class="form-control">
                                     <option selected="selected">Beginner</option>
                                     <option>Intermidiate</option>
                                     <option>Expert</option>
@@ -89,7 +89,7 @@
                                     <label for="">Due Date <span class="required-css">*</span></label>
                                 </div>
                                 <div class="col-md-9">
-                                    <input type="date" required data-ng-model="due_date" />
+                                    <input type="date" required data-ng-model="due_date" class="form-control" style="width: 300px;"/>
                                 </div>
                             </div>
 
@@ -99,13 +99,13 @@
                                 </div>
                                 <div class="col-md-9">
                                     <span class="ui-select">
-                                        <select required data-ng-model="industry">
+                                        <select required data-ng-model="industry" class="form-control" style="width: 300px;">
                                             <option data-ng-repeat="ind in industries">{{ind.name}}
                                             </option>
                                         </select>
                                     </span>
                                 </div>
-                            </div>
+                            </div><br>
 
                             <div class="form-group">
                                 <div class="col-md-3">
@@ -113,7 +113,7 @@
                                 </div>
                                 <div class="col-md-9">
                                     <span class="ui-select">
-                                        <select data-ng-model="department">
+                                        <select data-ng-model="department" class="form-control" style="width: 300px;">
                                             <option selected="selected">Administration</option>
                                             <option>Accounts</option>
                                             <option>Budget</option>
@@ -133,7 +133,7 @@
                                         </select>
                                     </span>
                                 </div>
-                            </div>
+                            </div><br>
 
                             <div class="form-group">
                                 <div class="col-md-3">
@@ -141,14 +141,14 @@
                                 </div>
                                 <div class="col-md-9">
                                     <span class="ui-select">
-                                        <select data-ng-model="gender">
+                                        <select data-ng-model="gender" class="form-control" style="width: 300px;">
                                             <option value="No preference" selected>No prference</option>
                                             <option value="Male">Male</option>
                                             <option value="Female">Female</option>
                                         </select>
                                     </span>
                                 </div>
-                            </div>
+                            </div><br>
 
                             <div class="form-group">
                                 <div class="col-md-3">
@@ -156,13 +156,13 @@
                                 </div>
                                 <div class="col-md-9">
                                     <span class="ui-select">
-                                        <select data-ng-model="work_permit">
+                                        <select data-ng-model="work_permit" class="form-control" style="width: 300px;">
                                             <option data-ng-repeat="count in countries">{{count.name}}
                                             </option>
                                         </select>
                                     </span>
                                 </div>
-                            </div>
+                            </div><br>
 
                             <div class="form-group">
                                 <div class="col-md-3">
@@ -170,7 +170,7 @@
                                 </div>
                                 <div class="col-md-9">
                                     <span class="ui-select">
-                                        <select data-ng-model="employee_type">
+                                        <select data-ng-model="employee_type" class="form-control" style="width: 300px;">
                                             <option>Contract</option>
                                             <option>Daily Wages</option>
                                             <option>Internship</option>
@@ -179,14 +179,14 @@
                                         </select>
                                     </span>
                                 </div>
-                            </div>
+                            </div><br>
                             <div class="form-group">
                                 <div class="col-md-3">
                                     <label for="">Salary/Month</label>
                                 </div>
                                 <div class="col-md-9">
                                     <span class="ui-select">
-                                        <select data-ng-model="salary_range">
+                                        <select data-ng-model="salary_range" class="form-control" style="width: 300px;">
                                             <option>Less than $1000</option>
                                             <option>$1000 - $2000</option>
                                             <option>$2000 - $3000</option>
@@ -200,7 +200,7 @@
                                         </select>
                                     </span>
                                 </div>
-                            </div>
+                            </div><br>
 
                             <div class="form-group">
                                 <div class="col-md-3">
@@ -208,7 +208,7 @@
                                 </div>
                                 <div class="col-md-9">
                                     <span class="ui-select">
-                                        <select ng-model="shift">
+                                        <select ng-model="shift" class="form-control" style="width: 300px;">
                                             <option>Morning</option>
                                             <option>Evening</option>
                                             <option>Night</option>
@@ -216,7 +216,7 @@
                                         </select>
                                     </span>
                                 </div>
-                            </div>
+                            </div><br>
 
                             <div class="form-group">
                                 <div class="col-md-3">
@@ -224,7 +224,7 @@
                                 </div>
                                 <div class="col-md-9">
                                     <span class="ui-select">
-                                        <select ng-model="no_of_positions">
+                                        <select ng-model="no_of_positions" class="form-control" style="width: 300px;">
                                             <option>1</option>
                                             <option>2</option>
                                             <option>3</option>
@@ -238,7 +238,7 @@
                                         </select>
                                     </span>
                                 </div>
-                            </div>
+                            </div><br>
 
                             <div class="form-group">
                                 <div class="col-md-3">
@@ -246,13 +246,13 @@
                                 </div>
                                 <div class="col-md-9">
                                     <span class="ui-select">
-                                        <select ng-model="country" required>
+                                        <select ng-model="country" required class="form-control" style="width: 300px;">
                                             <option data-ng-repeat="count in countries">{{count.name}}
                                             </option>
                                         </select>
                                     </span>
                                 </div>
-                            </div>
+                            </div><br>
 
                             <div class="form-group">
                                 <div class="col-md-3">
@@ -260,7 +260,7 @@
                                 </div>
                                 <div class="col-md-9">
                                     <span class="ui-select">
-                                        <select ng-model="location" required>
+                                        <select ng-model="location" required class="form-control" style="width: 300px;">
                                             <option>Islamabad</option>
                                             <option>Lahore</option>
                                             <option>Multan</option>
@@ -268,7 +268,7 @@
                                         </select>
                                     </span>
                                 </div>
-                            </div>
+                            </div><br>
                             
                             <div class="form-group">
                                 <div class="col-md-3">
@@ -276,7 +276,7 @@
                                 </div>
                                 <div class="col-md-9">
                                     <span class="ui-select">
-                                        <select ng-model="travel_required">
+                                        <select ng-model="travel_required" class="form-control" style="width: 300px;">
                                             <option>No Travelling</option>
                                             <option>25% or less</option>
                                             <option>50% or less </option>
@@ -285,7 +285,7 @@
                                         </select>
                                     </span>
                                 </div>
-                            </div>
+                            </div><br>
 
                         </fieldset>
                     </div>
@@ -300,7 +300,7 @@
                             </div>
                             <div class="col-md-9">
                                 <span class="ui-select">
-                                    <select ng-model="degree_title" required>
+                                    <select ng-model="degree_title" required class="form-control" style="width: 300px;">
                                         <option>Pre-Matriculation</option>
                                         <option>O-level/Matriculation</option>
                                         <option>Intermediate/A-Level</option>
@@ -312,19 +312,19 @@
                                     </select>
                                 </span>
                             </div>
-                        </div>
+                        </div><br>
                         <div class="form-group">
                             <div class="col-md-3">
                                 <label for="">Study Field <span class="required-css">*</span></label>
                             </div>
                             <div class="col-md-9">
                                 <span class="ui-select">
-                                    <select ng-model="study_field" required>
+                                    <select ng-model="study_field" required class="form-control" style="width: 300px;">
                                         <option data-ng-repeat="studyfeild in studyFields">{{studyfeild.name}}</option>
                                     </select>
                                 </span>
                             </div>
-                        </div>
+                        </div><br>
 
                         <div class="form-group">
                                 <div class="col-md-3">
@@ -332,7 +332,7 @@
                                 </div>
                                 <div class="col-md-9">
                                     <span class="ui-select">
-                                        <select ng-model="career_level" required>
+                                        <select ng-model="career_level" required class="form-control" style="width: 300px;">
                                             <option>Student/Internship</option>
                                             <option>Entry Level</option>
                                             <option>Mid Career</option>
@@ -342,7 +342,7 @@
                                         </select>
                                     </span>
                                 </div>
-                        </div>
+                        </div><br>
                         
                           <div class="form-group">
                                 <div class="col-md-3">
@@ -350,7 +350,7 @@
                                 </div>
                                 <div class="col-md-9">
                                             <input  type="number"
-                                                class="form-control" style="width:200px;"
+                                                class="form-control" style="width:300px;"
                                                 data-ng-model="experience">
                                 </div>
                         </div>
@@ -361,18 +361,18 @@
                                 </div>
                                 <div class="col-md-9">
                                     <span data-ng-repeat="certificate in certificates"><input  type="text" class="form-control"
-                                     style="width:200px;"
+                                     style="width:300px;"
                                     data-ng-model="certificate.name"
                                     ><a ng-click="removeCertificate($index)"><i class="fa fa-times pull-right"></i></a>
                                     </span><a class= "btn btn-default btn-xs" data-ng-click="addCertificate()">Add more</a>
                                 </div>
-                        </div>
+                        </div><br>
                     </div>     
         </section>
 
             <section class="row text-center">
                     <button type="submit"
-                        class="btn btn-success"
+                        class="btn btn-success btn-block btn-lg"
                         >Post Job</button>
             </section><br><br>
         </form>

@@ -769,8 +769,8 @@ $scope.openEducationModal=function(education)
         });
     };
 
-  $scope.ok = function (action) {
-  $modalInstance.close({ action: action, skill: $scope.skill });
+  $scope.upload = function (action) {
+  $modalInstance.close({ action: action, picture_url: $scope.picture_url });
   };
 
   $scope.cancel = function () {

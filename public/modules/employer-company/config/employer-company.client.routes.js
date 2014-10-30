@@ -21,5 +21,9 @@ angular.module('employer-company').config(['$stateProvider',
 			url: '/company-profile',
 			templateUrl: 'modules/employer-company/views/company-profile.client.view.html'
 		});
+		// state('logo-partial', {
+		// 	url: '/logo-partial',
+		// 	templateUrl: 'modules/employer-company/views/logo/logo-partial.html'
+		// });
 	}
 ]);

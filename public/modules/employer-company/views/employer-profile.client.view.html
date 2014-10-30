@@ -18,15 +18,15 @@
                                 class="form-control"
                                 data-ng-model="employer.title">
                     </div>
-                </section>
+                </section><br>
 
                 <section class="form-group">
                     <div class="col-sm-3">
                         <label for="">Division</label>
                     </div>
                     <div class="col-sm-9">
-                        <span class="ui-select">
-                            <select data-ng-model="employer.division">
+                        <span class="ui-select" >
+                            <select data-ng-model="employer.division" class="form-control">
                                 <option>Accounts</option>
                                 <option>Sales</option>
                                 <option>Business</option>
@@ -34,7 +34,7 @@
                             </select>
                         </span>
                     </div>
-                </section>
+                </section><br>
 
                 <section class="form-group">
                     <div class="col-sm-3">
@@ -42,7 +42,7 @@
                     </div>
                     <div class="col-sm-9">
                         <span class="ui-select">
-                            <select data-ng-model="employer.department">
+                            <select data-ng-model="employer.department" class="form-control">
                                 <option>Admin</option>
                                 <option>Software</option>
                                 <option>HR</option>
@@ -50,7 +50,7 @@
                             </select>
                         </span>
                     </div>
-                </section>
+                </section><br>
 
                 <section class="form-group">
                     <div class="col-sm-3">
@@ -61,7 +61,7 @@
                                 class="form-control"
                                 data-ng-model="employer.office_no">
                     </div>
-                </section>
+                </section><br>
 
                 <section class="form-group">
                     <div class="col-sm-3">
@@ -83,7 +83,7 @@
                                 class="form-control"
                                 data-ng-model="employer.contact_email">
                     </div>
-                </section>
+                </section><br>
 
                 <section class="form-group">
                     <div class="col-sm-3">
@@ -94,7 +94,7 @@
                                 class="form-control"
                                 data-ng-model="employer.skype_id">
                     </div>
-                </section>
+                </section><br>
 
                 <section class="form-group">
                     <div class="col-sm-3">
@@ -102,12 +102,12 @@
                     </div>
                     <div class="col-sm-9">
                         <span class="ui-select">
-                                <select ng-model="country">
+                                <select ng-model="employer.country" class="form-control">
                                     <option data-ng-repeat="count in countries">{{count.name}}</option>
                                 </select>
                             </span>
                     </div>
-                </section>
+                </section><br>
 
                 <section class="form-group">
                     <div class="col-sm-3">
@@ -118,25 +118,26 @@
                                 class="form-control"
                                 data-ng-model="employer.location">
                     </div>
-                </section>
+                </section><br>
 
                 <section class="form-group">
                     <div class="col-sm-3">
                         <label for="">Picture</label>
                     </div>
+
                     <div class="col-md-3 text-center">
                     <a href="" class="pull-right" ng-click="openPictureModal()" ><i class="fa fa-edit"></i></a>
                     <img alt=""class="img180_180" src="{{employer.picture_url}}">
-            </div>
-                </section>
+                    </div>
+                </section><br>
 
                 <button type="submit"
-                    class="btn btn-sucess btn-block btn-lg"
+                    class="btn btn-primary btn-block btn-lg"
                     ng-click="update()"
                     >Submit</button>                            
                 <section data-ng-show="error" class="text-danger">
                     <strong data-ng-bind="error"></strong>
-                </section>
+                </section><br>
             </fieldset>
         </form>
     </article>
