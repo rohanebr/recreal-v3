@@ -8,7 +8,7 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
 		$scope.visaFilters = [];
 		$scope.employeetypeFilters = [];
 		$scope.employeestatusFilters = [];
-		 $scope.itemsPerPage =2;
+		 $scope.itemsPerPage =10;
   $scope.currentPage = 0;
 
   $scope.range = function() {
@@ -91,12 +91,13 @@ console.log("CURRENT PAGE");
 		
 		$http.put('jobs/getPaginatedCandidates/' + $stateParams.jobId,{skip:0,limit:$scope.itemsPerPage,filter:"general"}).success(function(job) {
 			$scope.job = job.job;
+			$scope.locationFilters=job.filters.locationFilters;
+			$scope.salaryFilters = job.filters.salaryFilters;
 			$scope.candidates=$scope.job.candidates;
-			   $scope.total=job.totalentries;
+			$scope.total=job.totalentries;
             console.log($scope.total);
-			
-
-		});}
+		});
+	}
 		// $http.get('jobs/candidates/' + $stateParams.jobId).success(function(job) {
 		// 	$scope.job = job;
 		// 	$scope.candidates = job.candidates;

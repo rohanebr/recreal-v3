@@ -326,9 +326,110 @@ exports.onePlusView = function(req, res) {
 
 exports.getPaginatedCandidates = function(req, res) {
 var skillsrequired=[];
+var filters={
+    locationFilters:[],
+    salaryFilters:[],
+    visaFilters:[],
+    employeeTypeFilters:[],
+    EmployementStatusFilters:[]
+};
+
+
+
+
     Job.findById(req.job.id)
         .exec(function(err, job) {
+
             var candidates = job.candidates;
+
+            // populate filters to be sent
+            Candidate.find({"_id": {$in: candidates}}, 
+            'displayName title objective picture_url location salary_expectation visa_status employee_type employee_status skills')
+            .exec(function(err, candidates){
+
+
+                // populate Location Filter
+
+                candidates.sort(function(a, b){
+                    if(a.location && b.location)
+                 var locationA=a.location.toLowerCase(), locationB=b.location.toLowerCase()
+                 if (locationA < locationB) //sort string ascending
+                  return -1 
+                 if (locationA > locationB)
+                  return 1
+                 return 0 //default return value (no sorting)
+                });
+
+                var filterValue = 'invalid_value';
+               for (var i = 0, len = candidates.length; i < len; i++) {              
+                    var candidate = candidates[i];
+                    if(candidate.location !== filterValue){
+                        filterValue = candidate.location;
+                        filters.locationFilters.push({
+                            name: filterValue,
+                            count: 0
+                        });
+                    }
+                    filters.locationFilters[filters.locationFilters.length - 1].count++;
+                }
+
+
+
+                // Populate Salary Filter
+
+                candidates.sort(function(a, b){
+                    if(a.salary_expectation && b.salary_expectation)
+                 var salaryA=a.salary_expectation.toLowerCase(), salaryB=b.salary_expectation.toLowerCase()
+                 if (salaryA < salaryB) //sort string ascending
+                  return -1 
+                 if (salaryA > salaryB)
+                  return 1
+                 return 0 //default return value (no sorting)
+                });
+
+                var filterValue = 'invalid_value';
+               for (var i = 0, len = candidates.length; i < len; i++) {              
+                    var candidate = candidates[i];
+                    if(candidate.salary_expectation !== filterValue){
+                        filterValue = candidate.salary_expectation;
+                        filters.salaryFilters.push({
+                            name: filterValue,
+                            count: 0
+                        });
+                    }
+                    filters.salaryFilters[filters.salaryFilters.length - 1].count++;
+                }
+
+
+                //Populate Visa Filter
+                    candidates.sort(function(a, b){
+                    if(a.salary_expectation && b.salary_expectation)
+                 var salaryA=a.salary_expectation.toLowerCase(), salaryB=b.salary_expectation.toLowerCase()
+                 if (salaryA < salaryB) //sort string ascending
+                  return -1 
+                 if (salaryA > salaryB)
+                  return 1
+                 return 0 //default return value (no sorting)
+                });
+
+                var filterValue = 'invalid_value';
+               for (var i = 0, len = candidates.length; i < len; i++) {              
+                    var candidate = candidates[i];
+                    if(candidate.salary_expectation !== filterValue){
+                        filterValue = candidate.salary_expectation;
+                        filters.salaryFilters.push({
+                            name: filterValue,
+                            count: 0
+                        });
+                    }
+                    filters.salaryFilters[filters.salaryFilters.length - 1].count++;
+                }
+
+            });
+
+
+            // Find the paginated Candidates for the query
+            
             var totallength = job.candidates.length;
             if(req.body.filter=="general")
                  skillsrequired= job.skills;
@@ -341,22 +442,10 @@ var skillsrequired=[];
                     res.jsonp({
                         candidates: candidate,
                         totalentries: totallength,
-                        job: job
+                        job: job,
+                        filters: filters
                     });
-
-
-
-
                 }
-
-
-
-
             );
-
-
         });
-
-
-
 };

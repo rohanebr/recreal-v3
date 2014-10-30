@@ -7,7 +7,7 @@
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
 	display: none !important;
 }
-.form-group  {  margin: auto;font-size:20px;}
+/*.form-group  {  margin: auto;font-size:13px;}*/
 #form-container                { background:#2f2f2f; margin-bottom:20px;
     border-radius:5px; }
 #form-container .page-header   { background:#151515; margin:0; padding:30px; 

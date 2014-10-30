@@ -16,15 +16,12 @@ angular.module('candidate-features').controller('CandidateHomeController', ['$sc
 		$scope.jobs = Jobs.query();
 
 		$scope.hasApplied = function(job){
-
 			for(var d=0,x=$scope.candidate.jobs.length;d<x;d++)
 			{
                 if($scope.candidate.jobs[d]===job._id)
                 	 return true;
-
 			}
 			return false;
-			
 		};
 
 		// Apply for a Job

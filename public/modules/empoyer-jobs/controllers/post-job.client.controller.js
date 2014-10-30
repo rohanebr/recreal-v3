@@ -13,12 +13,20 @@ angular.module('empoyer-jobs').controller('PostJobController', ['$scope', 'Indus
    
 		$scope.skills = [];
 		$scope.skills.push({
-		        title: ''
+		        title: '',
+		        level: 'Beginner'
 		      });
 		$scope.certificates = [];
 		$scope.certificates.push({
-		        name: ''
-		      });
+	        name: ''
+	      });
+
+		$scope.isTabMap = false;
+
+		// $scope.setMapSelected =  function(){
+		// 	$scope.isTabMap = true;
+		// };
+
 		// Create new Job
 		$scope.create = function() {
 			$scope.position=$scope.map.markers[0].position;
@@ -69,7 +77,8 @@ angular.module('empoyer-jobs').controller('PostJobController', ['$scope', 'Indus
 		//Skills
 	    $scope.addSkill = function() {
 	      $scope.skills.push({
-	        title: ''
+	        title: '',
+	        level: 'Beginner'
 	      });
 	    };
 
@@ -94,7 +103,7 @@ angular.module('empoyer-jobs').controller('PostJobController', ['$scope', 'Indus
           $scope.lat=$rootScope.coords.lat;
           $scope.longi=$rootScope.coords.longi;
 
-console.log($scope.lat);
+			console.log($scope.lat);
 	    }
 
 
