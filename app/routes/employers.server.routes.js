@@ -4,6 +4,8 @@ module.exports = function(app) {
 	var users = require('../../app/controllers/users');
 	var employers = require('../../app/controllers/employers');
 
+	app.route('/uploadpicture').post(users.requiresLogin, employers.uploadPicture);
+	app.route('/uploads/fullsize/:file').get(employers.getImage);
 	// Employers Routes
 	app.route('/employers')
 		.get(employers.list);

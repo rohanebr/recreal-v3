@@ -1,0 +1,26 @@
+<div style="padding: 10px;">
+
+    <h2>Make sure you look good.</h2>
+    <div>
+        <span class="btn btn-default btn-file">
+            Browse
+            <input id="inputImage2"
+                type="file" 
+                accept="image/*" 
+                image="image2" 
+                resize-max-height="300"
+                resize-max-width="250"
+                resize-quality="0.9" />
+        </span>
+        <hr />
+        <img width="250" ng-src="{{image2.resized.dataURL}}"/>
+        
+    </div>
+    <br>
+    <div style="display: flex; align-items: center;">
+        <button class="btn btn-primary" ng-click="upload(image2.resized)">Upload</button>
+        <button class="btn btn-success" ng-click="cancel()">Cancel</button>
+    </div>
+
+    <hr />
+</div>

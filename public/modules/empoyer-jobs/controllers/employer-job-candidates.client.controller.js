@@ -2,13 +2,13 @@
 
 angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$scope', '$filter', 'Jobs', '$stateParams', '$http',
 	function($scope, $filter, Jobs, $stateParams, $http) {
-
+		
 		$scope.locationFilters = [];
 		$scope.salaryFilters = [];
 		$scope.visaFilters = [];
 		$scope.employeetypeFilters = [];
 		$scope.employeestatusFilters = [];
-		
+				
 		$scope.isShortListed = function(candidate){
 			var ans = false;
 			angular.forEach($scope.job.shortListedCandidates, function(item){
@@ -28,7 +28,7 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
 			populateVisaFilters();
 			populateEmployeetypeFilters();
 			populateEmployeestatusFilters();
-			
+		
 
 		});
 		// $http.get('jobs/candidates/' + $stateParams.jobId).success(function(job) {
@@ -45,7 +45,14 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
 					candidateId: candidate._id
 				}
 
+				
 			$http.put('jobs/addToShortList/' + $scope.job._id , attribute).success(function(response) {
+
+				$scope.job.shortListedCandidates.push({
+					candidate: candidate._id
+				});
+				// $scope.$apply();
+				
 
 				// $scope.candidate.jobs.push(job);
 				// $scope.jobs.splice($scope.jobs.indexOf(job), 1);
@@ -68,7 +75,11 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
 				}
 
 			$http.put('jobs/removeFromShortList/' + $scope.job._id , attribute).success(function(response) {
-
+				
+			angular.forEach($scope.job.shortListedCandidates, function(item){
+				if (item.candidate == candidate._id)
+					$scope.job.shortListedCandidates.splice($scope.job.shortListedCandidates.indexOf(item),1);
+				});
 				//And redirect to the index page
 
 				$location.path('jobs/' + job._id);
@@ -137,24 +148,9 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
 			}
 		};
 
-		var populateEmployeetypeFilters = function(){
-			
-			$scope.candidates = $filter('orderBy')($scope.candidates, 'visa_status');
-			var filterValue = 'invalid_value';
-			for (var i = 0 ; i < $scope.candidates.length ; i++ ){
-				var candidate = $scope.candidates[i];
-				if(candidate.visa_status !== filterValue){
-					filterValue = candidate.visa_status;
-					$scope.visaFilters.push({
-						name: filterValue,
-						count: 0,
-						value: false
-					});
-				}
-				$scope.employeetypeFilters[$scope.employeetypeFilters.length - 1].count++;
-			}
-		};
 
+		
+		
 		var populateEmployeestatusFilters = function(){
 			
 			$scope.candidates = $filter('orderBy')($scope.candidates, 'employee_status');
@@ -169,7 +165,7 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
 						value: false
 					});
 				}
-				$scope.visaFilters[$scope.visaFilters.length - 1].count++;
+				$scope.employeestatusFilters[$scope.employeestatusFilters.length - 1].count++;
 			}
 		};
 
@@ -192,23 +188,7 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
 			}
 		};
 
-		var populateEmployeestatusFilters = function(){
-			
-			$scope.candidates = $filter('orderBy')($scope.candidates, 'employee_status');
-			var filterValue = 'invalid_value';
-			for (var i = 0 ; i < $scope.candidates.length ; i++ ){
-				var candidate = $scope.candidates[i];
-				if(candidate.employee_status !== filterValue){
-					filterValue = candidate.employee_status;
-					$scope.employeestatusFilters.push({
-						name: filterValue,
-						count: 0,
-						value: false
-					});
-				}
-				$scope.employeestatusFilters[$scope.employeestatusFilters.length - 1].count++;
-			}
-		};
+		
 
 }
 ]);
