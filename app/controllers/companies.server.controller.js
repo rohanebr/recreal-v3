@@ -59,6 +59,58 @@ exports.read = function(req, res) {
 /**
  * Update a Company
  */
+var path = require('path');
+var fs = require('fs');
+var util = require('util');
+
+exports.uploadPicture = function(req, res) {
+
+  fs.readFile(req.files.file.path, function (err, data) {
+
+    var imageName = req.files.file.name
+
+    /// If there's an error
+    if(!imageName){
+
+      console.log("There was an error")
+      res.redirect("/");
+      res.end();
+
+    } else {
+
+       var newPath = __dirname + "../../../uploads/fullsize/" + imageName;
+
+      var thumbPath = __dirname + "../../../uploads/thumbs/" + imageName;
+      fs.writeFile(newPath, data, function (err) {
+       var company = Company.find({user: req.user._id}).exec(function(err, companies){
+         	var old_url = companies[0].picture_url;
+			companies[0].logo_url = "/uploads/fullsize/" + imageName;
+			companies[0].save(function(err) {
+				if (err) {
+					return res.send(400, {
+						message: getErrorMessage(err)
+					});
+				} else {
+					
+					//delete old picture
+					if (old_url != '/uploads/fullsize/no-image.jpg') {
+						fs.unlink(__dirname + '../../..' + old_url, function (err) {
+					  		if (err) console.log(err);
+						  	console.log('successfully deleted /tmp/hello');
+						});
+					};
+					res.send("/uploads/fullsize/" + imageName)
+				}
+			});
+		});
+
+         
+
+      });
+    }
+  });
+};
+
 exports.update = function(req, res) {
 	var company = req.company ;
 
@@ -125,4 +177,15 @@ exports.hasAuthorization = function(req, res, next) {
 		return res.send(403, 'User is not authorized');
 	}
 	next();
+};
+
+exports.getImage =  function (req, res){
+  var path = __dirname + "../../../uploads/fullsize/" + req.params.file;
+//   file = req.params.file;
+	
+
+  var img = fs.readFileSync(path);
+  res.writeHead(200, {'Content-Type': 'image/jpg' });
+  res.end(img, 'binary');
+
 };
