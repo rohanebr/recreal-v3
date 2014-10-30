@@ -90,7 +90,7 @@ angular.module('employer-company').controller('EmployerProfileController', ['$sc
 	      });
 	  };
 
-	$scope.ok = function (action) {
+	$scope.upload = function (action) {
 	$modalInstance.close({ action: action, picture_url: $scope.picture_url });
 	};
 
