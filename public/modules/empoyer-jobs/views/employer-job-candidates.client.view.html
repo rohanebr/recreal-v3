@@ -93,7 +93,7 @@
                         <label>Employee Type</label>
                         <ul>
                             <li data-ng-repeat="employeetypeFilter in employeetypeFilters">
-                            <input type="checkbox" data-ng-click="empTypeFilterChanged()" data-ng-model="employeetypeFilter.value" id="{{'employeetype' + employeetypeFilter.name}}" />
+                            <input type="checkbox" data-ng-click="emptypeFilterChanged(employeetypeFilter.name)" data-ng-model="employeetypeFilter.value" id="{{'employeetype' + employeetypeFilter.name}}" />
 
                             <label ng-if="employeetypeFilter.name" for="{{'employeetype' + employeetypeFilter.name}}" >{{employeetypeFilter.name}} ({{employeetypeFilter.count}})</label>
                             <label ng-if="!employeetypeFilter.name" for="{{'employeetype' + employeetypeFilter.name}}" >Not Mentioned ({{employeetypeFilter.count}})</label>

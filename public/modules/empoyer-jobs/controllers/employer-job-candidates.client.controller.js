@@ -98,7 +98,27 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
 	                $scope.employeetypeFilters = job.filters.employeetypeFilters;
 	            if(job.filters.employeestatusFilters.length > 0)    
 	                $scope.employeestatusFilters = job.filters.employeestatusFilters;
-                
+                if($scope.firstTimeFetching)
+                {
+                    $scope.salaryFilters.forEach(function(entry){
+                           $scope.salaryFilters[$scope.salaryFilters.indexOf(entry)].value=false;
+
+                    });
+                    $scope.visaFilters.forEach(function(entry){
+                           $scope.visaFilters[$scope.visaFilters.indexOf(entry)].value=false;
+
+                    });
+                    $scope.employeestatusFilters.forEach(function(entry){
+                           $scope.employeestatusFilters[$scope.employeestatusFilters.indexOf(entry)].value=false;
+
+                    });
+                    $scope.employeetypeFilters.forEach(function(entry){
+                           $scope.employeetypeFilters[$scope.employeetypeFilters.indexOf(entry)].value=false;
+
+                    });
+                    $scope.firstTimeFetching=false;
+
+                }
                 $scope.candidates = $scope.job.candidates;
                 $scope.total = job.totalentries;
                 $scope.candidates = job.candidates;
@@ -199,9 +219,12 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
 
          };
  //Remove and adds filter for employeetypeFilters
-    $scope.emptypeFilterChanged = function(){
+    $scope.emptypeFilterChanged = function(name){
          
             $scope.employeetypeFilters.forEach(function(entry) {
+                if(name==entry.name)
+                entry.value=!entry.value;
+            console.log(entry.value);
     				if(entry.value==true)
     			   	      addToFilters("employee_type",entry.name); 
     				 else
