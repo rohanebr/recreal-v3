@@ -76,23 +76,29 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
             return ans;
         };
 
-        $scope.findCandidates = function(skip,limit,filters) {
+        $scope.findCandidates = function(skip,limit,filters, isPageChange) {
+
+        	console.log('find candidates function');
 
             $http.put('jobs/getPaginatedCandidates/' + $stateParams.jobId, {
                 skip: skip,
                 limit: limit,
                 filter: filters,
-                firsttime: $scope.firstTimeFetching
+                isPageChange: isPageChange
             }).success(function(job) {
             	
                 $scope.job = job.job;
                 // $scope.locationFilters=job.filters.locationFilters;
-                if($scope.firstTimeFetching==true){
-                $scope.salaryFilters = job.filters.salaryFilters;
-                $scope.visaFilters = job.filters.visaFilters;
-                $scope.employeetypeFilters = job.filters.employeetypeFilters;
-                $scope.employeestatusFilters = job.filters.employeestatusFilters;}
-                $scope.firstTimeFetching=false;
+                	
+                if(job.filters.salaryFilters.length > 0)
+                	$scope.salaryFilters = job.filters.salaryFilters;
+	            if(job.filters.visaFilters.length > 0) 
+	                $scope.visaFilters = job.filters.visaFilters;
+	            if(job.filters.employeetypeFilters.length > 0)    
+	                $scope.employeetypeFilters = job.filters.employeetypeFilters;
+	            if(job.filters.employeestatusFilters.length > 0)    
+	                $scope.employeestatusFilters = job.filters.employeestatusFilters;
+                
                 $scope.candidates = $scope.job.candidates;
                 $scope.total = job.totalentries;
                 $scope.candidates = job.candidates;
@@ -147,10 +153,14 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
          //Add all watchers here from simple pagination watcher to the filter watchers
          $scope.$watch("currentPage", function(newValue, oldValue) {
             $scope.skip = newValue * $scope.itemsPerPage;
-            $scope.findCandidates($scope.skip,$scope.itemsPerPage,$scope.filters);
+            if($scope.skip == 0){ //   if first page
+            	$scope.findCandidates($scope.skip,$scope.itemsPerPage,$scope.filters, false);
+            } else {
+            	$scope.findCandidates($scope.skip,$scope.itemsPerPage,$scope.filters, true);
+            }
         });
          //Removes and adds filter for salary
-         $scope.$watch("salaryFilters",function(newValue,oldValue){
+         $scope.salaryFilterChanged =  function(){
           
             $scope.salaryFilters.forEach(function(entry) {
     				if(entry.value==true)
@@ -167,10 +177,10 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
 
 
 
-         },true);
+         };
 
          //Remove and adds filter for visa
-  $scope.$watch("visaFilters",function(newValue,oldValue){
+  $scope.visaFilterChanged = function(){
           
             $scope.visaFilters.forEach(function(entry) {
     				if(entry.value==true)
@@ -179,7 +189,7 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
     				    removeFromFilters("visa_status",entry.name);
     			
  														});
-            $scope.findCandidates($scope.skip,$scope.itemsPerPage,$scope.filters);
+            $scope.findCandidates($scope.skip,$scope.itemsPerPage,$scope.filters, false);
 
 
 
@@ -187,9 +197,9 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
 
 
 
-         },true);
+         };
  //Remove and adds filter for employeetypeFilters
-    $scope.$watch("employeetypeFilters",function(newValue,oldValue){
+    $scope.emptypeFilterChanged = function(){
          
             $scope.employeetypeFilters.forEach(function(entry) {
     				if(entry.value==true)
@@ -198,7 +208,7 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
     				    removeFromFilters("employee_type",entry.name);
     			
  														});
-            $scope.findCandidates($scope.skip,$scope.itemsPerPage,$scope.filters);
+            $scope.findCandidates($scope.skip,$scope.itemsPerPage,$scope.filters, false);
 
 
 
@@ -206,10 +216,10 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
 
 
 
-         },true);
+         };
 
 //Remove and adds filter for employeestatusFilters
-   $scope.$watch("employeestatusFilters",function(newValue,oldValue){
+   $scope.empStatusFilterChanged = function(){
             
             $scope.employeestatusFilters.forEach(function(entry) {
     				if(entry.value==true)
@@ -218,7 +228,7 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
     				    removeFromFilters("employee_status",entry.name);
     			
  														});
-            $scope.findCandidates($scope.skip,$scope.itemsPerPage,$scope.filters);
+            $scope.findCandidates($scope.skip,$scope.itemsPerPage,$scope.filters, false);
 
 
 
@@ -226,7 +236,7 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
 
 
 
-         },true);
+         };
 
 
 

@@ -332,34 +332,34 @@ exports.getPaginatedCandidates = function(req, res) {
         employeetypeFilters: [],
         employeestatusFilters: []
     };
-     var incomingfilters = {
+    var incomingfilters = {
         locationFilters: [],
         salaryFilters: [],
         visaFilters: [],
         employeetypeFilters: [],
         employeestatusFilters: []
     };
-console.log(req.body.filter);
+    console.log(req.body.filter);
 
-//entry.type shld be equal to any field given in the candidate model 
-//it is important to name them exactly as the model variables
-    req.body.filter.forEach(function(entry){
-      if(entry.type=="salary_expectation")
-        incomingfilters.salaryFilters.push(entry);
-      if(entry.type=="visa_status")
-        incomingfilters.visaFilters.push(entry);
-      if(entry.type=="employee_type")
-        incomingfilters.employeetypeFilters.push(entry);
-      if(entry.type=="employee_status")
-        incomingfilters.employeestatusFilters.push(entry);
-    //Add more filters 
+    //entry.type shld be equal to any field given in the candidate model 
+    //it is important to name them exactly as the model variables
+    req.body.filter.forEach(function(entry) {
+        if (entry.type == "salary_expectation")
+            incomingfilters.salaryFilters.push(entry);
+        if (entry.type == "visa_status")
+            incomingfilters.visaFilters.push(entry);
+        if (entry.type == "employee_type")
+            incomingfilters.employeetypeFilters.push(entry);
+        if (entry.type == "employee_status")
+            incomingfilters.employeestatusFilters.push(entry);
+        //Add more filters 
 
 
     });
-  
-  
- 
-      var firsttime = req.body.firsttime;
+
+
+
+    
 
 
 
@@ -369,13 +369,7 @@ console.log(req.body.filter);
             var candidates = job.candidates;
 
             // populate filters to be sent
-            Candidate.find({
-                        "_id": {
-                            $in: candidates
-                        }
-                    },
-                    'title location salary_expectation visa_status employee_type target_locations employee_status skills')
-                .exec(function(err, candidates) {
+
 
 
                     // populate target Location Filter
@@ -411,7 +405,35 @@ console.log(req.body.filter);
 
 
                     // Populate Salary Filter
-                    if (firsttime) {
+                  
+
+
+            // Find the paginated Candidates for the query
+
+            var totallength = job.candidates.length;
+            var selectedCandidates = Candidate.find({
+                "_id": {
+                    $in: candidates
+                }
+            });
+
+            if (incomingfilters.salaryFilters.length != 0)
+                selectedCandidates.where("salary_expectation").in(getNames(incomingfilters.salaryFilters));
+            if (incomingfilters.visaFilters.length != 0)
+                selectedCandidates.where("visa_status").in(getNames(incomingfilters.visaFilters));
+            if (incomingfilters.employeestatusFilters.length != 0)
+                selectedCandidates.where("employee_status").in(getNames(incomingfilters.employeestatusFilters));
+            if (incomingfilters.employeetypeFilters.length != 0)
+                selectedCandidates.where("employee_type").in(getNames(incomingfilters.employeetypeFilters));
+
+         
+            selectedCandidates.exec(function(err, candidates) {
+                totallength = candidates.length;
+
+
+                // Populate Salary Filter
+                    console.log('isPageChange value: ' + req.body.isPageChange);
+                    
                         candidates.sort(function(a, b) {
                             if (a.salary_expectation && b.salary_expectation)
                                 var salaryA = a.salary_expectation.toLowerCase(),
@@ -511,75 +533,35 @@ console.log(req.body.filter);
                             }
                             filters.employeestatusFilters[filters.employeestatusFilters.length - 1].count++;
                         }
-                    }
+                   
+
+            });
+            selectedCandidates.skip(req.body.skip);
+            selectedCandidates.limit(req.body.limit);
+            selectedCandidates.select('displayName title objective picture_url location salary_expectation visa_status employee_type employee_status skills');
+            selectedCandidates.exec(function(err, candidate) {
+
+                res.jsonp({
+                    candidates: candidate,
+                    totalentries: totallength,
+                    job: job,
+                    filters: filters
                 });
-
-
-            // Find the paginated Candidates for the query
-
-            var totallength = job.candidates.length;
-            var selectedCandidates=Candidate.find({"_id": {
-                   $in: candidates
-                 }});
-                       
-         if(incomingfilters.salaryFilters.length!=0)
-            selectedCandidates.where("salary_expectation").in(getNames(incomingfilters.salaryFilters));
-         if(incomingfilters.visaFilters.length!=0)
-            selectedCandidates.where("visa_status").in(getNames(incomingfilters.visaFilters));
-         if(incomingfilters.employeestatusFilters.length!=0)
-            selectedCandidates.where("employee_status").in(getNames(incomingfilters.employeestatusFilters));
-         if(incomingfilters.employeetypeFilters.length!=0)
-            selectedCandidates.where("employee_type").in(getNames(incomingfilters.employeetypeFilters));
-        
-
-               
-            // Candidate.find({
-            //     "_id": {
-            //         $in: candidates
-            //     }
-            // }, 'displayName title objective picture_url location salary_expectation visa_status employee_type employee_status skills', {
-            //     skip: req.body.skip,
-            //     limit: req.body.limit
-            // }).exec(function(err, candidate) {
-
-            //     res.jsonp({
-            //         candidates: candidate,
-            //         totalentries: totallength,
-            //         job: job,
-            //         filters: filters
-            //     });
-            // });
-selectedCandidates.exec(function(err,candidate){
-totallength=candidate.length;
-
-});
-     selectedCandidates.skip(req.body.skip);
-     selectedCandidates.limit(req.body.limit);
-     selectedCandidates.select('displayName title objective picture_url location salary_expectation visa_status employee_type employee_status skills');
-       selectedCandidates.exec(function(err, candidate) {
-             
-               res.jsonp({
-                     candidates: candidate,
-                     totalentries: totallength,
-                     job: job,
-                filters: filters
-                });
-             });
+            });
 
         });
 };
 
-var getNames=function(filter)
-{
+var getNames = function(filter) {
 
-  var names=[];
-  filter.forEach(function(entry){
-    names.push(entry.name);
+    var names = [];
+    filter.forEach(function(entry) {
+        names.push(entry.name);
 
 
-  });
+    });
 
-  return names;
+    return names;
 
 
 }
