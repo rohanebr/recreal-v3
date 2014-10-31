@@ -50,8 +50,7 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
   };
 
   $scope.pageCount = function() {
-  	console.log($scope.total+" "+$scope.itemsPerPage);
-  	 console.log($scope.total/$scope.itemsPerPage);
+  	
     return Math.ceil($scope.total/$scope.itemsPerPage);
 
   };
@@ -61,12 +60,14 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
     if (n >= 0 && n < $scope.pageCount()) {
 
       $scope.currentPage = n;
-      console.log($scope.currentPage);
+    
     }
   };
 
   $scope.$watch("currentPage", function(newValue, oldValue) {
-console.log("CURRENT PAGE");
+
+
+
   		$http.put('jobs/getPaginatedCandidates/' + $stateParams.jobId,{skip:newValue*$scope.itemsPerPage,limit:$scope.itemsPerPage}).success(function(job) {
 			
 			$scope.pagedItems=$scope.job.candidates;
@@ -91,7 +92,9 @@ console.log("CURRENT PAGE");
 		
 		$http.put('jobs/getPaginatedCandidates/' + $stateParams.jobId,{skip:0,limit:$scope.itemsPerPage,filter:"general"}).success(function(job) {
 			$scope.job = job.job;
-			$scope.locationFilters=job.filters.locationFilters;
+
+			
+			// $scope.locationFilters=job.filters.locationFilters;
 			$scope.salaryFilters = job.filters.salaryFilters;
 			$scope.visaFilters=job.filters.visaFilters;
 			$scope.employeetypeFilters=job.filters.employeetypeFilters;
@@ -99,7 +102,7 @@ console.log("CURRENT PAGE");
 			$scope.candidates=$scope.job.candidates;
 
 			$scope.total=job.totalentries;
-            console.log($scope.total);
+          
 		});
 	}
 		// $http.get('jobs/candidates/' + $stateParams.jobId).success(function(job) {

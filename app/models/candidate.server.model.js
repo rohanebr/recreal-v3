@@ -32,11 +32,13 @@ var CandidateSchema = new Schema({
 	},
 	country:{
 		type: 'String',
-		trim: true
+		trim: true,
+		default: 'choose a country'
 	},
 	location:{
 		type: 'String',
-		trim: true
+		trim: true,
+		default: 'choose a location'
 	},
 	contact_no:{
 		type: 'String',
@@ -47,7 +49,9 @@ var CandidateSchema = new Schema({
 		trim: true
 	},
 	gender:{
-		type: 'bool'
+		type: String,
+		enum: ['male', 'female', 'not specified'],
+		default: 'not specified'
 	},
 	visa_status:{
 		type: 'String',
@@ -59,7 +63,8 @@ var CandidateSchema = new Schema({
 		trim: true
 	},
 	xp:{
-		type: Number
+		type: Number,
+		default: 0
 	},
 	rating:{
 		type: Number,

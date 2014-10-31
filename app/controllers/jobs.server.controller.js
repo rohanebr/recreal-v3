@@ -348,35 +348,35 @@ var filters={
             .exec(function(err, candidates){
 
 
-                // populate Location Filter
+                // populate target Location Filter
 
-                candidates.sort(function(a, b){
-                    console.log(a.target_locations[0]+" "+b.target_locations[0]);
-                    if(a.target_locations && b.target_locations)
-                var locationA=a.target_locations[0].name.toLowerCase(), locationB=b.target_locations[0].name.toLowerCase();
-
-                 if (locationA < locationB) //sort string ascending
-                  return -1 
-                 if (locationA > locationB)
-                  return 1
-                 return 0 //default return value (no sorting)
-             
+               //  candidates.sort(function(a, b){
+               //      console.log(a.target_locations[0]+" "+b.target_locations[0]);
+               //      if(a.target_locations && b.target_locations)
+               //  var locationA=a.target_locations[0].name.toLowerCase(), locationB=b.target_locations[0].name.toLowerCase();
                 
-                });
+               //   if (locationA < locationB) //sort string ascending
+               //    return -1 
+               //   if (locationA > locationB)
+               //    return 1
+               //   return 0 //default return value (no sorting)
+               //  });
 
-                var filterValue = 'invalid_value';
-               for (var i = 0, len = candidates.length; i < len; i++) {              
-                    var candidate = candidates[i];
-                    console.log(candidate);
-                    if(candidate.target_locations[0].name !== filterValue){
-                        filterValue = candidate.target_locations[0].name;
-                        filters.locationFilters.push({
-                            name: filterValue,
-                            count: 0
-                        });
-                    }
-                    filters.locationFilters[filters.locationFilters.length - 1].count++;
-                }
+               //  var filterValue = 'invalid_value';
+               // for (var i = 0, len = candidates.length; i < len; i++) {              
+               //      var candidate = candidates[i];
+               //      console.log(candidate);
+               //      if(candidate.target_locations.length > 0){
+               //          if(candidate.target_locations[0].name !== filterValue){
+               //              filterValue = candidate.target_locations[0].name;
+               //              filters.locationFilters.push({
+               //                  name: filterValue,
+               //                  count: 0
+               //              });
+               //          }
+               //          filters.locationFilters[filters.locationFilters.length - 1].count++;
+               //      }
+               //  }
 
 
 
