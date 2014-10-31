@@ -325,8 +325,6 @@ exports.onePlusView = function(req, res) {
 
 
 exports.getPaginatedCandidates = function(req, res) {
-   var incomingFilters=req.body.filter;
-   console.log(incomingFilters);
     var filters = {
         locationFilters: [],
         salaryFilters: [],
@@ -334,7 +332,27 @@ exports.getPaginatedCandidates = function(req, res) {
         employeetypeFilters: [],
         employeestatusFilters: []
     };
-    var firsttime = req.body.firsttime;
+     var incomingfilters = {
+        locationFilters: [],
+        salaryFilters: [],
+        visaFilters: [],
+        employeetypeFilters: [],
+        employeestatusFilters: []
+    };
+
+    req.body.filter.forEach(function(entry){
+      if(entry.type=="salary_expectation")
+        incomingfilters.salaryFilters.push(entry);
+      if(entry.type=="visa_status")
+        incomingfilters.visaFilters.push(entry);
+
+
+
+    });
+  
+  
+ 
+      var firsttime = req.body.firsttime;
 
 
 
@@ -496,12 +514,15 @@ exports.getPaginatedCandidates = function(req, res) {
             var selectedCandidates=Candidate.find({"_id": {
                    $in: candidates
                  }});
-            incomingFilters.forEach(function(entry)
-                {
-                    selectedCandidates.where(entry.type).equals(entry.name);
-                 
+                         console.log(incomingfilters);
+         if(incomingfilters.salaryFilters.length!=0)
+         { console.log(getNames(incomingfilters.salaryFilters));
 
-                });
+                    selectedCandidates.where("salary_expectation").in(getNames(incomingfilters.salaryFilters));}
+                    if(incomingfilters.visaFilters.length!=0)
+                    selectedCandidates.where("visa_status").in(getNames(incomingfilters.visaFilters));
+
+               
             // Candidate.find({
             //     "_id": {
             //         $in: candidates
@@ -524,6 +545,7 @@ totallength=candidate.length;
 });
      selectedCandidates.skip(req.body.skip);
      selectedCandidates.limit(req.body.limit);
+     selectedCandidates.select('displayName title objective picture_url location salary_expectation visa_status employee_type employee_status skills');
        selectedCandidates.exec(function(err, candidate) {
              
                res.jsonp({
@@ -536,3 +558,18 @@ totallength=candidate.length;
 
         });
 };
+
+var getNames=function(filter)
+{
+
+  var names=[];
+  filter.forEach(function(entry){
+    names.push(entry.name);
+
+
+  });
+
+  return names;
+
+
+}
