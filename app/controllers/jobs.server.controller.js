@@ -325,15 +325,16 @@ exports.onePlusView = function(req, res) {
 
 
 exports.getPaginatedCandidates = function(req, res) {
-var skillsrequired=[];
-var filters={
-    locationFilters:[],
-    salaryFilters:[],
-    visaFilters:[],
-    employeetypeFilters:[],
-   employeestatusFilters:[]
-};
-
+   var incomingFilters=req.body.filter;
+   console.log(incomingFilters);
+    var filters = {
+        locationFilters: [],
+        salaryFilters: [],
+        visaFilters: [],
+        employeetypeFilters: [],
+        employeestatusFilters: []
+    };
+    var firsttime = req.body.firsttime;
 
 
 
@@ -343,162 +344,195 @@ var filters={
             var candidates = job.candidates;
 
             // populate filters to be sent
-            Candidate.find({"_id": {$in: candidates}}, 
-            'title location salary_expectation visa_status employee_type target_locations employee_status skills')
-            .exec(function(err, candidates){
+            Candidate.find({
+                        "_id": {
+                            $in: candidates
+                        }
+                    },
+                    'title location salary_expectation visa_status employee_type target_locations employee_status skills')
+                .exec(function(err, candidates) {
 
 
-                // populate target Location Filter
+                    // populate target Location Filter
 
-               //  candidates.sort(function(a, b){
-               //      console.log(a.target_locations[0]+" "+b.target_locations[0]);
-               //      if(a.target_locations && b.target_locations)
-               //  var locationA=a.target_locations[0].name.toLowerCase(), locationB=b.target_locations[0].name.toLowerCase();
-                
-               //   if (locationA < locationB) //sort string ascending
-               //    return -1 
-               //   if (locationA > locationB)
-               //    return 1
-               //   return 0 //default return value (no sorting)
-               //  });
+                    //  candidates.sort(function(a, b){
+                    //      console.log(a.target_locations[0]+" "+b.target_locations[0]);
+                    //      if(a.target_locations && b.target_locations)
+                    //  var locationA=a.target_locations[0].name.toLowerCase(), locationB=b.target_locations[0].name.toLowerCase();
 
-               //  var filterValue = 'invalid_value';
-               // for (var i = 0, len = candidates.length; i < len; i++) {              
-               //      var candidate = candidates[i];
-               //      console.log(candidate);
-               //      if(candidate.target_locations.length > 0){
-               //          if(candidate.target_locations[0].name !== filterValue){
-               //              filterValue = candidate.target_locations[0].name;
-               //              filters.locationFilters.push({
-               //                  name: filterValue,
-               //                  count: 0
-               //              });
-               //          }
-               //          filters.locationFilters[filters.locationFilters.length - 1].count++;
-               //      }
-               //  }
+                    //   if (locationA < locationB) //sort string ascending
+                    //    return -1 
+                    //   if (locationA > locationB)
+                    //    return 1
+                    //   return 0 //default return value (no sorting)
+                    //  });
+
+                    //  var filterValue = 'invalid_value';
+                    // for (var i = 0, len = candidates.length; i < len; i++) {              
+                    //      var candidate = candidates[i];
+                    //      console.log(candidate);
+                    //      if(candidate.target_locations.length > 0){
+                    //          if(candidate.target_locations[0].name !== filterValue){
+                    //              filterValue = candidate.target_locations[0].name;
+                    //              filters.locationFilters.push({
+                    //                  name: filterValue,
+                    //                  count: 0
+                    //              });
+                    //          }
+                    //          filters.locationFilters[filters.locationFilters.length - 1].count++;
+                    //      }
+                    //  }
 
 
 
-                // Populate Salary Filter
-
-                candidates.sort(function(a, b){
-                    if(a.salary_expectation && b.salary_expectation)
-                 var salaryA=a.salary_expectation.toLowerCase(), salaryB=b.salary_expectation.toLowerCase()
-                 if (salaryA < salaryB) //sort string ascending
-                  return -1 
-                 if (salaryA > salaryB)
-                  return 1
-                 return 0 //default return value (no sorting)
-                });
-
-                var filterValue = 'invalid_value';
-               for (var i = 0, len = candidates.length; i < len; i++) {              
-                    var candidate = candidates[i];
-                    if(candidate.salary_expectation !== filterValue){
-                        filterValue = candidate.salary_expectation;
-                        filters.salaryFilters.push({
-                            name: filterValue,
-                            count: 0
+                    // Populate Salary Filter
+                    if (firsttime) {
+                        candidates.sort(function(a, b) {
+                            if (a.salary_expectation && b.salary_expectation)
+                                var salaryA = a.salary_expectation.toLowerCase(),
+                                    salaryB = b.salary_expectation.toLowerCase()
+                            if (salaryA < salaryB) //sort string ascending
+                                return -1
+                            if (salaryA > salaryB)
+                                return 1
+                            return 0 //default return value (no sorting)
                         });
-                    }
-                    filters.salaryFilters[filters.salaryFilters.length - 1].count++;
-                }
+
+                        var filterValue = 'invalid_value';
+                        for (var i = 0, len = candidates.length; i < len; i++) {
+                            var candidate = candidates[i];
+                            if (candidate.salary_expectation !== filterValue) {
+                                filterValue = candidate.salary_expectation;
+                                filters.salaryFilters.push({
+                                    name: filterValue,
+                                    count: 0
+                                });
+                            }
+                            filters.salaryFilters[filters.salaryFilters.length - 1].count++;
+                        }
 
 
-                //Populate Visa Filter
-                    candidates.sort(function(a, b){
-                    if(a.visa_status && b.visa_status)
-                 var visaA=a.visa_status.toLowerCase(), visaB=b.visa_status.toLowerCase()
-                 if (visaA < visaB) //sort string ascending
-                  return -1 
-                 if (visaA > visaB)
-                  return 1
-                 return 0 //default return value (no sorting)
-                });
-
-                var filterValue = 'invalid_value';
-               for (var i = 0, len = candidates.length; i < len; i++) {              
-                    var candidate = candidates[i];
-                    if(candidate.visa_status !== filterValue){
-                        filterValue = candidate.visa_status;
-                        filters.visaFilters.push({
-                            name: filterValue,
-                            count: 0
+                        //Populate Visa Filter
+                        candidates.sort(function(a, b) {
+                            if (a.visa_status && b.visa_status)
+                                var visaA = a.visa_status.toLowerCase(),
+                                    visaB = b.visa_status.toLowerCase()
+                            if (visaA < visaB) //sort string ascending
+                                return -1
+                            if (visaA > visaB)
+                                return 1
+                            return 0 //default return value (no sorting)
                         });
-                    }
-                    filters.visaFilters[filters.visaFilters.length - 1].count++;
-                }
+
+                        var filterValue = 'invalid_value';
+                        for (var i = 0, len = candidates.length; i < len; i++) {
+                            var candidate = candidates[i];
+                            if (candidate.visa_status !== filterValue) {
+                                filterValue = candidate.visa_status;
+                                filters.visaFilters.push({
+                                    name: filterValue,
+                                    count: 0
+                                });
+                            }
+                            filters.visaFilters[filters.visaFilters.length - 1].count++;
+                        }
 
 
-                //Employee Type Filter
-                      candidates.sort(function(a, b){
-                    if(a.employee_type && b.employee_type)
-                 var employee_typeA=a.employee_type.toLowerCase(), employee_typeB=b.employee_type.toLowerCase()
-                 if (employee_typeA < employee_typeB) //sort string ascending
-                  return -1 
-                 if (employee_typeA > employee_typeB)
-                  return 1
-                 return 0 //default return value (no sorting)
-                });
-
-                var filterValue = 'invalid_value';
-               for (var i = 0, len = candidates.length; i < len; i++) {              
-                    var candidate = candidates[i];
-                    if(candidate.employee_type !== filterValue){
-                        filterValue = candidate.employee_type;
-                        filters.employeetypeFilters.push({
-                            name: filterValue,
-                            count: 0
+                        //Employee Type Filter
+                        candidates.sort(function(a, b) {
+                            if (a.employee_type && b.employee_type)
+                                var employee_typeA = a.employee_type.toLowerCase(),
+                                    employee_typeB = b.employee_type.toLowerCase()
+                            if (employee_typeA < employee_typeB) //sort string ascending
+                                return -1
+                            if (employee_typeA > employee_typeB)
+                                return 1
+                            return 0 //default return value (no sorting)
                         });
-                    }
-                    filters.employeetypeFilters[filters.employeetypeFilters.length - 1].count++;
-                }
-           //Employmentstatus FIlter
-                     candidates.sort(function(a, b){
-                    if(a.employee_status && b.employee_status)
-                 var employee_statusA=a.employee_status.toLowerCase(), employee_statusB=b.employee_status.toLowerCase()
-                 if (employee_statusA < employee_statusB) //sort string ascending
-                  return -1 
-                 if (employee_statusA > employee_statusB)
-                  return 1
-                 return 0 //default return value (no sorting)
-                });
 
-                var filterValue = 'invalid_value';
-               for (var i = 0, len = candidates.length; i < len; i++) {              
-                    var candidate = candidates[i];
-                    if(candidate.employee_status !== filterValue){
-                        filterValue = candidate.employee_status;
-                        filters.employeestatusFilters.push({
-                            name: filterValue,
-                            count: 0
+                        var filterValue = 'invalid_value';
+                        for (var i = 0, len = candidates.length; i < len; i++) {
+                            var candidate = candidates[i];
+                            if (candidate.employee_type !== filterValue) {
+                                filterValue = candidate.employee_type;
+                                filters.employeetypeFilters.push({
+                                    name: filterValue,
+                                    count: 0
+                                });
+                            }
+                            filters.employeetypeFilters[filters.employeetypeFilters.length - 1].count++;
+                        }
+                        //Employmentstatus FIlter
+                        candidates.sort(function(a, b) {
+                            if (a.employee_status && b.employee_status)
+                                var employee_statusA = a.employee_status.toLowerCase(),
+                                    employee_statusB = b.employee_status.toLowerCase()
+                            if (employee_statusA < employee_statusB) //sort string ascending
+                                return -1
+                            if (employee_statusA > employee_statusB)
+                                return 1
+                            return 0 //default return value (no sorting)
                         });
-                    }
-                    filters.employeestatusFilters[filters.employeestatusFilters.length - 1].count++;
-                }
 
-            });
+                        var filterValue = 'invalid_value';
+                        for (var i = 0, len = candidates.length; i < len; i++) {
+                            var candidate = candidates[i];
+                            if (candidate.employee_status !== filterValue) {
+                                filterValue = candidate.employee_status;
+                                filters.employeestatusFilters.push({
+                                    name: filterValue,
+                                    count: 0
+                                });
+                            }
+                            filters.employeestatusFilters[filters.employeestatusFilters.length - 1].count++;
+                        }
+                    }
+                });
 
 
             // Find the paginated Candidates for the query
-            
-            var totallength = job.candidates.length;
-            if(req.body.filter=="general")
-                 skillsrequired= job.skills;
-            Candidate.find({"_id": {$in: candidates}
-            }, 'displayName title objective picture_url location salary_expectation visa_status employee_type employee_status skills', {
-                skip: req.body.skip,
-                limit: req.body.limit
-            }).exec(function(err, candidate) {
 
-                    res.jsonp({
-                        candidates: candidate,
-                        totalentries: totallength,
-                        job: job,
-                        filters: filters
-                    });
-                }
-            );
+            var totallength = job.candidates.length;
+            var selectedCandidates=Candidate.find({"_id": {
+                   $in: candidates
+                 }});
+            incomingFilters.forEach(function(entry)
+                {
+                    selectedCandidates.where(entry.type).equals(entry.name);
+                 
+
+                });
+            // Candidate.find({
+            //     "_id": {
+            //         $in: candidates
+            //     }
+            // }, 'displayName title objective picture_url location salary_expectation visa_status employee_type employee_status skills', {
+            //     skip: req.body.skip,
+            //     limit: req.body.limit
+            // }).exec(function(err, candidate) {
+
+            //     res.jsonp({
+            //         candidates: candidate,
+            //         totalentries: totallength,
+            //         job: job,
+            //         filters: filters
+            //     });
+            // });
+selectedCandidates.exec(function(err,candidate){
+totallength=candidate.length;
+
+});
+     selectedCandidates.skip(req.body.skip);
+     selectedCandidates.limit(req.body.limit);
+       selectedCandidates.exec(function(err, candidate) {
+             
+               res.jsonp({
+                     candidates: candidate,
+                     totalentries: totallength,
+                     job: job,
+                filters: filters
+                });
+             });
+
         });
 };

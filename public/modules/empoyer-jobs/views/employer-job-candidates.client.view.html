@@ -14,7 +14,7 @@
  -->
 
 
-<section data-ng-controller="EmployerJobCandidatesController" data-ng-init="findCandidates()" class="container">
+<section data-ng-controller="EmployerJobCandidatesController" class="container">
     <article class="row ">
         <header class="col-md-3">
                 
@@ -65,7 +65,7 @@
                         <ul>
                             <li data-ng-repeat="salaryFilter in salaryFilters">
 
-                            <input type="checkbox" value="salaryFilter.value" data-ng-model="salaryFilter.value" id="{{'salary' + salaryFilter.name}}" />
+                            <input type="checkbox" data-ng-model="salaryFilter.value" id="{{'salary' + salaryFilter.name}}" />
 
                             <label ng-if="salaryFilter.name" for="{{'salary' + salaryFilter.name}}" >{{salaryFilter.name}} ({{salaryFilter.count}})</label>
                             <label ng-if="!salaryFilter.name" for="{{'salary' + salaryFilter.name}}" >Not Mentioned ({{salaryFilter.count}})</label>
