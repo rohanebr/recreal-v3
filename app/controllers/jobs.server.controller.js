@@ -500,12 +500,23 @@ exports.getPaginatedCandidates = function(req, res) {
                         var filterValue = 'invalid_value';
                         for (var i = 0, len = candidates.length; i < len; i++) {
                             var candidate = candidates[i];
+                            var isPresent=false;
                             if (candidate.employee_type !== filterValue) {
                                 filterValue = candidate.employee_type;
+                                 incomingfilters.employeetypeFilters.forEach(function(entry){
+                                     if(entry.name==filterValue)
+                                              
+                                                isPresent=true;
+                                              
+
+
+                                });
                                 filters.employeetypeFilters.push({
                                     name: filterValue,
-                                    count: 0
+                                    count: 0,
+                                    value:isPresent
                                 });
+                               
                             }
                             filters.employeetypeFilters[filters.employeetypeFilters.length - 1].count++;
                         }
