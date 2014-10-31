@@ -79,7 +79,7 @@
                        <label>Visa</label>
                         <ul>
                             <li data-ng-repeat="visaFilter in visaFilters">
-                            <input type="checkbox" value="visaFilter.value" data-ng-model="visaFilter.value" id="{{'visa' + visaFilter.name}}" />
+                            <input type="checkbox" data-ng-model="visaFilter.value" id="{{'visa' + visaFilter.name}}" />
 
                             <label ng-if="visaFilter.name" for="{{'visa' + visaFilter.name}}" >{{visaFilter.name}} ({{visaFilter.count}})</label>
                             <label ng-if="!visaFilter.name" for="{{'visa' + visaFilter.name}}" >Not Mentioned ({{visaFilter.count}})</label>
@@ -93,7 +93,7 @@
                         <label>Employee Type</label>
                         <ul>
                             <li data-ng-repeat="employeetypeFilter in employeetypeFilters">
-                            <input type="checkbox" value="employeetypeFilter.value" data-ng-model="employeetypeFilter.value" id="{{'employeetype' + employeetypeFilter.name}}" />
+                            <input type="checkbox" data-ng-model="employeetypeFilter.value" id="{{'employeetype' + employeetypeFilter.name}}" />
 
                             <label ng-if="employeetypeFilter.name" for="{{'employeetype' + employeetypeFilter.name}}" >{{employeetypeFilter.name}} ({{employeetypeFilter.count}})</label>
                             <label ng-if="!employeetypeFilter.name" for="{{'employeetype' + employeetypeFilter.name}}" >Not Mentioned ({{employeetypeFilter.count}})</label>
@@ -107,7 +107,7 @@
                        <label>Employment Status</label>
                         <ul>
                             <li data-ng-repeat="employeestatusFilter in employeestatusFilters">
-                            <input type="checkbox" value="employeestatusFilter.value" data-ng-model="employeestatusFilter.value" id="{{'employeestatus' + employeestatusFilter.name}}" />
+                            <input type="checkbox" data-ng-model="employeestatusFilter.value" id="{{'employeestatus' + employeestatusFilter.name}}" />
 
                             <label ng-if="employeestatusFilter.name" for="{{'employeestatus' + employeestatusFilter.name}}" >{{employeestatusFilter.name}} ({{employeestatusFilter.count}})</label>
                             <label ng-if="!employeestatusFilter.name" for="{{'employeestatus' + employeestatus.name}}" >Not Mentioned ({{employeestatusFilter.count}})</label>

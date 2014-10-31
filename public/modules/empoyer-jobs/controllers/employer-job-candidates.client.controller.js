@@ -188,6 +188,47 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
 
 
          },true);
+ //Remove and adds filter for employeetypeFilters
+    $scope.$watch("employeetypeFilters",function(newValue,oldValue){
+         
+            $scope.employeetypeFilters.forEach(function(entry) {
+    				if(entry.value==true)
+    			   	      addToFilters("employee_type",entry.name); 
+    				 else
+    				    removeFromFilters("employee_type",entry.name);
+    			
+ 														});
+            $scope.findCandidates($scope.skip,$scope.itemsPerPage,$scope.filters);
+
+
+
+
+
+
+
+         },true);
+
+//Remove and adds filter for employeestatusFilters
+   $scope.$watch("employeestatusFilters",function(newValue,oldValue){
+            
+            $scope.employeestatusFilters.forEach(function(entry) {
+    				if(entry.value==true)
+    			   	      addToFilters("employee_status",entry.name); 
+    				 else
+    				    removeFromFilters("employee_status",entry.name);
+    			
+ 														});
+            $scope.findCandidates($scope.skip,$scope.itemsPerPage,$scope.filters);
+
+
+
+
+
+
+
+         },true);
+
+
 
 
 

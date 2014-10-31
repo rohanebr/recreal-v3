@@ -339,13 +339,20 @@ exports.getPaginatedCandidates = function(req, res) {
         employeetypeFilters: [],
         employeestatusFilters: []
     };
+console.log(req.body.filter);
 
+//entry.type shld be equal to any field given in the candidate model 
+//it is important to name them exactly as the model variables
     req.body.filter.forEach(function(entry){
       if(entry.type=="salary_expectation")
         incomingfilters.salaryFilters.push(entry);
       if(entry.type=="visa_status")
         incomingfilters.visaFilters.push(entry);
-
+      if(entry.type=="employee_type")
+        incomingfilters.employeetypeFilters.push(entry);
+      if(entry.type=="employee_status")
+        incomingfilters.employeestatusFilters.push(entry);
+    //Add more filters 
 
 
     });
@@ -514,13 +521,16 @@ exports.getPaginatedCandidates = function(req, res) {
             var selectedCandidates=Candidate.find({"_id": {
                    $in: candidates
                  }});
-                         console.log(incomingfilters);
+                       
          if(incomingfilters.salaryFilters.length!=0)
-         { console.log(getNames(incomingfilters.salaryFilters));
-
-                    selectedCandidates.where("salary_expectation").in(getNames(incomingfilters.salaryFilters));}
-                    if(incomingfilters.visaFilters.length!=0)
-                    selectedCandidates.where("visa_status").in(getNames(incomingfilters.visaFilters));
+            selectedCandidates.where("salary_expectation").in(getNames(incomingfilters.salaryFilters));
+         if(incomingfilters.visaFilters.length!=0)
+            selectedCandidates.where("visa_status").in(getNames(incomingfilters.visaFilters));
+         if(incomingfilters.employeestatusFilters.length!=0)
+            selectedCandidates.where("employee_status").in(getNames(incomingfilters.employeestatusFilters));
+         if(incomingfilters.employeetypeFilters.length!=0)
+            selectedCandidates.where("employee_type").in(getNames(incomingfilters.employeetypeFilters));
+        
 
                
             // Candidate.find({
