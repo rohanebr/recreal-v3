@@ -188,12 +188,12 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
                 entry.value=!entry.value;
         
     				if(entry.value==true)
-    			   	      addToFilters("salary_expectation",entry.name); 
+    			   	      $scope.addToFilters("salary_expectation",entry.name); 
     				 else
-    				    removeFromFilters("salary_expectation",entry.name);
+    				    $scope.removeFromFilters("salary_expectation",entry.name);
     			
  														});
-            $scope.findCandidates($scope.skip,$scope.itemsPerPage,$scope.filters);
+          //  $scope.findCandidates($scope.skip,$scope.itemsPerPage,$scope.filters);
 
 
 
@@ -211,12 +211,12 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
                 entry.value=!entry.value;
         
     				if(entry.value==true)
-    			   	      addToFilters("visa_status",entry.name); 
+    			   	     $scope.addToFilters("visa_status",entry.name); 
     				 else
-    				    removeFromFilters("visa_status",entry.name);
+    				    $scope.removeFromFilters("visa_status",entry.name);
     			
  														});
-            $scope.findCandidates($scope.skip,$scope.itemsPerPage,$scope.filters, false);
+          //  $scope.findCandidates($scope.skip,$scope.itemsPerPage,$scope.filters, false);
 
 
 
@@ -233,12 +233,12 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
                 entry.value=!entry.value;
         
     				if(entry.value==true)
-    			   	      addToFilters("employee_type",entry.name); 
+    			   	      $scope.addToFilters("employee_type",entry.name); 
     				 else
-    				    removeFromFilters("employee_type",entry.name);
+    				$scope.removeFromFilters("employee_type",entry.name);
     			
  														});
-            $scope.findCandidates($scope.skip,$scope.itemsPerPage,$scope.filters, false);
+          //  $scope.findCandidates($scope.skip,$scope.itemsPerPage,$scope.filters, false);
 
 
 
@@ -256,13 +256,12 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
                 entry.value=!entry.value;
         
     				if(entry.value==true)
-    			   	      addToFilters("employee_status",entry.name); 
+    			   	      $scope.addToFilters("employee_status",entry.name); 
     				 else
-    				    removeFromFilters("employee_status",entry.name);
+    				    $scope.removeFromFilters("employee_status",entry.name);
     			
  														});
-            $scope.findCandidates($scope.skip,$scope.itemsPerPage,$scope.filters, false);
-
+           
 
 
 
@@ -278,7 +277,7 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
 
 
     //addToFilters
-     var addToFilters=function(type,name)
+    $scope.addToFilters=function(type,name)
      {
       var alreadyPresentInFilters=false;
      	 $scope.filters.forEach(function(entry){
@@ -294,17 +293,42 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
 
      
 
+    $scope.findCandidates($scope.skip,$scope.itemsPerPage,$scope.filters, false);
 
      }
+$scope.$watch('filters',function(newValue,oldValue){
+     
 
+
+},true);
      //removeFromFilters
-      var removeFromFilters=function(type,name)
+      $scope.removeFromFilters=function(type,name)
      {
+      
            $scope.filters.forEach(function(entry){
                 if(type==entry.type && name==entry.name)
+                {
+                   if(type=="salary_expectation")
+                   {
+                      $scope.salaryFilters.forEach(function(filter){
+                              if(filter.name==name)
+                                   $scope.salaryFilters[$scope.salaryFilters.indexOf(filter)].value=false;
+                         });
+
+                   }
+                  if(type=="visa_status")
+                  {}  
+                   if(type=="employee_type")
+                   {} 
+                   if(type=="employee_status")
+                   {} 
                        $scope.filters.splice($scope.filters.indexOf(entry),1);
+
+                   }
                         
           });
+            $scope.findCandidates($scope.skip,$scope.itemsPerPage,$scope.filters, false);
+
      }
 
 
