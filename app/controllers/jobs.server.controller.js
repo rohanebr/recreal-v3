@@ -448,11 +448,23 @@ exports.getPaginatedCandidates = function(req, res) {
                         var filterValue = 'invalid_value';
                         for (var i = 0, len = candidates.length; i < len; i++) {
                             var candidate = candidates[i];
+                            var isPresent=false;
+                           
                             if (candidate.salary_expectation !== filterValue) {
                                 filterValue = candidate.salary_expectation;
+                                 incomingfilters.salaryFilters.forEach(function(entry){
+                                     if(entry.name==filterValue)
+                                              
+                                                isPresent=true;
+                                              
+
+
+                                });
                                 filters.salaryFilters.push({
                                     name: filterValue,
-                                    count: 0
+                                    count: 0,
+                                    value: isPresent
+
                                 });
                             }
                             filters.salaryFilters[filters.salaryFilters.length - 1].count++;
@@ -474,11 +486,23 @@ exports.getPaginatedCandidates = function(req, res) {
                         var filterValue = 'invalid_value';
                         for (var i = 0, len = candidates.length; i < len; i++) {
                             var candidate = candidates[i];
+                            var isPresent=false;
+                           
                             if (candidate.visa_status !== filterValue) {
+
                                 filterValue = candidate.visa_status;
+                                 incomingfilters.visaFilters.forEach(function(entry){
+                                     if(entry.name==filterValue)
+                                              
+                                                isPresent=true;
+                                              
+
+
+                                });
                                 filters.visaFilters.push({
                                     name: filterValue,
-                                    count: 0
+                                    count: 0,
+                                    value: isPresent
                                 });
                             }
                             filters.visaFilters[filters.visaFilters.length - 1].count++;
@@ -507,10 +531,7 @@ exports.getPaginatedCandidates = function(req, res) {
                                      if(entry.name==filterValue)
                                               
                                                 isPresent=true;
-                                              
-
-
-                                });
+                                      });
                                 filters.employeetypeFilters.push({
                                     name: filterValue,
                                     count: 0,
@@ -535,11 +556,23 @@ exports.getPaginatedCandidates = function(req, res) {
                         var filterValue = 'invalid_value';
                         for (var i = 0, len = candidates.length; i < len; i++) {
                             var candidate = candidates[i];
+                            var isPresent=false
                             if (candidate.employee_status !== filterValue) {
+                                ;
+                            
                                 filterValue = candidate.employee_status;
+                                incomingfilters.employeestatusFilters.forEach(function(entry){
+                                     if(entry.name==filterValue)
+                                              
+                                                isPresent=true;
+                                              
+
+
+                                });
                                 filters.employeestatusFilters.push({
                                     name: filterValue,
-                                    count: 0
+                                    count: 0,
+                                    value: isPresent
                                 });
                             }
                             filters.employeestatusFilters[filters.employeestatusFilters.length - 1].count++;

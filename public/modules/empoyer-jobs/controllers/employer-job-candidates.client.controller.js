@@ -98,6 +98,7 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
 	                $scope.employeetypeFilters = job.filters.employeetypeFilters;
 	            if(job.filters.employeestatusFilters.length > 0)    
 	                $scope.employeestatusFilters = job.filters.employeestatusFilters;
+                
                 if($scope.firstTimeFetching)
                 {
                     $scope.salaryFilters.forEach(function(entry){
@@ -180,9 +181,12 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
             }
         });
          //Removes and adds filter for salary
-         $scope.salaryFilterChanged =  function(){
+         $scope.salaryFilterChanged =  function(name){
           
             $scope.salaryFilters.forEach(function(entry) {
+                  if(name==entry.name)
+                entry.value=!entry.value;
+        
     				if(entry.value==true)
     			   	      addToFilters("salary_expectation",entry.name); 
     				 else
@@ -200,9 +204,12 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
          };
 
          //Remove and adds filter for visa
-  $scope.visaFilterChanged = function(){
+  $scope.visaFilterChanged = function(name){
           
             $scope.visaFilters.forEach(function(entry) {
+                  if(name==entry.name)
+                entry.value=!entry.value;
+        
     				if(entry.value==true)
     			   	      addToFilters("visa_status",entry.name); 
     				 else
@@ -224,7 +231,7 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
             $scope.employeetypeFilters.forEach(function(entry) {
                 if(name==entry.name)
                 entry.value=!entry.value;
-            console.log(entry.value);
+        
     				if(entry.value==true)
     			   	      addToFilters("employee_type",entry.name); 
     				 else
@@ -242,9 +249,12 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
          };
 
 //Remove and adds filter for employeestatusFilters
-   $scope.empStatusFilterChanged = function(){
+   $scope.empStatusFilterChanged = function(name){
             
             $scope.employeestatusFilters.forEach(function(entry) {
+                  if(name==entry.name)
+                entry.value=!entry.value;
+        
     				if(entry.value==true)
     			   	      addToFilters("employee_status",entry.name); 
     				 else
