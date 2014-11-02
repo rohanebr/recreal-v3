@@ -51,7 +51,7 @@
                       
                         <label>Locations</label>
                         <ul>
-                            <li data-ng-repeat="locationFilter in locationFilters">
+                            <li data-ng-repeat="locationFilter in locationFilters | orderBy:'count':true | limitTo: filterLimit">
                             <input type="checkbox" value="locationFilter.value" data-ng-click="locationFilterChanged()"  data-ng-model="locationFilter.value" id="{{'location'+ locationFilter.name}}" />
                             
                              <label ng-if="locationFilter.name" for="{{'location' + locationFilter.name}}" >{{locationFilter.name}}({{locationFilter.count}})</label>
@@ -59,13 +59,14 @@
                                 
                             </li>
                         </ul>
+                        <a href="" data-ng-if="locationFilters.length > filterLimit" data-ng-click="openFilterModal(locationFilters, 'location')">more choices...</a>
                     </article> 
 
                     <article class="thumbnail">
                         <label>Salary Range</label>
 
                         <ul>
-                            <li data-ng-repeat="salaryFilter in salaryFilters">
+                            <li data-ng-repeat="salaryFilter in salaryFilters | orderBy:'count':true | limitTo: filterLimit">
 
                             <input type="checkbox"  data-ng-click="salaryFilterChanged(salaryFilter.name)" data-ng-model="salaryFilter.value" id="{{'salary' + salaryFilter.name}}" />
 
@@ -75,26 +76,26 @@
                                 
                             </li>
                         </ul>
+                        <a href="" data-ng-if="salaryFilters.length > filterLimit" data-ng-click="openFilterModal(salaryFilters, 'salary')">more choices...</a>
                     </article> 
 
                      <article class="thumbnail">
                        <label>Visa</label>
                         <ul>
-                            <li data-ng-repeat="visaFilter in visaFilters">
+                            <li data-ng-repeat="visaFilter in visaFilters | orderBy:'count':true  | limitTo: filterLimit">
                             <input type="checkbox" data-ng-click="visaFilterChanged(visaFilter.name)" data-ng-model="visaFilter.value" id="{{'visa' + visaFilter.name}}" />
 
                             <label ng-if="visaFilter.name" for="{{'visa' + visaFilter.name}}" >{{visaFilter.name}} ({{visaFilter.count}})</label>
                             <label ng-if="!visaFilter.name" for="{{'visa' + visaFilter.name}}" >Not Mentioned ({{visaFilter.count}})</label>
-
-                                
                             </li>
                         </ul>
+                        <a href="" data-ng-if="visaFilters.length > filterLimit" data-ng-click="openFilterModal(visaFilters, 'visa')">more choices...</a>
                     </article> 
 
                     <article class="thumbnail">
                         <label>Employee Type</label>
                         <ul>
-                            <li data-ng-repeat="employeetypeFilter in employeetypeFilters">
+                            <li data-ng-repeat="employeetypeFilter in employeetypeFilters | orderBy:'count':true | limitTo: filterLimit">
                             <input type="checkbox" data-ng-click="emptypeFilterChanged(employeetypeFilter.name)" data-ng-model="employeetypeFilter.value" id="{{'employeetype' + employeetypeFilter.name}}" />
 
                             <label ng-if="employeetypeFilter.name" for="{{'employeetype' + employeetypeFilter.name}}" >{{employeetypeFilter.name}} ({{employeetypeFilter.count}})</label>
@@ -103,12 +104,13 @@
                                 
                             </li>
                         </ul>
+                        <a href="" data-ng-if="employeetypeFilters.length > filterLimit" data-ng-click="openFilterModal(employeetypeFilters, 'employeetype')">more choices...</a>
                     </article> 
 
                     <article class="thumbnail">
                        <label>Employment Status</label>
                         <ul>
-                            <li data-ng-repeat="employeestatusFilter in employeestatusFilters">
+                            <li data-ng-repeat="employeestatusFilter in employeestatusFilters | orderBy:'count':true | limitTo: filterLimit">
                             <input type="checkbox" data-ng-click="empStatusFilterChanged(employeestatusFilter.name)" data-ng-model="employeestatusFilter.value" id="{{'employeestatus' + employeestatusFilter.name}}" />
 
                             <label ng-if="employeestatusFilter.name" for="{{'employeestatus' + employeestatusFilter.name}}" >{{employeestatusFilter.name}} ({{employeestatusFilter.count}})</label>
@@ -117,6 +119,7 @@
                                 
                             </li>
                         </ul>
+                        <a href="" data-ng-if="employeestatusFilters.length > filterLimit" data-ng-click="openFilterModal(employeestatusFilters, 'employeestatus')">more choices...</a>
                     </article> 
 
                     <!-- <article class="thumbnail">
@@ -153,7 +156,6 @@
                 </section>
                 <section class="col-md-9">
                     <header class="col-md-8">
-
                             <a data-ng-href="#!/candidates/{{candidate._id}}"><h3 style="color:#00afef;">{{candidate.displayName}}</h3></a>
                     </header> 
                     <aside  class="col-md-4">

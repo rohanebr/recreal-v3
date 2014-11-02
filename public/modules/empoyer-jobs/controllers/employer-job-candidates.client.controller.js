@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$scope', '$filter', 'Jobs', '$stateParams', '$http',
-    function($scope, $filter, Jobs, $stateParams, $http) {
+angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$scope', '$filter', 'Jobs', '$stateParams', '$http', '$modal',
+    function($scope, $filter, Jobs, $stateParams, $http, $modal) {
         $scope.firstTimeFetching=true;
         $scope.locationFilters = [];
         $scope.salaryFilters = [];
@@ -12,6 +12,7 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
         $scope.currentPage = 0;
         $scope.skip = 0;
         $scope.filters = [];
+        $scope.filterLimit = 2;
 
         $scope.range = function() {
             var rangeSize = 5;
@@ -120,7 +121,6 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
                     $scope.firstTimeFetching=false;
 
                 }
-                $scope.candidates = $scope.job.candidates;
                 $scope.total = job.totalentries;
                 $scope.candidates = job.candidates;
 
@@ -330,11 +330,49 @@ $scope.$watch('filters',function(newValue,oldValue){
             $scope.findCandidates($scope.skip,$scope.itemsPerPage,$scope.filters, false);
 
      }
+  $scope.openFilterModal = function (filterArray, name) {
 
+    var modalInstance = $modal.open({
+      templateUrl: '/modules/empoyer-jobs/views/employer-job-candidates/filter-modal.html',
+      controller: 'FilterModalCtrl',
+      resolve: {
+        filter: function () {
+          return {values: filterArray,
+                  name: name};
+        }
+      }
+    });
 
-
+    modalInstance.result.then(function (filterName) {
+      
+      $scope.findCandidates($scope.skip,$scope.itemsPerPage,$scope.filters, false);
+    }, function () {
+       console.log('Modal dismissed at: ' + new Date());
+       $scope.findCandidates($scope.skip,$scope.itemsPerPage,$scope.filters, false);
+    });
+  };
 
 
 
     }
-]);
+
+
+]).
+
+controller('FilterModalCtrl', [
+     '$scope', '$modalInstance', 'filter', function($scope, $modalInstance, filter) {
+
+       $scope.filters = filter.values;
+       $scope.name = filter.name;
+
+    $scope.ok = function () {
+      // $scope.$parent.findCandidates($scope.$parent.skip, $scope.$parent.itemsPerPage, $scope.$parent.filters, false);
+      $modalInstance.close($scope.name);
+    };
+
+    $scope.cancel = function () {
+    $modalInstance.dismiss('cancel');
+
+    };
+     }
+   ]);
