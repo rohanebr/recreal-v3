@@ -193,7 +193,7 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
     				    $scope.removeFromFilters("salary_expectation",entry.name);
     			
  														});
-          //  $scope.findCandidates($scope.skip,$scope.itemsPerPage,$scope.filters);
+           $scope.findCandidates($scope.skip,$scope.itemsPerPage,$scope.filters);
 
 
 
@@ -216,7 +216,7 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
     				    $scope.removeFromFilters("visa_status",entry.name);
     			
  														});
-          //  $scope.findCandidates($scope.skip,$scope.itemsPerPage,$scope.filters, false);
+       $scope.findCandidates($scope.skip,$scope.itemsPerPage,$scope.filters, false);
 
 
 
@@ -238,7 +238,7 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
     				$scope.removeFromFilters("employee_type",entry.name);
     			
  														});
-          //  $scope.findCandidates($scope.skip,$scope.itemsPerPage,$scope.filters, false);
+          $scope.findCandidates($scope.skip,$scope.itemsPerPage,$scope.filters, false);
 
 
 
@@ -265,7 +265,7 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
 
 
 
-
+$scope.findCandidates($scope.skip,$scope.itemsPerPage,$scope.filters, false);
 
 
          };
@@ -293,7 +293,7 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
 
      
 
-    $scope.findCandidates($scope.skip,$scope.itemsPerPage,$scope.filters, false);
+    
 
      }
 $scope.$watch('filters',function(newValue,oldValue){
@@ -337,18 +337,34 @@ $scope.$watch('filters',function(newValue,oldValue){
       controller: 'FilterModalCtrl',
       resolve: {
         filter: function () {
-          return {values: filterArray,
+          return {values: angular.copy(filterArray),
                   name: name};
         }
       }
     });
 
-    modalInstance.result.then(function (filterName) {
-      
-      $scope.findCandidates($scope.skip,$scope.itemsPerPage,$scope.filters, false);
+    modalInstance.result.then(function (filterObject) {
+      var filternames=[];
+      filterObject.filters.forEach(function(filter){
+        if(filter.value)
+        {
+          filternames.push(filter.name);
+        }
+      });
+     if(filterObject.name=="employeetype")
+     {
+          filternames.forEach(function(filter){
+              $scope.addToFilters("employee_type",filter);
+
+
+          });
+       
+     }
+     
+     $scope.findCandidates($scope.skip,$scope.itemsPerPage,$scope.filters, false);
+     
     }, function () {
-       console.log('Modal dismissed at: ' + new Date());
-       $scope.findCandidates($scope.skip,$scope.itemsPerPage,$scope.filters, false);
+       
     });
   };
 
@@ -367,7 +383,7 @@ controller('FilterModalCtrl', [
 
     $scope.ok = function () {
       // $scope.$parent.findCandidates($scope.$parent.skip, $scope.$parent.itemsPerPage, $scope.$parent.filters, false);
-      $modalInstance.close($scope.name);
+      $modalInstance.close({name:$scope.name,filters:$scope.filters});
     };
 
     $scope.cancel = function () {
