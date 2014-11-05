@@ -5,7 +5,6 @@ angular.module('core').controller('HomeController', ['$scope', 'Authentication',
 	function($scope, Authentication, $state, $rootScope, Employers, Companies, Candidates , Socket) {
 		// This provides Authentication context.
 		$scope.authentication = Authentication;
-		
 		var user = $scope.authentication.user;
 		console.log(user);
 //starting angular-charts

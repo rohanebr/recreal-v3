@@ -21,6 +21,10 @@ var JobSchema = new Schema({
 	    type: 'String',
 	    trim: true
 	  },
+	views: [{
+       type:Schema.ObjectId,
+       ref: 'User'
+    }],
 	  description:{
 	    type: 'String'
 	  },
@@ -169,6 +173,9 @@ var JobSchema = new Schema({
 		type: Schema.ObjectId,
 		ref: 'User'
 	}
+
+
+	
 });
 
 JobSchema.index({candidates: 1});

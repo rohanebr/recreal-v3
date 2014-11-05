@@ -6,7 +6,10 @@
 var mongoose = require('mongoose'),
 	Exam = mongoose.model('Exam'),
 	Candidate = mongoose.model('Candidate'),
-	_ = require('lodash');
+	ExamSocket = require('../sockets/exams.server.socket.js'),
+	_ = require('lodash'),
+	User= mongoose.model('User');
+	
 
 /**
  * Get the error message from error object
@@ -93,7 +96,6 @@ exports.delete = function(req, res) {
 	});
 };
 
-
 exports.saveExam = function(req, res) {
     var examTaken=req.body;
 	var id=req.user._id;
@@ -130,7 +132,96 @@ exports.list = function(req, res) { Exam.find().sort('-created').populate('user'
 exports.getResult = function(req, res) {
 	res.jsonp(req.examTaken);
 };
+//need to add notifications in the database when the employer sends the Test
+exports.sendTest = function(req, res){
 
+	var candidates=req.body.candidates;
+	var tests=req.body.tests;
+	console.log(tests[0]);
+var candidatesalreadygiventest=[];
+	Candidate.find().find({"_id":{$in:candidates}}).populate('examsTaken.exam').exec(function(err,docs){
+
+              for(var h=0,d=docs.length;h<d;h++)
+              { var examstaken=docs[h].examsTaken;
+              	        for(var w=0,x=examstaken.length;w<x;w++)
+              	        {var testtaken=false;
+                                for( var q=0,a=tests.length;q<a;q++)
+                                	{  
+                                     console.log(examstaken[w]+tests[q]);
+                                      if(examstaken[w].exam._id==tests[q])
+                                      	{testtaken=true;
+                                      		candidatesalreadygiventest=docs[h];
+                                    }
+                                  
+                                	}
+                                	if(!testtaken)
+                                	{ 
+                                	  console.log(tests[q]);
+                                      examstaken.push({score:0,exam:tests[q],isPass:false,state:"notTaken"});
+
+                                      User.findById(docs[h].user).exec(function(err, user) {
+                                         user.notifications.push({generalmessage:"Please click on the link to give the test",hiddendata:"/takeExam/"+tests[q],created:Date.now(),isRead:false});
+                                         user.markModified('notifications');
+                                         user.save();
+                                      });
+                                 ExamSocket.notifyCandidateToGiveTest({userid:docs[h].user,generalmessage: "Please click on the link to give the test",hiddendata:"/takeExam/"+tests[q],created:Date.now()});
+              //ExamSocket.notifyCandidateToGiveTest({generalmessage: "asdaf"});
+
+                                	}
+
+              	        }
+              	        if(examstaken.length==0)
+              	        { 
+              	    for(var hh=0,dd=tests.length;hh<dd;hh++)
+                         {
+                         	examstaken.push({score:0,exam:tests[hh],isPass:false,state:"notTaken"});
+                         	  User.findById(docs[h].user).exec(function(err, user) {
+                                         user.notifications.push({generalmessage:"Please click on the link to give the test",hiddendata:"/takeExam/"+tests[hh],created:Date.now(),isRead:false});
+                                         user.markModified('notifications');
+                                         user.save();
+                                      });
+                            ExamSocket.notifyCandidateToGiveTest({userid:docs[h].user,generalmessage: "Please click on the link to give the test",hiddendata:"/takeExam/"+tests[hh],created:Date.now()});
+                         }
+                          console.log(docs[h].displayName);
+
+              	        }
+
+              	    docs[h].markModified('examsTaken');
+              	     docs[h].save();
+
+
+                  
+
+              }
+              if(candidatesalreadygiventest.length!=0)
+             { res.jsonp({data:"already given test",candidates:candidatesalreadygiventest});}
+	else
+		res.jsonp({data:"none have given test"});
+
+	});
+// 	Candidate.find({
+//     '_id': { $in: [
+//         candidates
+//     ]}
+// }, function(err, docs){
+	
+//          for(var d=0,g=docs.length;d<g;d++)
+//          {
+
+//          	       var examtaken=docs[d].examsTaken;
+                         
+
+
+
+//          }
+
+
+    
+// });
+
+
+	
+};
 
 /**
  * Exam Result middleware
