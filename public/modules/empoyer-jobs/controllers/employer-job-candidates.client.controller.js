@@ -11,6 +11,7 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
         $scope.itemsPerPage = 2;
         $scope.currentPage = 0;
         $scope.skip = 0;
+        $scope.priority=1;
         $scope.filters = [];
         $scope.filterLimit = 2;
 
@@ -87,18 +88,30 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
                 filter: filters,
                 isPageChange: isPageChange
             }).success(function(job) {
-            	
+            	 $scope.salaryFilters = [];
+        $scope.visaFilters = [];
+        $scope.employeetypeFilters = [];
+        $scope.employeestatusFilters = [];
                 $scope.job = job.job;
                 // $scope.locationFilters=job.filters.locationFilters;
-                	
-                if(job.filters.salaryFilters.length > 0)
-                	$scope.salaryFilters = job.filters.salaryFilters;
-	            if(job.filters.visaFilters.length > 0) 
-	                $scope.visaFilters = job.filters.visaFilters;
-	            if(job.filters.employeetypeFilters.length > 0)    
-	                $scope.employeetypeFilters = job.filters.employeetypeFilters;
-	            if(job.filters.employeestatusFilters.length > 0)    
-	                $scope.employeestatusFilters = job.filters.employeestatusFilters;
+                	 $scope.total = job.totalentries;
+                $scope.candidates = job.candidates;
+                job.filters.forEach(function(entry){
+                    if(entry.type=="salary_expectation")
+                      $scope.salaryFilters.push(entry);
+                      if(entry.type=="visa_status")
+                      $scope.visaFilters.push(entry);
+
+  if(entry.type=="employee_type")
+                      $scope.employeetypeFilters.push(entry);
+
+  if(entry.type=="employee_status")
+                      $scope.employeestatusFilters.push(entry);
+
+
+
+                });
+                         
                 
                 if($scope.firstTimeFetching)
                 {
@@ -121,9 +134,7 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
                     $scope.firstTimeFetching=false;
 
                 }
-                $scope.total = job.totalentries;
-                $scope.candidates = job.candidates;
-
+               
             });
         }
 
@@ -296,35 +307,17 @@ $scope.findCandidates($scope.skip,$scope.itemsPerPage,$scope.filters, false);
     
 
      }
-$scope.$watch('filters',function(newValue,oldValue){
-     
 
-
-},true);
      //removeFromFilters
       $scope.removeFromFilters=function(type,name)
      {
       
            $scope.filters.forEach(function(entry){
                 if(type==entry.type && name==entry.name)
-                {
-                   if(type=="salary_expectation")
-                   {
-                      $scope.salaryFilters.forEach(function(filter){
-                              if(filter.name==name)
-                                   $scope.salaryFilters[$scope.salaryFilters.indexOf(filter)].value=false;
-                         });
+                
+                                      $scope.filters.splice($scope.filters.indexOf(entry),1);
 
-                   }
-                  if(type=="visa_status")
-                  {}  
-                   if(type=="employee_type")
-                   {} 
-                   if(type=="employee_status")
-                   {} 
-                       $scope.filters.splice($scope.filters.indexOf(entry),1);
-
-                   }
+                
                         
           });
             $scope.findCandidates($scope.skip,$scope.itemsPerPage,$scope.filters, false);

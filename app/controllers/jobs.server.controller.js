@@ -10,6 +10,36 @@ var mongoose = require('mongoose'),
     JobSocket = require('../sockets/job.server.socket.js'),
     _ = require('lodash');
 
+
+    Array.prototype.asyncEach = function(iterator) {
+  var list    = this,
+      n       = list.length,
+      i       = -1,
+      calls   = 0,
+      looping = false;
+
+  var iterate = function() {
+    calls -= 1;
+    i += 1;
+    if (i === n) return;
+    iterator(list[i], resume);
+  };
+
+  var loop = function() {
+    if (looping) return;
+    looping = true;
+    while (calls > 0) iterate();
+    looping = false;
+  };
+
+  var resume = function() {
+    calls += 1;
+    if (typeof setTimeout === 'undefined') loop();
+    else setTimeout(iterate, 1);
+  };
+  resume();
+};
+
 /**
  * Get the error message from error object
  */
@@ -325,41 +355,59 @@ exports.onePlusView = function(req, res) {
 
 
 exports.getPaginatedCandidates = function(req, res) {
-    var filters = {
-        locationFilters: [],
-        salaryFilters: [],
-        visaFilters: [],
-        employeetypeFilters: [],
-        employeestatusFilters: []
-    };
-    var incomingfilters = {
-        locationFilters: [],
-        salaryFilters: [],
-        visaFilters: [],
-        employeetypeFilters: [],
-        employeestatusFilters: []
-    };
+    var filters = [];
+var dbfilters = ["salary_expectation", "visa_status", "employee_status", "employee_type"];
+
+    var incomingfilters = [];
     console.log(req.body.filter);
 
     //entry.type shld be equal to any field given in the candidate model 
     //it is important to name them exactly as the model variables
-    req.body.filter.forEach(function(entry) {
-        if (entry.type == "salary_expectation")
-            incomingfilters.salaryFilters.push(entry);
-        if (entry.type == "visa_status")
-            incomingfilters.visaFilters.push(entry);
-        if (entry.type == "employee_type")
-            incomingfilters.employeetypeFilters.push(entry);
-        if (entry.type == "employee_status")
-            incomingfilters.employeestatusFilters.push(entry);
-        //Add more filters 
+    var previousentry = "";
+    var previouscount=0;
+    var count = 0;
+    var ffilter=req.body.filter;
+var dummy;
 
+    for(var h=count,j=ffilter.length;h<j;h++)            //salary_expectation salary_exepectation visa_status salary_expecetation visa_status
+    {
+
+           for(var t=h+1;t<j;t++)
+           {
+                if(ffilter[h].type==ffilter[t].type)
+                   {count++;      //2
+
+                    dummy=ffilter[h+count];
+                    ffilter[h+count]=ffilter[t];
+                     ffilter[t]=dummy;
+                    
+
+                            }
+
+
+           }
+
+
+
+    }
+    console.log(ffilter);
+    ffilter.forEach(function(entry) {
+        if (entry.type != previousentry)
+            count++;
+        
+        entry.priority = count;
+        if(previouscount!=count)
+        incomingfilters.push({name:[entry.name],type:entry.type,priority:entry.priority});
+    else
+    {
+   incomingfilters[incomingfilters.length-1].name.push(entry.name);
+
+    }
+        previousentry = entry.type;
+previouscount=count;
 
     });
 
-
-
-    
 
 
 
@@ -368,47 +416,7 @@ exports.getPaginatedCandidates = function(req, res) {
 
             var candidates = job.candidates;
 
-            // populate filters to be sent
 
-
-
-                    // populate target Location Filter
-
-                    //  candidates.sort(function(a, b){
-                    //      console.log(a.target_locations[0]+" "+b.target_locations[0]);
-                    //      if(a.target_locations && b.target_locations)
-                    //  var locationA=a.target_locations[0].name.toLowerCase(), locationB=b.target_locations[0].name.toLowerCase();
-
-                    //   if (locationA < locationB) //sort string ascending
-                    //    return -1 
-                    //   if (locationA > locationB)
-                    //    return 1
-                    //   return 0 //default return value (no sorting)
-                    //  });
-
-                    //  var filterValue = 'invalid_value';
-                    // for (var i = 0, len = candidates.length; i < len; i++) {              
-                    //      var candidate = candidates[i];
-                    //      console.log(candidate);
-                    //      if(candidate.target_locations.length > 0){
-                    //          if(candidate.target_locations[0].name !== filterValue){
-                    //              filterValue = candidate.target_locations[0].name;
-                    //              filters.locationFilters.push({
-                    //                  name: filterValue,
-                    //                  count: 0
-                    //              });
-                    //          }
-                    //          filters.locationFilters[filters.locationFilters.length - 1].count++;
-                    //      }
-                    //  }
-
-
-
-                    // Populate Salary Filter
-                  
-
-
-            // Find the paginated Candidates for the query
 
             var totallength = job.candidates.length;
             var selectedCandidates = Candidate.find({
@@ -416,175 +424,107 @@ exports.getPaginatedCandidates = function(req, res) {
                     $in: candidates
                 }
             });
-
-            if (incomingfilters.salaryFilters.length != 0)
-                selectedCandidates.where("salary_expectation").in(getNames(incomingfilters.salaryFilters));
-            if (incomingfilters.visaFilters.length != 0)
-                selectedCandidates.where("visa_status").in(getNames(incomingfilters.visaFilters));
-            if (incomingfilters.employeestatusFilters.length != 0)
-                selectedCandidates.where("employee_status").in(getNames(incomingfilters.employeestatusFilters));
-            if (incomingfilters.employeetypeFilters.length != 0)
-                selectedCandidates.where("employee_type").in(getNames(incomingfilters.employeetypeFilters));
-
-         
-            selectedCandidates.exec(function(err, candidates) {
-                totallength = candidates.length;
+            var once = true;
+            count = 1;
+            var firstfilter = [];
+            var priority=1;
+            incomingfilters.forEach(function(entry) {
+                if (entry.priority == priority)
+                    {firstfilter.push(entry);
+                        once=false;
+                    }
+               
 
 
-                // Populate Salary Filter
-                    console.log('isPageChange value: ' + req.body.isPageChange);
-                    
-                        candidates.sort(function(a, b) {
-                            if (a.salary_expectation && b.salary_expectation)
-                                var salaryA = a.salary_expectation.toLowerCase(),
-                                    salaryB = b.salary_expectation.toLowerCase()
-                            if (salaryA < salaryB) //sort string ascending
-                                return -1
-                            if (salaryA > salaryB)
-                                return 1
-                            return 0 //default return value (no sorting)
-                        });
-
-                        var filterValue = 'invalid_value';
-                        for (var i = 0, len = candidates.length; i < len; i++) {
-                            var candidate = candidates[i];
-                            var isPresent=false;
-                           
-                            if (candidate.salary_expectation !== filterValue) {
-                                filterValue = candidate.salary_expectation;
-                                 incomingfilters.salaryFilters.forEach(function(entry){
-                                     if(entry.name==filterValue)
-                                              
-                                                isPresent=true;
-                                              
-
-
-                                });
-                                filters.salaryFilters.push({
-                                    name: filterValue,
-                                    count: 0,
-                                    value: isPresent
-
-                                });
-                            }
-                            filters.salaryFilters[filters.salaryFilters.length - 1].count++;
-                        }
-
-
-                        //Populate Visa Filter
-                        candidates.sort(function(a, b) {
-                            if (a.visa_status && b.visa_status)
-                                var visaA = a.visa_status.toLowerCase(),
-                                    visaB = b.visa_status.toLowerCase()
-                            if (visaA < visaB) //sort string ascending
-                                return -1
-                            if (visaA > visaB)
-                                return 1
-                            return 0 //default return value (no sorting)
-                        });
-
-                        var filterValue = 'invalid_value';
-                        for (var i = 0, len = candidates.length; i < len; i++) {
-                            var candidate = candidates[i];
-                            var isPresent=false;
-                           
-                            if (candidate.visa_status !== filterValue) {
-
-                                filterValue = candidate.visa_status;
-                                 incomingfilters.visaFilters.forEach(function(entry){
-                                     if(entry.name==filterValue)
-                                              
-                                                isPresent=true;
-                                              
-
-
-                                });
-                                filters.visaFilters.push({
-                                    name: filterValue,
-                                    count: 0,
-                                    value: isPresent
-                                });
-                            }
-                            filters.visaFilters[filters.visaFilters.length - 1].count++;
-                        }
-
-
-                        //Employee Type Filter
-                        candidates.sort(function(a, b) {
-                            if (a.employee_type && b.employee_type)
-                                var employee_typeA = a.employee_type.toLowerCase(),
-                                    employee_typeB = b.employee_type.toLowerCase()
-                            if (employee_typeA < employee_typeB) //sort string ascending
-                                return -1
-                            if (employee_typeA > employee_typeB)
-                                return 1
-                            return 0 //default return value (no sorting)
-                        });
-
-                        var filterValue = 'invalid_value';
-                        for (var i = 0, len = candidates.length; i < len; i++) {
-                            var candidate = candidates[i];
-                            var isPresent=false;
-                            if (candidate.employee_type !== filterValue) {
-                                filterValue = candidate.employee_type;
-                                 incomingfilters.employeetypeFilters.forEach(function(entry){
-                                     if(entry.name==filterValue)
-                                              
-                                                isPresent=true;
-                                      });
-                                filters.employeetypeFilters.push({
-                                    name: filterValue,
-                                    count: 0,
-                                    value:isPresent
-                                });
-                               
-                            }
-                            filters.employeetypeFilters[filters.employeetypeFilters.length - 1].count++;
-                        }
-                        //Employmentstatus FIlter
-                        candidates.sort(function(a, b) {
-                            if (a.employee_status && b.employee_status)
-                                var employee_statusA = a.employee_status.toLowerCase(),
-                                    employee_statusB = b.employee_status.toLowerCase()
-                            if (employee_statusA < employee_statusB) //sort string ascending
-                                return -1
-                            if (employee_statusA > employee_statusB)
-                                return 1
-                            return 0 //default return value (no sorting)
-                        });
-
-                        var filterValue = 'invalid_value';
-                        for (var i = 0, len = candidates.length; i < len; i++) {
-                            var candidate = candidates[i];
-                            var isPresent=false
-                            if (candidate.employee_status !== filterValue) {
-                                ;
-                            
-                                filterValue = candidate.employee_status;
-                                incomingfilters.employeestatusFilters.forEach(function(entry){
-                                     if(entry.name==filterValue)
-                                              
-                                                isPresent=true;
-                                              
-
-
-                                });
-                                filters.employeestatusFilters.push({
-                                    name: filterValue,
-                                    count: 0,
-                                    value: isPresent
-                                });
-                            }
-                            filters.employeestatusFilters[filters.employeestatusFilters.length - 1].count++;
-                        }
-                   
 
             });
-            selectedCandidates.skip(req.body.skip);
+
+            if(incomingfilters.length!=0)
+            {   
+                 var lengthincomingfilters=incomingfilters.length;
+                 for(var h=0,t=dbfilters.length;h<t;h++)
+                    {  var alreadyPresent=false;
+                         for(var y=0,w=incomingfilters.length;y<w;y++)
+                         {
+                            if(incomingfilters[y].type==dbfilters[h])
+                                          alreadyPresent=true;
+
+                         }
+                         if(!alreadyPresent)
+                            incomingfilters.push({name:[""],type:dbfilters[h],priority:-4});
+ 
+                    }
+                var letspopulatefilters=[];
+               var x=0;
+                  incomingfilters.asyncEach(function(incomingfilter,resume) 
+               {
+                if(letspopulatefilters.length!=0)
+                {    for(var h=0;h<letspopulatefilters.length;h++)
+                    {
+                        console.log(h);
+                        var names=letspopulatefilters[h].name;
+                     selectedCandidates.where(letspopulatefilters[h].type).in(names);
+}
+                } 
+
+               
+                  selectedCandidates.exec(function(err, candidates) {
+                 if(x<lengthincomingfilters)
+                 letspopulatefilters.push(incomingfilter);
+                x++;
+                 filters = sortandfilter(incomingfilter.type, candidates,incomingfilters, filters);
+                
+            
+            if(x==incomingfilters.length)
+               { 
+               totallength=candidates.length;
+
+
+                      selectedCandidates.skip(req.body.skip);
             selectedCandidates.limit(req.body.limit);
             selectedCandidates.select('displayName title objective picture_url location salary_expectation visa_status employee_type employee_status skills');
             selectedCandidates.exec(function(err, candidate) {
+                console.log(filters);
+                res.jsonp({
+                    candidates: candidate,
+                    totalentries: totallength,
+                    job: job,
+                    filters: filters
+                });
+            });} 
 
+                         });
+
+
+resume();
+
+              });
+
+
+               }
+
+
+                
+               
+               
+
+            
+            console.log(filters);
+      
+                     if (incomingfilters.length == 0) {
+                selectedCandidates.exec(function(err, candidates) {
+                    for (var s = 0; s < dbfilters.length; s++) {
+                       
+                        filters = sortandfilter(dbfilters[s], candidates, incomingfilters, filters);
+                    }
+
+
+                });
+                selectedCandidates.skip(req.body.skip);
+            selectedCandidates.limit(req.body.limit);
+            selectedCandidates.select('displayName title objective picture_url location salary_expectation visa_status employee_type employee_status skills');
+            selectedCandidates.exec(function(err, candidate) {
+                console.log(filters);
                 res.jsonp({
                     candidates: candidate,
                     totalentries: totallength,
@@ -593,8 +533,87 @@ exports.getPaginatedCandidates = function(req, res) {
                 });
             });
 
+            }
+       
+            
+
         });
 };
+
+     // if (incomingfilters.salaryFilters.length != 0)
+            //     selectedCandidates.where("salary_expectation").in(getNames(incomingfilters.salaryFilters));
+            // if (incomingfilters.visaFilters.length != 0)
+            //     selectedCandidates.where("visa_status").in(getNames(incomingfilters.visaFilters));
+            // if (incomingfilters.employeestatusFilters.length != 0)
+            //     selectedCandidates.where("employee_status").in(getNames(incomingfilters.employeestatusFilters));
+            // if (incomingfilters.employeetypeFilters.length != 0)
+            //     selectedCandidates.where("employee_type").in(getNames(incomingfilters.employeetypeFilters));
+
+            // selectedCandidates.exec(function(err, candidates) {
+            //     totallength = candidates.length;
+
+
+
+
+            // });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 var getNames = function(filter) {
 
@@ -608,4 +627,204 @@ var getNames = function(filter) {
     return names;
 
 
+}
+
+var sortandfilter = function(type, candidates, incomingfiltersit, filters) {
+    var incomingfilters=[];
+incomingfiltersit.forEach(function(entry){
+
+    for(var h=0,j=entry.name.length;h<j;h++)
+           {
+      incomingfilters.push({name:entry.name[h],type:entry.type});
+
+
+           }
+
+
+
+});
+    if (type == "salary_expectation") {
+        candidates.sort(function(a, b) {
+            if (a.salary_expectation && b.salary_expectation)
+                var salaryA = a.salary_expectation.toLowerCase(),
+                    salaryB = b.salary_expectation.toLowerCase()
+            if (salaryA < salaryB) //sort string ascending
+                return -1
+            if (salaryA > salaryB)
+                return 1
+            return 0 //default return value (no sorting)
+        });
+
+        var filterValue = 'invalid_value';
+        for (var i = 0, len = candidates.length; i < len; i++) {
+            var candidate = candidates[i];
+            var isPresent = false;
+
+            if (candidate.salary_expectation !== filterValue) {
+                filterValue = candidate.salary_expectation;
+                incomingfilters.forEach(function(entry) {
+                    if (entry.name == filterValue)
+
+                        isPresent = true;
+
+
+
+                });
+                filters.push({
+                    type: "salary_expectation",
+                    name: filterValue,
+                    count: 0,
+                    value: isPresent
+
+                });
+            }
+            filters[filters.length - 1].count++;
+        }
+        return filters;
+    }
+    if (type == "visa_status") {
+        candidates.sort(function(a, b) {
+            if (a.visa_status && b.visa_status)
+                var visaA = a.visa_status.toLowerCase(),
+                    visaB = b.visa_status.toLowerCase()
+            if (visaA < visaB) //sort string ascending
+                return -1
+            if (visaA > visaB)
+                return 1
+            return 0 //default return value (no sorting)
+        });
+
+        var filterValue = 'invalid_value';
+        for (var i = 0, len = candidates.length; i < len; i++) {
+            var candidate = candidates[i];
+            var isPresent = false;
+
+            if (candidate.visa_status !== filterValue) {
+
+                filterValue = candidate.visa_status;
+                incomingfilters.forEach(function(entry) {
+                    if (entry.name == filterValue)
+
+                        isPresent = true;
+
+
+
+                });
+                filters.push({
+                    type: "visa_status",
+                    name: filterValue,
+                    count: 0,
+                    value: isPresent
+                });
+            }
+            filters[filters.length - 1].count++;
+        }
+        return filters;
+
+    }
+    if (type == "employee_type") {
+        candidates.sort(function(a, b) {
+            if (a.employee_type && b.employee_type)
+                var employee_typeA = a.employee_type.toLowerCase(),
+                    employee_typeB = b.employee_type.toLowerCase()
+            if (employee_typeA < employee_typeB) //sort string ascending
+                return -1
+            if (employee_typeA > employee_typeB)
+                return 1
+            return 0 //default return value (no sorting)
+        });
+
+        var filterValue = 'invalid_value';
+        for (var i = 0, len = candidates.length; i < len; i++) {
+            var candidate = candidates[i];
+            var isPresent = false;
+            if (candidate.employee_type !== filterValue) {
+                filterValue = candidate.employee_type;
+                incomingfilters.forEach(function(entry) {
+                    if (entry.name == filterValue)
+
+                        isPresent = true;
+                });
+                filters.push({
+                    type: "employee_type",
+                    name: filterValue,
+                    count: 0,
+                    value: isPresent
+                });
+
+            }
+            filters[filters.length - 1].count++;
+        }
+        return filters;
+
+    }
+    if (type == "employee_status") {
+        candidates.sort(function(a, b) {
+            if (a.employee_status && b.employee_status)
+                var employee_statusA = a.employee_status.toLowerCase(),
+                    employee_statusB = b.employee_status.toLowerCase()
+            if (employee_statusA < employee_statusB) //sort string ascending
+                return -1
+            if (employee_statusA > employee_statusB)
+                return 1
+            return 0 //default return value (no sorting)
+        });
+
+        var filterValue = 'invalid_value';
+        for (var i = 0, len = candidates.length; i < len; i++) {
+            var candidate = candidates[i];
+            var isPresent = false
+            if (candidate.employee_status !== filterValue) {;
+
+                filterValue = candidate.employee_status;
+                incomingfilters.forEach(function(entry) {
+                    if (entry.name == filterValue)
+
+                        isPresent = true;
+
+
+
+                });
+                filters.push({
+                    type: "employee_status",
+                    name: filterValue,
+                    count: 0,
+                    value: isPresent
+                });
+            }
+            filters[filters.length - 1].count++;
+        }
+        return filters;
+
+
+
+    }
+
+}
+
+
+
+
+var manipulatefilters = function(selectedCandidates, forfilter, filters) {
+    
+
+var dbfilters = ["salary_expectation", "visa_status", "employee_status", "employee_type"];
+
+
+    // var dbfilters=["salary_expectation","visa_status","employee_status","employee_type"];
+
+    selectedCandidates.where(forfilter[0].type).in(getNames(forfilter));
+    selectedCandidates.exec(function(err, candidates) {
+        for (var x = 0; x < dbfilters.length; x++) {
+            if (forfilter[0].type != dbfilters[x])
+                filters = sortandfilter(dbfilters[x], candidates, forfilter, filters);
+        }
+
+
+    });
+
+
+
+
+    return filters;
 }
