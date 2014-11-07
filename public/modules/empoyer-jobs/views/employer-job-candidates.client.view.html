@@ -1,38 +1,11 @@
-<!-- <section data-ng-controller="EmployerJobCandidatesController">
-    <h2>{{job.title}}</h2>
-    <div data-ng-repeat="candidate in candidates">
-        <h3>{{candidate.displayName}}</h3>
-    </div>
-</section>
- -->
-<!-- <section data-ng-controller="EmployerJobCandidatesController">
-    <h2>{{job.title}}</h2>
-    <div data-ng-repeat="candidate in candidates">
-        <h3>{{candidate.displayName}}</h3>
-    </div>
-</section>
- -->
-
-
 <section data-ng-controller="EmployerJobCandidatesController" class="container">
     <article class="row ">
         <header class="col-md-3">
-                
         </header>
         <section class="logo text-center col-md-8" >
             <h2> {{job.title}}</h2>
         </section>
     </article>
-
-    <!-- <section class="col-md-4 pull-right panel">
-        <article class="col-md-4">
-            <label class="col-md-3" for="searchBox">Search</label>
-        </article>
-        <article class="col-md-8">
-            <input id="searchBox" class="col-md-8 form-control" type="text" data-ng-model="searchText" />
-        </article>
-    </section> -->
-        
         <aside class="col-md-3">
               <div style="line-height: 2">
                         <span class="skill-div" data-ng-repeat="filter in filters" data-ng-click="removeFromFilters(filter.type,filter.name)">{{filter.name}}</span>
@@ -45,144 +18,19 @@
                 <hr class="col-sm-9">
             </section>
             <!-- Filters -->
-
-
-
             <section >
-
-           
                 <div class="col-sm-12">
 
-
-                     <filter-list filter-name="location"></filter-list>
+                     <!-- <filter-list filter-name="location"></filter-list> -->
                      <filter-list filter-name="salary"></filter-list>
                      <filter-list filter-name="employeetype"></filter-list>
                      <filter-list filter-name="employeestatus"></filter-list>
-                     <filter-list filter-name="industry"></filter-list>
+                     <filter-list filter-name="visa"></filter-list>
+                     <!-- <filter-list filter-name="industry"></filter-list>
                      <filter-list filter-name="careerLevel"></filter-list>
                      <filter-list filter-name="visa"></filter-list>
                      <filter-list filter-name="visa"></filter-list>
-                     <filter-list filter-name="visa"></filter-list>
-                     <filter-list filter-name="visa"></filter-list>
-
-
-
-
-
-
-
-                    <article class="thumbnail">
-                      
-                        <label>Locations</label>
-                        <ul>
-                            <li data-ng-repeat="locationFilter in locationFilters | orderBy:'count':true | limitTo: filterLimit">
-                            <input type="checkbox" value="locationFilter.value" data-ng-click="locationFilterChanged()"  data-ng-model="locationFilter.value" id="{{'location'+ locationFilter.name}}" />
-                            
-                             <label ng-if="locationFilter.name" for="{{'location' + locationFilter.name}}" >{{locationFilter.name}}({{locationFilter.count}})</label>
-                            <label ng-if="!locationFilter.name" for="{{'location' + locationFilter.name}}" >Not Mentioned({{locationFilter.count}}) </label>
-                            </li>
-                        </ul>
-                        <a href="" data-ng-if="locationFilters.length > filterLimit" data-ng-click="openFilterModal(locationFilters, 'location')">more choices...</a>
-                    </article> 
-
-                    <article class="thumbnail">
-                        <label>Salary Range</label>
-
-                        <ul>
-                            <li data-ng-repeat="salaryFilter in salaryFilters | orderBy:'count':true | limitTo: filterLimit">
-
-                            <input type="checkbox"  data-ng-click="salaryFilterChanged(salaryFilter.name)" data-ng-model="salaryFilter.value" id="{{'salary' + salaryFilter.name}}" />
-
-                            <label ng-if="salaryFilter.name" for="{{'salary' + salaryFilter.name}}" >{{salaryFilter.name}} ({{salaryFilter.count}})</label>
-                            <label ng-if="!salaryFilter.name" for="{{'salary' + salaryFilter.name}}" >Not Mentioned ({{salaryFilter.count}})</label>
-
-                                
-                            </li>
-                        </ul>
-                        <a href="" data-ng-if="salaryFilters.length > filterLimit" data-ng-click="openFilterModal(salaryFilters, 'salary')">more choices...</a>
-                    </article> 
-
-                     <article class="thumbnail">
-                       <label>Visa</label>
-                        <ul>
-                            <li data-ng-repeat="visaFilter in visaFilters | orderBy:'count':true  | limitTo: filterLimit">
-                            <input type="checkbox" data-ng-click="visaFilterChanged(visaFilter.name)" data-ng-model="visaFilter.value" id="{{'visa' + visaFilter.name}}" />
-
-                            <label ng-if="visaFilter.name" for="{{'visa' + visaFilter.name}}" >{{visaFilter.name}} ({{visaFilter.count}})</label>
-                            <label ng-if="!visaFilter.name" for="{{'visa' + visaFilter.name}}" >Not Mentioned ({{visaFilter.count}})</label>
-                            </li>
-                        </ul>
-                        <a href="" data-ng-if="visaFilters.length > filterLimit" data-ng-click="openFilterModal(visaFilters, 'visa')">more choices...</a>
-                    </article> 
-
-                    <article class="thumbnail">
-                        <label>Employee Type</label>
-                        <ul>
-                            <li data-ng-repeat="employeetypeFilter in employeetypeFilters | orderBy:'count':true | limitTo: filterLimit">
-                            <input type="checkbox" data-ng-click="emptypeFilterChanged(employeetypeFilter.name)" data-ng-model="employeetypeFilter.value" id="{{'employeetype' + employeetypeFilter.name}}" />
-
-                            <label ng-if="employeetypeFilter.name" for="{{'employeetype' + employeetypeFilter.name}}" >{{employeetypeFilter.name}} ({{employeetypeFilter.count}})</label>
-                            <label ng-if="!employeetypeFilter.name" for="{{'employeetype' + employeetypeFilter.name}}" >Not Mentioned ({{employeetypeFilter.count}})</label>
-
-                                
-                            </li>
-                        </ul>
-                        <a href="" data-ng-if="employeetypeFilters.length > filterLimit" data-ng-click="openFilterModal(employeetypeFilters, 'employeetype')">more choices...</a>
-                    </article> 
-
-                    <article class="thumbnail">
-                       <label>Employment Status</label>
-                        <ul>
-                            <li data-ng-repeat="employeestatusFilter in employeestatusFilters | orderBy:'count':true | limitTo: filterLimit">
-                            <input type="checkbox" data-ng-click="empStatusFilterChanged(employeestatusFilter.name)" data-ng-model="employeestatusFilter.value" id="{{'employeestatus' + employeestatusFilter.name}}" />
-
-                            <label ng-if="employeestatusFilter.name" for="{{'employeestatus' + employeestatusFilter.name}}" >{{employeestatusFilter.name}} ({{employeestatusFilter.count}})</label>
-                            <label ng-if="!employeestatusFilter.name" for="{{'employeestatus' + employeestatus.name}}" >Not Mentioned ({{employeestatusFilter.count}})</label>
-
-                                
-                            </li>
-                        </ul>
-                        <a href="" data-ng-if="employeestatusFilters.length > filterLimit" data-ng-click="openFilterModal(employeestatusFilters, 'employeestatus')">more choices...</a>
-                    </article> 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                    <!-- <article class="thumbnail">
-                      
-                        <label>Skills</label>
-                        <ul>
-                            <li data-ng-repeat="skillFilter in skillFilters">
-                            <input type="checkbox" value="skillFilter.value" data-ng-model="skillFilter.value" id="{{'skill' + skillFilter.title}}" />
-
-                            <label ng-if="skillFilter.title" for="{{'skill' + skillFilter.title}}" >{{skillFilter.title}} ({{skillFilter.count}})</label>
-                            <label ng-if="!skillFilter.title" for="{{'skill' + skill.title}}" >Not Mentioned ({{skillFilter.count}})</label>
-
-
-                            </li>
-                        </ul>
-                    </article> -->
-                                                
+                     <filter-list filter-name="visa"></filter-list> -->
 
                 </div>          
             </section>
@@ -209,7 +57,6 @@
                             <a href="" ng-hide="isShortListed(candidate)" ng-click="addCandidateToShortList(candidate) "><i class="fa fa-star-o fa-2x" style="padding-top:20px;"></i></a>
                            
                             <a href="" ng-show="isShortListed(candidate)" ng-click=" removeCandidateFromShortList(candidate)"><i class="fa fa-star fa-2x" style="color:#f1d104; padding-top:20px;"></i></a>
-                         
                     </aside> 
 
                     <section class="col-md-12">   
@@ -221,19 +68,12 @@
                         
                     <h6 style="padding-top:15px">Rating : 5  &nbsp;&nbsp;|&nbsp;&nbsp;  Location : {{candidate.location}}  &nbsp;&nbsp;|&nbsp;&nbsp;  Salary Range : {{candidate.salary_expectation}}  &nbsp;&nbsp;|&nbsp;&nbsp;Visa : {{candidate.visa_status}}  &nbsp;&nbsp;|&nbsp;&nbsp; Employee Type : {{candidate.employee_type}}  &nbsp;&nbsp;|&nbsp;&nbsp; Employee Status : {{candidate.employee_status}}  &nbsp;&nbsp;|&nbsp;&nbsp;Test</h6> <hr>
                     </section>
-                    
                     <br> 
-                   
                 </section>
-
-
-
             </td>
-            
           </tr>
         </tbody>
         <tfoot>
-    
               <ul class="pagination">
                 <li ng-class="prevPageDisabled()">
                   <a href ng-click="prevPage()">« Prev</a>
@@ -245,83 +85,12 @@
                   <a href ng-click="nextPage()">Next »</a>
                 </li>
               </ul>
-            
           </td>
         </tfoot>
       </table>
   </article>
 
 
-        <!-- <article class="col-md-9"> -->
-      
-           <!--  <section class="panel-body" data-ng-repeat="candidate in candidates | locationFilter:locationFilters:true | salaryFilter:salaryFilters:true | visaFilter:visaFilters:true | employeetypeFilter:employeetypeFilters:true | employeestatusFilter:employeestatusFilters:true |filter:searchText">
-                <section class="col-md-3 " style="padding-top:20px;">
-                    
-                    <a data-ng-href="#!/candidates/{{candidate._id}}">
-                        <img width="150" src="{{candidate.picture_url}}">
-                    </a>
-                    </div>
-                </section>
-                <section class="col-md-9">
-                    <header class="col-md-8">
-
-                            <a data-ng-href="#!/candidates/{{candidate._id}}"><h3 style="color:#00afef;">{{candidate.displayName}}</h3></a>
-                    </header> 
-                    <aside  class="col-md-4">
-
-                            <a href="" ng-hide="isShortListed(candidate)" ng-click="addCandidateToShortList(candidate) "><i class="fa fa-star-o fa-2x" style="padding-top:20px;"></i></a>
-                           
-                            <a href="" ng-show="isShortListed(candidate)" ng-click=" removeCandidateFromShortList(candidate)"><i class="fa fa-star fa-2x" style="color:#f1d104; padding-top:20px;"></i></a>
-                         
-                    </aside> 
-
-                    <section class="col-md-12">   
-                    <h4>{{candidate.title}}</h4>
-                    <p style="color:rgb(83, 82, 82)">{{candidate.objective}}</p>
-                    <div style="line-height: 2">
-                        <span  class="skill-div" data-ng-repeat="skill in candidate.skills">{{skill.title}}</span>
-                    </div>
-                        
-                    <h6 style="padding-top:15px">Rating : 5  &nbsp;&nbsp;|&nbsp;&nbsp;  Location : {{candidate.location}}  &nbsp;&nbsp;|&nbsp;&nbsp;  Salary Range : {{candidate.salary_expectation}}  &nbsp;&nbsp;|&nbsp;&nbsp;Visa : {{candidate.visa_status}}  &nbsp;&nbsp;|&nbsp;&nbsp; Employee Type : {{candidate.employee_type}}  &nbsp;&nbsp;|&nbsp;&nbsp; Employee Status : {{candidate.employee_status}}  &nbsp;&nbsp;|&nbsp;&nbsp; 1 Test</h6> <hr>
-                    </section>
-                    
-                    <br> 
-                   
-                </section>
-
-            </section> -->
-
-       
 
 </section>
-<!-- style="margin: 5px; padding:5px;background-color:#DBDBDB" -->
-<style>
-.super-awesome {
-        display: block;
-        color: #fff;
-        font-size: 5em;
-         text-shadow: 1px 1px #D5D5D5;
-         color: #f2f2f2
-}
-.signin-header {
-        padding: 8px 0;    
-        background-color: #898989;
-}
-.skill-div
-{
-background-color: #f2f2f2;
-color: #7c7c7a;
-padding: 4px 12px;
--webkit-border-radius: 4px;
--moz-border-radius: 4px;
--ms-border-radius: 4px;
--o-border-radius: 4px;
-border-radius: 4px;
-margin: 4px;
-font-size: 11px;
-line-height: 0;
-cursor: pointer;
 
-
-}
-</style>
