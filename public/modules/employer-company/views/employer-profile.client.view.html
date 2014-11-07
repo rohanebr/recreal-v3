@@ -1,5 +1,5 @@
 <!-- <section data-ng-controller="EmployerProfileController">
-	This is the Employer profile view
+    This is the Employer profile view
 </section> -->
 
 <section data-ng-controller="EmployerProfileController" data-ng-init="findOne()" class="container">
@@ -132,7 +132,7 @@
                     <!-- </div> -->
                     <div class="col-md-3">
                     <a href="" class="pull-right" ng-click="openPictureModal()" ><i class="fa fa-edit"></i></a>
-                    <img alt=""class="img180_180" src="{{employer.picture_url}}">
+                    <img alt=""class="img180_180" src="{{this.user.picture_url}}">
                     </div>
                 </section>
                    <!--  <div class="col-md-3 text-center">
@@ -141,19 +141,13 @@
                     </div>
                 </section><br> -->
 
-<<<<<<< HEAD
                 <section class="col-sm-9">
                     <button type="submit"
                         class="btn btn-primary btn-block btn-lg"
                         ng-click="update()"
                     >Sumbit</button> 
                 </section>                           
-=======
-                <button type="submit"
-                    class="btn btn-primary btn-block btn-lg"
-                    ng-click="update()"
-                    >Submit</button>                            
->>>>>>> 4bf0352c0f657700fb7eb2713edbe3a3399ad612
+
                 <section data-ng-show="error" class="text-danger">
                     <strong data-ng-bind="error"></strong>
                 </section><br>

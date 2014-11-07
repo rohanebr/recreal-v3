@@ -15,6 +15,29 @@ angular.module('employer-company').controller('EmployerProfileController', ['$sc
 			});
 		};
 
+// 	$scope.myCtrl = function() {
+// 			var divisionOptions = ["Accounts", "Sales", "Business", "Marketing"];
+// 			var departmentOptions = [["Finance"],
+//                ["Admin"],
+//                ["Software"],
+//                ["HR"]];
+// // 
+// 			    $scope.division = divisionOptions;
+// 			    $scope.department = []; // we'll get these later
+// 			    $scope.getDepartment = function(){
+// 			        // just some silly stuff to get the key of what was selected since we are using simple arrays.
+// 			        var key = $scope.division.indexOf($scope.division);
+// 			        // Here you could actually go out and fetch the options for a server.
+// 			        var myNewOptions = departmentOptions[key];
+// 			        // Now set the options.
+// 			        // If you got the results from a server, this would go in the callback
+// 			        $scope.department = myNewOptions;
+// 			    };
+
+
+
+
+
 
 		// Update existing Employer
 		$scope.update = function() {
@@ -34,7 +57,7 @@ angular.module('employer-company').controller('EmployerProfileController', ['$sc
           controller: 'PictureModalCtrl',
         });
         modalInstance.result.then(function(result) {
-           $scope.employer.picture_url = result.picture_url;
+           $scope.this.user.picture_url = result.picture_url;
         }, function() {
 
         });

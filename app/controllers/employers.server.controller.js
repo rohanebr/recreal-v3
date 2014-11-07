@@ -118,9 +118,9 @@ exports.uploadPicture = function(req, res) {
       var thumbPath = __dirname + "../../../uploads/thumbs/" + imageName;
       fs.writeFile(newPath, data, function (err) {
        var employer = Employer.find({user: req.user._id}).exec(function(err, employers){
-         	var old_url = employers[0].picture_url;
-			employers[0].picture_url = "/uploads/fullsize/" + imageName;
-			employers[0].save(function(err) {
+         	var old_url = this.user[0].picture_url;
+			this.user[0].picture_url = "/uploads/fullsize/" + imageName;
+			this.users[0].save(function(err) {
 				if (err) {
 					return res.send(400, {
 						message: getErrorMessage(err)

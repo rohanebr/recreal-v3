@@ -5,8 +5,8 @@ module.exports = function(app) {
 	var companies = require('../../app/controllers/companies');
 
 
-	// app.route('/uploadpicture').post(users.requiresLogin,companies.uploadPicture);
-	// app.route('/uploads/fullsize/:file').get(companies.getImage);
+	app.route('/uploadpicture').post(users.requiresLogin,companies.uploadPicture);
+	app.route('/uploads/fullsize/:file').get(companies.getImage);
 	// Companies Routes
 	app.route('/companies')
 		.get(companies.list)
