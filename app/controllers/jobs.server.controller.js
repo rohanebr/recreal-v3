@@ -366,21 +366,23 @@ var dbfilters = ["salary_expectation", "visa_status", "employee_status", "employ
     var previousentry = "";
     var previouscount=0;
     var count = 0;
+    var g=0;
     var ffilter=req.body.filter;
 var dummy;
 
-    for(var h=count,j=ffilter.length;h<j;h++)            //salary_expectation salary_exepectation visa_status salary_expecetation visa_status
+    for(var h=g,j=ffilter.length;h<j;h++)            //salary_expectation salary_exepectation visa_status salary_expecetation visa_status
     {
 
            for(var t=h+1;t<j;t++)
            {
                 if(ffilter[h].type==ffilter[t].type)
-                   {count++;      //2
+                   {g++;      //2
 
                     dummy=ffilter[h+count];
+                   
                     ffilter[h+count]=ffilter[t];
                      ffilter[t]=dummy;
-                    
+                     count++;
 
                             }
 
@@ -389,7 +391,7 @@ var dummy;
 
 
 
-    }
+    }count = 0;
     console.log(ffilter);
     ffilter.forEach(function(entry) {
         if (entry.type != previousentry)
@@ -408,9 +410,9 @@ previouscount=count;
 
     });
 
+var incomingfilters2=incomingfilters.slice();
 
-
-
+console.log(incomingfilters2);
     Job.findById(req.job.id)
         .exec(function(err, job) {
 
@@ -472,7 +474,7 @@ previouscount=count;
                  if(x<lengthincomingfilters)
                  letspopulatefilters.push(incomingfilter);
                 x++;
-                 filters = sortandfilter(incomingfilter.type, candidates,incomingfilters, filters);
+                 filters = sortandfilter(incomingfilter.type, candidates,incomingfilters2, filters);
                 
             
             if(x==incomingfilters.length)
