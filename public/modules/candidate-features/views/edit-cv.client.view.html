@@ -121,7 +121,7 @@
                                 <div class="col-sm-9">
                                     <span class="ui-select">
                                     <select class="form-control" ng-model="candidate.location" style="width: 300px">
-                                    <option data-ng-repeat="count in countries">{{count.name}}</option>
+                                    <option data-ng-repeat="loc in locationz">{{loc.name}}</option>
                                     </select>
                                     </span>
                                 </div>
@@ -154,14 +154,14 @@
                                 </div>
                             </div><br>
                             
-                             <div class="form-group">
+                             <!-- <div class="form-group">
                                 <div class="col-sm-3">
                                     <label for="">Profile Picture</label>
                                 </div>
                                 <div class="col-sm-9">
                                     <input type="file" title="Choose File" data-ui-file-upload>
                                 </div>
-                            </div><br>
+                            </div><br> -->
                </form>
             </section>
             <section class="row"></section>
@@ -282,12 +282,7 @@
                                 <div class="col-sm-9" data-ng-repeat="target_location in candidate.target_locations">
                                     <span class="ui-select">
                                         <select data-ng-model="target_location.name" class="form-control" style="width: 300px">
-                                            <option>Pakistan</option>
-                                            <option>Lahore</option>
-                                            <option>Pakistan - Karachi</option>
-                                            <option>UAE - Dubai</option>
-                                            <option>UAE - Sharjah</option>
-                                            <option>UAE</option>
+                                            <option data-ng-repeat="loc in locationz">{{loc.name}}</option>
                                         </select>
                                     </span>
                                 </div>
@@ -506,12 +501,7 @@
                                 <div class="col-sm-9">
                                     <span class="ui-select">
                                         <select data-ng-model="experience.company_location" class="form-control" style="width: 300px;">
-                                            <option>Pakistan</option>
-                                            <option>Lahore</option>
-                                            <option>Pakistan - Karachi</option>
-                                            <option>UAE - Dubai</option>
-                                            <option>UAE - Sharjah</option>
-                                            <option>UAE</option>
+                                            <option data-ng-repeat="loc in locationz">{{loc.name}}</option>
                                         </select>
                                     </span>
                                 </div>
@@ -524,10 +514,7 @@
                                 <div class="col-sm-9">
                                     <span class="ui-select">
                                         <select data-ng-model="experience.company_industry" class="form-control" style="width: 300px;">
-                                            <option>Accounts</option>
-                                            <option>Sales</option>
-                                            <option>Business</option>
-                                            <option>Marketing</option>
+                                            <option data-ng-repeat="ind in industries">{{ind.name}}</option>
                                         </select>
                                     </span>
                                 </div>
