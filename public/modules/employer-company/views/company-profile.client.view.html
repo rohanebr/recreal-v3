@@ -9,8 +9,8 @@
         <form name="form_company_profile" class="form-horizontal" >
             <fieldset>
 
-            <div class="form-group">
-                    <!-- <div class="col-sm-3">
+            <!-- <div class="form-group">
+                    <div class="col-sm-3">
                         <label for="">Website Logo</label>
                     </div>
                     <div class="col-sm-9">
@@ -19,11 +19,11 @@
                    
 
                     <div class="form-group">
-                        <a class="" ng-click="openPictureModal()" href="">
                         <img alt="" class="img180_180" src="{{company.logo_url}}">
+                        <a class="" ng-click="openPictureModal()" href="">
                         <i class="fa fa-edit"></i></a>
-                    </div>
-            </div>
+                    </div><br>
+            <!-- </div> -->
 
 
                  <div class="form-group">
@@ -37,8 +37,7 @@
                     </div>
                 </div><br>
 
-<<<<<<< HEAD
- <div class="form-group">
+                <div class="form-group">
                         <div class="col-md-3">
                             <label for="">Company Description <span class="required-css">*</span></label>
 
@@ -50,12 +49,11 @@
                                     data-ng-model="company.description"></text-angular>
                             </div>
                         </div>
-                    </div>
+                    </div><br>
 
                 <section class="form-group">
-=======
+
                 <div class="form-group">
->>>>>>> ea2345263f06b679953098d4c29d82dcc91479fd
                     <div class="col-sm-3">
                         <label for="">Industry</label>
                     </div>
@@ -108,9 +106,8 @@
                         <label for="">Founded</label>
                     </div>
                     <div class="col-sm-4">
-                        <input  type="date"
-                                class="form-control"
-                                data-ng-model="company.founded">
+                        <input  ui-date ui-date-format
+                                required data-ng-model="company.founded" class="form-control">
                     </div>
                 </section><br>
 
@@ -130,9 +127,9 @@
                         <label for="">Address</label>
                     </div>
                     <div class="col-sm-6">
-                        <input  type="text"
-                                class="form-control"
-                                data-ng-model="company.address">
+                        <textarea  type="text"
+                                class="form-control" rows="3"
+                                data-ng-model="company.address" />
                     </div>
                 </section><br>
 
@@ -215,12 +212,7 @@
 
                 <button type="submit"
                     class="btn btn-primary btn-block btn-lg"
-                    ng-click="update()"
-<<<<<<< HEAD
-                    >Submit</button>                             
-=======
-                    >Sumbit</button> <br>                            
->>>>>>> ea2345263f06b679953098d4c29d82dcc91479fd
+                    ng-click="update()">Submit</button><br>                            
                 <section data-ng-show="error" class="text-danger">
                     <strong data-ng-bind="error"></strong>
                 </section>

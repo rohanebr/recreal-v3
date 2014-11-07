@@ -4,6 +4,7 @@
         <!-- Profile picture and basic details widget -->
             <section>
                 <div class="col-md-4">
+                    <a class="pull-right" ng-click="openPictureModal()" href=""><i class="fa fa-edit"></i></a>
                     <img src="{{candidate.picture_url}}" width=110px; alt="Smily face">
                 </div>
                 <div class="col-md-8">
@@ -39,7 +40,7 @@
                                 <div class="col-sm-9">
                                     <input  type="text" class="form-control" placeholder="Manager IT" data-ng-model="candidate.title" style="width: 300px;">
                                 </div>
-                            </div>
+                            </div><br>
 
                             <div class="form-group">
                                 <div class="col-sm-3">
@@ -62,7 +63,7 @@
                                             <span>Female</span>
                                     </label>
                                 </div>
-                            </div>
+                            </div><br>
 
                             <div class="form-group">
                                 <div class="col-sm-3">
@@ -71,7 +72,7 @@
                                 <div class="col-sm-9">
                                     <input  type="text" class="form-control" data-ng-model="candidate.job_title" style="width: 300px;">
                                 </div>
-                            </div>
+                            </div><br>
 
                             <div class="form-group">
                                 <div class="col-sm-3">
@@ -80,7 +81,7 @@
                                 <div class="col-sm-9">
                                     <input  type="text" class="form-control" data-ng-model="candidate.contact_no" style="width: 300px;">
                                 </div>
-                            </div>
+                            </div><br>
 
                             <div class="form-group">
                                 <div class="col-sm-3">
@@ -89,7 +90,7 @@
                                 <div class="col-sm-9">
                                     <input  type="text" class="form-control" data-ng-model="candidate.skype_name" style="width: 300px;">
                                 </div>
-                            </div>
+                            </div><br>
 
                             <div class="form-group">
                                 <div class="col-sm-3">
@@ -98,7 +99,7 @@
                                 <div class="col-sm-9">
                                     <textarea  type="text" class="form-control" rows="3" data-ng-model="candidate.address" style="width: 300px;"></textarea>
                                 </div>
-                            </div>
+                            </div><br>
 
                              <div class="form-group">
                                 <div class="col-sm-3">
@@ -111,16 +112,20 @@
                                         </select>
                                     </span>
                                 </div>
-                            </div>
+                            </div><br>
 
                             <div class="form-group">
                                 <div class="col-sm-3">
                                     <label for="">Location</label>
                                 </div>
                                 <div class="col-sm-9">
-                                    <input  type="text" class="form-control" data-ng-model="candidate.location" style="width: 300px">
+                                    <span class="ui-select">
+                                    <select class="form-control" ng-model="candidate.location" style="width: 300px">
+                                    <option data-ng-repeat="count in countries">{{count.name}}</option>
+                                    </select>
+                                    </span>
                                 </div>
-                            </div>
+                            </div><br>
                             
                             <div class="form-group">
                                 <div class="col-sm-3">
@@ -138,7 +143,7 @@
                                         </select>
                                     </span>
                                 </div>
-                            </div>
+                            </div><br>
 
                             <div class="form-group">
                                 <div class="col-sm-3">
@@ -147,7 +152,7 @@
                                 <div class="col-sm-9">
                                     <input  type="text" class="form-control" style="width: 300px" data-ng-model="candidate.driving_license_issued">
                                 </div>
-                            </div>
+                            </div><br>
                             
                              <div class="form-group">
                                 <div class="col-sm-3">
@@ -156,7 +161,7 @@
                                 <div class="col-sm-9">
                                     <input type="file" title="Choose File" data-ui-file-upload>
                                 </div>
-                            </div>
+                            </div><br>
                </form>
             </section>
             <section class="row"></section>
@@ -175,7 +180,7 @@
                                     class="form-control" style="width: 300px"
                                     data-ng-model="candidate.target_job_title">
                                 </div>
-                            </div>
+                            </div><br>
 
                              <div class="form-group">
                                 <div class="col-sm-3">
@@ -193,7 +198,7 @@
                                         </select>
                                     </span> 
                                 </div>
-                            </div>
+                            </div><br>
 
                             <div class="form-group">
                                 <div class="col-sm-3">
@@ -210,7 +215,7 @@
                                         </select>
                                     </span>
                                 </div>
-                            </div>
+                            </div><br>
 
                              <div class="form-group">
                                 <div class="col-sm-3">
@@ -224,7 +229,7 @@
                                         </select>
                                     </span>
                                 </div>
-                            </div>
+                            </div><br>
 
                             <div class="form-group">
                                 <div class="col-sm-3">
@@ -239,7 +244,8 @@
                                         </select>
                                     </span>
                                 </div>
-                            </div>
+                            </div><br>
+
                              <div class="form-group">
                                 <div class="col-sm-3">
                                     <label for="">Availability</label>
@@ -254,7 +260,8 @@
                                         </select>
                                     </span>
                                 </div>
-                            </div>
+                            </div><br>
+
                             <div class="form-group">
                                 <div class="col-sm-3">
                                     <label for="">Industry</label>
@@ -266,7 +273,8 @@
                                         </select>
                                     </span>
                                 </div>
-                            </div>
+                            </div><br>
+
                             <div class="form-group">
                                 <div class="col-sm-3">
                                     <label for="">Location</label>
@@ -283,7 +291,7 @@
                                         </select>
                                     </span>
                                 </div>
-                            </div>
+                            </div><br>
                         </fieldset>
                     </form>
             </section>
@@ -356,7 +364,6 @@
             <!-- Education -->
             <section>
                 <h3>Education<hr></h3>
-                <div>
                     <form name="form_signin" class="form-horizontal form-validation" data-ng-submit="submitForm()">
                         <fieldset ng-repeat="education in candidate.educations">   
                             <div class="form-group">                         
@@ -376,7 +383,8 @@
                                             <option>Diploma</option>
                                         </select>
                                     </span>
-                                </div>
+                                </div><br>
+
                                 <div class="col-sm-1">
                                     <a href="" ng-click="removeEducation($index)"><i class="fa fa-times pull-right"></i></a>
                                 </div>  
@@ -399,7 +407,8 @@
                                         </select>
                                     </span>
                                 </div>
-                            </div>
+                            </div><br>
+
                             <div class="form-group">
                                 <div class="col-sm-3">
                                     <label for="">Institute</label>
@@ -418,7 +427,8 @@
                                         </select>
                                     </span>
                                 </div>
-                            </div>
+                            </div><br>
+
                             <div class="form-group">
                                 <div class="col-sm-3" style="padding-top: 2%">
                                     <label for="">Start Date</label>
@@ -426,7 +436,8 @@
                                 <div class="col-sm-4">
                                     <input ui-date ui-date-format class="form-control" style="width: 300px;" ng-model="education.start_date" />
                                 </div>
-                            </div>
+                            </div><br>
+
                             <div class="form-group">
                                 <div class="col-sm-3" style="padding-top: 2%">
                                     <label for="">End Date</label>
@@ -434,7 +445,7 @@
                                 <div class="col-sm-4">
                                     <input ui-date ui-date-format class="form-control" style="width: 300px;" ng-model="education.end_date" />
                                 </div>
-                            </div>
+                            </div><br>
 
                              <div class="form-group">
                                 <div class="col-sm-3" style="padding-top: 2%">
@@ -446,19 +457,16 @@
                                       required
                                       data-ng-model="education.notes"></textarea>
                                 </div>
-                            </div>
-
+                            </div><br>
                         </fieldset>
                         <button ng-click="addEducation()" class="btn btn-small btn-success pull-right">Add Education</button>
                     </form>
-                </div>
             </section>
             <section class="row"></section>
 
             <!-- Experience -->
             <section>
              <h3>Experience<hr></h3>
-                <div>
                     <form name="form_signin" class="form-horizontal form-validation" data-ng-submit="submitForm()">
                         <fieldset ng-repeat="experience in candidate.positions">   
                             <div class="form-group">
@@ -476,7 +484,8 @@
                                 <div class="col-sm-1">
                                     <a ng-click="removeExperience($index)"><i class="fa fa-times pull-right"></i></a>
                                 </div>
-                            </div>
+                            </div><br>
+
                             <div class="form-group">
                                 <div class="col-sm-3">
                                     <label for="">Job Title</label>
@@ -488,7 +497,8 @@
                                     data-ng-model="experience.title" style="width: 300px;"
                                     >
                                 </div>
-                            </div>
+                            </div><br>
+
                              <div class="form-group">
                                 <div class="col-sm-3">
                                     <label for="">Location</label>
@@ -505,7 +515,8 @@
                                         </select>
                                     </span>
                                 </div>
-                            </div>
+                            </div><br>
+
                             <div class="form-group">
                                 <div class="col-sm-3">
                                     <label for="">Industry</label>
@@ -520,7 +531,8 @@
                                         </select>
                                     </span>
                                 </div>
-                            </div>
+                            </div><br>
+
                             <div class="form-group">
                                 <div class="col-sm-3" style="padding-top: 2%">
                                     <label for="">Start Date</label>
@@ -538,7 +550,8 @@
                                 <div class="col-sm-3">
                                     <input ui-date ui-date-format class="form-control" style="width: 300px;" ng-model="experience.end_date" />
                                 </div>
-                            </div>
+                            </div><br>
+
                             <div class="form-group">
                                 <div class="col-sm-3" style="padding-top: 2%">
                                 <label for="">Responsibilities</label>
@@ -549,12 +562,11 @@
                                       required
                                       data-ng-model="experience.summary"></textarea>
                                 </div>
-                            </div>
+                            </div><br>
                             
                         </fieldset>
                         <button ng-click="addExperience()" class="btn btn-small btn-success pull-right">Add Experience</button>
                     </form>
-                </div>
             </section>
             <section class="row"></section>
 
@@ -577,7 +589,7 @@
                             <div class="col-sm-1">
                                 <a ng-click="removeProject($index)"><i class="fa fa-times pull-right"></i></a>
                             </div>
-                        </div>
+                        </div><br>
                          <div class="form-group">
                             <div class="col-sm-3">
                                 <label for="">Company</label>
@@ -590,7 +602,7 @@
                                     </select>
                                 </span>
                             </div>
-                        </div>
+                        </div><br>
                         <div class="form-group">
                             <div class="col-sm-3" style="padding-top: 2%">
                                 <label for="">Start Date</label>
@@ -606,7 +618,7 @@
                             <div class="col-sm-3">
                                 <input ui-date ui-date-format class="form-control" style="width: 300px;" ng-model="project.end_date" />
                             </div>
-                        </div>
+                        </div><br>
                         <div class="form-group">
                             <div class="col-sm-3" style="padding-top: 2%">
                             <label for="">Description</label>
@@ -617,7 +629,7 @@
                                   required
                                   data-ng-model="project.description"></textarea>
                             </div>
-                        </div>
+                        </div><br>
                         
                     </fieldset>
                     <button ng-click="addProject()" class="btn btn-small btn-success pull-right">Add Project</button>
@@ -661,7 +673,7 @@
             <button type="submit"
             class="btn btn-primary btn-block btn-lg"
             ng-click="update()"
-            >Submit</button>
+            >Submit</button><br>
         </section>
         <aside class="col-md-4">
             <!-- Thumbnails -->

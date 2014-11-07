@@ -50,12 +50,11 @@
 
         <section class="form-group">
             <label for="">Start Date</label>
-            <input ui-date ui-date-format ng-model="position.start_date" style="width: 125px";/>
-        
+            <input ui-date ui-date-format ng-model="position.start_date" class="form-control" style="width: 250px";/>
 
             <span>
             <label for="">End Date</label>
-            <input ui-date ui-date-format ng-model="position.end_date" style="width: 125px"; />
+            <input ui-date ui-date-format ng-model="position.end_date" class="form-control" style="width: 250px"/>
             </span>
         </section>
 
@@ -65,7 +64,7 @@
             <textarea class="form-control"
                       rows="3"
                       required
-                      data-ng-model="position.summary"></textarea>
+                      data-ng-model="position.summary"></textarea><br>
         </section>
 
 
