@@ -370,28 +370,35 @@ var dbfilters = ["salary_expectation", "visa_status", "employee_status", "employ
     var ffilter=req.body.filter;
 var dummy;
 
-    for(var h=g,j=ffilter.length;h<j;h++)            //salary_expectation salary_exepectation visa_status salary_expecetation visa_status
-    {
+    // for(var h=g,j=ffilter.length;h<j;h++)            //salary_expectation salary_exepectation visa_status salary_expecetation visa_status
+    // {
 
-           for(var t=h+1;t<j;t++)
-           {
-                if(ffilter[h].type==ffilter[t].type)
-                   {g++;      //2
+    //        for(var t=h+1;t<j;t++)
+    //        {
+    //             if(ffilter[h].type==ffilter[t].type)
+    //                {g++;      //2
 
-                    dummy=ffilter[h+count];
+    //                 dummy=ffilter[h+count];
                    
-                    ffilter[h+count]=ffilter[t];
-                     ffilter[t]=dummy;
-                     count++;
+    //                 ffilter[h+count]=ffilter[t];
+    //                  ffilter[t]=dummy;
+    //                  count++;
 
-                            }
-
-
-           }
+    //                         }
 
 
+    //        }
 
-    }count = 0;
+
+
+    // }
+
+
+    ffilter.sort(dynamicSort("type"));
+
+
+
+    count = 0;
     console.log(ffilter);
     ffilter.forEach(function(entry) {
         if (entry.type != previousentry)
@@ -612,7 +619,17 @@ resume();
 
 
 
-
+function dynamicSort(property) {
+    var sortOrder = 1;
+    if(property[0] === "-") {
+        sortOrder = -1;
+        property = property.substr(1);
+    }
+    return function (a,b) {
+        var result = (a[property] < b[property]) ? -1 : (a[property] > b[property]) ? 1 : 0;
+        return result * sortOrder;
+    }
+}
 
 
 
