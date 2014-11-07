@@ -12,10 +12,10 @@
             <div class="col-md-8 ">
                 <h2>{{employer.displayName.toUpperCase()}}</h2>
                 <h4>{{employer.title}}</h4>
-                <h5>Member Since:1947</h5>
+                <h5>Member Since: {{employer.created_date | date:'MMM,d,y'}}</h5>
                 <section>
                     <h6>Total Posted Jobs: 8</h6>
-                    <h6>Open Jobs: 2</h6>
+                    <h6>Open Jobs: {{employer.jobs.length }}</h6>
                 </section>
                 <hr>
             </div>

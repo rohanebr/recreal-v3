@@ -55,12 +55,12 @@
 
         <section class="form-group">
             <label for="">Start Date</label>
-            <input ui-date ui-date-format class="form-group" ng-model="education.start_date" />
+            <input ui-date ui-date-format ng-model="education.start_date" class="form-control" style="width: 250px" />
         
 
         <span class="form-group">
             <label for="">End Date</label>
-            <input ui-date ui-date-format class="form-group" ng-model="education.end_date" />
+            <input ui-date ui-date-format ng-model="education.end_date" class="form-control" style="width: 250px" />
         </span></section>
 
         <section class="form-group">
@@ -68,7 +68,7 @@
             <textarea class="form-control"
                               rows="3"
                               required
-                              data-ng-model="education.notes"></textarea>
+                              data-ng-model="education.notes"></textarea><br>
         </section>
 
         <button class="btn btn-primary" type="submit">Save</button>
