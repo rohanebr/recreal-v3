@@ -45,8 +45,32 @@
                 <hr class="col-sm-9">
             </section>
             <!-- Filters -->
+
+
+
             <section >
+
+           
                 <div class="col-sm-12">
+
+
+                     <filter-list filter-name="location"></filter-list>
+                     <filter-list filter-name="salary"></filter-list>
+                     <filter-list filter-name="employeetype"></filter-list>
+                     <filter-list filter-name="employeestatus"></filter-list>
+                     <filter-list filter-name="industry"></filter-list>
+                     <filter-list filter-name="careerLevel"></filter-list>
+                     <filter-list filter-name="visa"></filter-list>
+                     <filter-list filter-name="visa"></filter-list>
+                     <filter-list filter-name="visa"></filter-list>
+                     <filter-list filter-name="visa"></filter-list>
+
+
+
+
+
+
+
                     <article class="thumbnail">
                       
                         <label>Locations</label>
@@ -56,7 +80,6 @@
                             
                              <label ng-if="locationFilter.name" for="{{'location' + locationFilter.name}}" >{{locationFilter.name}}({{locationFilter.count}})</label>
                             <label ng-if="!locationFilter.name" for="{{'location' + locationFilter.name}}" >Not Mentioned({{locationFilter.count}}) </label>
-                                
                             </li>
                         </ul>
                         <a href="" data-ng-if="locationFilters.length > filterLimit" data-ng-click="openFilterModal(locationFilters, 'location')">more choices...</a>
@@ -121,6 +144,29 @@
                         </ul>
                         <a href="" data-ng-if="employeestatusFilters.length > filterLimit" data-ng-click="openFilterModal(employeestatusFilters, 'employeestatus')">more choices...</a>
                     </article> 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
                     <!-- <article class="thumbnail">
                       
