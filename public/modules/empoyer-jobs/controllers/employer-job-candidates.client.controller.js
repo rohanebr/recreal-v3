@@ -374,35 +374,7 @@ $scope.findCandidates($scope.skip,$scope.itemsPerPage,$scope.filters, false);
               $scope.addToFilters(filterObject.name,filter);
           });
       }
-     
-
-
-     // if(filterObject.name=="salary_expectation")
-     // {
-     //      filternames.forEach(function(filter){
-     //          $scope.addToFilters("salary_expectation",filter);
-     //      });
-     // }
-     // if(filterObject.name=="visa_status")
-     // {
-     //      filternames.forEach(function(filter){
-     //          $scope.addToFilters("visa_status",filter);
-     //      });
-     // } 
-     // if(filterObject.name=="employee_type")
-     // {
-     //      filternames.forEach(function(filter){
-     //          $scope.addToFilters("employee_type",filter);
-     //      });
-     // }
-     // if(filterObject.name=="employee_status")
-     // {
-     //      filternames.forEach(function(filter){
-     //          $scope.addToFilters("employee_status",filter);
-     //      });
-     // }
-
-
+      
      $scope.findCandidates($scope.skip,$scope.itemsPerPage,$scope.filters, false);
      
     }, function () {
