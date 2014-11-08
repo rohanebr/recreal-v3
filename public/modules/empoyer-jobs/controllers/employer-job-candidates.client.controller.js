@@ -286,15 +286,42 @@ $scope.findCandidates($scope.skip,$scope.itemsPerPage,$scope.filters, false);
      {
       var alreadyPresentInFilters=false;
      	 $scope.filters.forEach(function(entry){
-                if(type==entry.type && name==entry.name)
-                        {
-                        	alreadyPresentInFilters=true;
-                        }
-
-
+          if(type==entry.type && name==entry.name)
+                  {
+                  	alreadyPresentInFilters=true;
+                  }
          });
-         if(!alreadyPresentInFilters)
-          $scope.filters.push({type:type,name:name});
+
+         if(!alreadyPresentInFilters){
+
+          var typeExists = false;
+          $scope.filters.forEach(function(entry){
+            if(type==entry.type){
+              typeExists = true;
+              $scope.filters.push({type:type,name:name, priority: entry.priority});
+            }
+         });
+
+          if(!typeExists){
+             // There's no real number bigger than plus Infinity
+              
+              var highest = 0;
+              var tmp;
+              for (var i=$scope.filters.length-1; i>=0; i--) {
+                  tmp = $scope.filters[i].priority;
+                  if (tmp > highest) highest = tmp;
+              }
+
+              $scope.filters.push({type:type,name:name, priority: highest + 1});
+
+          }
+
+            //salary_expext salay_exp  visa visa
+         }
+
+
+
+          
 
      
 

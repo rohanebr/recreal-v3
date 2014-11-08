@@ -394,7 +394,7 @@ var dummy;
     // }
 
 
-    ffilter.sort(dynamicSort("type"));
+    ffilter.sort(dynamicSort("priority"));
 
 
 
