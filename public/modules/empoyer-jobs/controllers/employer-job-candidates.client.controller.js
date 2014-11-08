@@ -14,6 +14,7 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
         $scope.priority=1;
         $scope.filters = [];
         $scope.filterLimit = 2;
+        if (!$scope.user) $location.path('/signin');
 
         $scope.range = function() {
             var rangeSize = 5;
@@ -97,6 +98,7 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
                 	 $scope.total = job.totalentries;
                 $scope.candidates = job.candidates;
                 job.filters.forEach(function(entry){
+
                     if(entry.type=="salary_expectation")
                       $scope.salary_expectationFilters.push(entry);
                       if(entry.type=="visa_status")
