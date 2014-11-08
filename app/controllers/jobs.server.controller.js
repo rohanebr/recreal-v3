@@ -368,7 +368,7 @@ var dbfilters = ["salary_expectation", "visa_status", "employee_status", "employ
     var count = 0;
     var g=0;
     var ffilter=req.body.filter;
-var dummy;
+    var dummy;
 
     // for(var h=g,j=ffilter.length;h<j;h++)            //salary_expectation salary_exepectation visa_status salary_expecetation visa_status
     // {
@@ -399,7 +399,7 @@ var dummy;
 
 
     count = 0;
-    console.log(ffilter);
+   // console.log(ffilter);
     ffilter.forEach(function(entry) {
         if (entry.type != previousentry)
             count++;
@@ -470,7 +470,7 @@ console.log(incomingfilters2);
                 if(letspopulatefilters.length!=0)
                 {    for(var h=0;h<letspopulatefilters.length;h++)
                     {
-                        console.log(h);
+                       
                         var names=letspopulatefilters[h].name;
                      selectedCandidates.where(letspopulatefilters[h].type).in(names);
 }
@@ -493,7 +493,7 @@ console.log(incomingfilters2);
             selectedCandidates.limit(req.body.limit);
             selectedCandidates.select('displayName title objective picture_url location salary_expectation visa_status employee_type employee_status skills');
             selectedCandidates.exec(function(err, candidate) {
-                console.log(filters);
+               
                 res.jsonp({
                     candidates: candidate,
                     totalentries: totallength,
@@ -518,7 +518,7 @@ resume();
                
 
             
-            console.log(filters);
+           
       
                      if (incomingfilters.length == 0) {
                 selectedCandidates.exec(function(err, candidates) {
@@ -533,7 +533,7 @@ resume();
             selectedCandidates.limit(req.body.limit);
             selectedCandidates.select('displayName title objective picture_url location salary_expectation visa_status employee_type employee_status skills');
             selectedCandidates.exec(function(err, candidate) {
-                console.log(filters);
+                
                 res.jsonp({
                     candidates: candidate,
                     totalentries: totallength,
