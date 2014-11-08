@@ -1,9 +1,11 @@
 'use strict';
 
-angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$scope', '$filter', 'Jobs', '$stateParams', '$http', '$modal',
-    function($scope, $filter, Jobs, $stateParams, $http, $modal) {
+angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$scope', '$filter', 'Jobs', '$stateParams', '$http', '$modal','$location','Authentication',
+    function($scope, $filter, Jobs, $stateParams, $http, $modal,$location,Authentication) {
         $scope.firstTimeFetching=true;
         $scope.locationFilters = [];
+        $scope.user = Authentication.user;
+       
         $scope.salary_expectationFilters = [];
         $scope.visa_statusFilters = [];
         $scope.employee_typeFilters = [];
@@ -11,8 +13,11 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
         $scope.itemsPerPage = 2;
         $scope.currentPage = 0;
         $scope.skip = 0;
-        $scope.priority=1;
+
+        $scope.dummyfilters=[];
         $scope.filters = [];
+        $scope.filters1=[];
+        $scope.completefilternames=["salary_expectation","visa_status","employee_status","employee_type"];
         $scope.filterLimit = 2;
         if (!$scope.user) $location.path('/signin');
 
@@ -81,7 +86,7 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
 
         $scope.findCandidates = function(skip,limit,filters, isPageChange) {
 
-        	console.log('find candidates function');
+        	//console.log('find candidates function');
 
             $http.put('jobs/getPaginatedCandidates/' + $stateParams.jobId, {
                 skip: skip,
@@ -93,50 +98,23 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
         $scope.visa_statusFilters = [];
         $scope.employee_typeFilters = [];
         $scope.employee_statusFilters = [];
+ $scope.filters1=[];
                 $scope.job = job.job;
                 // $scope.locationFilters=job.filters.locationFilters;
                 	 $scope.total = job.totalentries;
                 $scope.candidates = job.candidates;
                 job.filters.forEach(function(entry){
+                           $scope.filters1.push(entry);
+                        
 
-                    if(entry.type=="salary_expectation")
-                      $scope.salary_expectationFilters.push(entry);
-                      if(entry.type=="visa_status")
-                      $scope.visa_statusFilters.push(entry);
-
-                if(entry.type=="employee_type")
-                                    $scope.employee_typeFilters.push(entry);
-
-                if(entry.type=="employee_status")
-                                    $scope.employee_statusFilters.push(entry);
-
-
+                    
+               
+                      
+            
 
                 });
                          
-                
-                if($scope.firstTimeFetching)
-                {
-                    $scope.salary_expectationFilters.forEach(function(entry){
-                           $scope.salary_expectationFilters[$scope.salary_expectationFilters.indexOf(entry)].value=false;
-
-                    });
-                    $scope.visa_statusFilters.forEach(function(entry){
-                           $scope.visa_statusFilters[$scope.visa_statusFilters.indexOf(entry)].value=false;
-
-                    });
-                    $scope.employee_statusFilters.forEach(function(entry){
-                           $scope.employee_statusFilters[$scope.employee_statusFilters.indexOf(entry)].value=false;
-
-                    });
-                    $scope.employee_typeFilters.forEach(function(entry){
-                           $scope.employee_typeFilters[$scope.employee_typeFilters.indexOf(entry)].value=false;
-
-                    });
-                    $scope.firstTimeFetching=false;
-
-                }
-               
+                             
             });
         }
 
@@ -184,7 +162,7 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
             });
         };
 
-         //Add all watchers here from simple pagination watcher to the filter watchers
+         //only watch currentPage for pagination purposes 
          $scope.$watch("currentPage", function(newValue, oldValue) {
             $scope.skip = newValue * $scope.itemsPerPage;
             if($scope.skip == 0){ //   if first page
@@ -193,94 +171,23 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
             	$scope.findCandidates($scope.skip,$scope.itemsPerPage,$scope.filters, true);
             }
         });
-         //Removes and adds filter for salary
-         $scope.salary_expectationFilterChanged =  function(name){
-          
-            $scope.salary_expectationFilters.forEach(function(entry) {
-                  if(name==entry.name)
-                entry.value=!entry.value;
         
-    				if(entry.value==true)
-    			   	      $scope.addToFilters("salary_expectation",entry.name); 
-    				 else
-    				    $scope.removeFromFilters("salary_expectation",entry.name);
-    			
- 														});
-           $scope.findCandidates($scope.skip,$scope.itemsPerPage,$scope.filters);
+$scope.filterChanged=function(type,name)
+{
+$scope.filters1.forEach(function(entry){
 
-         };
+if(name==entry.name)
+  entry.value=!entry.value;
+if(entry.value==true)
+  $scope.addToFilters(type,entry.name);
+else
+  $scope.removeFromFilters(type,entry.name);
 
-         //Remove and adds filter for visa
-  $scope.visa_statusFilterChanged = function(name){
-          
-            $scope.visa_statusFilters.forEach(function(entry) {
-                  if(name==entry.name)
-                entry.value=!entry.value;
-        
-    				if(entry.value==true)
-    			   	     $scope.addToFilters("visa_status",entry.name); 
-    				 else
-    				    $scope.removeFromFilters("visa_status",entry.name);
-    			
- 														});
-       $scope.findCandidates($scope.skip,$scope.itemsPerPage,$scope.filters, false);
-
-
-
-
-
-
-
-         };
- //Remove and adds filter for employee_typeFilters
-    $scope.employee_typeFilterChanged = function(name){
-         
-            $scope.employee_typeFilters.forEach(function(entry) {
-                if(name==entry.name)
-                entry.value=!entry.value;
-        
-    				if(entry.value==true)
-    			   	      $scope.addToFilters("employee_type",entry.name); 
-    				 else
-    				$scope.removeFromFilters("employee_type",entry.name);
-    			
- 														});
-          $scope.findCandidates($scope.skip,$scope.itemsPerPage,$scope.filters, false);
-
-
-
-
-
-
-
-         };
-
-//Remove and adds filter for employee_statusFilters
-   $scope.employee_statusFilterChanged = function(name){
-            
-            $scope.employee_statusFilters.forEach(function(entry) {
-                  if(name==entry.name)
-                entry.value=!entry.value;
-        
-    				if(entry.value==true)
-    			   	      $scope.addToFilters("employee_status",entry.name); 
-    				 else
-    				    $scope.removeFromFilters("employee_status",entry.name);
-    			
- 														});
-           
-
-
-
+});
 $scope.findCandidates($scope.skip,$scope.itemsPerPage,$scope.filters, false);
 
 
-         };
-
-
-
-
-
+}
 
 
     //addToFilters

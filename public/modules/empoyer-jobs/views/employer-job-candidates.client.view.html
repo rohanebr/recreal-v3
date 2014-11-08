@@ -20,17 +20,9 @@
             <!-- Filters -->
             <section >
                 <div class="col-sm-12">
-
-                     <filter-list filter-name="salary_expectation"></filter-list>
-                     <filter-list filter-name="employee_type"></filter-list>
-                     <filter-list filter-name="employee_status"></filter-list>
-                     <filter-list filter-name="visa_status"></filter-list>
-                     <!-- <filter-list filter-name="location"></filter-list> -->
-                     <!-- <filter-list filter-name="industry"></filter-list>
-                     <filter-list filter-name="careerLevel"></filter-list>
-                     <filter-list filter-name="visa"></filter-list>
-                     <filter-list filter-name="visa"></filter-list>
-                     <filter-list filter-name="visa"></filter-list> -->
+                 <div data-ng-repeat="filtername in completefilternames">
+                    <filter-list filter-name="{{filtername}}"></filter-list>
+                </div>
 
                 </div>          
             </section>
