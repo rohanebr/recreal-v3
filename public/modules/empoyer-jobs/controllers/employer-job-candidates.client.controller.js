@@ -4,10 +4,10 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
     function($scope, $filter, Jobs, $stateParams, $http, $modal) {
         $scope.firstTimeFetching=true;
         $scope.locationFilters = [];
-        $scope.salaryFilters = [];
-        $scope.visaFilters = [];
-        $scope.employeetypeFilters = [];
-        $scope.employeestatusFilters = [];
+        $scope.salary_expectationFilters = [];
+        $scope.visa_statusFilters = [];
+        $scope.employee_typeFilters = [];
+        $scope.employee_statusFilters = [];
         $scope.itemsPerPage = 2;
         $scope.currentPage = 0;
         $scope.skip = 0;
@@ -88,25 +88,25 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
                 filter: filters,
                 isPageChange: isPageChange
             }).success(function(job) {
-            	 $scope.salaryFilters = [];
-        $scope.visaFilters = [];
-        $scope.employeetypeFilters = [];
-        $scope.employeestatusFilters = [];
+            	 $scope.salary_expectationFilters = [];
+        $scope.visa_statusFilters = [];
+        $scope.employee_typeFilters = [];
+        $scope.employee_statusFilters = [];
                 $scope.job = job.job;
                 // $scope.locationFilters=job.filters.locationFilters;
                 	 $scope.total = job.totalentries;
                 $scope.candidates = job.candidates;
                 job.filters.forEach(function(entry){
                     if(entry.type=="salary_expectation")
-                      $scope.salaryFilters.push(entry);
+                      $scope.salary_expectationFilters.push(entry);
                       if(entry.type=="visa_status")
-                      $scope.visaFilters.push(entry);
+                      $scope.visa_statusFilters.push(entry);
 
-  if(entry.type=="employee_type")
-                      $scope.employeetypeFilters.push(entry);
+                if(entry.type=="employee_type")
+                                    $scope.employee_typeFilters.push(entry);
 
-  if(entry.type=="employee_status")
-                      $scope.employeestatusFilters.push(entry);
+                if(entry.type=="employee_status")
+                                    $scope.employee_statusFilters.push(entry);
 
 
 
@@ -115,20 +115,20 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
                 
                 if($scope.firstTimeFetching)
                 {
-                    $scope.salaryFilters.forEach(function(entry){
-                           $scope.salaryFilters[$scope.salaryFilters.indexOf(entry)].value=false;
+                    $scope.salary_expectationFilters.forEach(function(entry){
+                           $scope.salary_expectationFilters[$scope.salary_expectationFilters.indexOf(entry)].value=false;
 
                     });
-                    $scope.visaFilters.forEach(function(entry){
-                           $scope.visaFilters[$scope.visaFilters.indexOf(entry)].value=false;
+                    $scope.visa_statusFilters.forEach(function(entry){
+                           $scope.visa_statusFilters[$scope.visa_statusFilters.indexOf(entry)].value=false;
 
                     });
-                    $scope.employeestatusFilters.forEach(function(entry){
-                           $scope.employeestatusFilters[$scope.employeestatusFilters.indexOf(entry)].value=false;
+                    $scope.employee_statusFilters.forEach(function(entry){
+                           $scope.employee_statusFilters[$scope.employee_statusFilters.indexOf(entry)].value=false;
 
                     });
-                    $scope.employeetypeFilters.forEach(function(entry){
-                           $scope.employeetypeFilters[$scope.employeetypeFilters.indexOf(entry)].value=false;
+                    $scope.employee_typeFilters.forEach(function(entry){
+                           $scope.employee_typeFilters[$scope.employee_typeFilters.indexOf(entry)].value=false;
 
                     });
                     $scope.firstTimeFetching=false;
@@ -192,9 +192,9 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
             }
         });
          //Removes and adds filter for salary
-         $scope.salaryFilterChanged =  function(name){
+         $scope.salary_expectationFilterChanged =  function(name){
           
-            $scope.salaryFilters.forEach(function(entry) {
+            $scope.salary_expectationFilters.forEach(function(entry) {
                   if(name==entry.name)
                 entry.value=!entry.value;
         
@@ -206,18 +206,12 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
  														});
            $scope.findCandidates($scope.skip,$scope.itemsPerPage,$scope.filters);
 
-
-
-
-
-
-
          };
 
          //Remove and adds filter for visa
-  $scope.visaFilterChanged = function(name){
+  $scope.visa_statusFilterChanged = function(name){
           
-            $scope.visaFilters.forEach(function(entry) {
+            $scope.visa_statusFilters.forEach(function(entry) {
                   if(name==entry.name)
                 entry.value=!entry.value;
         
@@ -236,10 +230,10 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
 
 
          };
- //Remove and adds filter for employeetypeFilters
-    $scope.emptypeFilterChanged = function(name){
+ //Remove and adds filter for employee_typeFilters
+    $scope.employee_typeFilterChanged = function(name){
          
-            $scope.employeetypeFilters.forEach(function(entry) {
+            $scope.employee_typeFilters.forEach(function(entry) {
                 if(name==entry.name)
                 entry.value=!entry.value;
         
@@ -259,10 +253,10 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
 
          };
 
-//Remove and adds filter for employeestatusFilters
-   $scope.empStatusFilterChanged = function(name){
+//Remove and adds filter for employee_statusFilters
+   $scope.employee_statusFilterChanged = function(name){
             
-            $scope.employeestatusFilters.forEach(function(entry) {
+            $scope.employee_statusFilters.forEach(function(entry) {
                   if(name==entry.name)
                 entry.value=!entry.value;
         
@@ -344,30 +338,42 @@ $scope.findCandidates($scope.skip,$scope.itemsPerPage,$scope.filters, false);
           filternames.push(filter.name);
         }
       });
-     if(filterObject.name=="salary")
-     {
+
+
+      if(filterObject.name){
           filternames.forEach(function(filter){
-              $scope.addToFilters("salary_expectation",filter);
+              $scope.addToFilters(filterObject.name,filter);
           });
-     }
-     if(filterObject.name=="visa")
-     {
-          filternames.forEach(function(filter){
-              $scope.addToFilters("visa_status",filter);
-          });
-     } 
-     if(filterObject.name=="employeetype")
-     {
-          filternames.forEach(function(filter){
-              $scope.addToFilters("employee_type",filter);
-          });
-     }
-     if(filterObject.name=="employeestatus")
-     {
-          filternames.forEach(function(filter){
-              $scope.addToFilters("employee_status",filter);
-          });
-     }
+      }
+     
+
+
+     // if(filterObject.name=="salary_expectation")
+     // {
+     //      filternames.forEach(function(filter){
+     //          $scope.addToFilters("salary_expectation",filter);
+     //      });
+     // }
+     // if(filterObject.name=="visa_status")
+     // {
+     //      filternames.forEach(function(filter){
+     //          $scope.addToFilters("visa_status",filter);
+     //      });
+     // } 
+     // if(filterObject.name=="employee_type")
+     // {
+     //      filternames.forEach(function(filter){
+     //          $scope.addToFilters("employee_type",filter);
+     //      });
+     // }
+     // if(filterObject.name=="employee_status")
+     // {
+     //      filternames.forEach(function(filter){
+     //          $scope.addToFilters("employee_status",filter);
+     //      });
+     // }
+
+
      $scope.findCandidates($scope.skip,$scope.itemsPerPage,$scope.filters, false);
      
     }, function () {
