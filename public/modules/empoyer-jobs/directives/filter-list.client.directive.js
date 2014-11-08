@@ -10,6 +10,7 @@ angular.module('empoyer-jobs').directive('filterList', ['$compile',
 				// ...
 				
 				var filterName = attrs.filterName;
+				var filterNameString = "'" + attrs.filterName + "'";
 				var count  = "'count'"
 
 				var html =	'<article class="thumbnail">' + 
@@ -21,7 +22,7 @@ angular.module('empoyer-jobs').directive('filterList', ['$compile',
 		                            '<label ng-if="!'+ filterName +'Filter.name" for="{{'+ filterName +' + '+ filterName +'Filter.name}}" >Not Mentioned ({{'+ filterName +'Filter.count}})</label>' + 
 		                            '</li>' + 
 		                        '</ul>' + 
-		                        '<a href="" data-ng-if="'+ filterName +'Filters.length > filterLimit" data-ng-click="openFilterModal('+ filterName +'Filters, '+ filterName +')">more choices...</a>' + 
+		                        '<a href="" data-ng-if="'+ filterName +'Filters.length > filterLimit" data-ng-click="openFilterModal('+ filterName +'Filters, '+ filterNameString +')">more choices...</a>' + 
 		                    '</article>';
             	var e =$compile(html)(scope);
             	element.replaceWith(e);

@@ -394,7 +394,7 @@ var dbfilters = ["salary_expectation", "visa_status", "employee_status", "employ
     // }
 
 
-    ffilter.sort(dynamicSort("type"));
+    ffilter.sort(dynamicSort("priority"));
 
 
 
