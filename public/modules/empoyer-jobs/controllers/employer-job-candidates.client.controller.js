@@ -5,19 +5,14 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
         $scope.firstTimeFetching=true;
         $scope.locationFilters = [];
         $scope.user = Authentication.user;
-       
-        $scope.salary_expectationFilters = [];
-        $scope.visa_statusFilters = [];
-        $scope.employee_typeFilters = [];
-        $scope.employee_statusFilters = [];
         $scope.itemsPerPage = 2;
         $scope.currentPage = 0;
         $scope.skip = 0;
-
         $scope.dummyfilters=[];
         $scope.filters = [];
         $scope.filters1=[];
-        $scope.completefilternames=["salary_expectation","visa_status","employee_status","employee_type"];
+        $scope.firsttime=true;
+        $scope.completefilternames=[];
         $scope.filterLimit = 2;
         if (!$scope.user) $location.path('/signin');
 
@@ -86,7 +81,7 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
 
         $scope.findCandidates = function(skip,limit,filters, isPageChange) {
 
-        	//console.log('find candidates function');
+        	console.log('find candidates function');
 
             $http.put('jobs/getPaginatedCandidates/' + $stateParams.jobId, {
                 skip: skip,
@@ -94,11 +89,7 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
                 filter: filters,
                 isPageChange: isPageChange
             }).success(function(job) {
-            	 $scope.salary_expectationFilters = [];
-        $scope.visa_statusFilters = [];
-        $scope.employee_typeFilters = [];
-        $scope.employee_statusFilters = [];
- $scope.filters1=[];
+            	  $scope.filters1=[];
                 $scope.job = job.job;
                 // $scope.locationFilters=job.filters.locationFilters;
                 	 $scope.total = job.totalentries;
@@ -113,7 +104,30 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
             
 
                 });
-                         
+
+                if($scope.firsttime)
+                {
+                  $scope.firsttime=false;
+                     $scope.filters1.forEach(function(entry){
+                                    var alreadyexists=false;
+                                    for(var h=0,a=$scope.completefilternames.length;h<a;h++)
+                                    {
+
+                                     if($scope.completefilternames[h]==entry.type)
+                                      alreadyexists=true;
+
+                                    }
+                               if(!alreadyexists)
+                              $scope.completefilternames.push(entry.type);
+
+
+                     });
+
+
+
+
+                }
+                         console.log("COMETEPL"+$scope.completefilternames);
                              
             });
         }
@@ -171,6 +185,7 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
             	$scope.findCandidates($scope.skip,$scope.itemsPerPage,$scope.filters, true);
             }
         });
+         //Removes and adds filter for salary
         
 $scope.filterChanged=function(type,name)
 {
@@ -188,8 +203,7 @@ $scope.findCandidates($scope.skip,$scope.itemsPerPage,$scope.filters, false);
 
 
 }
-
-
+  
     //addToFilters
     $scope.addToFilters=function(type,name)
      {
