@@ -14,6 +14,26 @@ angular.module('empoyer-jobs').directive('filterList', ['$compile',
 				var filterNameString = "'" + attrs.filterName + "'";
 				var count  = "'count'";
 				var type='';
+
+
+				var filterHeading = '';
+				switch(filterName){
+					case 'salary_expectation':
+						filterHeading = 'Salary Expectation';
+					break;
+					case 'visa_status':
+						filterHeading = 'Visa';
+					break;
+					case 'employee_status':
+						filterHeading = 'Employment Status';
+					break;
+					case 'employee_type':
+						filterHeading = 'Employment Type';
+					break;
+					case 'career_level':
+						filterHeading = 'Career Level';
+					break;
+				}
 				
             
             	scope.$watch('filters1', function (v) {
@@ -31,7 +51,7 @@ angular.module('empoyer-jobs').directive('filterList', ['$compile',
 
 			
 			var html =	'<article class="thumbnail">' + 
- 		                      '<label>'+ filterName +'</label>' +
+ 		                      '<label>'+ filterHeading +'</label>' +
  		                        '<ul>' + 
 		                            '<li data-ng-repeat="'+ filterName +'Filter in dummyfilters | orderBy:'+ count + ':true  | limitTo: filterLimit">' + 
 		                            '<input type="checkbox" data-ng-click="filterChanged('+ filterNameString +','+filterName+'Filter.name)" data-ng-model="'+ filterName +'Filter.value" id="{{'+ filterName +' + '+ filterName +'Filter.name}}" />' + 

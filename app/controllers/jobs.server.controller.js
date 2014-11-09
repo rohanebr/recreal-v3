@@ -353,7 +353,7 @@ exports.onePlusView = function(req, res) {
 
 exports.getPaginatedCandidates = function(req, res) {
     var filters = [];
-var dbfilters = ["salary_expectation", "visa_status", "employee_status", "employee_type"];
+var dbfilters = ["salary_expectation", "visa_status", "employee_status", "employee_type", "career_level"];
 
     var incomingfilters = [];
     
@@ -488,7 +488,7 @@ var incomingfilters2=incomingfilters.slice();
 
                       selectedCandidates.skip(req.body.skip);
             selectedCandidates.limit(req.body.limit);
-            selectedCandidates.select('displayName title objective picture_url location salary_expectation visa_status employee_type employee_status skills');
+            selectedCandidates.select('displayName title objective picture_url location salary_expectation visa_status employee_type employee_status career_level skills');
             selectedCandidates.exec(function(err, candidate) {
                
                 res.jsonp({
@@ -774,6 +774,45 @@ incomingfiltersit.forEach(function(entry){
         return filters;
 
     }
+    if (type == "career_level") {
+        candidates.sort(function(a, b) {
+            if (a.career_level && b.career_level)
+                var salaryA = a.career_level.toLowerCase(),
+                    salaryB = b.career_level.toLowerCase()
+            if (salaryA < salaryB) //sort string ascending
+                return -1
+            if (salaryA > salaryB)
+                return 1
+            return 0 //default return value (no sorting)
+        });
+
+        var filterValue = 'invalid_value';
+        for (var i = 0, len = candidates.length; i < len; i++) {
+            var candidate = candidates[i];
+            var isPresent = false;
+
+            if (candidate.career_level !== filterValue) {
+                filterValue = candidate.career_level;
+                incomingfilters.forEach(function(entry) {
+                    if (entry.name == filterValue)
+
+                        isPresent = true;
+
+
+
+                });
+                filters.push({
+                    type: "career_level",
+                    name: filterValue,
+                    count: 0,
+                    value: isPresent
+
+                });
+            }
+            filters[filters.length - 1].count++;
+        }
+        return filters;
+    }
     if (type == "employee_status") {
         candidates.sort(function(a, b) {
             if (a.employee_status && b.employee_status)
@@ -816,31 +855,4 @@ incomingfiltersit.forEach(function(entry){
 
     }
 
-}
-
-
-
-
-var manipulatefilters = function(selectedCandidates, forfilter, filters) {
-    
-
-var dbfilters = ["salary_expectation", "visa_status", "employee_status", "employee_type"];
-
-
-    // var dbfilters=["salary_expectation","visa_status","employee_status","employee_type"];
-
-    selectedCandidates.where(forfilter[0].type).in(getNames(forfilter));
-    selectedCandidates.exec(function(err, candidates) {
-        for (var x = 0; x < dbfilters.length; x++) {
-            if (forfilter[0].type != dbfilters[x])
-                filters = sortandfilter(dbfilters[x], candidates, forfilter, filters);
-        }
-
-
-    });
-
-
-
-
-    return filters;
 }

@@ -5,7 +5,7 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
         $scope.firstTimeFetching=true;
         $scope.locationFilters = [];
         $scope.user = Authentication.user;
-        $scope.itemsPerPage = 2;
+        $scope.itemsPerPage = 10;
         $scope.currentPage = 0;
         $scope.skip = 0;
         $scope.dummyfilters=[];
@@ -13,7 +13,7 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
         $scope.filters1=[];
         $scope.firsttime=true;
         $scope.completefilternames=[];
-        $scope.filterLimit = 2;
+        $scope.filterLimit = 5;
         if (!$scope.user) $location.path('/signin');
 
         $scope.range = function() {
