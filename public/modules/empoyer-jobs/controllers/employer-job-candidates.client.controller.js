@@ -81,8 +81,7 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
 
         $scope.findCandidates = function(skip,limit,filters, isPageChange) {
 
-        	console.log('find candidates function');
-
+        
             $http.put('jobs/getPaginatedCandidates/' + $stateParams.jobId, {
                 skip: skip,
                 limit: limit,
@@ -192,12 +191,11 @@ $scope.filterChanged=function(type,name)
 $scope.filters1.forEach(function(entry){
 
 if(name==entry.name)
-  entry.value=!entry.value;
+ {entry.value=!entry.value;
 if(entry.value==true)
-  $scope.addToFilters(type,entry.name);
-else
-  $scope.removeFromFilters(type,entry.name);
-
+  $scope.addToFilters(entry.type,entry.name);
+else  $scope.removeFromFilters(entry.type,entry.name);
+}
 });
 $scope.findCandidates($scope.skip,$scope.itemsPerPage,$scope.filters, false);
 
@@ -221,7 +219,7 @@ $scope.findCandidates($scope.skip,$scope.itemsPerPage,$scope.filters, false);
           $scope.filters.forEach(function(entry){
             if(type==entry.type){
               typeExists = true;
-              $scope.filters.push({type:type,name:name, priority: entry.priority});
+              $scope.filters.push({type:type,name:name, priority: entry.priority,value:true});
             }
          });
 
@@ -235,7 +233,7 @@ $scope.findCandidates($scope.skip,$scope.itemsPerPage,$scope.filters, false);
                   if (tmp > highest) highest = tmp;
               }
 
-              $scope.filters.push({type:type,name:name, priority: highest + 1});
+              $scope.filters.push({type:type,name:name, priority: highest + 1,value:true});
 
           }
 

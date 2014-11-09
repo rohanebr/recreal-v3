@@ -72,16 +72,14 @@ var getErrorMessage = function(err) {
  * Create a Job
  */
 exports.create = function(req, res) {
-    console.log(req.user.candidate);
+    
     if (req.user.userType === 'employer') {
         var job = new Job(req.body);
         job.user = req.user;
-        console.log(req.user._id);
-
+       
         var emp = Employer.find({
             user: req.user._id
         }).populate('company').exec(function(err, employers) {
-            console.log(employers[0]._id);
             job.employer = employers[0]._id;
             job.company = employers[0].company._id;
             employers[0].jobs.push(job);
@@ -324,8 +322,7 @@ exports.onePlusView = function(req, res) {
     var alreadyviewedbytheuser = false;
 
     Job.findById(req.job._id).exec(function(err, job) {
-        console.log(job);
-        if (req.job.views.length == 0)
+       if (req.job.views.length == 0)
             job.views.push(req.body.user._id);
         if (req.job.views.length > 0) {
             for (var d = 0; d < numberofviews.length; d++) {
@@ -359,7 +356,7 @@ exports.getPaginatedCandidates = function(req, res) {
 var dbfilters = ["salary_expectation", "visa_status", "employee_status", "employee_type"];
 
     var incomingfilters = [];
-    console.log(req.body.filter);
+    
 
     //entry.type shld be equal to any field given in the candidate model 
     //it is important to name them exactly as the model variables
@@ -419,7 +416,7 @@ previouscount=count;
 
 var incomingfilters2=incomingfilters.slice();
 
-console.log(incomingfilters2);
+
     Job.findById(req.job.id)
         .exec(function(err, job) {
 
