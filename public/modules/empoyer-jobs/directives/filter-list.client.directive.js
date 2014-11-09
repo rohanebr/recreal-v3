@@ -39,7 +39,7 @@ angular.module('empoyer-jobs').directive('filterList', ['$compile',
  		                            '<label ng-if="!'+ filterName +'Filter.name" for="{{'+ filterName +' + '+ filterName +'Filter.name}}" >Not Mentioned ({{'+ filterName +'Filter.count}})</label>' + 
  		                            '</li>' + 
  		                        '</ul>' + 
- 		                        '<a href="" data-ng-if="dummyfilters.length > filterLimit" data-ng-click="openFilterModal('+ filterName +'Filters, '+ filterNameString +')">more choices...</a>' + 
+ 		                        '<a href="" data-ng-if="dummyfilters.length > filterLimit" data-ng-click="openFilterModal(dummyfilters, '+ filterNameString +')">more choices...</a>' + 
  		                    '</article>';
                 var e =$compile(html)(scope);
 
