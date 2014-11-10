@@ -36,7 +36,7 @@ var getErrorMessage = function(err) {
  */
 exports.create = function(req, res) {
 	var company = new Company(req.body);
-	company.user = req.user;
+	company.user = req.user._id;
 
 	company.save(function(err) {
 		if (err) {
@@ -91,7 +91,7 @@ exports.uploadPicture = function(req, res) {
     /// If there's an error
     if(!imageName){
 
-      console.log("There was an error")
+      console.log("There was an error");
       res.redirect("/");
       res.end();
 
@@ -103,7 +103,7 @@ exports.uploadPicture = function(req, res) {
       fs.writeFile(newPath, data, function (err) {
        var company = Company.find({user: req.user._id}).exec(function(err, companies){
          	var old_url = companies[0].logo_url;
-			companies[0].picture_url = "/uploads/fullsize/" + imageName;
+			companies[0].logo_url = "/uploads/fullsize/" + imageName;
 			companies[0].save(function(err) {
 				if (err) {
 					return res.send(400, {

@@ -54,7 +54,7 @@ angular.module('employer-company').controller('EmployerProfileController', ['$sc
         var modalInstance;
         modalInstance = $modal.open({
           templateUrl: '/modules/employer-company/views/picture-partial.html',
-          controller: 'PictureModalCtrl',
+          controller: 'EmpPictureModalCtrl',
         });
         modalInstance.result.then(function(result) {
            $scope.this.user.picture_url = result.picture_url;
@@ -64,7 +64,7 @@ angular.module('employer-company').controller('EmployerProfileController', ['$sc
       };
    }
 		
- ]).controller('PictureModalCtrl', [
+ ]).controller('EmpPictureModalCtrl', [
   '$scope', '$modalInstance', '$upload', function($scope, $modalInstance, $upload) {
 
     var convert = function convertDataURIToBlob(dataURI, mimetype) {
@@ -90,7 +90,7 @@ angular.module('employer-company').controller('EmployerProfileController', ['$sc
 	  		$scope.formData = convert(image.dataURL, image.type);
 
 	  		$scope.upload = $upload.upload({
-	        url: '/uploadpicture', //upload.php script, node.js route, or servlet url
+	        url: '/uploadEmpPicture', //upload.php script, node.js route, or servlet url
 	        //method: 'POST' or 'PUT',
 	        method: 'POST',
 	        //headers: {'header-key': 'header-value'},
@@ -113,7 +113,7 @@ angular.module('employer-company').controller('EmployerProfileController', ['$sc
 	      });
 	  };
 
-	$scope.upload = function (action) {
+	$scope.ok = function (action) {
 	$modalInstance.close({ action: action, picture_url: $scope.picture_url });
 	};
 

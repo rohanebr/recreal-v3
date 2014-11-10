@@ -56,7 +56,7 @@ angular.module('employer-company').controller('CompanyProfileController', ['$sco
 	      var modalInstance;
 	      modalInstance = $modal.open({
 	        templateUrl: '/modules/employer-company/views/logo/logo-partial.html',
-	        controller: 'PictureModalCtrl',
+	        controller: 'CompPictureModalCtrl',
 	      });
 	      modalInstance.result.then(function(result) {
 	         $scope.company.logo_url = result.logo_url;
@@ -65,7 +65,7 @@ angular.module('employer-company').controller('CompanyProfileController', ['$sco
 	      });
 	    };
 	}
-]).controller('PictureModalCtrl', ['$scope', '$modalInstance', '$upload', function($scope, $modalInstance, $upload) {
+]).controller('CompPictureModalCtrl', ['$scope', '$modalInstance', '$upload', function($scope, $modalInstance, $upload) {
 
     var convert = function convertDataURIToBlob(dataURI, mimetype) {
 		  var BASE64_MARKER = ';base64,';
@@ -90,7 +90,7 @@ angular.module('employer-company').controller('CompanyProfileController', ['$sco
 	  		$scope.formData = convert(image.dataURL, image.type);
 
 	  		$scope.upload = $upload.upload({
-	        url: '/uploadpicture', //upload.php script, node.js route, or servlet url
+	        url: '/uploadCompPicture', //upload.php script, node.js route, or servlet url
 	        //method: 'POST' or 'PUT',
 	        method: 'POST',
 	        //headers: {'header-key': 'header-value'},
@@ -113,7 +113,7 @@ angular.module('employer-company').controller('CompanyProfileController', ['$sco
 	      });
 	  };
 
-	$scope.upload = function (action) {
+	$scope.ok = function (action) {
 	$modalInstance.close({ action: action, logo_url: $scope.logo_url });
 	};
 
