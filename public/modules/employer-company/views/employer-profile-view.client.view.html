@@ -3,17 +3,19 @@
     </header>
     <section class="col-md-8" >
         <section>
-            <div class="col-md-4">
-                <img alt=""class="img180_180" src="https://media.licdn.com/mpr/mpr/shrink_200_200/p/7/005/078/1ef/03dc8ac.jpg">
-            </div>
+            
+                <div class="col-md-4">
+                    <img src="{{this.user.picture_url}}" width=110px; alt="Smily face">
+               
+                </div>
 
             <div class="col-md-8 ">
                 <h2>{{employer.displayName.toUpperCase()}}</h2>
                 <h4>{{employer.title}}</h4>
-                <h5>Member Since:1947</h5>
+                <h5>Member Since: {{employer.created_date | date:'MMM,d,y'}}</h5>
                 <section>
                     <h6>Total Posted Jobs: 8</h6>
-                    <h6>Open Jobs: 2</h6>
+                    <h6>Open Jobs: {{employer.jobs.length }}</h6>
                 </section>
                 <hr>
             </div>

@@ -18,24 +18,24 @@
 
 
         <section class="form-group">
-            <div><label for="">Company</label></div>
-            <div><span class="ui-select">
-                    <select data-ng-model="project.company" class="form-control" style="width: 175px";>
+            <label for="">Company</label>
+            <span class="ui-select">
+                    <select data-ng-model="project.company" class="form-control" style="width: 250px";>
                         <option>CNS</option>
                         <option>IBM</option>
                     </select>
-                </span></div>
+            </span>
             </section>
 
 
         <section class="form-group">
             <label for="">Start Date</label>
-            <input ui-date ui-date-format ng-model="project.start_date" />
+            <input ui-date ui-date-format ng-model="project.start_date" class="form-control" style="width: 250px" />
         
 
             <span class="form-group">
                     <label for="">End Date</label>
-                    <input ui-date ui-date-format ng-model="project.end_date" />
+                    <input ui-date ui-date-format ng-model="project.end_date" class="form-control" style="width: 250px"/>
             </span>    
         </section>
 
@@ -44,7 +44,7 @@
                 <textarea class="form-control"
                           rows="5"
                           required
-                          data-ng-model="project.description"></textarea>
+                          data-ng-model="project.description"></textarea><br>
         </section>
 
 

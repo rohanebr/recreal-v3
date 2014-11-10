@@ -15,6 +15,10 @@ var EmployerSchema = new Schema({
     type: 'String',
     trim: true
   },
+  created_date: {
+    type: Date,
+    default: Date.now
+  },
   division:{
     type: 'String',
     trim: true

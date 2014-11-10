@@ -1,11 +1,50 @@
 <article data-ng-controller="CompanyProfileController" data-ng-init="findOne()" class="container">
     <header>
         <h1>Build Company Profile</h1>
+
+            <div class="form-group">
+                                
     </header>
     <section class="col-md-8" >
         <form name="form_company_profile" class="form-horizontal" >
             <fieldset>
-                 <section class="form-group">
+
+            <!-- <div class="form-group">
+                    <div class="col-sm-3">
+                        <label for="">Website Logo</label>
+                    </div>
+                    <div class="col-sm-9">
+                        <input type="file" title="Choose File" data-ui-file-upload>
+                    </div> -->
+                   
+
+                    <section class="form-group">
+                    <div class="col-sm-3">
+                        <label for="">Company Logo</label>
+                    </div>
+                    <!-- <div class="col-sm-6">
+                        <input  type="text"
+                                class="form-control"
+                                data-ng-model="company.logo_url">
+                    </div> -->
+                
+                   <!--  <div class="col-sm-6">
+                        <img alt="" class="img180_180" src="{{company.logo_url}}">
+                        <a class="" ng-click="openPictureModal()" href="">
+                        <i class="fa fa-edit"></i></a> -->
+
+                         <div class="col-md-6">
+                    <a href="" class="pull-right" ng-click="openPictureModal()" ><i class="fa fa-edit"></i></a>
+                    <img alt=""class="img180_180" src="{{company.logo_url}}">
+                    </div>
+
+
+                   <!--  </div> -->
+                    </section><br>
+            <!-- </div> -->
+
+
+                 <div class="form-group">
                     <div class="col-sm-3">
                         <label for="">Company Name</label>
                     </div>
@@ -14,9 +53,9 @@
                                 class="form-control"
                                 data-ng-model="company.company_name">
                     </div>
-                </section>
+                </div><br>
 
- <div class="form-group">
+                <div class="form-group">
                         <div class="col-md-3">
                             <label for="">Company Description <span class="required-css">*</span></label>
 
@@ -28,20 +67,22 @@
                                     data-ng-model="company.description"></text-angular>
                             </div>
                         </div>
-                    </div>
+                    </div><br>
 
                 <section class="form-group">
+
+                <div class="form-group">
                     <div class="col-sm-3">
                         <label for="">Industry</label>
                     </div>
                     <div class="col-sm-6">
                         <span class="ui-select">
-                            <select data-ng-model="company.industry">
+                            <select data-ng-model="company.industry" class="form-control">
                                     <option data-ng-repeat="ind in industries">{{ind.name}}</option>
                             </select>
                         </span>
                     </div>
-                </section>
+                </div><br>
 
                 <section class="form-group">
                     <div class="col-sm-3">
@@ -49,7 +90,7 @@
                     </div>
                     <div class="col-sm-6">
                         <span class="ui-select">
-                            <select data-ng-model="company.company_type">
+                            <select data-ng-model="company.company_type" class="form-control">
                                     <option>Sole Proprietorship</option>
                                     <option>Public</option>
                                     <option>Private</option>
@@ -57,7 +98,7 @@
                                 </select>
                         </span>
                     </div>
-                </section>
+                </section><br>
 
                 <section class="form-group">
                     <div class="col-sm-3">
@@ -65,7 +106,7 @@
                     </div>
                     <div class="col-sm-6">
                         <span class="ui-select">
-                            <select data-ng-model="company.company_size">
+                            <select data-ng-model="company.company_size" class="form-control">
                                 <option>1 - 10</option>
                                 <option>11 - 50</option>
                                 <option>51 - 100</option>
@@ -76,18 +117,17 @@
                             </select>
                         </span> 
                     </div>
-                </section>
+                </section><br>
 
                 <section class="form-group">
                     <div class="col-sm-3">
                         <label for="">Founded</label>
                     </div>
                     <div class="col-sm-4">
-                        <input  type="date"
-                                class="form-control"
-                                data-ng-model="company.founded">
+                        <input  ui-date ui-date-format
+                                required data-ng-model="company.founded" class="form-control">
                     </div>
-                </section>
+                </section><br>
 
                 <section class="form-group">
                     <div class="col-sm-3">
@@ -98,18 +138,18 @@
                                 class="form-control"
                                 data-ng-model="company.website">
                     </div>
-                </section>
+                </section><br>
 
                 <section class="form-group">
                     <div class="col-sm-3">
                         <label for="">Address</label>
                     </div>
                     <div class="col-sm-6">
-                        <input  type="text"
-                                class="form-control"
-                                data-ng-model="company.address">
+                        <textarea  type="text"
+                                class="form-control" rows="3"
+                                data-ng-model="company.address" />
                     </div>
-                </section>
+                </section><br>
 
                 <section class="form-group">
                     <div class="col-sm-3">
@@ -120,7 +160,7 @@
                                 class="form-control"
                                 data-ng-model="company.contact_no">
                     </div>
-                </section>
+                </section><br>
 
                 <section class="form-group">
                     <div class="col-sm-3">
@@ -144,16 +184,17 @@
                     </div>
                 </section>
 
-                <section class="form-group">
-                    <div class="col-sm-3">
-                        <label for="">Company Logo</label>
-                    </div>
-                    <div class="col-sm-6">
-                        <input  type="text"
-                                class="form-control"
-                                data-ng-model="company.logo_url">
-                    </div>
-                </section>
+                <!-- <section class="form-group">
+                <div class="col-sm-3">
+                       <label for="">Description</label>
+                </div>
+                 <div class="col-sm-6">
+                    <textarea class="form-control"
+                              rows="3"
+                              required
+                              data-ng-model="education.notes"></textarea>
+                 </div>
+                 </section><br> -->
 
                 <section class="form-group">
                     <div class="panel-body" >
@@ -178,8 +219,7 @@
 
                 <button type="submit"
                     class="btn btn-primary btn-block btn-lg"
-                    ng-click="update()"
-                    >Submit</button>                             
+                    ng-click="update()">Submit</button><br>                            
                 <section data-ng-show="error" class="text-danger">
                     <strong data-ng-bind="error"></strong>
                 </section>

@@ -13,7 +13,7 @@ angular.module('candidate-features').controller('LinkedinCvController', ['$scope
 
 			 	$scope.candidate.displayName = res.firstName + ' ' + res.lastName;
 			 	$scope.candidate.title = res.headline;
-			 	$scope.candidate.country = res.location.name;
+			 	$scope.candidate.country = res.locat.name;
 			 	$scope.candidate.picture_url = res.pictureUrl;
 			 	$scope.candidate.objective = res.summary;
 

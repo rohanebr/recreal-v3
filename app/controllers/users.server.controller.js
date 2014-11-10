@@ -81,6 +81,7 @@ exports.signup = function(req, res) {
 			var company = new Company();
 			typeObject.company = company;
 			company.employers.push(typeObject);
+			company.user = user;
 			company.save();
 			break;
 	}

@@ -1,6 +1,4 @@
 'use strict';
-
-
 angular.module('empoyer-jobs').controller('CompanyOpenJobsController', ['$scope', 'Authentication', 'Jobs', 'Employers', 'Companies', '$location', 'Socket',
     function($scope, Authentication, Jobs, Employers, Companies, $location, Socket) {
         $scope.user = Authentication.user;
@@ -40,5 +38,23 @@ angular.module('empoyer-jobs').controller('CompanyOpenJobsController', ['$scope'
 
         });
     }
+
+
+	// 	$scope.employer = Employers.get({
+ //                employerId: $scope.user.employer
+ //            }, function(employer){
+	// 			$scope.company = Companies.get({
+	// 				companyId: employer.company
+	// 			}, function(company){
+	// 				angular.forEach(company.jobs, function(job, key){
+	// 					Jobs.get({
+	// 						jobId: job
+	// 					}, function(job){
+	// 						$scope.jobs.push(job);
+	// 					});
+	// 				});
+	// 			});
+	// 		});
+	// }
 
 ]);
