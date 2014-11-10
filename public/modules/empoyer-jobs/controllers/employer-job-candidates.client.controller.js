@@ -1,197 +1,327 @@
 'use strict';
 
-angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$scope', '$filter', 'Jobs', '$stateParams', '$http',
-	function($scope, $filter, Jobs, $stateParams, $http) {
-		
-		$scope.locationFilters = [];
-		$scope.salaryFilters = [];
-		$scope.visaFilters = [];
-		$scope.employeetypeFilters = [];
-		$scope.employeestatusFilters = [];
-				
-		$scope.isShortListed = function(candidate){
+angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$scope', '$filter', 'Jobs', '$stateParams', '$http', '$modal','$location','Authentication',
+    function($scope, $filter, Jobs, $stateParams, $http, $modal,$location,Authentication) {
+        $scope.firstTimeFetching=true;
+        $scope.locationFilters = [];
+        $scope.user = Authentication.user;
+        $scope.itemsPerPage = 10;
+        $scope.currentPage = 0;
+        $scope.skip = 0;
+        $scope.dummyfilters=[];
+        $scope.filters = [];
+        $scope.filters1=[];
+        $scope.firsttime=true;
+        $scope.completefilternames=[];
+        $scope.filterLimit = 5;
+        if (!$scope.user) $location.path('/signin');
 
-			var ans = false;
-			angular.forEach($scope.job.shortListedCandidates, function(item){
-				if (item.candidate == candidate._id)
-					ans = true;
-			});
-			return ans;
-		};
-		
-		$http.get('jobs/candidates/' + $stateParams.jobId).success(function(job) {
-			$scope.job = job;
-			$scope.candidates = job.candidates;
-			$scope.filteredCandidates = $scope.candidates;
+        $scope.range = function() {
+            var rangeSize = 5;
+            var ret = [];
+            var start;
 
-			populateLocationFilters();
-			populateSalaryFilters();
-			populateVisaFilters();
-			populateEmployeetypeFilters();
-			populateEmployeestatusFilters();
-		
+            start = $scope.currentPage;
+            if (start > $scope.pageCount() - rangeSize) {
+                start = $scope.pageCount() - rangeSize;
+            }
 
-		});
-		// $http.get('jobs/candidates/' + $stateParams.jobId).success(function(job) {
-		// 	$scope.job = job;
-		// 	$scope.candidates = job.candidates;
-		// 	$scope.filteredCandidates = $scope.candidates;
-
-			
-			// Add to Short List
-		$scope.addCandidateToShortList = function(candidate) {
-
-			var attribute = {
-					jobId: $scope.job._id,
-					candidateId: candidate._id
-				}
-
-				
-			$http.put('jobs/addToShortList/' + $scope.job._id , attribute).success(function(response) {
-
-				$scope.job.shortListedCandidates.push({
-					candidate: candidate._id
-				});
-				// $scope.$apply();
-				
-
-				// $scope.candidate.jobs.push(job);
-				// $scope.jobs.splice($scope.jobs.indexOf(job), 1);
-				// $scope.$apply();
-				
-
-				// $location.path('jobs/' + job._id);
-			}).error(function(response) {
-				$scope.error = response.message;
-			});
-		};
+            for (var i = start; i < start + rangeSize; i++) {
+                if (i >= 0)
+                    ret.push(i);
+            }
+            return ret;
+        };
 
 
-		// Remove from Short List
-		$scope.removeCandidateFromShortList = function(candidate) {
+        $scope.prevPage = function() {
+            if ($scope.currentPage > 0) {
+                $scope.currentPage--;
+            }
+        };
 
-				var attribute = {
-					jobId: $scope.job._id,
-					candidateId: candidate._id
-				}
+        $scope.prevPageDisabled = function() {
+            return $scope.currentPage === 0 ? "disabled" : "";
+        };
 
-			$http.put('jobs/removeFromShortList/' + $scope.job._id , attribute).success(function(response) {
-				
-			angular.forEach($scope.job.shortListedCandidates, function(item){
-				if (item.candidate == candidate._id)
-					$scope.job.shortListedCandidates.splice($scope.job.shortListedCandidates.indexOf(item),1);
-				});
-				//And redirect to the index page
+        $scope.nextPage = function() {
+            if ($scope.currentPage < $scope.pageCount() - 1) {
+                $scope.currentPage++;
+            }
+        };
 
-				$location.path('jobs/' + job._id);
-			}).error(function(response) {
-				$scope.error = response.message;
-			});
-		};
+        $scope.nextPageDisabled = function() {
+            return $scope.currentPage === $scope.pageCount() - 1 ? "disabled" : "";
+        };
+
+        $scope.pageCount = function() {
+
+            return Math.ceil($scope.total / $scope.itemsPerPage);
+
+        };
+
+        $scope.setPage = function(n) {
+
+            if (n >= 0 && n < $scope.pageCount()) {
+
+                $scope.currentPage = n;
+
+            }
+        };
+
+        $scope.isShortListed = function(candidate) {
+
+            var ans = false;
+            angular.forEach($scope.job.shortListedCandidates, function(item) {
+                if (item.candidate == candidate._id)
+                    ans = true;
+            });
+            return ans;
+        };
+
+        $scope.findCandidates = function(skip,limit,filters, isPageChange) {
+
+        
+            $http.put('jobs/getPaginatedCandidates/' + $stateParams.jobId, {
+                skip: skip,
+                limit: limit,
+                filter: filters,
+                isPageChange: isPageChange
+            }).success(function(job) {
+            	  $scope.filters1=[];
+                $scope.job = job.job;
+                // $scope.locationFilters=job.filters.locationFilters;
+                	 $scope.total = job.totalentries;
+                $scope.candidates = job.candidates;
+                job.filters.forEach(function(entry){
+                           $scope.filters1.push(entry);
+                        
+
+                    
+               
+                      
+            
+
+                });
+
+                if($scope.firsttime)
+                {
+                  $scope.firsttime=false;
+                     $scope.filters1.forEach(function(entry){
+                                    var alreadyexists=false;
+                                    for(var h=0,a=$scope.completefilternames.length;h<a;h++)
+                                    {
+
+                                     if($scope.completefilternames[h]==entry.type)
+                                      alreadyexists=true;
+
+                                    }
+                               if(!alreadyexists)
+                              $scope.completefilternames.push(entry.type);
 
 
-		// });
-		// $scope.search.name = 'Rawalpindi';
+                     });
 
 
 
-		var populateLocationFilters = function(){
-			
-			$scope.candidates = $filter('orderBy')($scope.candidates, 'location');
-			var filterValue = 'invalid_value';
-			for (var i = 0 ; i < $scope.candidates.length ; i++ ){
-				var candidate = $scope.candidates[i];
-				if(candidate.location !== filterValue){
-					filterValue = candidate.location;
-					$scope.locationFilters.push({
-						name: filterValue,
-						count: 0,
-						value: false
-					});
-				}
-				$scope.locationFilters[$scope.locationFilters.length - 1].count++;
-			}
-		};
 
-		var populateSalaryFilters = function(){
-			
-			$scope.candidates = $filter('orderBy')($scope.candidates, 'salary_expectation');
-			var filterValue = 'invalid_value';
-			for (var i = 0 ; i < $scope.candidates.length ; i++ ){
-				var candidate = $scope.candidates[i];
-				if(candidate.salary_expectation !== filterValue){
-					filterValue = candidate.salary_expectation;
-					$scope.salaryFilters.push({
-						name: filterValue,
-						count: 0,
-						value: false
-					});
-				}
-				$scope.salaryFilters[$scope.salaryFilters.length - 1].count++;
-			}
-		};
-
-		var populateVisaFilters = function(){
-			
-			$scope.candidates = $filter('orderBy')($scope.candidates, 'visa_status');
-			var filterValue = 'invalid_value';
-			for (var i = 0 ; i < $scope.candidates.length ; i++ ){
-				var candidate = $scope.candidates[i];
-				if(candidate.visa_status !== filterValue){
-					filterValue = candidate.visa_status;
-					$scope.visaFilters.push({
-						name: filterValue,
-						count: 0,
-						value: false
-					});
-				}
-				$scope.visaFilters[$scope.visaFilters.length - 1].count++;
-			}
-		};
+                }
+                         console.log("COMETEPL"+$scope.completefilternames);
+                             
+            });
+        }
 
 
-		
-		
-		var populateEmployeestatusFilters = function(){
-			
-			$scope.candidates = $filter('orderBy')($scope.candidates, 'employee_status');
-			var filterValue = 'invalid_value';
-			for (var i = 0 ; i < $scope.candidates.length ; i++ ){
-				var candidate = $scope.candidates[i];
-				if(candidate.employee_status !== filterValue){
-					filterValue = candidate.employee_status;
-					$scope.employeestatusFilters.push({
-						name: filterValue,
-						count: 0,
-						value: false
-					});
-				}
-				$scope.employeestatusFilters[$scope.employeestatusFilters.length - 1].count++;
-			}
-		};
+        // Add to Short List
+        $scope.addCandidateToShortList = function(candidate) {
 
-		
-		var populateEmployeetypeFilters = function(){
-			
-			$scope.candidates = $filter('orderBy')($scope.candidates, 'employee_type');
-			var filterValue = 'invalid_value';
-			for (var i = 0 ; i < $scope.candidates.length ; i++ ){
-				var candidate = $scope.candidates[i];
-				if(candidate.employee_type !== filterValue){
-					filterValue = candidate.employee_type;
-					$scope.employeetypeFilters.push({
-						name: filterValue,
-						count: 0,
-						value: false
-					});
-				}
-				$scope.employeetypeFilters[$scope.employeetypeFilters.length - 1].count++;
-			}
-		};
+            var attribute = {
+                jobId: $scope.job._id,
+                candidateId: candidate._id
+            }
 
-		
+
+            $http.put('jobs/addToShortList/' + $scope.job._id, attribute).success(function(response) {
+
+                $scope.job.shortListedCandidates.push({
+                    candidate: candidate._id
+                });
+
+            }).error(function(response) {
+                $scope.error = response.message;
+            });
+        };
+
+
+        // Remove from Short List
+        $scope.removeCandidateFromShortList = function(candidate) {
+
+            var attribute = {
+                jobId: $scope.job._id,
+                candidateId: candidate._id
+            }
+
+            $http.put('jobs/removeFromShortList/' + $scope.job._id, attribute).success(function(response) {
+
+                angular.forEach($scope.job.shortListedCandidates, function(item) {
+                    if (item.candidate == candidate._id)
+                        $scope.job.shortListedCandidates.splice($scope.job.shortListedCandidates.indexOf(item), 1);
+                });
+                //And redirect to the index page
+
+                $location.path('jobs/' + job._id);
+            }).error(function(response) {
+                $scope.error = response.message;
+            });
+        };
+
+         //only watch currentPage for pagination purposes 
+         $scope.$watch("currentPage", function(newValue, oldValue) {
+            $scope.skip = newValue * $scope.itemsPerPage;
+            if($scope.skip == 0){ //   if first page
+            	$scope.findCandidates($scope.skip,$scope.itemsPerPage,$scope.filters, false);
+            } else {
+            	$scope.findCandidates($scope.skip,$scope.itemsPerPage,$scope.filters, true);
+            }
+        });
+         //Removes and adds filter for salary
+        
+$scope.filterChanged=function(type,name)
+{
+$scope.filters1.forEach(function(entry){
+
+if(name==entry.name)
+ {entry.value=!entry.value;
+if(entry.value==true)
+  $scope.addToFilters(entry.type,entry.name);
+else  $scope.removeFromFilters(entry.type,entry.name);
+}
+});
+$scope.findCandidates($scope.skip,$scope.itemsPerPage,$scope.filters, false);
+
 
 }
-]);
+  
+    //addToFilters
+    $scope.addToFilters=function(type,name)
+     {
+      var alreadyPresentInFilters=false;
+     	 $scope.filters.forEach(function(entry){
+          if(type==entry.type && name==entry.name)
+                  {
+                  	alreadyPresentInFilters=true;
+                  }
+         });
+
+         if(!alreadyPresentInFilters){
+
+          var typeExists = false;
+          $scope.filters.forEach(function(entry){
+            if(type==entry.type){
+              typeExists = true;
+              $scope.filters.push({type:type,name:name, priority: entry.priority,value:true});
+            }
+         });
+
+          if(!typeExists){
+             // There's no real number bigger than plus Infinity
+              
+              var highest = 0;
+              var tmp;
+              for (var i=$scope.filters.length-1; i>=0; i--) {
+                  tmp = $scope.filters[i].priority;
+                  if (tmp > highest) highest = tmp;
+              }
+
+              $scope.filters.push({type:type,name:name, priority: highest + 1,value:true});
+
+          }
+
+            //salary_expext salay_exp  visa visa
+         }
 
 
+
+          
+
+     
+
+    
+
+     }
+
+     //removeFromFilters
+      $scope.removeFromFilters=function(type,name)
+     {
+      
+           $scope.filters.forEach(function(entry){
+                if(type==entry.type && name==entry.name)
+                
+                                      $scope.filters.splice($scope.filters.indexOf(entry),1);
+
+                
+                        
+          });
+            $scope.findCandidates($scope.skip,$scope.itemsPerPage,$scope.filters, false);
+
+     }
+  $scope.openFilterModal = function (filterArray, name) {
+
+    var modalInstance = $modal.open({
+      templateUrl: '/modules/empoyer-jobs/views/employer-job-candidates/filter-modal.html',
+      controller: 'FilterModalCtrl',
+      resolve: {
+        filter: function () {
+          return {values: angular.copy(filterArray),
+                  name: name};
+        }
+      }
+    });
+
+    modalInstance.result.then(function (filterObject) {
+      var filternames=[];
+      filterObject.filters.forEach(function(filter){
+        if(filter.value)
+        {
+          filternames.push(filter.name);
+        }
+      });
+
+
+      if(filterObject.name){
+          filternames.forEach(function(filter){
+              $scope.addToFilters(filterObject.name,filter);
+          });
+      }
+      
+     $scope.findCandidates($scope.skip,$scope.itemsPerPage,$scope.filters, false);
+     
+    }, function () {
+       
+    });
+  };
+
+
+
+    }
+
+
+]).
+
+controller('FilterModalCtrl', [
+     '$scope', '$modalInstance', 'filter', function($scope, $modalInstance, filter) {
+
+       $scope.filters = filter.values;
+       $scope.name = filter.name;
+
+    $scope.ok = function () {
+      // $scope.$parent.findCandidates($scope.$parent.skip, $scope.$parent.itemsPerPage, $scope.$parent.filters, false);
+      $modalInstance.close({name:$scope.name,filters:$scope.filters});
+    };
+
+    $scope.cancel = function () {
+    $modalInstance.dismiss('cancel');
+
+    };
+     }
+   ]);

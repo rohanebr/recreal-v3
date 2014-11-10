@@ -28,7 +28,10 @@ module.exports = {
 				'public/lib/ng-file-upload/angular-file-upload-html5-shim.min.js',
 				'public/lib/ng-file-upload/angular-file-upload.min.js',
 				'public/lib/textAngular/dist/textAngular-sanitize.min.js',
-				'public/lib/textAngular/dist/textAngular.min.js'
+				'public/lib/textAngular/dist/textAngular.min.js',
+				'public/lib/ngmap/build/scripts/ng-map.js',
+				'http://maps.google.com/maps/api/js',
+				'public/lib/angularjs-geolocation/src/geolocation.js'
 			]
 		},
 		css: 'public/dist/application.min.css',

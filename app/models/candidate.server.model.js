@@ -11,7 +11,7 @@ var mongoose = require('mongoose'),
  */
 var CandidateSchema = new Schema({
 	title:{
-		type: 'String',
+		type: String,
 		trim: true
 	},
 	displayName:{
@@ -19,197 +19,208 @@ var CandidateSchema = new Schema({
 		trim: true
 	},
 	picture_url:{
-		type: 'String',
+		type: String,
 		default: '/uploads/fullsize/no-image.jpg'
 	},
 	objective:{
-		type: 'String',
+		type: String,
 		trim: true
 	},
 	address:{
-		type: 'String',
+		type: String,
 		trim: true
 	},
 	country:{
-		type: 'String',
-		trim: true
+		type: String,
+		trim: true,
+		default: 'choose a country'
 	},
 	location:{
-		type: 'String',
-		trim: true
+		type: String,
+		trim: true,
+		default: 'choose a location'
 	},
 	contact_no:{
-		type: 'String',
+		type: String,
 		trim: true
 	},
 	skype_name:{
-		type: 'String',
+		type: String,
 		trim: true
 	},
 	gender:{
-		type: 'bool'
+		type: String,
+		enum: ['male', 'female', 'not specified'],
+		default: 'not specified'
 	},
 	visa_status:{
-		type: 'String',
-		trim: true
+		type: String,
+		trim: true,
+		default: 'Not mentioned'
 	},
 	driving_license_issued:{
-		type: 'String',
+		type: String,
 		trim: true
 	},
 	xp:{
-		type: 'Number'
+		type: Number,
+		default: 0
 	},
 	rating:{
-		type: 'String',
+		type: Number,
 		trim: true
 	},
+
 	target_job_title:{
-		type: 'String',
+		type: String,
 		trim: true
 	},
 	career_level:{
-		type: 'String',
+		type: String,
 		trim: true
 	},
 	employee_type:{
-		type: 'String',
-		trim: true
+		type: String,
+		trim: true,
+		default: 'Not mentioned'
 	},
 	employee_status:{
-		type: 'String',
-		trim: true
+		type: String,
+		trim: true,
+		default:'Not mentioned'
 	},
 	salary_expectation:{
-		type: 'String',
-		trim: true
+		type: String,
+		trim: true,
+		default: "Not mentioned"
 	},
 	notice_period:{
-		type: 'String',
+		type: String,
 		trim: true
 	},
 	target_industries: [{
 		name:{
-			type: 'String',
+			type: String,
 			trim: true
 	  	}
 	}],
 	target_locations: [{
 		name:{
-			type: 'String',
-			trim: true
+			type: String,
+			trim: true,
+			default: 'Not Mentioned'
 	  	}
 	}],
 	educations:[{
 		degree:{
-			type: 'String',
+			type: String,
 			trim: true
 		},
 		study_feild:{
-			type: 'String',
+			type: String,
 			trim: true
 	  	},
 		notes:{
-		  type: 'String',
+		  type: String,
 		  trim: true
 		  },
 		institute:{
-		  type: 'String',
+		  type: String,
 		  trim: true
 		},
 		start_date:{
-		  type: 'Date'
+		  type: Date
 		}, 
 		end_date:{
-		  type: 'Date'
+		  type: Date
 		}
 	}],
 	positions:[{
 		company_name:{
-		  type: 'String',
+		  type: String,
 		  trim: true
 		},
 		title:{
-		  type: 'String',
+		  type: String,
 		  trim: true
 		},
 		summary:{
-		  type: 'String',
+		  type: String,
 		  trim: true
 		},
 		company_location:{
-		  type: 'String',
+		  type: String,
 		  trim: true
 		},
 		company_industry:{
-		  type: 'String',
+		  type: String,
 		  trim: true
 		},
 		start_date:{
-		  type: 'Date'
+		  type: Date
 		}, 
 		end_date:{
-		  type: 'Date'
+		  type: Date
 		},
 		is_current:{
-		  type: 'Boolean'
+		  type: Boolean
 		}
 	}],
 	skills:[{
 		title:{
-		  type: 'String',
+		  type: String,
 		  trim: true
 		},
 		level:{
-		  type: 'String',
+		  type: String,
 		  trim: true
 		},
 		experience:{
-		  type: 'Number'
+		  type: Number
 		},
 		last_used:{
-		  type: 'Date'
+		  type: Date
 		}
 	}],
 	projects:[{
 		name:{
-		  type: 'String',
+		  type: String,
 		  trim: true
 		},
 		company:{
-		  type: 'String',
+		  type: String,
 		  trim: true
 		},
 		description:{
-		  type: 'String',
+		  type: String,
 		  trim: true
 		},
 		start_date:{
-		  type: 'Date'
+		  type: Date
 		}, 
 		end_date:{
-		  type: 'Date'
+		  type: Date
 		}
 	}],
 	languages:[{
 		name:{
-		  type: 'String',
+		  type: String,
 		  trim: true
 		},
 		proficiency:{
-		  type: 'String',
+		  type: String,
 		  trim: true
 		}
 	}],
 	certificates:[{
 		name:{
-		  type: 'String',
+		  type: String,
 		  trim: true
 		}
 	}],
 	nationalities:[{
 		name:{
-		  type: 'String',
+		  type: String,
 		  trim: true
 		}
 	}],
@@ -256,12 +267,7 @@ var CandidateSchema = new Schema({
            	default:0
            }
 
-	  },
-	  interested:
-	 [ {
-
-
-	  }]
+	  }
 });
 
 

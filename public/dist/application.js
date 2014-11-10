@@ -12,7 +12,9 @@ var ApplicationConfiguration = function () {
         'angularFileUpload',
         'textAngular',
         'timer',
-        'angularCharts'
+        'angularCharts',
+        'geolocation',
+        'ngMap'
       ];
     // Add a new vertical module
     var registerModule = function (moduleName) {
@@ -79,7 +81,10 @@ angular.module('candidate-features').config([
   '$stateProvider',
   function ($stateProvider) {
     // Candidate features state routing
-    $stateProvider.state('edit-cv', {
+    $stateProvider.state('linkedin-cv', {
+      url: '/linkedin-cv',
+      templateUrl: 'modules/candidate-features/views/linkedin-cv.client.view.html'
+    }).state('edit-cv', {
       url: '/edit-cv',
       templateUrl: 'modules/candidate-features/views/edit-cv.client.view.html'
     }).state('candidate-home', {
@@ -756,10 +761,7 @@ angular.module('candidate-features').controller('CandidateHomeController', [
     // Apply for a Job
     $scope.apply = function (job) {
       $http.put('jobs/apply/' + job._id, job).success(function (response) {
-        Socket.emit('applied_on_job', {
-          job: job,
-          candidate: $scope.candidate
-        });
+        // Socket.emit('applied_on_job', {job: job, candidate: $scope.candidate});
         $scope.candidate.jobs.push(job);
         $scope.jobs.splice($scope.jobs.indexOf(job), 1);
         $scope.$apply();
@@ -767,6 +769,26 @@ angular.module('candidate-features').controller('CandidateHomeController', [
         $location.path('jobs/' + job._id);
       }).error(function (response) {
         $scope.error = response.message;
+      });
+    };
+  }
+]);'use strict';
+angular.module('candidate-features').controller('LinkedinCvController', [
+  '$scope',
+  '$http',
+  'Authentication',
+  function ($scope, $http, Authentication) {
+    $scope.getLinkiedInProfile = function () {
+      $scope.user = Authentication.user;
+      $http.get('/users/linkedInProfile/' + $scope.user._id).success(function (res) {
+        $scope.candidate = new Object();
+        $scope.candidate.displayName = res.firstName + ' ' + res.lastName;
+        $scope.candidate.title = res.headline;
+        $scope.candidate.country = res.location.name;
+        $scope.candidate.picture_url = res.pictureUrl;
+        $scope.candidate.objective = res.summary;
+      }).error(function (data, status, headers, confige) {
+        console.log('Shouldnt have happened');
       });
     };
   }
@@ -827,12 +849,20 @@ angular.module('candidate-jobs').controller('CandidateOpenJobsController', [
   'Authentication',
   'Candidates',
   '$location',
-  function ($scope, Jobs, $http, Authentication, Candidates, $location) {
+  'Socket',
+  '$rootScope',
+  function ($scope, Jobs, $http, Authentication, Candidates, $location, Socket, $rootScope) {
+    console.log($rootScope.coords.lat + ',' + $rootScope.coords.longi);
     $scope.user = Authentication.user;
     // If user is not signed in then redirect back home
     if (!$scope.user)
       $location.path('/signin');
     $scope.candidate = Candidates.get({ candidateId: $scope.user.candidate });
+    Socket.on('job_posted', function (data) {
+      console.log(data);
+      $scope.jobs.push(data.job);
+      console.log($rootScope.coords.lat + ',' + $rootScope.coords.longi);
+    });
     $scope.jobs = Jobs.query();
     $scope.hasApplied = function (job) {
       if ($scope.candidate.jobs.indexOf(job._id) > -1) {
@@ -1051,7 +1081,14 @@ angular.module('core').config([
     // Home state routing
     $stateProvider.state('transition', {
       url: '/transition',
-      templateUrl: 'modules/core/views/transition.client.view.html'
+      templateUrl: 'modules/core/views/transition.client.view.html',
+      controller: 'TransitionController'
+    }).state('transition.userType', {
+      url: '/userType',
+      templateUrl: 'modules/core/views/transition-userType.client.view.html'
+    }).state('transition.importCv', {
+      url: '/importCv',
+      templateUrl: 'modules/core/views/transition-importCv.client.view.html'
     }).state('home', {
       url: '/',
       templateUrl: 'modules/core/views/landing-page/index.html'
@@ -1075,9 +1112,46 @@ angular.module('core').controller('HeaderController', [
     $scope.isCollapsed = false;
     $scope.menu = Menus.getMenu('topbar');
     $scope.threads = [];
+    $scope.unreadnotificationslength = 0;
+    $scope.notifications = [];
     var thread = [];
-    //add code to refresh the header if thread is coming through the socket
+    $scope.notificationRead = function (data) {
+      $http.post('/users/readNotification/' + $scope.authentication.user._id, data).success(function (res) {
+      }).error(function (data, status, headers, confige) {
+      });
+      for (var i in $scope.notifications) {
+        if ($scope.notifications[i] === data) {
+          $scope.notifications.splice(i, 1);
+        }
+      }
+    };
     if ($scope.authentication.user) {
+      var count = 0;
+      var y = $scope.authentication.user.notifications.length;
+      for (var x = 0; x < y; x++)
+        if (!$scope.authentication.user.notifications[x].isRead) {
+          $scope.notifications = $scope.authentication.user.notifications[x];
+          count++;
+        }
+      $scope.unreadnotificationslength = count--;
+      if (count < 10 && y >= 10) {
+        var x = 0;
+        while (count < 10) {
+          if ($scope.authentication.user.notifications[x].isRead)
+            $scope.notifications = $scope.authentication.user.notifications[x];
+          count++;
+          x++;
+        }
+      }
+      $scope.notifications = $scope.authentication.user.notifications;
+      Socket.on('take_the_test_notification', function (data) {
+        if (data.userid == $scope.authentication.user._id)
+          $scope.notifications.push({
+            generalmessage: data.generalmessage,
+            hiddendata: data.hiddendata,
+            created: data.created
+          });
+      });
       Socket.on('watched_thread_to', function (event, args) {
         $scope.threads = [];
         console.log('wactched_thread_to works');
@@ -1120,7 +1194,7 @@ angular.module('core').controller('HeaderController', [
             $scope.threads.push(thread);
             $scope.$apply();
           }
-        }  // alert(data.message.subject + ' --------------> ' + data.message.messageBody);
+        }
       });
     }
     $scope.toggleCollapsibleMenu = function () {
@@ -1145,6 +1219,7 @@ angular.module('core').controller('HomeController', [
     // This provides Authentication context.
     $scope.authentication = Authentication;
     var user = $scope.authentication.user;
+    console.log(user);
     //starting angular-charts
     $scope.data1 = {
       series: [
@@ -1245,18 +1320,11 @@ angular.module('core').controller('HomeController', [
       $state.go('home');
     else if (user.userType === 'employer') {
       console.log('EMPLOYER');
-      Socket.on('applied_on_job', function (data) {
-        console.log(data.candidate.displayName + ' applied on job : ' + data.job.title);
-        if (user.userType === 'employer')
-          alert(data.candidate.displayName + ' applied on job : ' + data.job.title);
-      });
-      Socket.emit('user_data', user);
       $rootScope.employer = Employers.get({ employerId: $scope.authentication.user.employer }, function (employer) {
         $rootScope.company = Companies.get({ companyId: employer.company });
       });
       $state.go('employerDashboard');
     } else if (user.userType === 'candidate') {
-      Socket.emit('user_data', user);
       $rootScope.candidate = Candidates.get({ candidate: $scope.authentication.user.candidate });
       $state.go('candidate-home');
     } else if (user.userType === 'transition') {
@@ -1274,32 +1342,48 @@ angular.module('core').controller('TransitionController', [
   'Companies',
   'Candidates',
   'Socket',
-  function ($scope, Authentication, $http, $state, $rootScope, Employers, Companies, Candidates, Socket) {
+  '$location',
+  function ($scope, Authentication, $http, $state, $rootScope, Employers, Companies, Candidates, Socket, $location) {
     $scope.authentication = Authentication;
-    //add code for nasty people who can do localhost:3000/#!/transition 
-    $scope.becomeEmployer = function () {
+    $scope.formData = { userType: '' };
+    // function to process the form
+    $scope.$watch('formData.userType', function () {
+      if ($scope.formData.userType == 'Employer') {
+        becomeEmployer();
+      }
+    });
+    $scope.$watch('formData.importCV', function () {
+      if ($scope.formData.importCV == 'import') {
+        // $location.go();
+        $location.path('/linkedin-cv');
+      } else if ($scope.formData.importCV == 'dontimport') {
+        becomeEmployee();
+      }
+    });
+    var becomeEmployer = function () {
+      console.log($scope.authentication.user.userType);
       if ($scope.authentication.user.userType == 'transition') {
         $http.put('/users/setUserType/' + $scope.authentication.user._id, { userType: 'employer' }).success(function (user) {
-          Socket.on('applied_on_job', function (data) {
-            console.log(data.candidate.displayName + ' applied on job : ' + data.job.title);
-            if (user.userType === 'employer')
-              alert(data.candidate.displayName + ' applied on job : ' + data.job.title);
-          });
-          Socket.emit('user_data', user);
-          $rootScope.employer = Employers.get({ employerId: $scope.authentication.user.employer }, function (employer) {
+          // Socket.on('applied_on_job', function (data) {
+          //       		    console.log(data.candidate.displayName + ' applied on job : ' + data.job.title);
+          //       		    if(user.userType === 'employer')
+          //       		    	alert(data.candidate.displayName + ' applied on job : ' + data.job.title);
+          //       		  });
+          $rootScope.employer = Employers.get({ employerId: user.employer }, function (employer) {
             $rootScope.company = Companies.get({ companyId: employer.company });
           });
-          $state.go('employerDashboard');
+          $scope.authentication.user.userType = 'employer';
+          $location.path('/company-profile');
         });
       }
     };
-    $scope.becomeEmployee = function () {
+    var becomeEmployee = function () {
       if ($scope.authentication.user.userType == 'transition') {
         $http.put('/users/setUserType/' + $scope.authentication.user._id, { userType: 'candidate' }).success(function (user) {
           console.log(user);
         });
-        Socket.emit('user_data', user);
         $rootScope.candidate = Candidates.get({ candidate: $scope.authentication.user.candidate });
+        $scope.authentication.user.userType = 'candidate';
         $state.go('candidate-home');
       }
     };
@@ -1649,8 +1733,25 @@ angular.module('core').service('Menus', [function () {
   }]);'use strict';
 angular.module('core').factory('Socket', [
   '$rootScope',
-  function ($rootScope) {
-    var socket = io.connect('http://localhost:3000');
+  'Authentication',
+  'geolocation',
+  function ($rootScope, Authentication, geolocation) {
+    //console.log(Authentication.user);
+    if (Authentication.user && !socket) {
+      $rootScope.coords = {
+        lat: 0,
+        longi: 0
+      };
+      geolocation.getLocation().then(function (data) {
+        $rootScope.coords = {
+          lat: data.coords.latitude,
+          longi: data.coords.longitude
+        };
+        console.log($rootScope.coords.lat + ',' + $rootScope.coords.longi);
+      });
+      var socket = io.connect('http://localhost:3000');
+      socket.emit('user_data', Authentication.user);
+    }
     return {
       on: function (eventName, callback) {
         socket.on(eventName, function () {
@@ -1921,7 +2022,8 @@ angular.module('empoyer-jobs').controller('CompanyOpenJobsController', [
   'Employers',
   'Companies',
   '$location',
-  function ($scope, Authentication, Jobs, Employers, Companies, $location) {
+  'Socket',
+  function ($scope, Authentication, Jobs, Employers, Companies, $location, Socket) {
     $scope.user = Authentication.user;
     // If user is not signed in then redirect back home
     if (!$scope.user)
@@ -1938,6 +2040,14 @@ angular.module('empoyer-jobs').controller('CompanyOpenJobsController', [
         });
       });
     });
+    Socket.on('applied_on_job', function (data) {
+      for (var d = 0, h = $scope.jobs.length; d < h; d++) {
+        if ($scope.jobs[d]._id == data.job._id) {
+          $scope.jobs[d] = data.job;
+          break;
+        }
+      }
+    });
   }
 ]);'use strict';
 angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', [
@@ -1952,21 +2062,82 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', [
     $scope.visaFilters = [];
     $scope.employeetypeFilters = [];
     $scope.employeestatusFilters = [];
-    $scope.isShortListed = function (candidate) {
-      // job.candidates = [];
-      // job.shortListedCandidates = [];
-      return false;
+    $scope.itemsPerPage = 10;
+    $scope.currentPage = 0;
+    $scope.range = function () {
+      var rangeSize = 5;
+      var ret = [];
+      var start;
+      start = $scope.currentPage;
+      if (start > $scope.pageCount() - rangeSize) {
+        start = $scope.pageCount() - rangeSize;
+      }
+      for (var i = start; i < start + rangeSize; i++) {
+        if (i >= 0)
+          ret.push(i);
+      }
+      return ret;
     };
-    $http.get('jobs/candidates/' + $stateParams.jobId).success(function (job) {
-      $scope.job = job;
-      $scope.candidates = job.candidates;
-      $scope.filteredCandidates = $scope.candidates;
-      populateLocationFilters();
-      populateSalaryFilters();
-      populateVisaFilters();
-      populateEmployeetypeFilters();
-      populateEmployeestatusFilters();
+    $scope.prevPage = function () {
+      if ($scope.currentPage > 0) {
+        $scope.currentPage--;
+      }
+    };
+    $scope.prevPageDisabled = function () {
+      return $scope.currentPage === 0 ? 'disabled' : '';
+    };
+    $scope.nextPage = function () {
+      if ($scope.currentPage < $scope.pageCount() - 1) {
+        $scope.currentPage++;
+      }
+    };
+    $scope.nextPageDisabled = function () {
+      return $scope.currentPage === $scope.pageCount() - 1 ? 'disabled' : '';
+    };
+    $scope.pageCount = function () {
+      console.log($scope.total + ' ' + $scope.itemsPerPage);
+      console.log($scope.total / $scope.itemsPerPage);
+      return Math.ceil($scope.total / $scope.itemsPerPage);
+    };
+    $scope.setPage = function (n) {
+      console.log('EVERYTIME ITS CALLED');
+      if (n >= 0 && n < $scope.pageCount()) {
+        $scope.currentPage = n;
+        console.log($scope.currentPage);
+      }
+    };
+    $scope.$watch('currentPage', function (newValue, oldValue) {
+      console.log('CURRENT PAGE');
+      $http.put('jobs/getPaginatedCandidates/' + $stateParams.jobId, {
+        skip: newValue * $scope.itemsPerPage,
+        limit: $scope.itemsPerPage
+      }).success(function (job) {
+        $scope.pagedItems = $scope.job.candidates;
+        $scope.total = $scope.job.candidates.length;
+        $scope.candidates = job.candidates;
+        $scope.filteredCandidates = $scope.candidates;
+      });
     });
+    $scope.isShortListed = function (candidate) {
+      var ans = false;
+      angular.forEach($scope.job.shortListedCandidates, function (item) {
+        if (item.candidate == candidate._id)
+          ans = true;
+      });
+      return ans;
+    };
+    $scope.findCandidates = function () {
+      $http.put('jobs/getPaginatedCandidates/' + $stateParams.jobId, {
+        skip: 0,
+        limit: $scope.itemsPerPage,
+        filter: 'general'
+      }).success(function (job) {
+        $scope.job = job.job;
+        $scope.candidates = $scope.job.candidates;
+        $scope.total = job.totalentries;
+        console.log($scope.total);
+      });
+    };
     // $http.get('jobs/candidates/' + $stateParams.jobId).success(function(job) {
     // 	$scope.job = job;
     // 	$scope.candidates = job.candidates;
@@ -1978,6 +2149,11 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', [
           candidateId: candidate._id
         };
       $http.put('jobs/addToShortList/' + $scope.job._id, attribute).success(function (response) {
+        $scope.job.shortListedCandidates.push({ candidate: candidate._id });  // $scope.$apply();
+                                                                              // $scope.candidate.jobs.push(job);
+                                                                              // $scope.jobs.splice($scope.jobs.indexOf(job), 1);
+                                                                              // $scope.$apply();
+                                                                              // $location.path('jobs/' + job._id);
       }).error(function (response) {
         $scope.error = response.message;
       });
@@ -1989,6 +2165,10 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', [
           candidateId: candidate._id
         };
       $http.put('jobs/removeFromShortList/' + $scope.job._id, attribute).success(function (response) {
+        angular.forEach($scope.job.shortListedCandidates, function (item) {
+          if (item.candidate == candidate._id)
+            $scope.job.shortListedCandidates.splice($scope.job.shortListedCandidates.indexOf(item), 1);
+        });
         //And redirect to the index page
         $location.path('jobs/' + job._id);
       }).error(function (response) {
@@ -2045,22 +2225,6 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', [
         $scope.visaFilters[$scope.visaFilters.length - 1].count++;
       }
     };
-    var populateEmployeetypeFilters = function () {
-      $scope.candidates = $filter('orderBy')($scope.candidates, 'visa_status');
-      var filterValue = 'invalid_value';
-      for (var i = 0; i < $scope.candidates.length; i++) {
-        var candidate = $scope.candidates[i];
-        if (candidate.visa_status !== filterValue) {
-          filterValue = candidate.visa_status;
-          $scope.visaFilters.push({
-            name: filterValue,
-            count: 0,
-            value: false
-          });
-        }
-        $scope.employeetypeFilters[$scope.employeetypeFilters.length - 1].count++;
-      }
-    };
     var populateEmployeestatusFilters = function () {
       $scope.candidates = $filter('orderBy')($scope.candidates, 'employee_status');
       var filterValue = 'invalid_value';
@@ -2074,7 +2238,7 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', [
             value: false
           });
         }
-        $scope.visaFilters[$scope.visaFilters.length - 1].count++;
+        $scope.employeestatusFilters[$scope.employeestatusFilters.length - 1].count++;
       }
     };
     var populateEmployeetypeFilters = function () {
@@ -2093,22 +2257,6 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', [
         $scope.employeetypeFilters[$scope.employeetypeFilters.length - 1].count++;
       }
     };
-    var populateEmployeestatusFilters = function () {
-      $scope.candidates = $filter('orderBy')($scope.candidates, 'employee_status');
-      var filterValue = 'invalid_value';
-      for (var i = 0; i < $scope.candidates.length; i++) {
-        var candidate = $scope.candidates[i];
-        if (candidate.employee_status !== filterValue) {
-          filterValue = candidate.employee_status;
-          $scope.employeestatusFilters.push({
-            name: filterValue,
-            count: 0,
-            value: false
-          });
-        }
-        $scope.employeestatusFilters[$scope.employeestatusFilters.length - 1].count++;
-      }
-    };
   }
 ]);'use strict';
 angular.module('empoyer-jobs').controller('PostJobController', [
@@ -2119,22 +2267,29 @@ angular.module('empoyer-jobs').controller('PostJobController', [
   '$location',
   'Authentication',
   'Jobs',
-  function ($scope, Industries, Countries, Studyfields, $location, Authentication, Jobs) {
+  '$rootScope',
+  function ($scope, Industries, Countries, Studyfields, $location, Authentication, Jobs, $rootScope) {
     $scope.user = Authentication.user;
     // If user is not signed in then redirect back home
     if (!$scope.user)
       $location.path('/signin');
     $scope.industries = Industries.getIndustries();
-    // $scope.industry =$scope.industries[0].name;
     $scope.countries = Countries.getCountries();
     $scope.studyFields = Studyfields.getStudyFields();
-    // $scope.texting = IndustriesFactory.sayHello('world');
     $scope.skills = [];
-    $scope.skills.push({ title: '' });
+    $scope.skills.push({
+      title: '',
+      level: 'Beginner'
+    });
     $scope.certificates = [];
     $scope.certificates.push({ name: '' });
+    $scope.isTabMap = false;
+    // $scope.setMapSelected =  function(){
+    // 	$scope.isTabMap = true;
+    // };
     // Create new Job
     $scope.create = function () {
+      $scope.position = $scope.map.markers[0].position;
       // Create new Job object
       var job = new Jobs({
           title: this.title,
@@ -2157,7 +2312,11 @@ angular.module('empoyer-jobs').controller('PostJobController', [
           study_field: this.study_field,
           travel_required: this.travel_required,
           skills: this.skills,
-          certificates: this.certificates
+          certificates: this.certificates,
+          coordinates: {
+            latitude: $scope.position.k,
+            longitude: $scope.position.B
+          }
         });
       // Redirect after save
       job.$save(function (response) {
@@ -2171,7 +2330,10 @@ angular.module('empoyer-jobs').controller('PostJobController', [
     };
     //Skills
     $scope.addSkill = function () {
-      $scope.skills.push({ title: '' });
+      $scope.skills.push({
+        title: '',
+        level: 'Beginner'
+      });
     };
     $scope.removeSkill = function (index) {
       $scope.skills.splice(index, 1);
@@ -2182,6 +2344,11 @@ angular.module('empoyer-jobs').controller('PostJobController', [
     };
     $scope.removeCertificate = function (index) {
       $scope.certificates.splice(index, 1);
+    };
+    $scope.bootupmapaccordingtogeolocation = function () {
+      $scope.lat = $rootScope.coords.lat;
+      $scope.longi = $rootScope.coords.longi;
+      console.log($scope.lat);
     };
   }
 ]);'use strict';
@@ -2345,7 +2512,6 @@ angular.module('exams').controller('TakeExamController', [
       $scope.submitExam();
     });
     $scope.$on('$destroy', function () {
-      console.log('DESTRUCTION');
       window.onbeforeunload = undefined;
     });
     window.onbeforeunload = function (event) {
@@ -2422,6 +2588,7 @@ angular.module('jobs').controller('JobsController', [
     // If user is not signed in then redirect back home
     if (!$scope.user)
       $location.path('/signin');
+    //Add one to view if the job was seen by the candidate
     // Create new Job
     $scope.create = function () {
       // Create new Job object
@@ -2480,6 +2647,10 @@ angular.module('jobs').controller('JobsController', [
             $scope.isApplied = true;
           }
         });
+      });
+      $http.put('jobs/onePlusView/' + $stateParams.jobId, { user: $scope.user }).success(function (response) {
+      }).error(function (response) {
+        $scope.error = response.message;
       });
     };
   }
@@ -2583,10 +2754,58 @@ angular.module('short-list').config([
   '$stateProvider',
   function ($stateProvider) {
     // Short list state routing
-    $stateProvider.state('shortlisted-candidates', {
+    $stateProvider.state('shortlisted-candidates-skeleton', {
+      url: '/shortlisted-candidates-skeleton',
+      templateUrl: 'modules/core/views/shortlisted-candidates-skeleton.client.view.html'
+    }).state('shortlisted-candidates', {
       url: '/shortlisted-candidates/:jobId',
-      templateUrl: 'modules/short-list/views/shortlisted-candidates.client.view.html'
+      templateUrl: 'modules/short-list/views/shortlisted-candidates.client.view.html',
+      controller: 'ShortlistedCandidatesController'
+    }).state('shortlisted-candidates-test', {
+      url: '/test',
+      templateUrl: 'modules/short-list/views/shortlisted-candidates-test.client.view.html',
+      controller: 'CandidatesTestController'
     });
+  }
+]);angular.module('short-list').controller('CandidatesTestController', [
+  '$scope',
+  '$http',
+  '$stateParams',
+  '$modal',
+  '$rootScope',
+  'Exams',
+  'Authentication',
+  function ($scope, $http, $stateParams, $modal, $rootScope, Exams, Authentication) {
+    $scope.user = Authentication.user;
+    // console.log($rootScope.selectedCandidates[0]);
+    // Find a list of Exams
+    $scope.find = function () {
+      $scope.tests = Exams.query();
+    };
+    $scope.sendTest = function () {
+      var tests = [];
+      angular.forEach($scope.tests, function (test) {
+        console.log(test);
+        if (test.selected) {
+          tests.push(test._id);
+        }
+      });
+      var candidates = $rootScope.selectedCandidates;
+      console.log(candidates);
+      $http.put('/exams/sendTest/' + $scope.user._id, {
+        candidates: candidates,
+        tests: tests
+      }).success(function (response) {
+        console.log(response);
+        if (response.data == 'none have given test') {
+          alert('None have given the test ');
+        }
+        if (response.data == 'already given test') {
+          alert('well it looks like someone has given the test already');
+        }
+      }).error(function (err) {
+      });
+    };
   }
 ]);'use strict';
 angular.module('short-list').controller('messageController', [
@@ -2660,12 +2879,25 @@ angular.module('short-list').controller('ShortlistedCandidatesController', [
   '$http',
   '$stateParams',
   '$modal',
-  function ($scope, $http, $stateParams, $modal) {
+  '$rootScope',
+  function ($scope, $http, $stateParams, $modal, $rootScope) {
     // Controller Logic
     // ...
+    $rootScope.selectedCandidates = [];
+    $scope.formData = { userType: '' };
     $http.get('jobs/shortListedCandidates/' + $stateParams.jobId).success(function (job) {
       $scope.job = job;
-      $scope.shortListedObjects = job.shortListedCandidates;  // $scope.filteredCandidates = $scope.candidates;
+      $scope.shortListedObjects = job.shortListedCandidates;
+    });
+    $scope.$on('$destroy', function () {
+      for (var d = 0, s = $scope.shortListedObjects.length; d < s; d++) {
+        var f = $scope.shortListedObjects[d];
+        console.log(f.selected);
+        if (f.selected) {
+          $rootScope.selectedCandidates.push($scope.shortListedObjects[d].candidate._id);
+          console.log('WTF');
+        }
+      }
     });
     // Remove from Short List
     $scope.removeCandidateFromShortList = function (candidate) {
@@ -4768,7 +5000,8 @@ angular.module('threads').controller('ThreadsController', [
   'Threads',
   '$http',
   'Socket',
-  function ($scope, $stateParams, $location, Authentication, Threads, $http, Socket) {
+  '$rootScope',
+  function ($scope, $stateParams, $location, Authentication, Threads, $http, Socket, $rootScope) {
     $scope.authentication = Authentication;
     $scope.color = 'color:green';
     $scope.color2 = 'color:red';
@@ -4923,6 +5156,12 @@ angular.module('threads').controller('ThreadsController', [
         Socket.emit('watched_thread', $scope.authentication.user._id);
       });
     };
+    $scope.cancelCompose = function () {
+      $scope.isCompose = false;
+    };
+    $scope.startCompose = function () {
+      $scope.isCompose = true;
+    };
   }
 ]);'use strict';
 //Threads service used to communicate Threads REST endpoints
@@ -4982,6 +5221,18 @@ angular.module('users').config([
     }).state('signin', {
       url: '/signin',
       templateUrl: 'modules/users/views/signin.client.view.html'
+    }).state('forgot', {
+      url: '/password/forgot',
+      templateUrl: 'modules/users/views/password/forgot-password.client.view.html'
+    }).state('reset-invlaid', {
+      url: '/password/reset/invalid',
+      templateUrl: 'modules/users/views/password/reset-password-invalid.client.view.html'
+    }).state('reset-success', {
+      url: '/password/reset/success',
+      templateUrl: 'modules/users/views/password/reset-password-success.client.view.html'
+    }).state('reset', {
+      url: '/password/reset/:token',
+      templateUrl: 'modules/users/views/password/reset-password.client.view.html'
     });
   }
 ]);'use strict';
@@ -5026,6 +5277,46 @@ angular.module('users').controller('AuthenticationController', [
         //And redirect to the index page
         // $location.path('/');
         changeLocation('/');
+      }).error(function (response) {
+        $scope.error = response.message;
+      });
+    };
+  }
+]);'use strict';
+angular.module('users').controller('PasswordController', [
+  '$scope',
+  '$stateParams',
+  '$http',
+  '$location',
+  'Authentication',
+  function ($scope, $stateParams, $http, $location, Authentication) {
+    $scope.authentication = Authentication;
+    //If user is signed in then redirect back home
+    if ($scope.authentication.user)
+      $location.path('/');
+    // Submit forgotten password account id
+    $scope.askForPasswordReset = function () {
+      $scope.success = $scope.error = null;
+      $http.post('/auth/forgot', $scope.credentials).success(function (response) {
+        // Show user success message and clear form
+        $scope.credentials = null;
+        $scope.success = response.message;
+      }).error(function (response) {
+        // Show user error message and clear form
+        $scope.credentials = null;
+        $scope.error = response.message;
+      });
+    };
+    // Change user password
+    $scope.resetUserPassword = function () {
+      $scope.success = $scope.error = null;
+      $http.post('/auth/reset/' + $stateParams.token, $scope.passwordDetails).success(function (response) {
+        // If successful show success message and clear form
+        $scope.passwordDetails = null;
+        // Attach user profile
+        Authentication.user = response;
+        // And redirect to the index page
+        $location.path('/password/reset/success');
       }).error(function (response) {
         $scope.error = response.message;
       });
