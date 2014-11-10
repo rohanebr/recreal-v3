@@ -621,7 +621,9 @@ var sortandfilter = function(type, candidates, incomingfiltersit, filters) {
 
 
 
+ 
 
+ 
 var generateFilter = function(filterType, candidates, filters, incomingfilters){
     var filterValue = 'invalid_value';
         for (var i = 0, len = candidates.length; i < len; i++) {
