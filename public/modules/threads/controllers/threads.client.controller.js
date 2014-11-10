@@ -222,5 +222,29 @@ Socket.emit('message_sent_from', {message: thread});
 		$scope.startCompose = function(){
 			$scope.isCompose = true;
 		}
+
+		// Check / Uncheck All
+    $scope.checkAll = function() {
+        for(var i=0; i < $scope.threads.length; i++) {
+            $scope.threads[i].selected = $scope.allChecked;
+        }
+    };
+    
+    // Change the status of the 'Check All' checkbox
+    // According to the other checkboxes
+    $scope.changeCheckAll = function() {
+        for(var i = 0; i < $scope.threads.length; i++) {
+            // If there is an unchecked input
+            // Change the status and exit the function
+            if (!$scope.threads[i].selected) {
+                $scope.allChecked = false;
+                return false;
+            }
+        }
+        
+        // If all are checked
+        $scope.allChecked = true;
+        
+    }
 	}
 ]);
