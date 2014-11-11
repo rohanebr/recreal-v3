@@ -506,7 +506,7 @@ exports.getPaginatedCandidates = function(req, res) {
 
 
                 });
-                selectedCandidates.sort('-xp');
+                selectedCandidates.sort('-calculateScore.Score');
                 selectedCandidates.skip(req.body.skip);
                 selectedCandidates.limit(req.body.limit);
                 selectedCandidates.select('displayName title objective picture_url location salary_expectation visa_status employee_type employee_status skills');

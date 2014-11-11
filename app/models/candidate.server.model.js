@@ -228,6 +228,7 @@ var CandidateSchema = new Schema({
 		type: Date,
 		default: Date.now
 	},
+	calculateScore:[{jobname:{type:Schema.ObjectId,ref: 'Job'},Score:{type:Number,default:0}}],
 	jobs: [{
 		type: Schema.ObjectId,
 		ref: 'Job'

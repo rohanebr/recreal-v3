@@ -33,8 +33,8 @@ else
              	}
 
 
-     candidate.xp=xp;
-     candidate.markModified('xp');
+     candidate.calculateScore.push({jobname:job._id,Score:xp});
+     candidate.markModified('calculateScore');
 	 candidate.save();
      console.log("XP"+xp);
 
