@@ -1,7 +1,7 @@
 var mongoose = require('mongoose'),
   
     Candidate = mongoose.model('Candidate');
-
+var level=["Beginner","Intermediate","Expert"];
 var career_level=["Student/Internship","Entry Level","Mid Career","Management","Executive (Director)","Senior Executive (CEO)"];
 var salary_expectation=["10,000 - 15,000","15,000 - 30,000","30,000 - 60,000"];
 exports.calculateMatchPercent=function(candidates,precedence,job)
@@ -32,7 +32,7 @@ else
     
     {
         var xp=0;
-console.log(candidates.length+" "+candidates[h].displayName);
+
         var candidate=candidates[h];
 
              for(var g=0;g<precedence.length;g++)
@@ -67,6 +67,60 @@ for(var q=0,tt=salary_expectation.length;q<tt;q++)
                        }
          
                 }
+
+
+             }
+
+             if(precedence[g].name=="skills")
+             {
+
+                     for(var xxx=0,yyy=candidate.skills.length;xxx<yyy;xxx++)
+                     {
+                            for(var k=0,jj=job.skills.length;k<jj;k++)
+                            {
+                              if(job.skills[k].title.toLowerCase()==candidate.skills[xxx].title.toLowerCase())
+                              {
+                                  
+                                         for(u=0;u<level.length;u++)
+                                         {
+
+                                           if(candidate.skills[xxx].level==level[u])
+                                               {
+                                                 var oneskillvalue=getIndexOf("skills",precedence)/job.skills.length;
+                                                 console.log(oneskillvalue);
+                                                 if(candidate.skills[xxx].experience>=5)
+                                                 {
+                                                 
+                                                  oneskillvalue=oneskillvalue*((u+1)/level.length);
+                                                  xp=xp+oneskillvalue;
+                                                  console.log(oneskillvalue+" "+level[u]+" "+(u+1)/level.length);
+                                                 }
+                                                 else
+                                                 {
+
+                                                     oneskillvalue=oneskillvalue*(((u+1)/level.length)*candidate.skills[xxx].experience/5);
+
+                                                     xp=xp+oneskillvalue;
+                                                      console.log(oneskillvalue+" "+level[u]+" "+(u+1)/level.length+" "+candidate.skills[xxx].experience/10);
+                                               
+
+                                                 }
+             
+
+                                               }
+
+                                         }
+
+                              }
+
+
+                            }
+                     
+
+                     }
+
+
+
 
 
              }
@@ -116,7 +170,7 @@ console.log("getindexof");
 
 
    }
-  console.log(precedence.length-h+" "+precedence.length+" "+h);
+ 
    return precedence.length-h;
 
 
