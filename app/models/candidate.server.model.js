@@ -50,7 +50,7 @@ var CandidateSchema = new Schema({
 	},
 	gender:{
 		type: String,
-		enum: ['male', 'female', 'not specified'],
+		enum: ['Male', 'Female', 'not specified'],
 		default: 'not specified'
 	},
 	visa_status:{

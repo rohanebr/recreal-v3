@@ -21,6 +21,20 @@
             <section >
                 <div class="col-sm-12">
 
+                <div id="sortable-container">
+    <div class="sortable-row" as-sortable="sortableOptions" ng-model="itemsList.items1">
+        <div ng-repeat="item in itemsList.items1" as-sortable-item>
+            <div as-sortable-item-handle>{{item.Label}}</div>
+        </div>
+    </div>
+    
+</div>
+  </div>
+
+
+                </div>          
+                <div class="col-sm-12">
+
                  <div data-ng-repeat="filtername in completefilternames">
                     <filter-list filter-name="{{filtername}}"></filter-list>
                 </div>
