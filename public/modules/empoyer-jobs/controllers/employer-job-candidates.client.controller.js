@@ -15,18 +15,19 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
         $scope.completefilternames=[];
         $scope.filterLimit = 5;
         var i;
-  $scope.itemsList = {
-    items1: [],
-    items2: []
+$scope.priorities=["career_level","salary_expectation","skills"];
+        if (!$scope.user) $location.path('/signin');
+    
+   $scope.itemsList = {
+    items1: []
+  
   };
-
-  for (i = 0; i <= 5; i += 1) {
-    $scope.itemsList.items1.push({'Id': i, 'Label': 'Item ' + i});
+$scope.itemsList.items1
+  for (i = 0; i < $scope.priorities.length; i += 1) {
+    $scope.itemsList.items1.push({'Id': i, 'Label': $scope.priorities[i]});
   }
 
-  for (i = 0; i <= 5; i += 1) {
-    $scope.itemsList.items2.push({'Id': i, 'Label': 'Item 2_' + i});
-  }
+ 
   $scope.sortableOptions = {
     containment: '#sortable-container',
     //restrict move across columns. move only within column.
@@ -34,8 +35,6 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
       return sourceItemHandleScope.itemScope.sortableScope.$id === destSortableScope.$id;
     }
   };
-        if (!$scope.user) $location.path('/signin');
- 
         $scope.range = function() {
             var rangeSize = 5;
             var ret = [];
@@ -100,13 +99,14 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
         };
 
         $scope.findCandidates = function(skip,limit,filters, isPageChange) {
-
+ console.log($scope.itemsList.items1);
         
             $http.put('jobs/getPaginatedCandidates/' + $stateParams.jobId, {
                 skip: skip,
                 limit: limit,
                 filter: filters,
-                isPageChange: isPageChange
+                isPageChange: isPageChange,
+                priority:$scope.itemsList.items1
             }).success(function(job) {
             	  $scope.filters1=[];
                 $scope.job = job.job;
