@@ -15,26 +15,24 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
         $scope.completefilternames=[];
         $scope.filterLimit = 5;
         var i;
-$scope.priorities=["career_level","salary_expectation","skills"];
+$scope.priorities=[{'Id':1,'Label':"Career Level",'name':'career_level','nameinjob':'career_level'},{'Id':2,'Label':"Salary Expectation",'name':'salary_expectation','nameinjob':"salary_range"},{'Id':3,'Label':"Skills",'name':'skills','nameinjob':'skills'}];
         if (!$scope.user) $location.path('/signin');
     
    $scope.itemsList = {
     items1: []
   
   };
-$scope.itemsList.items1
-  for (i = 0; i < $scope.priorities.length; i += 1) {
-    $scope.itemsList.items1.push({'Id': i, 'Label': $scope.priorities[i]});
-  }
-
- 
-  $scope.sortableOptions = {
+$scope.itemsList.items1=$scope.priorities;
+$scope.sortableOptions = {
     containment: '#sortable-container',
     //restrict move across columns. move only within column.
     accept: function (sourceItemHandleScope, destSortableScope) {
       return sourceItemHandleScope.itemScope.sortableScope.$id === destSortableScope.$id;
-    }
-  };
+    },
+      orderChanged: function(event) {$scope.findCandidates($scope.skip,$scope.itemsPerPage,$scope.filters, false);}
+  }; 
+
+
         $scope.range = function() {
             var rangeSize = 5;
             var ret = [];

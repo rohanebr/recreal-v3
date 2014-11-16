@@ -368,7 +368,7 @@ exports.getPaginatedCandidates = function(req, res) {
     var g = 0;
     var ffilter = req.body.filter;
     var dummy;
-
+    var precedence=req.body.priority;
 
     ffilter.sort(filterHelper.dynamicSort("priority"));
 
@@ -466,7 +466,9 @@ exports.getPaginatedCandidates = function(req, res) {
 
                         if (x == incomingfilters.length) {
                             totallength = candidates.length;
-
+                             matching.calculateMatchPercent(candidates,precedence,job);
+                              selectedCandidates.sort('-calculateScore.Score');
+                
 
                             selectedCandidates.skip(req.body.skip);
                             selectedCandidates.limit(req.body.limit);
