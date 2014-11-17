@@ -50,7 +50,7 @@ var CandidateSchema = new Schema({
 	},
 	gender:{
 		type: String,
-		enum: ['male', 'female', 'not specified'],
+		enum: ['Male', 'Female', 'not specified'],
 		default: 'not specified'
 	},
 	visa_status:{
@@ -228,6 +228,7 @@ var CandidateSchema = new Schema({
 		type: Date,
 		default: Date.now
 	},
+	calculateScore:[{jobname:{type:Schema.ObjectId,ref: 'Job'},Score:{type:Number,default:0}}],
 	jobs: [{
 		type: Schema.ObjectId,
 		ref: 'Job'

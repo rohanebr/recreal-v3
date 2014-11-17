@@ -8,36 +8,38 @@ var mongoose = require('mongoose'),
     Employer = mongoose.model('Employer'),
     Candidate = mongoose.model('Candidate'),
     JobSocket = require('../sockets/job.server.socket.js'),
-    _ = require('lodash');
+    _ = require('lodash'),
+    matching = require('../helpers/matching-algo.server.helper.js'),
+    filterHelper=require('../helpers/filter.server.helper.js');
 
 
-    Array.prototype.asyncEach = function(iterator) {
-  var list    = this,
-      n       = list.length,
-      i       = -1,
-      calls   = 0,
-      looping = false;
+Array.prototype.asyncEach = function(iterator) {
+    var list = this,
+        n = list.length,
+        i = -1,
+        calls = 0,
+        looping = false;
 
-  var iterate = function() {
-    calls -= 1;
-    i += 1;
-    if (i === n) return;
-    iterator(list[i], resume);
-  };
+    var iterate = function() {
+        calls -= 1;
+        i += 1;
+        if (i === n) return;
+        iterator(list[i], resume);
+    };
 
-  var loop = function() {
-    if (looping) return;
-    looping = true;
-    while (calls > 0) iterate();
-    looping = false;
-  };
+    var loop = function() {
+        if (looping) return;
+        looping = true;
+        while (calls > 0) iterate();
+        looping = false;
+    };
 
-  var resume = function() {
-    calls += 1;
-    if (typeof setTimeout === 'undefined') loop();
-    else setTimeout(iterate, 1);
-  };
-  resume();
+    var resume = function() {
+        calls += 1;
+        if (typeof setTimeout === 'undefined') loop();
+        else setTimeout(iterate, 1);
+    };
+    resume();
 };
 
 /**
@@ -72,11 +74,11 @@ var getErrorMessage = function(err) {
  * Create a Job
  */
 exports.create = function(req, res) {
-    
+
     if (req.user.userType === 'employer') {
         var job = new Job(req.body);
         job.user = req.user;
-       
+
         var emp = Employer.find({
             user: req.user._id
         }).populate('company').exec(function(err, employers) {
@@ -322,7 +324,7 @@ exports.onePlusView = function(req, res) {
     var alreadyviewedbytheuser = false;
 
     Job.findById(req.job._id).exec(function(err, job) {
-       if (req.job.views.length == 0)
+        if (req.job.views.length == 0)
             job.views.push(req.body.user._id);
         if (req.job.views.length > 0) {
             for (var d = 0; d < numberofviews.length; d++) {
@@ -353,45 +355,48 @@ exports.onePlusView = function(req, res) {
 
 exports.getPaginatedCandidates = function(req, res) {
     var filters = [];
-var dbfilters = ["salary_expectation", "visa_status", "employee_status", "employee_type", "career_level"];
+    var dbfilters = ["salary_expectation", "visa_status", "employee_status", "employee_type", "career_level"];
 
     var incomingfilters = [];
-    
 
+   var precedence=req.body.precedence;
     //entry.type shld be equal to any field given in the candidate model 
     //it is important to name them exactly as the model variables
     var previousentry = "";
-    var previouscount=0;
+    var previouscount = 0;
     var count = 0;
-    var g=0;
-    var ffilter=req.body.filter;
+    var g = 0;
+    var ffilter = req.body.filter;
     var dummy;
+    var precedence=req.body.priority;
 
-
-    ffilter.sort(dynamicSort("priority"));
+    ffilter.sort(filterHelper.dynamicSort("priority"));
 
 
 
     count = 0;
-   // console.log(ffilter);
+    // console.log(ffilter);
     ffilter.forEach(function(entry) {
         if (entry.type != previousentry)
             count++;
-        
-        entry.priority = count;
-        if(previouscount!=count)
-        incomingfilters.push({name:[entry.name],type:entry.type,priority:entry.priority});
-    else
-    {
-   incomingfilters[incomingfilters.length-1].name.push(entry.name);
 
-    }
+        entry.priority = count;
+        if (previouscount != count)
+            incomingfilters.push({
+                name: [entry.name],
+                type: entry.type,
+                priority: entry.priority
+            });
+        else {
+            incomingfilters[incomingfilters.length - 1].name.push(entry.name);
+
+        }
         previousentry = entry.type;
-previouscount=count;
+        previouscount = count;
 
     });
 
-var incomingfilters2=incomingfilters.slice();
+    var incomingfilters2 = incomingfilters.slice();
 
 
     Job.findById(req.job.id)
@@ -407,243 +412,121 @@ var incomingfilters2=incomingfilters.slice();
                     $in: candidates
                 }
             });
+           
             var once = true;
             count = 1;
             var firstfilter = [];
-            var priority=1;
+            var priority = 1;
             incomingfilters.forEach(function(entry) {
-                if (entry.priority == priority)
-                    {firstfilter.push(entry);
-                        once=false;
-                    }
-               
+                if (entry.priority == priority) {
+                    firstfilter.push(entry);
+                    once = false;
+                }
+
 
 
 
             });
 
-            if(incomingfilters.length!=0)
-            {   
-                 var lengthincomingfilters=incomingfilters.length;
-                 for(var h=0,t=dbfilters.length;h<t;h++)
-                    {  var alreadyPresent=false;
-                         for(var y=0,w=incomingfilters.length;y<w;y++)
-                         {
-                            if(incomingfilters[y].type==dbfilters[h])
-                                          alreadyPresent=true;
+            if (incomingfilters.length != 0) {
+                var lengthincomingfilters = incomingfilters.length;
+                for (var h = 0, t = dbfilters.length; h < t; h++) {
+                    var alreadyPresent = false;
+                    for (var y = 0, w = incomingfilters.length; y < w; y++) {
+                        if (incomingfilters[y].type == dbfilters[h])
+                            alreadyPresent = true;
 
-                         }
-                         if(!alreadyPresent)
-                            incomingfilters.push({name:[""],type:dbfilters[h],priority:-4});
- 
                     }
-                var letspopulatefilters=[];
-               var x=0;
-                  incomingfilters.asyncEach(function(incomingfilter,resume) 
-               {
-                if(letspopulatefilters.length!=0)
-                {    for(var h=0;h<letspopulatefilters.length;h++)
-                    {
-                       
-                        var names=letspopulatefilters[h].name;
-                     selectedCandidates.where(letspopulatefilters[h].type).in(names);
-}
-                } 
+                    if (!alreadyPresent)
+                        incomingfilters.push({
+                            name: [""],
+                            type: dbfilters[h],
+                            priority: -4
+                        });
 
-               
-                  selectedCandidates.exec(function(err, candidates) {
-                 if(x<lengthincomingfilters)
-                 letspopulatefilters.push(incomingfilter);
-                x++;
-                 filters = sortandfilter(incomingfilter.type, candidates,incomingfilters2, filters);
-                
-            
-            if(x==incomingfilters.length)
-               { 
-               totallength=candidates.length;
+                }
+                var letspopulatefilters = [];
+                var x = 0;
+                incomingfilters.asyncEach(function(incomingfilter, resume) {
+                    if (letspopulatefilters.length != 0) {
+                        for (var h = 0; h < letspopulatefilters.length; h++) {
 
-
-                      selectedCandidates.skip(req.body.skip);
-            selectedCandidates.limit(req.body.limit);
-            selectedCandidates.select('displayName title objective picture_url location salary_expectation visa_status employee_type employee_status career_level skills');
-            selectedCandidates.exec(function(err, candidate) {
-               
-                res.jsonp({
-                    candidates: candidate,
-                    totalentries: totallength,
-                    job: job,
-                    filters: filters
-                });
-            });} 
-
-                         });
-
-
-resume();
-
-              });
-
-
-               }
-
-
-                
-               
-               
-
-            
-           
-      
-                     if (incomingfilters.length == 0) {
-                selectedCandidates.exec(function(err, candidates) {
-                    for (var s = 0; s < dbfilters.length; s++) {
-                       
-                        filters = sortandfilter(dbfilters[s], candidates, incomingfilters, filters);
+                            var names = letspopulatefilters[h].name;
+                            selectedCandidates.where(letspopulatefilters[h].type).in(names);
+                        }
                     }
 
 
-                });
-                selectedCandidates.skip(req.body.skip);
-            selectedCandidates.limit(req.body.limit);
-            selectedCandidates.select('displayName title objective picture_url location salary_expectation visa_status employee_type employee_status skills');
-            selectedCandidates.exec(function(err, candidate) {
+                    selectedCandidates.exec(function(err, candidates) {
+                        if (x < lengthincomingfilters)
+                            letspopulatefilters.push(incomingfilter);
+                        x++;
+                        filters = filterHelper.sortandfilter(incomingfilter.type, candidates, incomingfilters2, filters);
+
+
+                        if (x == incomingfilters.length) {
+                            totallength = candidates.length;
+                             matching.calculateMatchPercent(candidates,precedence,job);
+                              selectedCandidates.sort('-calculateScore.Score');
                 
-                res.jsonp({
-                    candidates: candidate,
-                    totalentries: totallength,
-                    job: job,
-                    filters: filters
+
+                            selectedCandidates.skip(req.body.skip);
+                            selectedCandidates.limit(req.body.limit);
+                            selectedCandidates.select('displayName title objective picture_url location salary_expectation visa_status employee_type employee_status career_level skills');
+                            selectedCandidates.exec(function(err, candidate) {
+
+                                res.jsonp({
+                                    candidates: candidate,
+                                    totalentries: totallength,
+                                    job: job,
+                                    filters: filters
+                                });
+                            });
+                        }
+
+                    });
+
+
+                    resume();
+
                 });
-            });
+
 
             }
-       
-            
+
+
+
+
+            if (incomingfilters.length == 0) {
+                selectedCandidates.exec(function(err, candidates) {
+                     matching.calculateMatchPercent(candidates,precedence,job);
+                    
+                    for (var s = 0; s < dbfilters.length; s++) {
+
+                        filters = filterHelper.sortandfilter(dbfilters[s], candidates, incomingfilters, filters);
+                    }
+
+
+                });
+                selectedCandidates.sort('-calculateScore.Score');
+                selectedCandidates.skip(req.body.skip);
+                selectedCandidates.limit(req.body.limit);
+                selectedCandidates.select('displayName title objective picture_url location salary_expectation visa_status employee_type employee_status skills');
+                selectedCandidates.exec(function(err, candidate) {
+
+                    res.jsonp({
+                        candidates: candidate,
+                        totalentries: totallength,
+                        job: job,
+                        filters: filters
+                    });
+                });
+
+            }
+
+
 
         });
 };
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-function dynamicSort(property) {
-    var sortOrder = 1;
-    if(property[0] === "-") {
-        sortOrder = -1;
-        property = property.substr(1);
-    }
-    return function (a,b) {
-        var result = (a[property] < b[property]) ? -1 : (a[property] > b[property]) ? 1 : 0;
-        return result * sortOrder;
-    }
-}
-
-
-
-
-var getNames = function(filter) {
-
-    var names = [];
-    filter.forEach(function(entry) {
-        names.push(entry.name);
-
-
-    });
-
-    return names;
-
-
-}
-
-var sortandfilter = function(type, candidates, incomingfiltersit, filters) {
-    var incomingfilters=[];
-    incomingfiltersit.forEach(function(entry){
-        for(var h=0,j=entry.name.length;h<j;h++){
-            incomingfilters.push({name:entry.name[h],type:entry.type});
-        }
-    });
-
-    
-    candidates.sort(dynamicSort(type));
-    generateFilter(type, candidates, filters, incomingfilters);
-    return filters;
-}
-
-
-
-
-var generateFilter = function(filterType, candidates, filters, incomingfilters){
-    var filterValue = 'invalid_value';
-        for (var i = 0, len = candidates.length; i < len; i++) {
-            var candidate = candidates[i];
-            var isPresent = false;
-
-            if (candidate[filterType] !== filterValue) {
-                filterValue = candidate[filterType];
-                incomingfilters.forEach(function(entry) {
-                    if (entry.name == filterValue)
-
-                        isPresent = true;
-                });
-                filters.push({
-                    type: filterType,
-                    name: filterValue,
-                    count: 0,
-                    value: isPresent
-
-                });
-            }
-            filters[filters.length - 1].count++;
-        }
-        
-}
