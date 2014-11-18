@@ -18,6 +18,9 @@ angular.module('empoyer-jobs').directive('filterList', ['$compile',
 
 				var filterHeading = '';
 				switch(filterName){
+					case 'gender':
+					    filterHeading = 'Gender';
+					break;
 					case 'salary_expectation':
 						filterHeading = 'Salary Expectation';
 					break;
@@ -33,6 +36,11 @@ angular.module('empoyer-jobs').directive('filterList', ['$compile',
 					case 'career_level':
 						filterHeading = 'Career Level';
 					break;
+					case 'skills':
+					    filterHeading = 'Skills';
+					break;
+					case 'educations':
+					    filterHeading = 'Education';
 				}
 				
             
