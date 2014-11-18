@@ -468,7 +468,7 @@ exports.getPaginatedCandidates = function(req, res) {
                         if (x == incomingfilters.length) {
                             totallength = candidates.length;
                              matching.calculateMatchPercent(candidates,precedence,job);
-                             c1=filterHelper.sortCandidates(candidatepool,job);
+                             c1=filterHelper.sortCandidates(candidates,job);
                              c1=c1.splice(req.body.skip,req.body.limit);
             
              
