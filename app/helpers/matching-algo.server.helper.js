@@ -8,6 +8,7 @@ var studyfield=["Electrical Engineering","Computer Engineering",
                                             "Physics",
                                             "Mathematics",
                                             "Chemistry"];
+
 var degree=["Pre-Matriculation","O-level/Matriculation","Intermediate/A-Level","Certificate","Diploma","Bachelor's Degree","Master's Degree","Doctorate"];
 var level=["Beginner","Intermediate","Expert"];
 var career_level=["Student/Internship","Entry Level","Mid Career","Management","Executive (Director)","Senior Executive (CEO)"];
@@ -60,7 +61,23 @@ else
              	}
 
              }
+           if(precedence[g].name=="employee_status")
+           {
 
+               if(job.employee_status==candidates.employee_status)
+                xp=xp+getIndexOf("employee_status",precedence);
+
+           }
+             if(precedence[g].name=="employee_type")
+           {
+
+               if(job.employee_type==candidates.employee_type)
+                xp=xp+getIndexOf("employee_type",precedence);
+
+           }
+
+             if(precedence[g].name=="visa_status")
+             {}
              if(precedence[g].name=="salary_expectation")
              {
 
