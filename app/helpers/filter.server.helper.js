@@ -12,6 +12,17 @@ exports.dynamicSort=function(property) {
     }
 }
 
+exports.dynamicSortDescending=function(property) {
+    var sortOrder = 1;
+    if (property[0] === "-") {
+        sortOrder = -1;
+        property = property.substr(1);
+    }
+    return function(a, b) {
+        var result = (a[property] > b[property]) ? -1 : (a[property] < b[property]) ? 1 : 0;
+        return result * sortOrder;
+    }
+}
 
 
 
@@ -73,4 +84,47 @@ exports.generateFilter = function(filterType, candidates, filters, incomingfilte
         filters[filters.length - 1].count++;
     }
 
-}
+};
+exports.sortCandidates=function(candidate,job)
+{ var cc=[];
+    var candidatecopy = candidate.slice();
+                        for(var aa=0,bb=candidatecopy.length;aa<bb;aa++)
+                        {
+                                for(var c=0,dd=candidatecopy[aa].calculateScore.length;c<dd;c++)
+                                {
+                                   if(candidatecopy[aa].calculateScore[c].jobname==job.id)
+                                    {  
+                                        cc.push({id:candidatecopy[aa]._id,tempScore:candidatecopy[aa].calculateScore[c].Score});
+                                   
+                                    break;
+
+
+                                    }
+
+
+                                }
+
+
+
+                        }
+                        cc.sort(this.dynamicSortDescending('tempScore'));
+                        console.log(cc);
+                    for(var aa=0,bb=candidatecopy.length;aa<bb;aa++)
+                    {var dummy=0;
+                       for(var c=0,dd=cc.length;c<dd;c++)
+                       {
+                        if(cc[c].id==candidatecopy[aa].id)
+                         {  console.log("ALGO ALGO");
+                            dummy=candidatecopy[c];
+                            candidatecopy[c]=candidatecopy[aa];
+                            candidatecopy[aa]=dummy;}
+                       }
+
+
+                    }
+
+
+
+return candidatecopy;
+
+                  };

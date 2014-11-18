@@ -429,6 +429,7 @@ exports.getPaginatedCandidates = function(req, res) {
             });
 
             if (incomingfilters.length != 0) {
+                var c1;
                 var lengthincomingfilters = incomingfilters.length;
                 for (var h = 0, t = dbfilters.length; h < t; h++) {
                     var alreadyPresent = false;
@@ -467,21 +468,18 @@ exports.getPaginatedCandidates = function(req, res) {
                         if (x == incomingfilters.length) {
                             totallength = candidates.length;
                              matching.calculateMatchPercent(candidates,precedence,job);
-                              selectedCandidates.sort('-calculateScore.Score');
-                
-
-                            selectedCandidates.skip(req.body.skip);
-                            selectedCandidates.limit(req.body.limit);
-                            selectedCandidates.select('displayName title objective picture_url location salary_expectation visa_status employee_type employee_status career_level skills');
-                            selectedCandidates.exec(function(err, candidate) {
-
+                             c1=filterHelper.sortCandidates(candidatepool,job);
+                             c1=c1.splice(req.body.skip,req.body.limit);
+            
+             
+                            
                                 res.jsonp({
-                                    candidates: candidate,
+                                    candidates: c1,
                                     totalentries: totallength,
                                     job: job,
                                     filters: filters
                                 });
-                            });
+                           
                         }
 
                     });
@@ -498,29 +496,39 @@ exports.getPaginatedCandidates = function(req, res) {
 
 
             if (incomingfilters.length == 0) {
-                selectedCandidates.exec(function(err, candidates) {
-                     matching.calculateMatchPercent(candidates,precedence,job);
-                    
-                    for (var s = 0; s < dbfilters.length; s++) {
+                 var c1;
+                  // selectedCandidates.select('displayName title objective picture_url location salary_expectation visa_status employee_type employee_status skills calculateScore');
+                 
+                selectedCandidates.exec(function(err, candidatepool) {
+                   matching.calculateMatchPercent(candidatepool,precedence,job);
+                   
+                       c1=filterHelper.sortCandidates(candidatepool,job);
+                       
+                             
+               c1=c1.splice(req.body.skip,req.body.limit);
+            
+             
+            for (var s = 0; s < dbfilters.length; s++) {
 
-                        filters = filterHelper.sortandfilter(dbfilters[s], candidates, incomingfilters, filters);
+                        filters = filterHelper.sortandfilter(dbfilters[s], candidatepool, incomingfilters, filters);
                     }
-
-
-                });
-                selectedCandidates.sort('-calculateScore.Score');
-                selectedCandidates.skip(req.body.skip);
-                selectedCandidates.limit(req.body.limit);
-                selectedCandidates.select('displayName title objective picture_url location salary_expectation visa_status employee_type employee_status skills');
-                selectedCandidates.exec(function(err, candidate) {
-
+                        
                     res.jsonp({
-                        candidates: candidate,
+                        candidates: c1,
                         totalentries: totallength,
                         job: job,
                         filters: filters
                     });
+              
+
+
+
+
                 });
+               
+                
+                           
+         
 
             }
 
