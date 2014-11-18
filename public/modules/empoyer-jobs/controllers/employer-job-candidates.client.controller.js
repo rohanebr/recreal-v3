@@ -15,7 +15,7 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
         $scope.completefilternames=[];
         $scope.filterLimit = 5;
         var i;
-$scope.priorities=[{'Id':1,'Label':"Career Level",'name':'career_level','nameinjob':'career_level'},{'Id':2,'Label':"Salary Expectation",'name':'salary_expectation','nameinjob':"salary_range"},{'Id':3,'Label':"Skills",'name':'skills','nameinjob':'skills'},{'Id':4,'Label':"Education",'name':"degree_title",'nameinjob':"degree_title"}];
+$scope.priorities=[{'Id':1,'Label':"Career Level",'name':'career_level','nameinjob':'career_level'},{'Id':2,'Label':"Salary Expectation",'name':'salary_expectation','nameinjob':"salary_range"},{'Id':3,'Label':"Skills",'name':'skills','nameinjob':'skills'},{'Id':4,'Label':"Education",'name':"degree_title",'nameinjob':"degree_title"},{'Id':5,'Label':"Gender",'name':"gender",'nameinjob':"gender"}];
         if (!$scope.user) $location.path('/signin');
     
    $scope.itemsList = {
@@ -211,6 +211,7 @@ $scope.filters1.forEach(function(entry){
 if(name==entry.name)
  {entry.value=!entry.value;
 if(entry.value==true)
+
   $scope.addToFilters(entry.type,entry.name);
 else  $scope.removeFromFilters(entry.type,entry.name);
 }
@@ -220,9 +221,11 @@ $scope.findCandidates($scope.skip,$scope.itemsPerPage,$scope.filters, false);
 
 }
   
+
     //addToFilters
     $scope.addToFilters=function(type,name)
      {
+ var once=true;
       var alreadyPresentInFilters=false;
      	 $scope.filters.forEach(function(entry){
           if(type==entry.type && name==entry.name)
@@ -234,10 +237,14 @@ $scope.findCandidates($scope.skip,$scope.itemsPerPage,$scope.filters, false);
          if(!alreadyPresentInFilters){
 
           var typeExists = false;
-          $scope.filters.forEach(function(entry){
-            if(type==entry.type){
+          var feefilters=$scope.filters.slice();
+          feefilters.forEach(function(entry){
+           
+            if(type==entry.type && once){
+              once=false;
               typeExists = true;
               $scope.filters.push({type:type,name:name, priority: entry.priority,value:true});
+             
             }
          });
 
@@ -252,7 +259,7 @@ $scope.findCandidates($scope.skip,$scope.itemsPerPage,$scope.filters, false);
               }
 
               $scope.filters.push({type:type,name:name, priority: highest + 1,value:true});
-
+            
           }
 
             //salary_expext salay_exp  visa visa

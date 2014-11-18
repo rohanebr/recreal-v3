@@ -79,7 +79,7 @@ for(var q=0,tt=salary_expectation.length;q<tt;q++)
 
              }
 
-
+           
              if(precedence[g].name=="degree_title")
              {
               var totalpoints=0;
@@ -106,7 +106,15 @@ for(var q=0,tt=salary_expectation.length;q<tt;q++)
 
 
              }
+             if(precedence[g].name=="gender")
+             {
 
+                if(job.gender==candidate.gender)
+                     xp=xp+getIndexOf("gender",precedence);   
+
+
+
+             }
              if(precedence[g].name=="skills")
              {
 

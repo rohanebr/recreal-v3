@@ -355,7 +355,7 @@ exports.onePlusView = function(req, res) {
 
 exports.getPaginatedCandidates = function(req, res) {
     var filters = [];
-    var dbfilters = ["salary_expectation", "visa_status", "employee_status", "employee_type", "career_level"];
+    var dbfilters = ["salary_expectation", "visa_status", "employee_status", "employee_type", "career_level","gender","skills"];
 
     var incomingfilters = [];
 
@@ -397,6 +397,7 @@ exports.getPaginatedCandidates = function(req, res) {
     });
 
     var incomingfilters2 = incomingfilters.slice();
+    var incomingfilters3 = incomingfilters.slice();
 
 
     Job.findById(req.job.id)
@@ -453,7 +454,10 @@ exports.getPaginatedCandidates = function(req, res) {
                         for (var h = 0; h < letspopulatefilters.length; h++) {
 
                             var names = letspopulatefilters[h].name;
+                            if(letspopulatefilters[h].type!="skills")
                             selectedCandidates.where(letspopulatefilters[h].type).in(names);
+                        if(letspopulatefilters[h].type=="skills")
+                            selectedCandidates.where("skills.title").in(names);
                         }
                     }
 
@@ -462,8 +466,12 @@ exports.getPaginatedCandidates = function(req, res) {
                         if (x < lengthincomingfilters)
                             letspopulatefilters.push(incomingfilter);
                         x++;
+                          if(incomingfilter.type!="skills")
                         filters = filterHelper.sortandfilter(incomingfilter.type, candidates, incomingfilters2, filters);
+                          if(incomingfilter.type=="skills")
+                            filters=filterHelper.sortandfilterArray(incomingfilter.type, candidates, incomingfilters3, filters);
 
+                       
 
                         if (x == incomingfilters.length) {
                             totallength = candidates.length;
@@ -471,7 +479,7 @@ exports.getPaginatedCandidates = function(req, res) {
                              c1=filterHelper.sortCandidates(candidates,job);
                              c1=c1.splice(req.body.skip,req.body.limit);
             
-             
+         
                             
                                 res.jsonp({
                                     candidates: c1,
@@ -507,12 +515,15 @@ exports.getPaginatedCandidates = function(req, res) {
                              
                c1=c1.splice(req.body.skip,req.body.limit);
             
-             
+             console.log(incomingfilters);
             for (var s = 0; s < dbfilters.length; s++) {
-
+                         if(dbfilters[s]!="skills")
                         filters = filterHelper.sortandfilter(dbfilters[s], candidatepool, incomingfilters, filters);
+                        if(dbfilters[s]=="skills")
+                            filters=filterHelper.sortandfilterArray(dbfilters[s], candidatepool, incomingfilters, filters);
+
                     }
-                        
+                      // console.log(filters); 
                     res.jsonp({
                         candidates: c1,
                         totalentries: totallength,

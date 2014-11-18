@@ -43,7 +43,10 @@ exports.getNames = function(filter) {
 exports.sortandfilter = function(type, candidates, incomingfiltersit, filters) {
     var incomingfilters = [];
     incomingfiltersit.forEach(function(entry) {
+       
+       
         for (var h = 0, j = entry.name.length; h < j; h++) {
+
             incomingfilters.push({
                 name: entry.name[h],
                 type: entry.type
@@ -108,13 +111,13 @@ exports.sortCandidates=function(candidate,job)
 
                         }
                         cc.sort(this.dynamicSortDescending('tempScore'));
-                        console.log(cc);
+                       
                     for(var aa=0,bb=candidatecopy.length;aa<bb;aa++)
                     {var dummy=0;
                        for(var c=0,dd=cc.length;c<dd;c++)
                        {
                         if(cc[c].id==candidatecopy[aa].id)
-                         {  console.log("ALGO ALGO");
+                         { 
                             dummy=candidatecopy[c];
                             candidatecopy[c]=candidatecopy[aa];
                             candidatecopy[aa]=dummy;}
@@ -128,3 +131,81 @@ exports.sortCandidates=function(candidate,job)
 return candidatecopy;
 
                   };
+
+
+
+exports.sortandfilterArray= function(type, candidates, incomingfiltersit, filters) {
+    var incomingfilters = [];
+    incomingfiltersit.forEach(function(entry) {
+     
+       
+        for (var h = 0, j = entry.name.length; h < j; h++) {
+
+            incomingfilters.push({
+                name: entry.name[h],
+                type: entry.type
+            });
+        }
+    });
+
+
+    candidates.sort(this.dynamicSort(type));
+   
+    this.generateFilterArray(type, candidates, filters, incomingfilters);
+    return filters;
+};
+
+exports.generateFilterArray = function(filterType, candidates, filters, incomingfilters) {
+    
+    for (var i = 0, len = candidates.length; i < len; i++) {
+        var candidate = candidates[i];
+       
+        var filterValue = 'invalid_value';
+              for(var n=0,len1=candidate.skills.length;n<len1;n++)
+              {var infilter=false;
+                var target=0;
+                      var isPresent = false;
+                     incomingfilters.forEach(function(entry) {
+                        console.log("ENTRY"+entry.name);
+                         if (entry.name == candidate.skills[n].title)
+ 
+                    isPresent = true;
+            });
+                           for(var ddd=0,fff=filters.length;ddd<fff;ddd++)
+
+                           {
+                                if(filters[ddd].name==candidate.skills[n].title)
+                                    {infilter=true;
+                                        target=ddd;
+                                        break;}
+
+
+                           }
+                       if(!infilter)
+                       {
+                         filters.push({
+                type: filterType,
+                name: candidate.skills[n].title,
+                count: 1,
+                value: isPresent
+
+            });
+
+
+                       }
+                       if(infilter)
+                       {
+
+                    filters[target].count++;
+
+                       }
+ 
+
+                     
+
+
+              }
+      
+    }
+
+};
