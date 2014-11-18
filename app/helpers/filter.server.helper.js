@@ -149,7 +149,7 @@ exports.sortandfilterArray= function(type, candidates, incomingfiltersit, filter
     });
 
 
-    candidates.sort(this.dynamicSort(type));
+   
    
     this.generateFilterArray(type, candidates, filters, incomingfilters);
     return filters;
@@ -160,7 +160,53 @@ exports.generateFilterArray = function(filterType, candidates, filters, incoming
     for (var i = 0, len = candidates.length; i < len; i++) {
         var candidate = candidates[i];
        
-        var filterValue = 'invalid_value';
+     
+        if(filterType=="educations")
+        {     for(var n=0,len1=candidate.educations.length;n<len1;n++)
+              {var infilter=false;
+                var target=0;
+                      var isPresent = false;
+                     incomingfilters.forEach(function(entry) {
+                        console.log("ENTRY"+entry.name);
+                         if (entry.name == candidate.educations[n].degree)
+ 
+                    isPresent = true;
+            });
+                           for(var ddd=0,fff=filters.length;ddd<fff;ddd++)
+
+                           {
+                                if(filters[ddd].name==candidate.educations[n].degree)
+                                    {infilter=true;
+                                        target=ddd;
+                                        break;}
+
+
+                           }
+                       if(!infilter && candidate.educations.length!=0)
+                       {
+                         filters.push({
+                type: filterType,
+                name: candidate.educations[n].degree,
+                count: 1,
+                value: isPresent
+
+            });
+
+
+                       }
+                       if(infilter && candidate.educations.length!=0)
+                       {
+
+                    filters[target].count++;
+
+                       }
+ 
+
+                     
+
+
+              }}
+        if(filterType=="skills"){
               for(var n=0,len1=candidate.skills.length;n<len1;n++)
               {var infilter=false;
                 var target=0;
@@ -181,7 +227,7 @@ exports.generateFilterArray = function(filterType, candidates, filters, incoming
 
 
                            }
-                       if(!infilter)
+                       if(!infilter && candidate.skills.length!=0)
                        {
                          filters.push({
                 type: filterType,
@@ -193,7 +239,7 @@ exports.generateFilterArray = function(filterType, candidates, filters, incoming
 
 
                        }
-                       if(infilter)
+                       if(infilter && candidate.skills.length!=0)
                        {
 
                     filters[target].count++;
@@ -204,7 +250,7 @@ exports.generateFilterArray = function(filterType, candidates, filters, incoming
                      
 
 
-              }
+              }}
       
     }
 

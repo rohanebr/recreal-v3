@@ -355,7 +355,7 @@ exports.onePlusView = function(req, res) {
 
 exports.getPaginatedCandidates = function(req, res) {
     var filters = [];
-    var dbfilters = ["salary_expectation", "visa_status", "employee_status", "employee_type", "career_level","gender","skills"];
+    var dbfilters = ["salary_expectation", "visa_status", "employee_status", "employee_type", "career_level","gender","skills","educations"];
 
     var incomingfilters = [];
 
@@ -398,6 +398,7 @@ exports.getPaginatedCandidates = function(req, res) {
 
     var incomingfilters2 = incomingfilters.slice();
     var incomingfilters3 = incomingfilters.slice();
+    var incomingfilters4 = incomingfilters.slice();
 
 
     Job.findById(req.job.id)
@@ -454,10 +455,12 @@ exports.getPaginatedCandidates = function(req, res) {
                         for (var h = 0; h < letspopulatefilters.length; h++) {
 
                             var names = letspopulatefilters[h].name;
-                            if(letspopulatefilters[h].type!="skills")
+                            if(letspopulatefilters[h].type!="skills" && letspopulatefilters[h].type!="educations")
                             selectedCandidates.where(letspopulatefilters[h].type).in(names);
                         if(letspopulatefilters[h].type=="skills")
                             selectedCandidates.where("skills.title").in(names);
+                         if(letspopulatefilters[h].type=="educations")
+                            selectedCandidates.where("educations.degree").in(names);
                         }
                     }
 
@@ -466,10 +469,12 @@ exports.getPaginatedCandidates = function(req, res) {
                         if (x < lengthincomingfilters)
                             letspopulatefilters.push(incomingfilter);
                         x++;
-                          if(incomingfilter.type!="skills")
+                          if(incomingfilter.type!="skills" && incomingfilter.type!="educations")
                         filters = filterHelper.sortandfilter(incomingfilter.type, candidates, incomingfilters2, filters);
                           if(incomingfilter.type=="skills")
-                            filters=filterHelper.sortandfilterArray(incomingfilter.type, candidates, incomingfilters3, filters);
+                             filters=filterHelper.sortandfilterArray(incomingfilter.type, candidates, incomingfilters3, filters);
+                           if(incomingfilter.type=="educations")
+                            filters=filterHelper.sortandfilterArray(incomingfilter.type, candidates, incomingfilters4, filters);
 
                        
 
@@ -517,9 +522,11 @@ exports.getPaginatedCandidates = function(req, res) {
             
              console.log(incomingfilters);
             for (var s = 0; s < dbfilters.length; s++) {
-                         if(dbfilters[s]!="skills")
+                         if(dbfilters[s]!="skills" && dbfilters[s]!="educations")
                         filters = filterHelper.sortandfilter(dbfilters[s], candidatepool, incomingfilters, filters);
                         if(dbfilters[s]=="skills")
+                            filters=filterHelper.sortandfilterArray(dbfilters[s], candidatepool, incomingfilters, filters);
+                        if(dbfilters[s]=="educations")
                             filters=filterHelper.sortandfilterArray(dbfilters[s], candidatepool, incomingfilters, filters);
 
                     }
