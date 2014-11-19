@@ -172,6 +172,7 @@ exports.apply = function(req, res, next)
                                 //doc.apply(candidate);
                                 job.apply(candidate);
                                 JobSocket.applicationReceived({
+                                    
                                     job: job
                                 });
                                 res.jsonp(req.job);

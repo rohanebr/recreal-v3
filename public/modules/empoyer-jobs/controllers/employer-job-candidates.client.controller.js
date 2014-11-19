@@ -9,6 +9,7 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
         $scope.currentPage = 0;
         $scope.candidates=[];
         $scope.skip = 0;
+
         $scope.dummyfilters=[];
         $scope.filters = [];
         $scope.filters1=[];
@@ -18,6 +19,11 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
         var i;
 $scope.priorities=[{'Id':1,'Label':"Career Level",'name':'career_level','nameinjob':'career_level'},{'Id':2,'Label':"Salary Expectation",'name':'salary_expectation','nameinjob':"salary_range"},{'Id':3,'Label':"Skills",'name':'skills','nameinjob':'skills'},{'Id':4,'Label':"Education",'name':"degree_title",'nameinjob':"degree_title"},{'Id':5,'Label':"Gender",'name':"gender",'nameinjob':"gender"},{'Id':6,'Label':"Employment Status",'name':"employee_status",'nameinjob':"employee_status"},{'Id':7,'Label':"Employment Type",'name':"employee_type",'nameinjob':"employee_type"},{'Id':8,'Label':"Visa Status",'name':"visa_status",'nameinjob':"visa_status"}];
         if (!$scope.user) $location.path('/signin');
+        Socket.on('applied_on_job', function (data) {
+      
+          if ($scope.job._id == data.job._id) {
+                 $scope.findCandidates($scope.skip,$scope.itemsPerPage,$scope.filters, false); 
+          }});
           Socket.on('WatchingJob', function(data){
             for(var dd=0,len=$scope.candidates.length;dd<len;dd++)
             {
