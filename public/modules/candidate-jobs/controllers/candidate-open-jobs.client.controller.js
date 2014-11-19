@@ -79,8 +79,8 @@ $scope.findJobs= function(skip,limit, isPageChange) {
                 limit: limit,
                 isPageChange:isPageChange
             }).success(function(job) {
-                   $scope.jobs=job;
-                   $scope.total=job.length;   
+                   $scope.jobs=job.jobs;
+                   $scope.total=job.total;   
 
 
             });

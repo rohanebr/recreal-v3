@@ -366,15 +366,25 @@ exports.onePlusView = function(req, res) {
 };
 
 exports.getPaginatedJobs = function(req,res){
-    Job.find().sort('-created').populate('user', 'displayName').populate('company').skip(req.body.skip).limit(req.body.limit).exec(function(err, jobs) {
+   var jobs= Job.find().sort('-created').populate('user', 'displayName').populate('company');
+var totallength=0;
+jobs.exec(function(err,jobarray){
+
+totallength=jobarray.length;
+
+
+ jobs.skip(req.body.skip).limit(req.body.limit).exec(function(err, jobs) {
         if (err) {
             return res.send(400, {
                 message: getErrorMessage(err)
             });
         } else {
-            res.jsonp(jobs);
+            res.jsonp({jobs:jobs,total:totallength});
         }
     });
+
+});
+  
 
 
 
