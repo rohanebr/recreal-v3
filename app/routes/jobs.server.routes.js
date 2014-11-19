@@ -20,6 +20,9 @@ module.exports = function(app) {
 		.put(jobs.onePlusView);
 		app.route('/jobs/getPaginatedCandidates/:jobId')
 		.put(jobs.getPaginatedCandidates);
+		app.route('/jobs/getPaginatedJobs/:userId')
+		.put(jobs.getPaginatedJobs);
+		
 	app.route('/jobs/candidates/:jobId')
 		.get(jobs.getJobCandidates);
 
@@ -36,4 +39,5 @@ module.exports = function(app) {
 	
 	// Finish by binding the Job middleware
 	app.param('jobId', jobs.jobByID);
+	app.param('userId',users.userByID);
 };

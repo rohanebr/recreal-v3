@@ -235,6 +235,7 @@ exports.delete = function(req, res) {
  * List of Jobs
  */
 exports.list = function(req, res) {
+    console.log("FUCK ME");
     Job.find().sort('-created').populate('user', 'displayName').populate('company').exec(function(err, jobs) {
         if (err) {
             return res.send(400, {
@@ -363,6 +364,26 @@ exports.onePlusView = function(req, res) {
 
 
 };
+
+exports.getPaginatedJobs = function(req,res){
+    Job.find().sort('-created').populate('user', 'displayName').populate('company').skip(req.body.skip).limit(req.body.limit).exec(function(err, jobs) {
+        if (err) {
+            return res.send(400, {
+                message: getErrorMessage(err)
+            });
+        } else {
+            res.jsonp(jobs);
+        }
+    });
+
+
+
+
+
+
+};
+
+
 
 
 exports.getPaginatedCandidates = function(req, res) {

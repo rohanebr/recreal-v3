@@ -3,8 +3,11 @@
             <h2>Recommended Jobs</h2>
     </header>
     <article class="col-md-8 media">
-        <section class="media" ng-repeat="job in jobs"  data-ng-show="!hasApplied(job)">
-            <a class="pull-left" href="#">
+         <table class="table table-striped">
+           <tbody>
+          <tr ng-repeat="job in jobs" data-ng-show="!hasApplied(job)">
+            <td>
+                  <a class="pull-left" href="#">
                 <img alt="" src="http://cns.com.pk/wp-content/uploads/2012/06/CNS-Logo.bmp" class="img-rounded img64_64">
             </a>
             <section class="media-body">
@@ -19,7 +22,25 @@
                 <label>{{job.dueDate | date}}</label>
                  <p>Your location is: {{coords}}</p>
             </section>
-        </section>
+            </td>
+          </tr>
+        </tbody>
+        <tfoot>
+              <ul class="pagination">
+                <li ng-class="prevPageDisabled()">
+                  <a href ng-click="prevPage()">« Prev</a>
+                </li>
+                <li ng-repeat="n in range()" ng-class="{active: n == currentPage}" ng-click="setPage(n)">
+                  <a href="#">{{n+1}}</a>
+                </li>
+                <li ng-class="nextPageDisabled()">
+                  <a href ng-click="nextPage()">Next »</a>
+                </li>
+              </ul>
+          </td>
+        </tfoot>
+      </table>
+        
     </article>
     <aside class="col-md-4">
         <header> <h2>Search</h2></header>
