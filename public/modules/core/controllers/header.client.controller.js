@@ -7,22 +7,25 @@ angular.module('core').controller('HeaderController', ['$scope', 'Authentication
         $scope.menu = Menus.getMenu('topbar');
         $scope.threads = [];
         $scope.unreadnotificationslength=0;
+
         $scope.notifications = [];
         var thread = [];
 $scope.notificationRead=function(data){
-             
+              $scope.unreadnotificationslength--;
                 $http.post('/users/readNotification/' + $scope.authentication.user._id,data).success(function(res) {
+                    for (var i in $scope.notifications ) {
+                    if ($scope.notifications [i] === data  && $scope.notifications.length>10) {
+                        $scope.notifications.splice(i, 1);
+                    }
+                }
+                   
+                    $scope.apply();
                 }).error(function(data, status, headers, confige) {
-
+ console.log("BOOBOO");
                  
                 });
 
-        		for (var i in $scope.notifications ) {
-					if ($scope.notifications [i] === data ) {
-						$scope.notifications.splice(i, 1);
-					}
-				}
-
+        		
         	}
      
         if ($scope.authentication.user) {
@@ -54,12 +57,21 @@ $scope.notificationRead=function(data){
                   
         	$scope.notifications=$scope.authentication.user.notifications;
             Socket.on('take_the_test_notification', function(data) {
+                console.log("GOT A HIT");
                 if (data.userid == $scope.authentication.user._id)
-                    $scope.notifications.push({
-                        generalmessage: data.generalmessage,
-                        hiddendata: data.hiddendata,
-                        created: data.created
-                    });
+                {
+                 var present=false;
+
+                        for(var d=0,len=$scope.notifications.length;d<len;d++)
+                        {
+                            if($scope.notifications[d]._id==data.notification._id)
+                              {  present=true;break;}
+
+                        }
+                        if(!present){
+                    $scope.notifications.push(data.notification);
+                     $scope.unreadnotificationslength++;}
+                }
 
             });
             Socket.on('watched_thread_to', function(event, args) {

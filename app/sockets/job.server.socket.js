@@ -11,6 +11,7 @@ exports.publishCreate = function(){
 //a candiate applies on a job employer gets notified
 exports.applicationReceived = function(data){
     io.sockets.emit('applied_on_job', data);
+    io.sockets.emit('Notification',data);
             
     
 };

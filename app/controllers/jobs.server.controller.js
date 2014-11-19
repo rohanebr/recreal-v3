@@ -6,11 +6,13 @@
 var mongoose = require('mongoose'),
     Job = mongoose.model('Job'),
     Employer = mongoose.model('Employer'),
+    User = mongoose.model('User'),
     Candidate = mongoose.model('Candidate'),
     JobSocket = require('../sockets/job.server.socket.js'),
     _ = require('lodash'),
     matching = require('../helpers/matching-algo.server.helper.js'),
-    filterHelper=require('../helpers/filter.server.helper.js');
+    filterHelper=require('../helpers/filter.server.helper.js'),
+     Notification = require('../sockets/notification.server.socket.js');
 
 
 Array.prototype.asyncEach = function(iterator) {
@@ -156,11 +158,19 @@ exports.apply = function(req, res, next)
                 _id: req.job._id
             })
             .exec(function(err, doc) {
-
+                      
                 job = doc;
+
                 Candidate.findOne({
                     user: req.user._id
                 }).exec(function(err, candidate) {
+                    User.findById(job.user).exec(function(err, user) {
+                                         user.notifications.push({generalmessage:candidate.displayName+" has applied for the "+job.title+" job",hiddendata:"#",created:Date.now(),isRead:false});
+                                         user.markModified('notifications');
+                                         user.save();
+                                         Notification.notifyEmployerAboutNewCandidateApplication({userid:user._id,notification:user.notifications[user.notifications.length-1]});
+          
+                                      });
                     Job.findOne({
                             _id: job._id
                         })
@@ -171,6 +181,7 @@ exports.apply = function(req, res, next)
                             if (!doc) {
                                 //doc.apply(candidate);
                                 job.apply(candidate);
+                             
                                 JobSocket.applicationReceived({
                                     
                                     job: job
