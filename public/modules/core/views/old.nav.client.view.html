@@ -1,0 +1,223 @@
+<!-- <ul id="nav"
+    data-collapse-nav
+    data-slim-scroll
+    data-highlight-active>
+
+    <li data-ng-hide="authentication.user.userType === 'employer'">
+        <a href="#!/ui"><i class="fa fa-magic"></i><span>Profile</span></a>
+        <ul>
+            <li><a href="/#/jobs"><i class="fa fa-caret-right"></i><span>Dashboard</span></a></li>
+            <li><a href="#!/candidate-cv"><i class="fa fa-caret-right"></i><span>My CV</span></a></li>
+            <li><a href="#/jobs"><i class="fa fa-caret-right"></i><span>CV Visibility</span></a></li>
+            <li><a href="#/jobs"><i class="fa fa-caret-right"></i><span>Recommendations</span></a></li>
+            <li><a href="#/jobs"><i class="fa fa-caret-right"></i><span>Purchased Features</span></a></li>
+            <li><a href="#/jobs"><i class="fa fa-caret-right"></i><span>Upgrade Features</span></a></li>
+        </ul>
+    </li>
+    
+    <li data-ng-hide="authentication.user.userType === 'employer'">
+        <a href="#!/ui"><i class="fa fa-magic"></i><span>Jobs</span></a>
+        <ul>
+            <li><a href="#!/candidate-open-jobs"><i class="fa fa-caret-right"></i><span>Open Jobs</span></a></li>
+            <li><a href="#!/candidate-applied-jobs"><i class="fa fa-caret-right"></i><span>Applied Jobs</span></a></li>
+        </ul>
+    </li>
+
+    <li data-ng-hide="authentication.user.userType === 'employer'"><a href="#/jobs/closed"> <i class="fa fa-tasks"></i><span>People</span> </a></li> 
+
+    <li data-ng-hide="authentication.user.userType === 'employer'"><a href="#/candidates/starred"> <i class="fa fa-bar-chart-o"></i><span>Company</span> </a></li> 
+
+    <li  data-ng-hide="authentication.user.userType === 'employer'">
+        <a href="#!/ui"><i class="fa fa-magic"></i><span>Tests</span></a>
+        <ul>
+            <li><a href="#/jobs"><i class="fa fa-caret-right"></i><span>Request by System</span></a></li>
+            <li><a href="#/jobs"><i class="fa fa-caret-right"></i><span>Request by Employer</span></a></li>
+            <li><a href="#/jobs"><i class="fa fa-caret-right"></i><span>Given Test</span></a></li>
+        </ul>
+    </li>
+
+
+
+
+
+    <li  data-ng-show="authentication.user.userType === 'employer'">
+        <a href="#!/ui"><i class="fa fa-magic"></i><span>Profile</span></a>
+        <ul>
+            <li><a href="#/jobs"><i class="fa fa-caret-right"></i><span>Dashboard</span></a></li>
+            <li><a href="#!/employer-profile"><i class="fa fa-caret-right"></i><span>Edit Profile</span></a></li>
+            <li><a href="#/jobs"><i class="fa fa-caret-right"></i><span>Purchased Features</span></a></li>
+            <li><a href="#/jobs"><i class="fa fa-caret-right"></i><span>Upgrade Features</span></a></li>
+        </ul>
+    </li>
+
+    <li  data-ng-show="authentication.user.userType === 'employer'">
+        <a href="#!/ui"><i class="fa fa-magic"></i><span>jobs</span></a>
+        <ul>
+            <li><a href="#!/post-job"><i class="fa fa-caret-right"></i><span>Post a Job</span></a></li>
+            <li><a href="#!/company-open-jobs"><i class="fa fa-caret-right"></i><span>Open Jobs</span></a></li>
+            <li><a href="#/jobs"><i class="fa fa-caret-right"></i><span>Closed Jobs</span></a></li>
+            <li><a href="#/jobs"><i class="fa fa-caret-right"></i><span>Cancel Jobs</span></a></li>
+        </ul>
+    </li>
+
+    <li data-ng-show="authentication.user.userType === 'employer'"><a href="#/jobs/closed"> <i class="fa fa-tasks"></i><span>People</span> </a></li> 
+
+    <li  data-ng-show="authentication.user.userType === 'employer'">
+        <a href="#!/ui"><i class="fa fa-magic"></i><span>Company</span></a>
+        <ul>
+            <li><a href="#!/company-profile"><i class="fa fa-caret-right"></i><span>Profile</span></a></li>
+            <li><a href="#/jobs"><i class="fa fa-caret-right"></i><span>Collaborators</span></a></li>
+            <li><a href="#/jobs"><i class="fa fa-caret-right"></i><span>Followers</span></a></li>
+            <li><a href="#/jobs"><i class="fa fa-caret-right"></i><span>Reviews</span></a></li>
+            <li><a href="#/jobs"><i class="fa fa-caret-right"></i><span>Salary Reviews</span></a></li>
+            <li><a href="#/jobs"><i class="fa fa-caret-right"></i><span>Hired Employees</span></a></li>
+        </ul>
+    </li>
+
+    <li  data-ng-show="authentication.user.userType === 'employer'">
+        <a href="#!/ui"><i class="fa fa-magic"></i><span>Tasks</span></a>
+        <ul>
+            <li><a href="#/jobs"><i class="fa fa-caret-right"></i><span>Assign</span></a></li>
+            <li><a href="#/jobs"><i class="fa fa-caret-right"></i><span>Pending</span></a></li>
+            <li><a href="#/jobs"><i class="fa fa-caret-right"></i><span>Complete</span></a></li>
+        </ul>
+    </li>
+
+</ul> -->
+
+
+<nav class="navbar navbar-default nav-secondary"  role="navigation" data-ng-show="authentication.user.userType === 'candidate'">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav navbar-center">
+
+
+
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle">Profile<span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="#!/candidate-home">Dashboard</a></li>
+            <li><a href="#!/candidate-cv">My CV</a></li>
+            <li><a href="#">CV Visibility</a></li>
+            <li><a href="#">Recommendations</a></li>
+            <li class="divider"></li>
+            <li><a href="#">Purchased Features</a></li>
+            <li><a href="#">Upgrade Features</a></li>
+          </ul>
+        </li>
+
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle">Jobs<span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="#!/candidate-open-jobs">Open Jobs</a></li>
+            <li><a href="#!/candidate-applied-jobs">Applied Jobs</a></li>
+          </ul>
+        </li>
+
+        
+
+        <li><a href="#">People</a></li>
+
+        <li><a href="#">Companies</a></li>
+
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle">Tests<span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="#">Suggested By System</a></li>
+            <li><a href="#!/candidate-cv">Requested By Employers</a></li>
+            <li><a href="#">Tests Taken</a></li>
+          </ul>
+        </li>
+
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+
+
+
+
+
+
+<nav class="navbar navbar-default nav-secondary" role="navigation"  data-ng-show="authentication.user.userType === 'employer'">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav navbar-center">
+
+
+
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle">Profile<span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="#!/employer-home">Dashboard</a></li>
+            <li><a href="#!/employer-profile-view">Edit personal Profile</a></li>
+            <li class="divider"></li>
+            <li><a href="#">Purchased Features</a></li>
+            <li><a href="#">Upgrade Features</a></li>
+          </ul>
+        </li>
+
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle">Jobs<span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="#!/post-job">Post a Job</a></li>
+            <li><a href="#!/company-open-jobs">Open Jobs</a></li>
+            <li><a href="#">Closed Jobs</a></li>
+            <li><a href="#">Cancel a Job</a></li>
+          </ul>
+        </li>
+
+        
+
+        <li><a href="#">People</a></li>
+
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle">Company<span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="#!/company-profile-view">Profile</a></li>
+            <li><a href="#">Collaborators</a></li>
+            <li><a href="#">Followers</a></li>
+            <li><a href="#">Reviews</a></li>
+            <li class="divider"></li>
+            <li><a href="#">Salary Reviews</a></li>
+            <li><a href="#">Hired Employees</a></li>
+            <li><a href="#">Applicants Pool</a></li>
+          </ul>
+        </li>
+
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle">Tasks<span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="#">Assign</a></li>
+            <li><a href="#!/candidate-cv">Pending</a></li>
+            <li><a href="#">Complete</a></li>
+          </ul>
+        </li>
+
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>

@@ -80,6 +80,13 @@ img.img180_180 {
 }
 
 
+.custom-wrapper {
+    -webkit-box-shadow: 0 3px 60px rgba(0,0,0,0.3);
+    box-shadow: 0 3px 60px rgba(0,0,0,0.3);
+    border-left: 1px solid #cbd5dd;
+    border-right: 1px solid #cbd5dd;
+  }
+
 
 
 /*h1 {font-size: 40px; letter-spacing: -3px; color: #727171; font-weight: 700;}

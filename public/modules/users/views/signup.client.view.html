@@ -1,3 +1,40 @@
+<header class="bg-white header header-md navbar navbar-fixed-top-xs box-shadow">
+    <div class="navbar-header aside-md dk">
+      <a class="btn btn-link visible-xs" data-toggle="class:nav-off-screen" data-target="#nav">
+        <i class="fa fa-bars"></i>
+      </a>
+      <a href="/" class="navbar-brand">
+        <img src="/theme/images/logo.png" class="m-r-sm" alt="scale">
+        <span class="hidden-nav-xs">recreal</span>
+      </a>
+      <a class="btn btn-link visible-xs" data-toggle="dropdown" data-target=".user">
+        <i class="fa fa-cog"></i>
+      </a>
+    </div>
+
+    <form class="navbar-form navbar-left input-s-lg m-t m-l-n-xs hidden-xs" role="search">
+      <div class="form-group">
+        <div class="input-group">
+          <span class="input-group-btn">
+            <button type="submit" class="btn btn-sm bg-white b-white btn-icon"><i class="fa fa-search"></i></button>
+          </span>
+          <input type="text" class="form-control input-sm no-border" placeholder="Search jobs, companies...">            
+        </div>
+      </div>
+    </form>
+    <ul class="nav navbar-nav navbar-right m-n hidden-xs nav-user user">
+      <li class="hidden-xs">
+        <a href="/#!/signin">Login</a>
+      </li>
+      <li>
+        <a href="/#!/signup">Sumbit CV</a>
+      </li>
+      <li>
+        <button class="btn btn-primary btn-small emp-button-header">Employers</button>
+      </li>
+    </ul>      
+  </header>
+
 <article class="row" data-ng-controller="AuthenticationController">
 	<h3 class="col-md-12 text-center">Sign up for FREE today!</h3>
 	<section class="col-xs-offset-2 col-xs-8 col-md-offset-4 col-md-4">
