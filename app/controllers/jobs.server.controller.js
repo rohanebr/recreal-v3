@@ -542,7 +542,7 @@ exports.getPaginatedCandidates = function(req, res) {
                              
                c1=c1.splice(req.body.skip,req.body.limit);
             
-             console.log(incomingfilters);
+            
             for (var s = 0; s < dbfilters.length; s++) {
                          if(dbfilters[s]!="skills" && dbfilters[s]!="educations")
                         filters = filterHelper.sortandfilter(dbfilters[s], candidatepool, incomingfilters, filters);

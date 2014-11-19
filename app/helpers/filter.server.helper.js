@@ -111,24 +111,38 @@ exports.sortCandidates=function(candidate,job)
 
                         }
                         cc.sort(this.dynamicSortDescending('tempScore'));
-                       
-                    for(var aa=0,bb=candidatecopy.length;aa<bb;aa++)
-                    {var dummy=0;
+                       var newcandidatecopy=[];
+                 
                        for(var c=0,dd=cc.length;c<dd;c++)
                        {
-                        if(cc[c].id==candidatecopy[aa].id)
-                         { 
-                            dummy=candidatecopy[c];
-                            candidatecopy[c]=candidatecopy[aa];
-                            candidatecopy[aa]=dummy;}
+                        for(var aa=0,len=candidatecopy.length;aa<len;aa++)
+                        {
+
+                             if(cc[c].id==candidatecopy[aa].id)
+                             {
+                               newcandidatecopy.push(candidatecopy[aa]);
+                               break;
+
+
+                             }
+
+
+                        }
+                        // if(cc[c].id==candidatecopy[aa].id)
+                        //  { 
+                        //     dummy=candidatecopy[c];
+                        //     candidatecopy[c]=candidatecopy[aa];
+                        //     candidatecopy[aa]=dummy;
+                        //     break;
+                        //   }
                        }
 
 
-                    }
+                    
 
 
 
-return candidatecopy;
+return newcandidatecopy;
 
                   };
 
