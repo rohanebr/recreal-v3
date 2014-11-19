@@ -159,7 +159,56 @@ exports.generateFilterArray = function(filterType, candidates, filters, incoming
     
     for (var i = 0, len = candidates.length; i < len; i++) {
         var candidate = candidates[i];
-       
+       if(filterType=="isOnline")
+       { 
+        var result;
+          var infilter=false;
+                var target=0;
+                      var isPresent = false;
+                     incomingfilters.forEach(function(entry) {
+                 
+                      console.log("SOO MANY CALLS22"+result);
+                         if (entry.name == candidate.user.isOnline)
+ 
+                    isPresent = true;
+            });
+ for(var ddd=0,fff=filters.length;ddd<fff;ddd++)
+
+                           {  
+                      console.log("SOO MANY CALLS"+result);
+                                if(filters[ddd].name== candidate.user.isOnline)
+                                    {infilter=true;
+                                        target=ddd;
+                                        break;}
+
+
+                           }
+                            if(!infilter )
+                       {
+                         filters.push({
+                type: filterType,
+                name: candidate.user.isOnline,
+                count: 1,
+                value: isPresent
+
+            });
+
+
+                       }
+                       if(infilter )
+                       {
+
+                    filters[target].count++;
+
+                       }
+                 
+
+
+        
+
+
+
+       }
      
         if(filterType=="educations")
         {     for(var n=0,len1=candidate.educations.length;n<len1;n++)
@@ -167,7 +216,7 @@ exports.generateFilterArray = function(filterType, candidates, filters, incoming
                 var target=0;
                       var isPresent = false;
                      incomingfilters.forEach(function(entry) {
-                        console.log("ENTRY"+entry.name);
+                      
                          if (entry.name == candidate.educations[n].degree)
  
                     isPresent = true;

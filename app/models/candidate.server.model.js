@@ -228,7 +228,16 @@ var CandidateSchema = new Schema({
 		type: Date,
 		default: Date.now
 	},
-	calculateScore:[{jobname:{type:Schema.ObjectId,ref: 'Job'},Score:{type:Number,default:0}}],
+	calculateScore: [{
+		 jobname:{
+		 	type:Schema.ObjectId,
+		 	ref: 'Job'
+		        },
+		 	Score:{
+		 	type:Number,
+		 	default:0
+		          }
+		           }],
 	jobs: [{
 		type: Schema.ObjectId,
 		ref: 'Job'
@@ -258,7 +267,14 @@ var CandidateSchema = new Schema({
 		type: Schema.ObjectId,
 		ref: 'User',
 		required: true
-	},coordinates:{
+	},
+	isOnline:{
+        type: String,
+        enum:['Offline','Online'],
+        default: 'Offline'
+
+	},
+	coordinates:{
             latitude:{
          	type:Number,
            	default:0

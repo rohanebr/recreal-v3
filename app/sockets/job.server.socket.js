@@ -19,3 +19,10 @@ exports.applicationReceived = function(data){
 exports.jobPosted = function(data){
     io.sockets.emit('job_posted', data);
 };
+
+exports.candidateIsOnline=function(data)
+{
+   io.sockets.emit('candidatejustcameonline',data);
+
+
+};

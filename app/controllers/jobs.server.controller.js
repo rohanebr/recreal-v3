@@ -355,7 +355,7 @@ exports.onePlusView = function(req, res) {
 
 exports.getPaginatedCandidates = function(req, res) {
     var filters = [];
-    var dbfilters = ["salary_expectation", "visa_status", "employee_status", "employee_type", "career_level","gender","skills","educations"];
+    var dbfilters = ["salary_expectation", "visa_status", "employee_status", "employee_type", "career_level","gender","skills","educations","isOnline"];
 
     var incomingfilters = [];
 
@@ -399,7 +399,7 @@ exports.getPaginatedCandidates = function(req, res) {
     var incomingfilters2 = incomingfilters.slice();
     var incomingfilters3 = incomingfilters.slice();
     var incomingfilters4 = incomingfilters.slice();
-
+    var incomingfilters5 = incomingfilters.slice();
 
     Job.findById(req.job.id)
         .exec(function(err, job) {
@@ -414,6 +414,7 @@ exports.getPaginatedCandidates = function(req, res) {
                     $in: candidates
                 }
             });
+           selectedCandidates.populate('user');
            
             var once = true;
             count = 1;
@@ -452,6 +453,7 @@ exports.getPaginatedCandidates = function(req, res) {
                 var x = 0;
                 incomingfilters.asyncEach(function(incomingfilter, resume) {
                     if (letspopulatefilters.length != 0) {
+                       
                         for (var h = 0; h < letspopulatefilters.length; h++) {
 
                             var names = letspopulatefilters[h].name;
@@ -461,20 +463,39 @@ exports.getPaginatedCandidates = function(req, res) {
                             selectedCandidates.where("skills.title").in(names);
                          if(letspopulatefilters[h].type=="educations")
                             selectedCandidates.where("educations.degree").in(names);
+                      
+                              
+                           
                         }
                     }
 
 
                     selectedCandidates.exec(function(err, candidates) {
+                     
+   // do stuff with docs
+   if(incomingfilter.type=="isOnline")
+   {
+   
+
+   }
+    
+                        
+                        console.log(incomingfilter);
                         if (x < lengthincomingfilters)
                             letspopulatefilters.push(incomingfilter);
                         x++;
                           if(incomingfilter.type!="skills" && incomingfilter.type!="educations")
-                        filters = filterHelper.sortandfilter(incomingfilter.type, candidates, incomingfilters2, filters);
+                       { filters = filterHelper.sortandfilter(incomingfilter.type, candidates, incomingfilters2, filters);
+  for(var s=0,ss=candidates.length;s<ss;s++)
+        console.log("WTF"+candidates[s].user.isOnline);
+
+                       }
                           if(incomingfilter.type=="skills")
                              filters=filterHelper.sortandfilterArray(incomingfilter.type, candidates, incomingfilters3, filters);
                            if(incomingfilter.type=="educations")
                             filters=filterHelper.sortandfilterArray(incomingfilter.type, candidates, incomingfilters4, filters);
+                         
+
 
                        
 
@@ -511,7 +532,7 @@ exports.getPaginatedCandidates = function(req, res) {
             if (incomingfilters.length == 0) {
                  var c1;
                   // selectedCandidates.select('displayName title objective picture_url location salary_expectation visa_status employee_type employee_status skills calculateScore');
-                 
+               
                 selectedCandidates.exec(function(err, candidatepool) {
                    matching.calculateMatchPercent(candidatepool,precedence,job);
                    
@@ -528,7 +549,7 @@ exports.getPaginatedCandidates = function(req, res) {
                             filters=filterHelper.sortandfilterArray(dbfilters[s], candidatepool, incomingfilters, filters);
                         if(dbfilters[s]=="educations")
                             filters=filterHelper.sortandfilterArray(dbfilters[s], candidatepool, incomingfilters, filters);
-
+                         
                     }
                       // console.log(filters); 
                     res.jsonp({
