@@ -12,7 +12,8 @@ var mongoose = require('mongoose'),
     _ = require('lodash'),
     matching = require('../helpers/matching-algo.server.helper.js'),
     filterHelper=require('../helpers/filter.server.helper.js'),
-     Notification = require('../sockets/notification.server.socket.js');
+     Notification = require('../sockets/notification.server.socket.js'),
+     searchPlugin = require('mongoose-search-plugin');
 
 
 Array.prototype.asyncEach = function(iterator) {
@@ -365,6 +366,38 @@ exports.onePlusView = function(req, res) {
 
 };
 
+exports.searchedJobs = function(req,res){
+
+Job.search(req.body.keyword,{title: 1}, function (err, output) {
+    if (err) return handleError(err);
+
+    else
+    {console.log(output);
+
+  var totallength=output.results.length;
+var ids=[];
+     for(var a=req.body.skip;a<totallength;a++)
+        if(a<(req.body.skip+req.body.limit))
+         ids.push(output.results[a]._id);
+ 
+    Job.find({_id: {$in: ids}}).populate('user', 'displayName').populate('company').exec(function(err,out){
+if(!err)
+{
+    res.jsonp({jobs:out,total:output.totalCount});
+}
+
+    });   
+ 
+
+
+    }
+     
+});
+
+console.log("SEARCH JOB");
+
+
+};
 exports.getPaginatedJobs = function(req,res){
    var jobs= Job.find().sort('-created').populate('user', 'displayName').populate('company');
 var totallength=0;

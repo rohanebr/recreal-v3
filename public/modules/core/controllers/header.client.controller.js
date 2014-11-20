@@ -1,15 +1,28 @@
 'use strict';
 
-angular.module('core').controller('HeaderController', ['$scope', 'Authentication', 'Menus', 'Socket', '$http',
-    function($scope, Authentication, Menus, Socket, $http) {
+angular.module('core').controller('HeaderController', ['$scope', 'Authentication', 'Menus', 'Socket', '$http','$location','$rootScope',
+    function($scope, Authentication, Menus, Socket, $http,$location,$rootScope) {
         $scope.authentication = Authentication;
         $scope.isCollapsed = false;
         $scope.menu = Menus.getMenu('topbar');
         $scope.threads = [];
         $scope.unreadnotificationslength=0;
-
+         
         $scope.notifications = [];
         var thread = [];
+
+
+
+       $scope.list =' ';
+      $scope.texts = ' ';
+      $scope.submit = function() {
+        if ($scope.texts) {
+          $scope.list=this.texts;
+          $rootScope=$scope.list;
+          $scope.texts = ' ';
+          $location.path('/search-jobs/'+$scope.list);
+        }
+      };
 $scope.notificationRead=function(data){
               $scope.unreadnotificationslength--;
                 $http.post('/users/readNotification/' + $scope.authentication.user._id,data).success(function(res) {
@@ -21,7 +34,7 @@ $scope.notificationRead=function(data){
                    
                     $scope.apply();
                 }).error(function(data, status, headers, confige) {
- console.log("BOOBOO");
+
                  
                 });
 

@@ -1,0 +1,88 @@
+<section data-ng-controller="SearchJobsController" class="container">
+    <header class="text-center col-md-12">
+            <h2>Recommended Jobs</h2>
+    </header>
+    <article class="col-md-8 media">
+         <table class="table table-striped">
+           <tbody>
+          <tr ng-repeat="job in jobs" data-ng-show="!hasApplied(job)">
+            <td>
+                  <a class="pull-left" href="#">
+                <img alt="" src="http://cns.com.pk/wp-content/uploads/2012/06/CNS-Logo.bmp" class="img-rounded img64_64">
+            </a>
+            <section class="media-body">
+                <a data-ng-href="#!/jobs/{{job._id}}"><h3 class="media-heading">{{job.title}}</h3></a>
+                <h5>at <a data-ng-href="#!/companies/{{job.company._id}}">{{job.company.company_name}}</a></h5>                    
+                <p>{{job.description | truncate:270}}</p>
+                <div>
+                    <span  class="skill-div" data-ng-repeat="skill in job.skills">{{skill.title}}</span>
+                </div>
+            </section>
+            <section class="pull-right">    
+                <label>{{job.dueDate | date}}</label>
+                 <p>Your location is: {{coords}}</p>
+            </section>
+            </td>
+          </tr>
+        </tbody>
+        <tfoot>
+              <ul class="pagination">
+                <li ng-class="prevPageDisabled()">
+                  <a href ng-click="prevPage()">« Prev</a>
+                </li>
+                <li ng-repeat="n in range()" ng-class="{active: n == currentPage}" ng-click="setPage(n)">
+                  <a href="#">{{n+1}}</a>
+                </li>
+                <li ng-class="nextPageDisabled()">
+                  <a href ng-click="nextPage()">Next »</a>
+                </li>
+              </ul>
+          </td>
+        </tfoot>
+      </table>
+        
+    </article>
+    <aside class="col-md-4">
+        <header> <h2>Search</h2></header>
+        <section class="caption">
+            <h3>Thumbnail label</h3>
+            <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+        </section>
+    </aside>
+</section>
+
+<style>
+.super-awesome 
+{
+    display: block;
+    color: #fff;
+    font-size: 5em;
+     text-shadow: 1px 1px #D5D5D5;
+     color: #f2f2f2
+}
+.signin-header {
+        padding: 8px 0;    
+        background-color: #898989;
+}
+.skill-div
+{
+background-color: #f2f2f2;
+color: #7c7c7a;
+padding: 4px 12px;
+-webkit-border-radius: 4px;
+-moz-border-radius: 4px;
+-ms-border-radius: 4px;
+-o-border-radius: 4px;
+border-radius: 4px;
+margin: 4px;
+font-size: 11px;
+line-height: 0;
+}
+.header-page
+{
+    color: #464545; 
+    text-shadow: 1px 1px -2px #D5D5D5; 
+    font-size:30px; 
+    padding-top:10px;
+}
+</style>

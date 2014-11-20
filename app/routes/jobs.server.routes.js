@@ -22,7 +22,8 @@ module.exports = function(app) {
 		.put(jobs.getPaginatedCandidates);
 		app.route('/jobs/getPaginatedJobs/:userId')
 		.put(jobs.getPaginatedJobs);
-		
+		app.route('/jobs/searchedJobs/:userId')
+		.put(jobs.searchedJobs);
 	app.route('/jobs/candidates/:jobId')
 		.get(jobs.getJobCandidates);
 

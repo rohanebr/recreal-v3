@@ -5,7 +5,8 @@
  */
 var mongoose = require('mongoose'),
 Candidate = mongoose.model('Candidate'),
-	Schema = mongoose.Schema;
+Schema = mongoose.Schema,
+ searchPlugin = require('mongoose-search-plugin');
 
 /**
  * Job Schema
@@ -18,6 +19,10 @@ var JobSchema = new Schema({
 	// 	trim: true
 	// },
 	  title:{
+	    type: 'String',
+	    trim: true
+	  },
+	   location:{
 	    type: 'String',
 	    trim: true
 	  },
@@ -89,10 +94,7 @@ var JobSchema = new Schema({
 	    type: 'String',
 	    trim: true
 	  },
-	  location:{
-	    type: 'String',
-	    trim: true
-	  },
+	 
 	  country:{
 	    type: 'String',
 	    trim: true
@@ -178,7 +180,16 @@ var JobSchema = new Schema({
 	
 });
 
+JobSchema.plugin(searchPlugin, {
+    fields: ['title', 'location']
+  });
 JobSchema.index({candidates: 1});
+
+
+//two below lines added for text saerch plugin remove if not required
+
+
+
 
 // A couple of methods to save references inside the documents by using only
 // the _id instead of creating a subdocument.

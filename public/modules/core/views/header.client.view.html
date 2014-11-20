@@ -284,9 +284,13 @@
             </div>
         </li>
     </ul>
-    <form class="navbar-form navbar-left">
-      <input type="text" class="form-control col-lg-8" placeholder="Search">
-    </form>
+     <form data-ng-submit="submit()" class="navbar-form navbar-left">
+ 
+  <input type="text" data-ng-model="texts" class="form-control col-lg-8" name="texts" placeholder="I am looking for..."/>
+  <input type="submit" id="submit" value="Search" />
+  
+  
+</form>
     <ul class="nav navbar-nav navbar-right">
         <li>
             <img src="{{candidate.picture_url}}">
