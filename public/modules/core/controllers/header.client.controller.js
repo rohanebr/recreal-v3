@@ -1,32 +1,61 @@
 'use strict';
 
-angular.module('core').controller('HeaderController', ['$scope', 'Authentication', 'Menus', 'Socket', '$http',
-    function($scope, Authentication, Menus, Socket, $http) {
+angular.module('core').controller('HeaderController', ['$scope', 'Authentication', 'Menus', 'Socket', '$http','$location','$rootScope',
+    function($scope, Authentication, Menus, Socket, $http,$location,$rootScope) {
         $scope.authentication = Authentication;
         $scope.isCollapsed = false;
         $scope.menu = Menus.getMenu('topbar');
         $scope.threads = [];
         $scope.unreadnotificationslength=0;
+         
         $scope.notifications = [];
         var thread = [];
+
+
+
+       $scope.list =' ';
+      $scope.texts = ' ';
+      $scope.submit = function() {
+        if ($scope.texts) {
+          $scope.list=this.texts;
+          $rootScope=$scope.list;
+          $scope.texts = ' ';
+          $location.path('/search-jobs/'+$scope.list);
+        }
+      };
+      $scope.findMeAJob=function()
+      {
+
+      $location.path('/search-jobs/find-me-a-job');
+      };
+
 $scope.notificationRead=function(data){
-             
+              $scope.unreadnotificationslength--;
                 $http.post('/users/readNotification/' + $scope.authentication.user._id,data).success(function(res) {
+                    for (var i in $scope.notifications ) {
+                    if ($scope.notifications [i] === data  && $scope.notifications.length>10) {
+                        $scope.notifications.splice(i, 1);
+                    }
+                }
+                   
+                    $scope.apply();
                 }).error(function(data, status, headers, confige) {
 
                  
                 });
 
-        		for (var i in $scope.notifications ) {
-					if ($scope.notifications [i] === data ) {
-						$scope.notifications.splice(i, 1);
-					}
-				}
-
+        		
         	}
      
         if ($scope.authentication.user) {
+ $scope.isCandidate=function()
+      {
 
+       if( $scope.authentication.user.userType==='candidate')
+        return true;
+
+else return false;
+      };
 
         	var count=0;
         	var y=$scope.authentication.user.notifications.length;
@@ -54,12 +83,21 @@ $scope.notificationRead=function(data){
                   
         	$scope.notifications=$scope.authentication.user.notifications;
             Socket.on('take_the_test_notification', function(data) {
+                console.log("GOT A HIT");
                 if (data.userid == $scope.authentication.user._id)
-                    $scope.notifications.push({
-                        generalmessage: data.generalmessage,
-                        hiddendata: data.hiddendata,
-                        created: data.created
-                    });
+                {
+                 var present=false;
+
+                        for(var d=0,len=$scope.notifications.length;d<len;d++)
+                        {
+                            if($scope.notifications[d]._id==data.notification._id)
+                              {  present=true;break;}
+
+                        }
+                        if(!present){
+                    $scope.notifications.push(data.notification);
+                     $scope.unreadnotificationslength++;}
+                }
 
             });
             Socket.on('watched_thread_to', function(event, args) {

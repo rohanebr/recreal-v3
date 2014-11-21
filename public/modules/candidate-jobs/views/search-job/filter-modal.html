@@ -1,0 +1,23 @@
+<div data-ng-repeat="filter in filters">
+	{{filter.name}} ({{filter.count}})
+</div>
+
+<article class="thumbnail">
+	<label>{{name}}</label>
+
+	<ul>
+	    <li data-ng-repeat="filter in filters | orderBy:'count':true">
+
+	    <input type="checkbox" data-ng-model="filter.value" id="{{'salary' + filter.name}}" />
+
+	    <label ng-if="filter.name" for="{{'salary' + filter.name}}" >{{filter.name}} ({{filter.count}})</label>
+	    <label ng-if="!filter.name" for="{{'salary' + filter.name}}" >Not Mentioned ({{filter.count}})</label>
+
+	        
+	    </li>
+	</ul>
+
+	   <button class="btn btn-primary" ng-click="cancel()">Cancel</button> 
+        <button class="btn btn-success" ng-click="ok()">Submit</button>
+	
+</article> 

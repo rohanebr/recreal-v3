@@ -1,8 +1,13 @@
-<section data-ng-controller="CandidateOpenJobsController" class="container">
+<section data-ng-controller="SearchJobsController" class="container">
     <header class="text-center col-md-12">
             <h2>Recommended Jobs</h2>
     </header>
     <article class="col-md-8 media">
+      <aside class="col-md-3">
+              <div style="line-height: 2">
+                        <span class="skill-div" data-ng-repeat="filter in filters" data-ng-click="removeFromFilters(filter.type,filter.name)">{{filter.name}}</span>
+                    </div>
+                  </aside>
          <table class="table table-striped">
            <tbody>
           <tr ng-repeat="job in jobs" data-ng-show="!hasApplied(job)">

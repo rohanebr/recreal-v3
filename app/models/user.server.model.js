@@ -42,8 +42,9 @@ var UserSchema = new Schema({
 		trim: true
 	},
 	isOnline:{
-        type: Boolean,
-        default: false
+        type: String,
+  	enum: ['Online', 'Offline'],
+  	default:'Offline'
 	},
 	picture_url:{
 		type: 'String',
