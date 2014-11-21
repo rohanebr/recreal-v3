@@ -13,13 +13,65 @@ module.exports = {
 	assets: {
 		lib: {
 			css: [
-				'public/lib/bootstrap/dist/css/bootstrap.css',
-				'public/lib/bootstrap/dist/css/bootstrap-theme.css'
+				// 'public/lib/bootstrap/dist/css/bootstrap.css',
+				// 'public/lib/bootstrap/dist/css/bootstrap-theme.css'
+
+				// careers theme
+
+				"public/theme/css/bootstrap.css" ,
+				"public/theme/css/animate.css" ,
+				"public/theme/css/font-awesome.min.css" ,
+				"public/theme/css/icon.css" ,
+				"public/theme/css/font.css" ,
+				"public/theme/css/app.css" ,
+				"public/theme/js/calendar/bootstrap_calendar.css" ,
+
+
 			],
 			js: [
-				'public/lib/jquery/dist/jquery.js',
+
+
+				// scale theme
+
+				"public/theme/js/jquery.min.js" ,
+				// <!-- Bootstrap -->
+				"public/theme/js/bootstrap.js" ,
+				// <!-- App -->
+				"public/theme/js/app.js" ,
+				"public/theme/js/slimscroll/jquery.slimscroll.min.js" ,
+				"public/theme/js/charts/easypiechart/jquery.easy-pie-chart.js" ,
+				"public/theme/js/charts/sparkline/jquery.sparkline.min.js" ,
+				"public/theme/js/charts/flot/jquery.flot.min.js" ,
+				"public/theme/js/charts/flot/jquery.flot.tooltip.min.js" ,
+				"public/theme/js/charts/flot/jquery.flot.spline.js" ,
+				"public/theme/js/charts/flot/jquery.flot.pie.min.js" ,
+				"public/theme/js/charts/flot/jquery.flot.resize.js" ,
+				"public/theme/js/charts/flot/jquery.flot.grow.js" ,
+				"public/theme/js/charts/flot/demo.js" ,
+
+				"public/theme/js/calendar/bootstrap_calendar.js" ,
+				"public/theme/js/calendar/demo.js" ,
+
+				"public/theme/js/sortable/jquery.sortable.js" ,
+
+				"public/theme/js/app.plugin.js" ,
+				
+				
+
+
 				// 'public/lib/jquery-slimscroll/jquery.slimscroll.js',
+				
+				// 'public/lib/jquery/dist/jquery.js',
 				'public/lib/jquery-ui/jquery-ui.js',
+
+
+				
+
+				
+				
+
+
+
 				'public/lib/angular/angular.min.js',
 				'public/lib/angular-resource/angular-resource.js', 
 				'public/lib/angular-ui-router/release/angular-ui-router.min.js',
@@ -39,9 +91,18 @@ module.exports = {
 				'public/lib/textAngular/dist/textAngular-sanitize.min.js',
 				'public/lib/textAngular/dist/textAngular.min.js',
 				'public/lib/ngmap/build/scripts/ng-map.js',
+<<<<<<< HEAD
 				'public/lib/ng-sortable/dist/ng-sortable.js',
 				'http://maps.google.com/maps/api/js'
 
+=======
+				'http://maps.google.com/maps/api/js',
+
+
+				
+
+				
+>>>>>>> frontEnd
 			]
 		},
 		css: [

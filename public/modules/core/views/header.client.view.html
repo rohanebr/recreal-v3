@@ -1,221 +1,4 @@
-<!-- <header class="clearfix" data-ng-controller="HeaderController">
-
-    
-    <div class="logo bg-primary">
-        <a ui-sref="home">
-            <span class="glyphicon glyphicon-fire logo-icon"></span><span>recreal</span>
-        </a>
-    </div>
-
-    
-    <div class="menu-button" toggle-off-canvas>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-    </div>
-
-    <div class="top-nav">
-        <ul class="nav-left list-unstyled" data-ng-show="authentication.user">
-            <li class="dropdown">
-                <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
-                    <i class="fa fa-comment-o"></i>
-                    <span class="badge badge-success">2</span>
-                </a>
-                <div class="dropdown-menu panel panel-default">
-                    <div class="panel-heading">
-                        You have 2 messages.
-                    </div>
-                    <ul class="list-group">
-                        <li class="list-group-item">
-                            <a href="javascript:;" class="media">
-                                <span class="pull-left media-icon">
-                                    <span class="round-icon sm bg-info"><i class="fa fa-comment-o"></i></span>
-                                </span>
-                                <div class="media-body">
-                                    <span class="block">Jane sent you a message</span>
-                                    <span class="text-muted">3 hours ago</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="list-group-item">
-                            <a href="javascript:;" class="media">
-                                <span class="pull-left media-icon">
-                                    <span class="round-icon sm bg-danger"><i class="fa fa-comment-o"></i></span>
-                                </span>
-                                <div class="media-body">
-                                    <span class="block">Lynda sent you a mail</span>
-                                    <span class="text-muted">9 hours ago</span>
-                                </div>
-                            </a>
-                        </li>                       
-                    </ul>
-                    <div class="panel-footer">
-                        <a href="javascript:;">Show all messages.</a>
-                    </div>
-                </div>
-            </li>
-            <li class="dropdown">
-                <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
-                    <i class="fa fa-envelope-o"></i>
-                    <span class="badge badge-info">3</span>
-                </a>
-                <div class="dropdown-menu panel panel-default">
-                    <div class="panel-heading">
-                        You have 3 mails.
-                    </div>
-                    <ul class="list-group">
-                        <li class="list-group-item">
-                            <a href="javascript:;" class="media">
-                                <span class="pull-left media-icon">
-                                    <span class="round-icon sm bg-warning"><i class="fa fa-envelope-o"></i></span>
-                                </span>
-                                <div class="media-body">
-                                    <span class="block">Lisa sent you a mail</span>
-                                    <span class="text-muted block">2min ago</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="list-group-item">
-                            <a href="javascript:;" class="media">
-                                <span class="pull-left media-icon">
-                                    <span class="round-icon sm bg-info"><i class="fa fa-envelope-o"></i></span>
-                                </span>
-                                <div class="media-body">
-                                    <span class="block">Jane sent you a mail</span>
-                                    <span class="text-muted">3 hours ago</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="list-group-item">
-                            <a href="javascript:;" class="media">
-                                <span class="pull-left media-icon">
-                                    <span class="round-icon sm bg-success"><i class="fa fa-envelope-o"></i></span>
-                                </span>
-                                <div class="media-body">
-                                    <span class="block">Lynda sent you a mail</span>
-                                    <span class="text-muted">9 hours ago</span>
-                                </div>
-                            </a>
-                        </li>                       
-                    </ul>
-                    <div class="panel-footer">
-                        <a href="javascript:;">Show all mails.</a>
-                    </div>
-                </div>
-            </li>
-            <li class="dropdown">
-                <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
-                    <i class="fa fa-bell-o nav-icon"></i>
-                    <span class="badge badge-warning">3</span>
-                </a>
-                <div class="dropdown-menu panel panel-default">
-                    <div class="panel-heading">
-                        You have 3 notifications.
-                    </div>
-                    <ul class="list-group">
-                        <li class="list-group-item">
-                            <a href="javascript:;" class="media">
-                                <span class="pull-left media-icon">
-                                    <span class="round-icon sm bg-success"><i class="fa fa-bell-o"></i></span>
-                                </span>
-                                <div class="media-body">
-                                    <span class="block">New tasks needs to be done</span>
-                                    <span class="text-muted block">2min ago</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="list-group-item">
-                            <a href="javascript:;" class="media">
-                                <span class="pull-left media-icon">
-                                    <span class="round-icon sm bg-info"><i class="fa fa-bell-o"></i></span>
-                                </span>
-                                <div class="media-body">
-                                    <span class="block">Change your password</span>
-                                    <span class="text-muted">3 hours ago</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="list-group-item">
-                            <a href="javascript:;" class="media">
-                                <span class="pull-left media-icon">
-                                    <span class="round-icon sm bg-danger"><i class="fa fa-bell-o"></i></span>
-                                </span>
-                                <div class="media-body">
-                                    <span class="block">New feature added</span>
-                                    <span class="text-muted">9 hours ago</span>
-                                </div>
-                            </a>
-                        </li>                       
-                    </ul>
-                    <div class="panel-footer">
-                        <a href="javascript:;">Show all notifications.</a>
-                    </div>
-                </div>
-            </li>
-        </ul>
-
-        <ul class="nav navbar-nav navbar-right" data-ng-hide="authentication.user">
-            <li ui-route="/signup" ng-class="{active: $uiRoute}" style="padding-right: 15px;">
-                <form action="/#!/signin">
-                    <input type="submit" class="btn btn-success btn-md" value="Sign In">
-                </form>
-            </li>
-            <li class="divider-vertical"></li>
-            <li ui-route="/signin" ng-class="{active: $uiRoute}" style="padding-right: 15px;">
-                <form action="/#!/signup">
-                    <input type="submit" class="btn btn-primary btn-md" value="Sign Up">
-                </form>
-            </li>
-        </ul>
-
-        <ul class="nav-right pull-right list-unstyled" data-ng-show="authentication.user">
-
-            <li class="dropdown text-normal nav-profile">
-                <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
-                    <img src="modules/core/img/g1.jpg" alt="" class="img-circle img30_30">
-                    <span class="hidden-xs">
-                        <span data-ng-bind="authentication.user.displayName">
-                    </span>
-                </a>
-                <ul class="dropdown-menu pull-right">
-                    <li>
-                        <a href="#/userCandidateProfile">
-                            <i class="fa fa-user"></i>
-                            <span>My Profile</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/#!/settings/profile"><i class="fa fa-user"></i>Edit Profile</a>
-                    </li>
-                    <li>
-                        <a href="/#!/settings/accounts"><i class="fa fa-user"></i>Manage Social Accounts</a>
-                    </li>
-                    <li data-ng-show="authentication.user.provider === 'local'">
-                        <a href="/#!/settings/password"><i class="fa fa-user"></i>Change Password</a>
-                    </li>
-                    <li class="divider"></li>
-                    <li>
-                        <a href="#/tasks">
-                            <i class="fa fa-check"></i>
-                            <span>My Tasks</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/auth/signout">
-                            <i class="fa fa-sign-out"></i>
-                            <span>Log Out</span>
-                        </a>
-                    </li>
-                </ul>
-            </li>
-
-        </ul>        
-    </div>
-
-</header> -->
-
-
-<div class="navbar navbar-inverse" data-ng-show="authentication.user">
+<!-- <div class="navbar navbar-inverse" data-ng-show="authentication.user">
   <div class="navbar-header">
     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-inverse-collapse">
       <span class="icon-bar"></span>
@@ -305,4 +88,167 @@
         </li>
     </ul>
   </div>
-</div>
+</div> -->
+
+
+<header class="bg-primary header header-md navbar navbar-fixed-top-xs box-shadow" data-ng-show="authentication.user">
+  <div class="navbar-header aside-md dk">
+    <a class="btn btn-link visible-xs" data-toggle="class:nav-off-screen" data-target="#nav">
+      <i class="fa fa-bars"></i>
+    </a>
+    <a href="index.html" class="navbar-brand">
+      <img src="/theme/images/logo.png" class="m-r-sm" alt="scale">
+      <span class="hidden-nav-xs">Scale</span>
+    </a>
+    <a class="btn btn-link visible-xs" data-toggle="dropdown" data-target=".user">
+      <i class="fa fa-cog"></i>
+    </a>
+  </div>
+  <ul class="nav navbar-nav hidden-xs">
+    <li class="dropdown">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+        <i class="i i-grid"></i>
+      </a>
+      <section class="dropdown-menu aside-lg bg-white on animated fadeInLeft">
+        <div class="row m-l-none m-r-none m-t m-b text-center">
+          <div class="col-xs-4">
+            <div class="padder-v">
+              <a href="#">
+                <span class="m-b-xs block">
+                  <i class="i i-mail i-2x text-primary-lt"></i>
+                </span>
+                <small class="text-muted">Mailbox</small>
+              </a>
+            </div>
+          </div>
+          <div class="col-xs-4">
+            <div class="padder-v">
+              <a href="#">
+                <span class="m-b-xs block">
+                  <i class="i i-calendar i-2x text-danger-lt"></i>
+                </span>
+                <small class="text-muted">Calendar</small>
+              </a>
+            </div>
+          </div>
+          <div class="col-xs-4">
+            <div class="padder-v">
+              <a href="#">
+                <span class="m-b-xs block">
+                  <i class="i i-map i-2x text-success-lt"></i>
+                </span>
+                <small class="text-muted">Map</small>
+              </a>
+            </div>
+          </div>
+          <div class="col-xs-4">
+            <div class="padder-v">
+              <a href="#">
+                <span class="m-b-xs block">
+                  <i class="i i-paperplane i-2x text-info-lt"></i>
+                </span>
+                <small class="text-muted">Trainning</small>
+              </a>
+            </div>
+          </div>
+          <div class="col-xs-4">
+            <div class="padder-v">
+              <a href="#">
+                <span class="m-b-xs block">
+                  <i class="i i-/theme/images i-2x text-muted"></i>
+                </span>
+                <small class="text-muted">Photos</small>
+              </a>
+            </div>
+          </div>
+          <div class="col-xs-4">
+            <div class="padder-v">
+              <a href="#">
+                <span class="m-b-xs block">
+                  <i class="i i-clock i-2x text-warning-lter"></i>
+                </span>
+                <small class="text-muted">Timeline</small>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </li>
+  </ul>
+  <form class="navbar-form navbar-left input-s-lg m-t m-l-n-xs hidden-xs" role="search">
+    <div class="form-group">
+      <div class="input-group">
+        <span class="input-group-btn">
+          <button type="submit" class="btn btn-sm bg-white b-white btn-icon"><i class="fa fa-search"></i></button>
+        </span>
+        <input type="text" class="form-control input-sm no-border" placeholder="Search apps, projects...">            
+      </div>
+    </div>
+  </form>
+  <ul class="nav navbar-nav navbar-right m-n hidden-xs nav-user user">
+    <li class="hidden-xs">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+        <i class="i i-chat7"></i>
+        <span class="badge badge-sm up bg-danger count">2</span>
+      </a>
+      <section class="dropdown-menu aside-xl animated flipInY">
+        <section class="panel bg-white">
+          <div class="panel-heading b-light bg-light">
+            <strong>You have <span class="count">2</span> notifications</strong>
+          </div>
+          <div class="list-group list-group-alt">
+            <a href="#" class="media list-group-item">
+              <span class="pull-left thumb-sm">
+                <img src="/theme/images/a0.png" alt="..." class="img-circle">
+              </span>
+              <span class="media-body block m-b-none">
+                Use awesome animate.css<br>
+                <small class="text-muted">10 minutes ago</small>
+              </span>
+            </a>
+            <a href="#" class="media list-group-item">
+              <span class="media-body block m-b-none">
+                1.0 initial released<br>
+                <small class="text-muted">1 hour ago</small>
+              </span>
+            </a>
+          </div>
+          <div class="panel-footer text-sm">
+            <a href="#" class="pull-right"><i class="fa fa-cog"></i></a>
+            <a href="#notes" data-toggle="class:show animated fadeInRight">See all the notifications</a>
+          </div>
+        </section>
+      </section>
+    </li>
+    <li class="dropdown">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+        <span class="thumb-sm avatar pull-left">
+          <img src="/theme/images/a0.png" alt="...">
+        </span>
+        John.Smith <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu animated fadeInRight">            
+        <li>
+          <span class="arrow top"></span>
+          <a href="#">Settings</a>
+        </li>
+        <li>
+          <a href="profile.html">Profile</a>
+        </li>
+        <li>
+          <a href="#">
+            <span class="badge bg-danger pull-right">3</span>
+            Notifications
+          </a>
+        </li>
+        <li>
+          <a href="docs.html">Help</a>
+        </li>
+        <li class="divider"></li>
+        <li>
+          <a href="/auth/signout" data-toggle="ajaxModal" >Logout</a>
+        </li>
+      </ul>
+    </li>
+  </ul>      
+</header>
