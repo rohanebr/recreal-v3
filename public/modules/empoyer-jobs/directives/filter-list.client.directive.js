@@ -41,6 +41,10 @@ angular.module('empoyer-jobs').directive('filterList', ['$compile',
 					break;
 					case 'educations':
 					    filterHeading = 'Education';
+					break;
+					case 'isOnline':
+					    filterHeading = 'Presence';
+					break;
 				}
 				
             
@@ -58,7 +62,7 @@ angular.module('empoyer-jobs').directive('filterList', ['$compile',
 				}
 
 			
-			var html =	'<article>' + 
+			var html =	'<article style="padding-top: 10px;">' + 
  		                      '<label><strong>'+ filterHeading +'</strong></label>' +
  		                        '<ul class="list-unstyled m-t-n-sm">' + 
 		                            '<li class="checkbox i-checks" data-ng-repeat="'+ filterName +'Filter in dummyfilters | orderBy:'+ count + ':true  | limitTo: filterLimit">' + 
