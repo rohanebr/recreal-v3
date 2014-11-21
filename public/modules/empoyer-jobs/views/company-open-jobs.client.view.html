@@ -164,9 +164,28 @@
               <section class="vbox">
                 <section class="scrollable padder">
                    <article class="col-md-12">
-                      <header class="header bg-white b-b b-light page-title">
-                        <h2>Jobs <small>({{}})</small></h2>
+                      <header class="header">
+                        <h2>My Jobs <hr/></h2>
                       </header>
+                      <section><span><span style="margin-right:2%">Sort By:</span><a style="margin-right:2%">A-Z <i class="fa fa-arrow-up"></i></a><a style="margin-right:2%">Most Recent Closed</a><a style="margin-right:2%">Most Candidates</a><a style="margin-right:2%">Most Shortlist</a></span><span class="pull-right btn btn-sm btn-success">Create New</span><hr/></section>
+                      <section>
+                        <h3>Senior Software Engineer </h3>
+                          <small class="block text-muted"> Islamabad, Pakistan</small>
+                          <span style="margin-right:2%">Candidates: 556</span><span style="margin-right:2%">Short List: 26</span><span style="margin-right:2%">Interview: 0</span>
+                          <p><span class="pull-left" style="color:gray; font-style: italic"> Posted By: Muhammad Ahsin Anwar</span><span class="pull-right">10 Days remaining</span></p><hr/>
+                      </section>
+                       <section>
+                        <h3>Senior Finance Officier</h3>
+                          <small class="block text-muted"> Islamabad, Pakistan</small>
+                          <span style="margin-right:2%">Candidates: 556</span><span style="margin-right:2%">Short List: 26</span><span style="margin-right:2%">Interview: 0</span>
+                          <p><span class="pull-left" style="color:gray; font-style: italic"> Posted By: Muhammad Ahsin Anwar</span><span class="pull-right">10 Days remaining</span></p><hr/>
+                      </section>
+                       <section>
+                        <h3>Java Developer </h3>
+                          <small class="block text-muted"> Islamabad, Pakistan</small>
+                          <span style="margin-right:2%">Candidates: 556</span><span style="margin-right:2%">Short List: 26</span><span style="margin-right:2%">Interview: 0</span>
+                          <p><span class="pull-left" style="color:gray; font-style: italic"> Posted By: Muhammad Ahsin Anwar</span><span class="pull-right">10 Days remaining</span></p><hr/>
+                      </section>
                       <!-- Job panel start -->
                       <section ng-repeat="job in jobs |filter:searchText" class="panel panel-info">
                         <div class="panel-body">
@@ -181,11 +200,10 @@
 
                               <a href="/#!/shortlisted-candidates/{{job._id}}" class="btn btn-xs btn-success m-t-xs">Shortlisted ({{job.shortListedCandidates.length}})</a>
                             </div>
-
-
                           </div>
                         </div>
                       </section>
+
                     <section ng-repeat="job in jobs |filter:searchText">
                         <a href="#!/jobs/{{job._id}}" ><h2>{{job.title}}</h2></a> 
                         <span class="pull-right" style="color:gray; font-style: italic"> Close Date: {{job.due_date | date}}</span>
