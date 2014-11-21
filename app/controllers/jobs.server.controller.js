@@ -166,11 +166,11 @@ exports.apply = function(req, res, next)
                     user: req.user._id
                 }).exec(function(err, candidate) {
                     User.findById(job.user).exec(function(err, user) {
-                                         user.notifications.push({generalmessage:candidate.displayName+" has applied for the "+job.title+" job",hiddendata:"#!/jobs/"+job._id,created:Date.now(),isRead:false});
+                                         user.notifications.push({generalmessage:candidate.displayName+" has applied for the "+job.title+" job",hiddendata:"/employer-job-candidates/"+job._id,created:Date.now(),isRead:false});
                                          user.markModified('notifications');
                                          user.save();
                                          Notification.notifyEmployerAboutNewCandidateApplication({userid:user._id,notification:user.notifications[user.notifications.length-1]});
-          
+                             
                                       });
                     Job.findOne({
                             _id: job._id
@@ -180,7 +180,7 @@ exports.apply = function(req, res, next)
                         })
                         .exec(function(err, doc) {
                             if (!doc) {
-                                //doc.apply(candidate);
+                                
                                 job.apply(candidate);
                              
                                 JobSocket.applicationReceived({
@@ -385,7 +385,7 @@ var ids=[];
  
     Job.find({_id: {$in: ids}}).populate('user', 'displayName').populate('company').exec(function(err,out){
 if(!err)
-{
+{console.log(out);  
     res.jsonp({jobs:out,total:output.totalCount});
 }
 

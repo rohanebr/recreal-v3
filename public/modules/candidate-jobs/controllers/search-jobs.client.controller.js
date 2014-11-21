@@ -8,9 +8,33 @@ $scope.itemsPerPage = 10;
         $scope.isPageChange=false;
         $scope.skip = 0;
 		$scope.user = Authentication.user;
-        
+        $scope.firsttime=true;
 		// If user is not signed in then redirect back home
 		if (!$scope.user) $location.path('/signin');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 $scope.range = function() {
             var rangeSize = 5;
             var ret = [];
@@ -82,6 +106,35 @@ $scope.findJobs= function(skip,limit, isPageChange) {
             }).success(function(job) {
                    $scope.jobs=job.jobs;
                    $scope.total=job.total;   
+                   $scope.filters1=[];
+                  
+                    job.filters.forEach(function(entry){
+                           $scope.filters1.push(entry);
+                               });
+
+                if($scope.firsttime)
+                {
+                  $scope.firsttime=false;
+                     $scope.filters1.forEach(function(entry){
+                                    var alreadyexists=false;
+                                    for(var h=0,a=$scope.completefilternames.length;h<a;h++)
+                                    {
+
+                                     if($scope.completefilternames[h]==entry.type)
+                                      alreadyexists=true;
+
+                                    }
+                               if(!alreadyexists)
+                              $scope.completefilternames.push(entry.type);
+
+
+                     });
+
+
+
+
+                }
+                         console.log("COMETEPL"+$scope.completefilternames);
 
 
             });
@@ -124,5 +177,163 @@ $scope.findJobs= function(skip,limit, isPageChange) {
 				$scope.error = response.message;
 			});
 		};
-	}
+
+
+$scope.filterChanged=function(type,name)
+{
+$scope.filters1.forEach(function(entry){
+
+if(name==entry.name)
+ {entry.value=!entry.value;
+if(entry.value==true)
+
+  $scope.addToFilters(entry.type,entry.name);
+else  $scope.removeFromFilters(entry.type,entry.name);
+}
+});
+//$scope.findCandidates($scope.skip,$scope.itemsPerPage,$scope.filters, false);
+
+
+};
+  
+
+    //addToFilters
+    $scope.addToFilters=function(type,name)
+     {
+ var once=true;
+      var alreadyPresentInFilters=false;
+         $scope.filters.forEach(function(entry){
+          if(type==entry.type && name==entry.name)
+                  {
+                    alreadyPresentInFilters=true;
+                  }
+         });
+
+         if(!alreadyPresentInFilters){
+
+          var typeExists = false;
+          var feefilters=$scope.filters.slice();
+          feefilters.forEach(function(entry){
+           
+            if(type==entry.type && once){
+              once=false;
+              typeExists = true;
+              $scope.filters.push({type:type,name:name, priority: entry.priority,value:true});
+             
+            }
+         });
+
+          if(!typeExists){
+             // There's no real number bigger than plus Infinity
+              
+              var highest = 0;
+              var tmp;
+              for (var i=$scope.filters.length-1; i>=0; i--) {
+                  tmp = $scope.filters[i].priority;
+                  if (tmp > highest) highest = tmp;
+              }
+
+             $scope.filters.push({type:type,name:name, priority: highest + 1,value:true});
+            
+          }
+
+            //salary_expext salay_exp  visa visa
+         }
+
+
+
+          
+
+     
+
+    
+
+     };
+
+     //removeFromFilters
+      $scope.removeFromFilters=function(type,name)
+     {
+      
+           $scope.filters.forEach(function(entry){
+                if(type==entry.type && name==entry.name)
+                
+                                      $scope.filters.splice($scope.filters.indexOf(entry),1);
+
+                
+                        
+          });
+          //  $scope.findCandidates($scope.skip,$scope.itemsPerPage,$scope.filters, false);
+
+     };
+  $scope.openFilterModal = function (filterArray, name) {
+
+    var modalInstance = $modal.open({
+      templateUrl: '/modules/candidate-jobs/views/search-job/filter-modal.html',
+      controller: 'FilterModalCtrl',
+      resolve: {
+        filter: function () {
+          return {values: angular.copy(filterArray),
+                  name: name};
+        }
+      }
+    });
+
+    modalInstance.result.then(function (filterObject) {
+      var filternames=[];
+      filterObject.filters.forEach(function(filter){
+        if(filter.value)
+        {
+          filternames.push(filter.name);
+        }
+      });
+
+
+      if(filterObject.name){
+          filternames.forEach(function(filter){
+              $scope.addToFilters(filterObject.name,filter);
+          });
+      }
+      
+     //$scope.findCandidates($scope.skip,$scope.itemsPerPage,$scope.filters, false);
+     
+    }, function () {
+       
+    });
+  };
+
+
+
+    }
+
+
+]).
+
+controller('FilterModalCtrl', [
+     '$scope', '$modalInstance', 'filter', function($scope, $modalInstance, filter) {
+
+       $scope.filters = filter.values;
+       $scope.name = filter.name;
+
+    $scope.ok = function () {
+      // $scope.$parent.findCandidates($scope.$parent.skip, $scope.$parent.itemsPerPage, $scope.$parent.filters, false);
+      $modalInstance.close({name:$scope.name,filters:$scope.filters});
+    };
+
+    $scope.cancel = function () {
+    $modalInstance.dismiss('cancel');
+
+    };
+     }
+
+
+
+
+
+
+
+
+
+
+
+	
 ]);

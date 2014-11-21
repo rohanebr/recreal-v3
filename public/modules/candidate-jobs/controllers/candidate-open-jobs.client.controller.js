@@ -22,7 +22,7 @@ $scope.range = function() {
             }
 
             for (var i = start; i < start + rangeSize; i++) {
-                if (i >= 0)
+                grif (i >= 0)
                     ret.push(i);
             }
             return ret;
