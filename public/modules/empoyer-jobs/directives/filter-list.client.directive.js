@@ -50,13 +50,16 @@ angular.module('empoyer-jobs').directive('filterList', ['$compile',
 				}
 
 			
-			var html =	'<article class="thumbnail">' + 
- 		                      '<label>'+ filterHeading +'</label>' +
- 		                        '<ul>' + 
-		                            '<li data-ng-repeat="'+ filterName +'Filter in dummyfilters | orderBy:'+ count + ':true  | limitTo: filterLimit">' + 
-		                            '<input type="checkbox" data-ng-click="filterChanged('+ filterNameString +','+filterName+'Filter.name)" data-ng-model="'+ filterName +'Filter.value" id="{{'+ filterName +' + '+ filterName +'Filter.name}}" />' + 
- 		                            '<label ng-if="'+ filterName +'Filter.name" for="{{'+ filterName +' + '+ filterName +'Filter.name}}" >{{'+ filterName +'Filter.name}} ({{'+ filterName +'Filter.count}})</label>' + 
- 		                            '<label ng-if="!'+ filterName +'Filter.name" for="{{'+ filterName +' + '+ filterName +'Filter.name}}" >Not Mentioned ({{'+ filterName +'Filter.count}})</label>' + 
+			var html =	'<article>' + 
+ 		                      '<label><strong>'+ filterHeading +'</strong></label>' +
+ 		                        '<ul class="list-unstyled m-t-n-sm">' + 
+		                            '<li class="checkbox i-checks" data-ng-repeat="'+ filterName +'Filter in dummyfilters | orderBy:'+ count + ':true  | limitTo: filterLimit">' + 
+			                            '<label>' +
+				                            '<input type="checkbox" data-ng-click="filterChanged('+ filterNameString +','+filterName+'Filter.name)" data-ng-model="'+ filterName +'Filter.value" id="{{'+ filterName +' + '+ filterName +'Filter.name}}" />' +
+				                            '<i></i>' +
+		 		                            '<label ng-if="'+ filterName +'Filter.name" for="{{'+ filterName +' + '+ filterName +'Filter.name}}" >{{'+ filterName +'Filter.name}} ({{'+ filterName +'Filter.count}})</label>' + 
+		 		                            '<label ng-if="!'+ filterName +'Filter.name" for="{{'+ filterName +' + '+ filterName +'Filter.name}}" >Not Mentioned ({{'+ filterName +'Filter.count}})</label>' + 
+	 		                            '</label>' +
  		                            '</li>' + 
  		                        '</ul>' + 
  		                        '<a href="" data-ng-if="dummyfilters.length > filterLimit" data-ng-click="openFilterModal(dummyfilters, '+ filterNameString +')">more choices...</a>' + 
