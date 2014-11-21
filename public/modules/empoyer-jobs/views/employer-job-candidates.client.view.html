@@ -6,17 +6,10 @@
                 
             
             <aside class="col-md-3 bg-light lt b-r b-light aside-md hidden-print" id="nav">
-                <div style="line-height: 2">
-                    <span class="skill-div" data-ng-repeat="filter in filters" data-ng-click="removeFromFilters(filter.type,filter.name)">{{filter.name}}</span>
+                <div>
+                    <span data-ng-repeat="filter in filters" data-ng-click="removeFromFilters(filter.type,filter.name)">{{filter.name}}</span>
                 </div>
                 <section>
-                    <label class="col-sm-3" for="searchBox">
-                        Search
-                    </label>
-                    <article class="col-sm-9">
-                        <input id="searchBox" class="col-md-9 form-control" style="width:145px" type="text" data-ng-model="searchText" />
-                    </article>
-                    <br>
                     <hr class="col-sm-9">
                 </section>
                 <!-- Filters -->

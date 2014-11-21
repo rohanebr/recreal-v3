@@ -182,13 +182,13 @@
       </section>
     </li>
   </ul>
-  <form class="navbar-form navbar-left input-s-lg m-t m-l-n-xs hidden-xs" role="search">
+  <form class="navbar-form navbar-left input-s-lg m-t m-l-n-xs hidden-xs" role="search" data-ng-submit="submit()">
     <div class="form-group">
       <div class="input-group">
         <span class="input-group-btn">
           <button type="submit" class="btn btn-sm bg-white b-white btn-icon"><i class="fa fa-search"></i></button>
         </span>
-        <input type="text" class="form-control input-sm no-border" placeholder="Search apps, projects...">            
+        <input type="text" data-ng-model="texts" class="form-control input-sm no-border" placeholder="Search apps, projects...">            
       </div>
     </div>
   </form>
@@ -196,13 +196,13 @@
 
 
 
- <form data-ng-submit="submit()" class="navbar-form navbar-left">
+<!--  <form data-ng-submit="submit()" class="navbar-form navbar-left">
  
   <input type="text" data-ng-model="texts" class="form-control col-lg-8" name="texts" placeholder="I am looking for..."/>
   <input type="submit" id="submit" value="Search" />
   
   
-</form>
+</form> -->
 <form data-ng-submit="findMeAJob()" class="navbar-form navbar-left" data-ng-show="isCandidate()">
     <input type="submit" id="sumbit2" value="Find me a Job"/>
     </form>
