@@ -23,6 +23,12 @@ angular.module('core').controller('HeaderController', ['$scope', 'Authentication
           $location.path('/search-jobs/'+$scope.list);
         }
       };
+      $scope.findMeAJob=function()
+      {
+
+      $location.path('/search-jobs/find-me-a-job');
+      };
+
 $scope.notificationRead=function(data){
               $scope.unreadnotificationslength--;
                 $http.post('/users/readNotification/' + $scope.authentication.user._id,data).success(function(res) {
@@ -42,7 +48,14 @@ $scope.notificationRead=function(data){
         	}
      
         if ($scope.authentication.user) {
+ $scope.isCandidate=function()
+      {
 
+       if( $scope.authentication.user.userType==='candidate')
+        return true;
+
+else return false;
+      };
 
         	var count=0;
         	var y=$scope.authentication.user.notifications.length;

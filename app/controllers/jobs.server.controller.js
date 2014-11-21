@@ -166,7 +166,7 @@ exports.apply = function(req, res, next)
                     user: req.user._id
                 }).exec(function(err, candidate) {
                     User.findById(job.user).exec(function(err, user) {
-                                         user.notifications.push({generalmessage:candidate.displayName+" has applied for the "+job.title+" job",hiddendata:"#",created:Date.now(),isRead:false});
+                                         user.notifications.push({generalmessage:candidate.displayName+" has applied for the "+job.title+" job",hiddendata:"#!/jobs/"+job._id,created:Date.now(),isRead:false});
                                          user.markModified('notifications');
                                          user.save();
                                          Notification.notifyEmployerAboutNewCandidateApplication({userid:user._id,notification:user.notifications[user.notifications.length-1]});
@@ -370,7 +370,7 @@ exports.searchedJobs = function(req,res){
     Job.setKeywords(function(err) {
    
   });
-
+if(req.body.keyword!='find-me-a-job'){
 Job.search(req.body.keyword,{title: 1}, function (err, output) {
     if (err) return handleError(err);
 
@@ -396,8 +396,51 @@ if(!err)
     }
      
 });
+}
+if(req.body.keyword=='find-me-a-job')
+{
 
-console.log("SEARCH JOB");
+   
+
+    Candidate.findOne({user:req.params.userId}).exec(function(err,candidate){
+
+        if(!err)
+           {
+           Job.search(candidate.location, {title:1},function (err, output) {
+    if (err) return handleError(err);
+
+    else
+    {console.log(output);
+
+  var totallength=output.results.length;
+var ids=[];
+     for(var a=req.body.skip;a<totallength;a++)
+        if(a<(req.body.skip+req.body.limit))
+         ids.push(output.results[a]._id);
+ 
+    Job.find({_id: {$in: ids}}).populate('user', 'displayName').populate('company').exec(function(err,out){
+if(!err)
+{
+    res.jsonp({jobs:out,total:output.totalCount});
+}
+
+    });   
+ 
+
+
+    }
+     
+});
+
+
+
+
+
+
+           } 
+      
+    });
+}
 
 
 };
