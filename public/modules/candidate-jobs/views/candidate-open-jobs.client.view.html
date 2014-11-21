@@ -1,9 +1,10 @@
+
 <section data-ng-controller="CandidateOpenJobsController" class="container">
     <header class="text-center col-md-12">
             <h2>Recommended Jobs</h2>
     </header>
     <aside class="col-md-3">
-        <div class="col-sm-12">
+        <div>
 
                  <div data-ng-repeat="filtername in completefilternames">
                     <filter-list-open-jobs filter-name="{{filtername}}"></filter-list-open-jobs>
@@ -12,7 +13,7 @@
 
                 </div>
               </aside>
-    <article class="col-md-8 media">
+    <article class="col-md-6 media">
       
          <table class="table table-striped">
            <tbody>
@@ -53,7 +54,13 @@
       </table>
         
     </article>
-   
+   <div>
+     <map zoom="2" center="[43.6650000, -79.4103000]"></map>
+  
+
+    </div>
+                    
+  
 </section>
 
 <style>

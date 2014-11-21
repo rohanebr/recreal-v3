@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('candidate-jobs').controller('CandidateOpenJobsController', ['$scope', 'Jobs', '$http', 'Authentication', 'Candidates', '$location', 'Socket', '$rootScope',
-    function($scope, Jobs, $http, Authentication, Candidates, $location, Socket, $rootScope) 
+angular.module('candidate-jobs').controller('CandidateOpenJobsController', ['ngMap','$scope', 'Jobs', '$http', 'Authentication', 'Candidates', '$location', 'Socket', '$rootScope',
+    function(ngMap,$scope, Jobs, $http, Authentication, Candidates, $location, Socket, $rootScope) 
     {
         console.log($rootScope.coords.lat + "," + $rootScope.coords.longi);
         $scope.itemsPerPage = 10;
@@ -14,9 +14,24 @@ angular.module('candidate-jobs').controller('CandidateOpenJobsController', ['$sc
         $scope.jobs = [];
          $scope.dummyfilters=[];
         $scope.user = Authentication.user;
+        $scope.lat=0;
+        $scope.longi=0;
         $scope.filters = [];
            $scope.filterLimit = 5;
+        
+          $scope.longi=$rootScope.coords.longi;
+   $scope.lat=$rootScope.coords.lat;
        if (!$scope.user) $location.path('/signin');
+       var map;
+    $scope.dynMarkers = [];
+    $scope.$on('mapInitialized', function(event, evtMap) {
+      map = evtMap;
+      for (var i=0; i<1000; i++) {
+        var latLng = new google.maps.LatLng(markers[i].position[0], markers[i].position[1]);
+        $scope.dynMarkers.push(new google.maps.Marker({position:latLng}));
+      }
+      $scope.markerClusterer = new MarkerClusterer(map, $scope.dynMarkers, {});
+    });
         $scope.range = function() {
             var rangeSize = 5;
             var ret = [];

@@ -456,7 +456,7 @@ exports.getPaginatedJobs = function(req,res){
     console.log(req.params.userId);
     Candidate.findOne({user:req.params.userId}).exec(function(err,candidate){
       var jj=candidate.jobs;
-console.log(jj);
+
 
 
 
