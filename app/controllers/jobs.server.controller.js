@@ -367,6 +367,9 @@ exports.onePlusView = function(req, res) {
 };
 
 exports.searchedJobs = function(req,res){
+    Job.setKeywords(function(err) {
+   
+  });
 
 Job.search(req.body.keyword,{title: 1}, function (err, output) {
     if (err) return handleError(err);

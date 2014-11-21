@@ -181,7 +181,7 @@ var JobSchema = new Schema({
 });
 
 JobSchema.plugin(searchPlugin, {
-    fields: ['title', 'location']
+    fields: ['title', 'location','department','skills']
   });
 JobSchema.index({candidates: 1});
 
