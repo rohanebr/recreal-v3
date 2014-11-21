@@ -168,7 +168,8 @@ $scope.sortableOptions = {
                 }
                          console.log("COMETEPL"+$scope.completefilternames);
                              
-            });
+            }
+            );
         }
 
 
@@ -348,9 +349,9 @@ $scope.findCandidates($scope.skip,$scope.itemsPerPage,$scope.filters, false);
     });
   };
 
+}
 
-
-    }
+    
 
 
 ]).

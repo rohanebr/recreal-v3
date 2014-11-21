@@ -445,30 +445,236 @@ if(!err)
 
 };
 exports.getPaginatedJobs = function(req,res){
-   var jobs= Job.find().sort('-created').populate('user', 'displayName').populate('company');
-var totallength=0;
-jobs.exec(function(err,jobarray){
+    var filters = [];
+      var dbfilters = ["industry", "location","salary_range","gender","employee_type","career_level"];
+     var incomingfilters = [];
+    var previousentry = "";
+    var previouscount = 0;
+    var count = 0;
+    var g = 0;
+    var ffilter = req.body.filter;
+    console.log(req.params.userId);
+    Candidate.findOne({user:req.params.userId}).exec(function(err,candidate){
+      var jj=candidate.jobs;
+console.log(jj);
 
-totallength=jobarray.length;
 
 
- jobs.skip(req.body.skip).limit(req.body.limit).exec(function(err, jobs) {
-        if (err) {
-            return res.send(400, {
-                message: getErrorMessage(err)
+
+  
+    var dummy;
+        count = 0;
+    // console.log(ffilter);
+    ffilter.forEach(function(entry) {
+        if (entry.type != previousentry)
+            count++;
+
+        entry.priority = count;
+        if (previouscount != count)
+            incomingfilters.push({
+                name: [entry.name],
+                type: entry.type,
+                priority: entry.priority
             });
-        } else {
-            res.jsonp({jobs:jobs,total:totallength});
+        else {
+            incomingfilters[incomingfilters.length - 1].name.push(entry.name);
+
         }
+        previousentry = entry.type;
+        previouscount = count;
+
     });
 
-});
+     var incomingfilters2 = incomingfilters.slice();
+    var incomingfilters3 = incomingfilters.slice();
+    var incomingfilters4 = incomingfilters.slice();
+      var jobs= Job.find({_id:{$nin:jj}}).sort('-created').populate('user', 'displayName').populate('company');
+ var totallength=0;
+
+
+
+
+
+
+
+
+
+    if (incomingfilters.length != 0) {
+                var c1;
+                var lengthincomingfilters = incomingfilters.length;
+                for (var h = 0, t = dbfilters.length; h < t; h++) {
+                    var alreadyPresent = false;
+                    for (var y = 0, w = incomingfilters.length; y < w; y++) {
+                        if (incomingfilters[y].type == dbfilters[h])
+                            alreadyPresent = true;
+
+                    }
+                    if (!alreadyPresent)
+                        incomingfilters.push({
+                            name: [""],
+                            type: dbfilters[h],
+                            priority: -4
+                        });
+
+                }
+                var letspopulatefilters = [];
+                var x = 0;
+                incomingfilters.asyncEach(function(incomingfilter, resume) {
+                    if (letspopulatefilters.length != 0) {
+                       
+                        for (var h = 0; h < letspopulatefilters.length; h++) {
+
+                            var names = letspopulatefilters[h].name;
+                            if(letspopulatefilters[h].type!="skills" && letspopulatefilters[h].type!="educations")
+                           jobs.where(letspopulatefilters[h].type).in(names);
+                        if(letspopulatefilters[h].type=="skills")
+                            jobs.where("skills.title").in(names);
+                         if(letspopulatefilters[h].type=="educations")
+                            jobs.where("educations.degree").in(names);
+                      
+                              
+                           
+                        }
+                    }
+
+
+                   jobs.exec(function(err, candidates) {
+                     
+   
+    
+                        
+                        console.log(incomingfilter);
+                        if (x < lengthincomingfilters)
+                            letspopulatefilters.push(incomingfilter);
+                        x++;
+                          if(incomingfilter.type!="skills" && incomingfilter.type!="educations")
+                       { filters = filterHelper.sortandfilter(incomingfilter.type, candidates, incomingfilters2, filters);
+  for(var s=0,ss=candidates.length;s<ss;s++)
+        console.log("WTF"+candidates[s].user.isOnline);
+
+                       }
+                          if(incomingfilter.type=="skills")
+                             filters=filterHelper.sortandfilterArray(incomingfilter.type, candidates, incomingfilters3, filters);
+                           if(incomingfilter.type=="educations")
+                            filters=filterHelper.sortandfilterArray(incomingfilter.type, candidates, incomingfilters4, filters);
+                         
+
+
+                       
+
+                        if (x == incomingfilters.length) {
+                            totallength = candidates.length;
+                            c1=candidates.slice();
+                             c1=c1.splice(req.body.skip,req.body.limit);
+            
+         
+                            
+                                res.jsonp({
+                                  
+                                    total: totallength,
+                                    jobs: candidates,
+                                    filters: filters
+                                });
+                           
+                        }
+
+                    });
+
+
+                    resume();
+
+                });
+
+
+            }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     if (incomingfilters.length == 0) {
+                 var c1;
+                  // selectedCandidates.select('displayName title objective picture_url location salary_expectation visa_status employee_type employee_status skills calculateScore');
+               
+                jobs.exec(function(err, candidatepool) {
+                    c1=candidatepool.slice();
+                     totallength=candidatepool.length;
+                     c1=c1.splice(req.body.skip,req.body.limit);
+            
+            
+            for (var s = 0; s < dbfilters.length; s++) {
+                         if(dbfilters[s]!="skills" && dbfilters[s]!="educations")
+                        filters = filterHelper.sortandfilter(dbfilters[s], candidatepool, incomingfilters, filters);
+                        if(dbfilters[s]=="skills")
+                            filters=filterHelper.sortandfilterArray(dbfilters[s], candidatepool, incomingfilters, filters);
+                        if(dbfilters[s]=="educations")
+                            filters=filterHelper.sortandfilterArray(dbfilters[s], candidatepool, incomingfilters, filters);
+                         
+                    }
+                       console.log(filters); 
+                    res.jsonp({
+                       
+                        total: totallength,
+                        jobs: c1,
+                        filters: filters
+                    });
+              
+
+
+
+
+                });
+               
+                
+                           
+         
+
+            }
+
+
+
+//    var jobs= Job.find().sort('-created').populate('user', 'displayName').populate('company');
+// var totallength=0;
+// jobs.exec(function(err,jobarray){
+//     totallength=jobarray.length;
+
+
+
+
+
+
+
+
+
+//  jobs.skip(req.body.skip).limit(req.body.limit).exec(function(err, jobs) {
+//         if (err) {
+//             return res.send(400, {
+//                 message: getErrorMessage(err)
+//             });
+//         } else {
+//             res.jsonp({jobs:jobs,total:totallength});
+//         }
+//     });
+
+// });
   
 
 
 
 
-
+  });
 
 };
 

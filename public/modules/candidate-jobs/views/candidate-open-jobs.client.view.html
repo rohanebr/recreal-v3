@@ -2,7 +2,18 @@
     <header class="text-center col-md-12">
             <h2>Recommended Jobs</h2>
     </header>
+    <aside class="col-md-3">
+        <div class="col-sm-12">
+
+                 <div data-ng-repeat="filtername in completefilternames">
+                    <filter-list-open-jobs filter-name="{{filtername}}"></filter-list-open-jobs>
+                </div>
+
+
+                </div>
+              </aside>
     <article class="col-md-8 media">
+      
          <table class="table table-striped">
            <tbody>
           <tr ng-repeat="job in jobs" data-ng-show="!hasApplied(job)">
@@ -42,13 +53,7 @@
       </table>
         
     </article>
-    <aside class="col-md-4">
-        <header> <h2>Search</h2></header>
-        <section class="caption">
-            <h3>Thumbnail label</h3>
-            <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-        </section>
-    </aside>
+   
 </section>
 
 <style>

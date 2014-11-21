@@ -106,35 +106,10 @@ $scope.findJobs= function(skip,limit, isPageChange) {
             }).success(function(job) {
                    $scope.jobs=job.jobs;
                    $scope.total=job.total;   
-                   $scope.filters1=[];
-                  
-                    job.filters.forEach(function(entry){
-                           $scope.filters1.push(entry);
-                               });
-
-                if($scope.firsttime)
-                {
-                  $scope.firsttime=false;
-                     $scope.filters1.forEach(function(entry){
-                                    var alreadyexists=false;
-                                    for(var h=0,a=$scope.completefilternames.length;h<a;h++)
-                                    {
-
-                                     if($scope.completefilternames[h]==entry.type)
-                                      alreadyexists=true;
-
-                                    }
-                               if(!alreadyexists)
-                              $scope.completefilternames.push(entry.type);
-
-
-                     });
-
-
-
-
-                }
-                         console.log("COMETEPL"+$scope.completefilternames);
+                
+                 
+               
+                      
 
 
             });
