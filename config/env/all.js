@@ -91,18 +91,10 @@ module.exports = {
 				'public/lib/textAngular/dist/textAngular-sanitize.min.js',
 				'public/lib/textAngular/dist/textAngular.min.js',
 				'public/lib/ngmap/build/scripts/ng-map.js',
-<<<<<<< HEAD
 				'public/lib/ng-sortable/dist/ng-sortable.js',
 				'http://maps.google.com/maps/api/js'
 
-=======
-				'http://maps.google.com/maps/api/js',
 
-
-				
-
-				
->>>>>>> frontEnd
 			]
 		},
 		css: [

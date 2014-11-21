@@ -50,14 +50,14 @@
                                     <label class="ui-radio">
                                     <input  name="role" 
                                             type="radio" 
-                                            value="male" 
+                                            value="Male" 
                                             data-ng-model="candidate.gender">
                                             <span>Male</span>
                                     </label>
                                     <label class="ui-radio">
                                     <input  name="role" 
                                             type="radio" 
-                                            value="female" 
+                                            value="Female" 
                                             checked
                                             data-ng-model="candidate.gender" style="margin-left: 20px">
                                             <span>Female</span>
@@ -121,7 +121,10 @@
                                 <div class="col-sm-9">
                                     <span class="ui-select">
                                     <select class="form-control" ng-model="candidate.location" style="width: 300px">
-                                    <option data-ng-repeat="loc in locationz">{{loc.name}}</option>
+                                    <option>Islamabad</option>
+                                    <option>Multan</option>
+                                    <option>Lahore</option>
+                                    <option>Karachi</option>
                                     </select>
                                     </span>
                                 </div>
@@ -238,9 +241,16 @@
                                 <div class="col-sm-9">
                                     <span class="ui-select">
                                         <select data-ng-model="candidate.salary_expectation" class="form-control" style="width: 300px">
-                                            <option>10,000 - 15,000</option>
-                                            <option>15,000 - 30,000</option>
-                                            <option>30,000 - 60,000</option>
+                                            <option>Less than $1000</option>
+                                            <option>$1000 - $2000</option>
+                                            <option>$2000 - $3000</option>
+                                            <option>$3000 - $4000</option>
+                                            <option>$4000 - $5000</option>
+                                            <option>$5000 - $6000</option>
+                                            <option>$6000 - $8000</option>
+                                            <option>$8000 - $10000</option>
+                                            <option>$10000 - $15000</option>
+                                            <option>$15000 - $20000</option>
                                         </select>
                                     </span>
                                 </div>
@@ -282,7 +292,10 @@
                                 <div class="col-sm-9" data-ng-repeat="target_location in candidate.target_locations">
                                     <span class="ui-select">
                                         <select data-ng-model="target_location.name" class="form-control" style="width: 300px">
-                                            <option data-ng-repeat="loc in locationz">{{loc.name}}</option>
+                                            <option>Islamabad</option>
+                                            <option>Multan</option>
+                                            <option>Lahore</option>
+                                            <option>Karachi</option>
                                         </select>
                                     </span>
                                 </div>
@@ -501,7 +514,10 @@
                                 <div class="col-sm-9">
                                     <span class="ui-select">
                                         <select data-ng-model="experience.company_location" class="form-control" style="width: 300px;">
-                                            <option data-ng-repeat="loc in locationz">{{loc.name}}</option>
+                                            <option>Islamabad</option>
+                                            <option>Multan</option>
+                                            <option>Lahore</option>
+                                            <option>Karachi</option>
                                         </select>
                                     </span>
                                 </div>
