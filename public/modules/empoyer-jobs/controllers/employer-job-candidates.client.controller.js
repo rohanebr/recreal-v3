@@ -1,13 +1,15 @@
 'use strict';
 
-angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$scope', '$filter', 'Jobs', '$stateParams', '$http', '$modal','$location','Authentication',
-    function($scope, $filter, Jobs, $stateParams, $http, $modal,$location,Authentication) {
+angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$scope', '$filter', 'Jobs', '$stateParams', '$http', '$modal','$location','Authentication','Socket',
+    function($scope, $filter, Jobs, $stateParams, $http, $modal,$location,Authentication,Socket) {
         $scope.firstTimeFetching=true;
         $scope.locationFilters = [];
         $scope.user = Authentication.user;
         $scope.itemsPerPage = 10;
         $scope.currentPage = 0;
+        $scope.candidates=[];
         $scope.skip = 0;
+
         $scope.dummyfilters=[];
         $scope.filters = [];
         $scope.filters1=[];
@@ -15,9 +17,29 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
         $scope.completefilternames=[];
         $scope.filterLimit = 5;
         var i;
-$scope.priorities=[{'Id':1,'Label':"Career Level",'name':'career_level','nameinjob':'career_level'},{'Id':2,'Label':"Salary Expectation",'name':'salary_expectation','nameinjob':"salary_range"},{'Id':3,'Label':"Skills",'name':'skills','nameinjob':'skills'}];
+$scope.priorities=[{'Id':1,'Label':"Career Level",'name':'career_level','nameinjob':'career_level'},{'Id':2,'Label':"Salary Expectation",'name':'salary_expectation','nameinjob':"salary_range"},{'Id':3,'Label':"Skills",'name':'skills','nameinjob':'skills'},{'Id':4,'Label':"Education",'name':"degree_title",'nameinjob':"degree_title"},{'Id':5,'Label':"Gender",'name':"gender",'nameinjob':"gender"},{'Id':6,'Label':"Employment Status",'name':"employee_status",'nameinjob':"employee_status"},{'Id':7,'Label':"Employment Type",'name':"employee_type",'nameinjob':"employee_type"},{'Id':8,'Label':"Visa Status",'name':"visa_status",'nameinjob':"visa_status"}];
         if (!$scope.user) $location.path('/signin');
-    
+        Socket.on('applied_on_job', function (data) {
+      
+          if ($scope.job._id == data.job._id) {
+                 $scope.findCandidates($scope.skip,$scope.itemsPerPage,$scope.filters, false); 
+          }});
+          Socket.on('WatchingJob', function(data){
+            for(var dd=0,len=$scope.candidates.length;dd<len;dd++)
+            {
+
+              if(data.userId==$scope.candidates[dd].user._id)
+                 {
+                   
+$scope.findCandidates($scope.skip,$scope.itemsPerPage,$scope.filters, false);
+break;
+                 }
+
+            }
+             
+
+
+          });
    $scope.itemsList = {
     items1: []
   
@@ -211,6 +233,7 @@ $scope.filters1.forEach(function(entry){
 if(name==entry.name)
  {entry.value=!entry.value;
 if(entry.value==true)
+
   $scope.addToFilters(entry.type,entry.name);
 else  $scope.removeFromFilters(entry.type,entry.name);
 }
@@ -220,9 +243,11 @@ $scope.findCandidates($scope.skip,$scope.itemsPerPage,$scope.filters, false);
 
 }
   
+
     //addToFilters
     $scope.addToFilters=function(type,name)
      {
+ var once=true;
       var alreadyPresentInFilters=false;
      	 $scope.filters.forEach(function(entry){
           if(type==entry.type && name==entry.name)
@@ -234,10 +259,14 @@ $scope.findCandidates($scope.skip,$scope.itemsPerPage,$scope.filters, false);
          if(!alreadyPresentInFilters){
 
           var typeExists = false;
-          $scope.filters.forEach(function(entry){
-            if(type==entry.type){
+          var feefilters=$scope.filters.slice();
+          feefilters.forEach(function(entry){
+           
+            if(type==entry.type && once){
+              once=false;
               typeExists = true;
               $scope.filters.push({type:type,name:name, priority: entry.priority,value:true});
+             
             }
          });
 
@@ -252,7 +281,7 @@ $scope.findCandidates($scope.skip,$scope.itemsPerPage,$scope.filters, false);
               }
 
               $scope.filters.push({type:type,name:name, priority: highest + 1,value:true});
-
+            
           }
 
             //salary_expext salay_exp  visa visa

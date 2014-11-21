@@ -12,10 +12,10 @@ angular.module('threads').controller('ThreadsController', ['$scope', '$statePara
         	   for(var x=0,b=$scope.thread.messages.length;x<b;x++)
         	   {
                     if($scope.thread.messages[x].author._id===data.userId)
-                    	     $scope.thread.messages[x].author.isOnline=data.isOnline;
+                    	     $scope.thread.messages[x].author.isOnline=(data.isOnline=="Online"?true:false);
                   
                     	if($scope.thread.messages[x].author.authorid==data.userId)
-                    		$scope.thread.messages[x].author.isOnline=data.isOnline;
+                    		$scope.thread.messages[x].author.isOnline=(data.isOnline=="Online"?true:false);
                     		
 
         	   }
@@ -32,7 +32,7 @@ angular.module('threads').controller('ThreadsController', ['$scope', '$statePara
 						                 author:{authorid:data.id,
 						                 	     displayName:data.author,
 						                 	     picture_url:data.authordp,
-						                 	     isOnline:true },
+						                 	     isOnline:"Online" },
 							             created:data.created
 							           });
 		
@@ -51,14 +51,14 @@ angular.module('threads').controller('ThreadsController', ['$scope', '$statePara
 
         $scope.showOnline=function(data)
         {
-             if(data.author.isOnline)
+             if(data.author.isOnline=="Online")
              	return true;
              else
              	return false;
         }
         $scope.showOffline=function(data)
         {
-             if(data.author.isOnline)
+             if(data.author.isOnline=="Online")
              	return false;
              else
              	return true;

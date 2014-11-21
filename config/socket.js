@@ -47,13 +47,17 @@ exports.create = function(server) {
 
         // registerPresence(socket);
 
-        socket.on('user_data', function(data) {
+        socket.on('user_data', function(data) 
+        {
 
             var mongoose = require('mongoose'),
                 User = mongoose.model('User'),
-                Thread = mongoose.model('Thread');
+                Thread = mongoose.model('Thread'),
+                Candidate = mongoose.model('Candidate');
+            
+
             User.findById(data._id).exec(function(err, user) {
-                user.isOnline = true;
+                user.isOnline = "Online";
                 user.markModified('isOnline'); //moongoose
                 user.save();
                 var sockets = [];
@@ -69,6 +73,18 @@ exports.create = function(server) {
                             });
 
                     }
+                        Candidate.findOne({user:data._id}).exec(function(err,candidate){
+                    if(!err && candidate)
+                      {candidate.isOnline="Online";
+                candidate.markModified('isOnline');
+                candidate.save();
+            io.sockets.emit("WatchingJob",{userId:user._id,isOnline:candidate.isOnline});
+              }
+
+                });
+                    
+                  
+                    
             });
 
 
@@ -111,7 +127,7 @@ exports.create = function(server) {
                 console.log("ITERATE SOCKETS" + online_users[a].socket.id);
                 if (online_users[a].socket.id == socket.id) {
                     User.findById(online_users[a].user._id).exec(function(err, user) {
-                        user.isOnline = false;
+                        user.isOnline = "Offline";
                         user.markModified('isOnline');
                         user.save();
                     });
@@ -140,9 +156,9 @@ exports.create = function(server) {
 
 
                     });
-
+               
                 User.findById(idofuser).exec(function(err, user) {
-                    user.isOnline = false;
+                    user.isOnline = "Offline";
                     user.markModified('isOnline');
                     user.save();
 
@@ -157,6 +173,16 @@ exports.create = function(server) {
                                 });
 
                         }
+                        var Candidate = mongoose.model('Candidate');
+                                 Candidate.findOne({user:idofuser}).exec(function(err,candidate){
+                    if(!err && candidate)
+                      {candidate.isOnline="Offline";
+                candidate.markModified('isOnline');
+                candidate.save();
+            io.sockets.emit("WatchingJob",{userId:idofuser,isOnline:candidate.isOnline});
+              }
+
+                });
                 });
 
             }
