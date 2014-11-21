@@ -192,6 +192,28 @@
       </div>
     </div>
   </form>
+
+
+
+
+ <form data-ng-submit="submit()" class="navbar-form navbar-left">
+ 
+  <input type="text" data-ng-model="texts" class="form-control col-lg-8" name="texts" placeholder="I am looking for..."/>
+  <input type="submit" id="submit" value="Search" />
+  
+  
+</form>
+<form data-ng-submit="findMeAJob()" class="navbar-form navbar-left" data-ng-show="isCandidate()">
+    <input type="submit" id="sumbit2" value="Find me a Job"/>
+    </form>
+
+
+
+
+
+
+
+    
   <ul class="nav navbar-nav navbar-right m-n hidden-xs nav-user user">
     <li class="hidden-xs">
       <a href="#" class="dropdown-toggle" data-toggle="dropdown">
