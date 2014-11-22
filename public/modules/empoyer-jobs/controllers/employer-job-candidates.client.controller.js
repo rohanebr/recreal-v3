@@ -1,7 +1,10 @@
 'use strict';
 
-angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$scope', '$filter', 'Jobs', '$stateParams', '$http', '$modal','$location','Authentication','Socket',
-    function($scope, $filter, Jobs, $stateParams, $http, $modal,$location,Authentication,Socket) {
+angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$scope', '$filter', 'Jobs', '$stateParams', '$http', '$modal','$location','Authentication','Socket','$rootScope',
+    function($scope, $filter, Jobs, $stateParams, $http, $modal,$location,Authentication,Socket,$rootScope) {
+      $rootScope.$broadcast("inEmployerJobupdateHeader", {
+            trigger: true
+        });
         $scope.firstTimeFetching=true;
         $scope.locationFilters = [];
         $scope.user = Authentication.user;
@@ -119,8 +122,7 @@ $scope.sortableOptions = {
         };
 
         $scope.findCandidates = function(skip,limit,filters, isPageChange) {
- console.log($scope.itemsList.items1);
-        
+
             $http.put('jobs/getPaginatedCandidates/' + $stateParams.jobId, {
                 skip: skip,
                 limit: limit,
@@ -166,7 +168,7 @@ $scope.sortableOptions = {
 
 
                 }
-                         console.log("COMETEPL"+$scope.completefilternames);
+                      
                              
             }
             );

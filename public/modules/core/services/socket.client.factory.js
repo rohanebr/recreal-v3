@@ -10,7 +10,7 @@ if(Authentication.user && !socket)
   $rootScope.coords={lat:0,longi:0};
 geolocation.getLocation().then(function(data){
       $rootScope.coords = {lat:data.coords.latitude, longi:data.coords.longitude};
-      console.log($rootScope.coords.lat+","+$rootScope.coords.longi);
+     
     });
 	var socket = io.connect('http://localhost:3000');
 socket.emit("user_data",Authentication.user);

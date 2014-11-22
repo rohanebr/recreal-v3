@@ -251,6 +251,17 @@ exports.list = function(req, res) {
 /**
  * Job middleware
  */
+ exports.jobsByIDs=function(req,res)
+ {console.log(req.body);
+    Job.find({_id:{$in:req.body}}).exec(function(err,job){
+        
+res.jsonp(job);
+
+    });
+
+
+
+ };
 exports.jobByID = function(req, res, next, id) {
     Job.findById(id).populate('user', 'displayName').exec(function(err, job) {
         if (err) return next(err);

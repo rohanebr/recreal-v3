@@ -7,7 +7,7 @@ angular.module('core').controller('HeaderController', ['$scope', 'Authentication
         $scope.menu = Menus.getMenu('topbar');
         $scope.threads = [];
         $scope.unreadnotificationslength=0;
-         
+        $scope.user=$scope.authentication.user;
         $scope.notifications = [];
         var thread = [];
 
@@ -130,7 +130,7 @@ else return false;
 
             $http.get('/users/getMessages/' + $scope.authentication.user._id).success(function(res) {
 
-                console.log(res + "weird");
+               
                 if (res.length > 1) {
                     for (var x = 1; x < res.length; x++)
                         $scope.threads.push(res[x]);
