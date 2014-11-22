@@ -128,30 +128,37 @@
               <section class="vbox">
                 <section class="scrollable padder">
                    <article class="col-md-12">
-                      <header>
-                        <h2>My Jobs <hr/></h2>
-                      </header>
-                      <section><span><span style="margin-right:2%;font-weight:bold;">Sort By:</span><a href=""style="margin-right:2%;text-decoration: underline;">A-Z <i class="fa fa-arrow-up"></i></a><a href=""style="margin-right:2%;text-decoration: underline;">Most Recent Closed</a><a href=""style="margin-right:2%;text-decoration: underline;">Most Candidates</a><a href=""style="margin-right:2%;text-decoration: underline;">Most Shortlist</a></span><span class="pull-right"><a href=""style="text-decoration: underline; font-size:15px;font-weight:bold;">Create New</a></span><hr/></section>
-                      <section>
-                        <h3>Senior Software Engineer </h3>
-                          <span><i class="fa fa-map-marker fa-lg text-primary"></i></span><span> Islamabad, Pakistan</span>
-                          <p style="margin-top:1%; font-size:13px;font-weight:bold;text-decoration: underline; color:rgb(124, 39, 63);"><span style="margin-right:2%">Candidates: 556</span><span style="margin-right:2%">Short List: 26</span><span style="margin-right:2%">Interview: 0</span></p>
-                          <p><span class="pull-left" style="color:gray; font-style: italic"> Posted By: Muhammad Ahsin Anwar</span></p>
+                      <header class="row">
+                        <div class="col-md-6"><h2>My Jobs</h2></div>
+                        <div class="col-md-6 ">
+                          <p><a class="pull-right "href=""style="color:#126da7;text-decoration: underline; font-size:15px;font-weight:bold; margin-top:25px;">Create New</a></p>
+                        </div>
+                      </header><hr style="margin-bottom: 5px;" />
+                        <section>
+                        <span><span style="margin-right:2%;font-weight:bold;">Sort By:</span><a href=""style="margin-right:2%;text-decoration: underline;">A-Z <i class="fa fa-arrow-up"></i></a><a href=""style="margin-right:2%;text-decoration: underline;">Most Recent Closed</a><a href=""style="margin-right:2%;text-decoration: underline;">Most Candidates</a><a href=""style="margin-right:2%;text-decoration: underline;">Most Shortlist</a><hr style="margin-top: 5px;"/>
+                        </section>
+                      <section style="margin-left:8px;">
+                        <section>
+                        <h3 style="margin-bottom: 5px;">Senior Software Engineer </h3>
+                          <span style="margin-left:5px"><i class="fa fa-map-marker fa-lg text-primary"></i></span><span> Islamabad, Pakistan</span>
+                          <p style="margin-top:7px; margin-left:5px;margin-bottom:3px;font-size:13px;font-weight:bold;text-decoration: underline; color:#126da7;"><span style="margin-right:2%">Candidates: 556</span><span style="margin-right:2%">Short List: 26</span><span style="margin-right:2%">Interview: 0</span></p>
+                          <p><span class="pull-left" style="margin-left:5px;color:gray; font-style: italic"> Posted By: Muhammad Ahsin Anwar</span></p>
                           <p class="row"><hr/></p>
-                      </section>
-                       <section>
-                        <h3>Full Stack Developer </h3>
-                          <span><i class="fa fa-map-marker fa-lg text-primary"></i></span><span> New York, USA</span>
-                          <p style="margin-top:1%; font-size:13px;font-weight:bold;text-decoration: underline; color:rgb(124, 39, 63);"><span style="margin-right:2%">Candidates: 556</span><span style="margin-right:2%">Short List: 26</span><span style="margin-right:2%">Interview: 0</span></p>
-                          <p><span class="pull-left" style="color:gray; font-style: italic"> Posted By: Muhammad Ahsin Anwar</span></p>
+                        </section>
+                        <section>
+                        <h3 style="margin-bottom: 5px;">Project Manager Finance </h3>
+                          <span style="margin-left:5px"><i class="fa fa-map-marker fa-lg text-primary"></i></span><span> New York, USA</span>
+                          <p style="margin-top:7px; margin-left:5px;margin-bottom:3px;font-size:13px;font-weight:bold;text-decoration: underline; color:#126da7;"><span style="margin-right:2%">Candidates: 220</span><span style="margin-right:2%">Short List: 2</span><span style="margin-right:2%">Interview: 0</span></p>
+                          <p><span class="pull-left" style="margin-left:5px;color:gray; font-style: italic"> Posted By: Muhammad Ahsin Anwar</span></p>
                           <p class="row"><hr/></p>
-                      </section>
-                       <section>
-                        <h3>Project Manager Finance</h3>
-                          <span><i class="fa fa-map-marker fa-lg text-primary"></i></span><span> Dubai, UAE</span>
-                          <p style="margin-top:1%; font-size:13px;font-weight:bold;text-decoration: underline; color:rgb(124, 39, 63);"><span style="margin-right:2%">Candidates: 556</span><span style="margin-right:2%">Short List: 26</span><span style="margin-right:2%">Interview: 0</span></p>
-                          <p><span class="pull-left" style="color:gray; font-style: italic"> Posted By: Muhammad Ahsin Anwar</span></p>
+                        </section>
+                        <section>
+                        <h3 style="margin-bottom: 5px;">Software Engineer </h3>
+                          <span style="margin-left:5px"><i class="fa fa-map-marker fa-lg text-primary"></i></span><span> Lahore, Pakistan</span>
+                          <p style="margin-top:7px; margin-left:5px;margin-bottom:3px;font-size:13px;font-weight:bold;text-decoration: underline; color:#126da7;"><span style="margin-right:2%">Candidates: 556</span><span style="margin-right:2%">Short List: 26</span><span style="margin-right:2%">Interview: 0</span></p>
+                          <p><span class="pull-left" style="margin-left:5px;color:gray; font-style: italic"> Posted By: Muhammad Ahsin Anwar</span></p>
                           <p class="row"><hr/></p>
+                        </section>
                       </section>
                       <!-- Job panel start -->
                       <section ng-repeat="job in jobs |filter:searchText" class="panel panel-info">
