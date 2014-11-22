@@ -8,8 +8,10 @@ angular.module('empoyer-jobs').directive('filterList', ['$compile',
 			link: function postLink(scope, element, attrs) {
 				// Test directive directive logic
 				// ...
-				console.log(attrs.filterFlag);
-            
+			
+
+
+          
                var filterName = attrs.filterName;
 				var filterNameString = "'" + attrs.filterName + "'";
 				var count  = "'count'";
@@ -54,7 +56,7 @@ angular.module('empoyer-jobs').directive('filterList', ['$compile',
             		filterNameString = "'" + attrs.filterName + "'";
             		count  = "'count'";
             		 	scope.dummyfilters=[];
-            		   console.log("FILTERS "+filterName);
+            		  
             		for(var h=0,j=v.length;h<j;h++)
 				{
 					if(filterName==v[h].type)
