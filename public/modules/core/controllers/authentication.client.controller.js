@@ -2,8 +2,7 @@
 
 angular.module('users').controller('AuthenticationController', ['$scope', '$http', '$location', 'Authentication', '$state',
 	function($scope, $http, $location, Authentication, $state) {
-		console.log("I AM IN THE AUTHENTICAITON CIOTNROLLERDSFDSF");
-				$scope.authentication = Authentication;
+		$scope.authentication = Authentication;
 
 		//If user is signed in then redirect back home
 		if ($scope.authentication.user) $location.path('/');

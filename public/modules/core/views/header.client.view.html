@@ -205,9 +205,8 @@
   
 </form> -->
 <form data-ng-submit="findMeAJob()" class="navbar-form navbar-left" data-ng-show="isCandidate()">
-    <input type="submit" id="sumbit2" value="Find me a Job"/>
-    </form>
-
+  <input type="submit" id="sumbit2" value="Find me a Job"/>
+</form>
 
 
 
@@ -216,7 +215,7 @@
 
     
   <ul class="nav navbar-nav navbar-right m-n hidden-xs nav-user user">
-    <li class="hidden-xs">
+    <li class="hidden-xs" class="dropdown-toggle" data-toggle="dropdown">
       <a href="#" class="dropdown-toggle" data-toggle="dropdown">
         <i class="i i-chat7"></i>
         <span class="badge badge-sm up bg-danger count">2</span>
@@ -276,7 +275,7 @@
         </li>
         <li class="divider"></li>
         <li>
-          <a href="/auth/signout" data-toggle="ajaxModal" >Logout</a>
+          <a href="/auth/signout" >Logout</a>
         </li>
       </ul>
     </li>

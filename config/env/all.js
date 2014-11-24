@@ -90,9 +90,9 @@ module.exports = {
 				'public/lib/ng-file-upload/angular-file-upload.js',
 				'public/lib/textAngular/dist/textAngular-sanitize.min.js',
 				'public/lib/textAngular/dist/textAngular.min.js',
-				'public/lib/ngmap/build/scripts/ng-map.js',
 				'public/lib/ng-sortable/dist/ng-sortable.js',
 				'http://maps.google.com/maps/api/js'
+				
 
 
 			]

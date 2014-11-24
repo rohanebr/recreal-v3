@@ -1,4 +1,4 @@
-<section data-ng-controller="HomeController">
+<section data-ng-controller="EmployerLandingController">
   <header class="bg-primary header header-md navbar navbar-fixed-top-xs box-shadow">
     <div class="navbar-header aside-md dk">
       <a class="btn btn-link visible-xs" data-toggle="class:nav-off-screen" data-target="#nav">
@@ -12,6 +12,7 @@
         <i class="fa fa-cog"></i>
       </a>
     </div>
+
     <form class="navbar-form navbar-left input-s-lg m-t m-l-n-xs hidden-xs" role="search">
       <div class="form-group">
         <div class="input-group">
@@ -24,13 +25,13 @@
     </form>
     <ul class="nav navbar-nav navbar-right m-n hidden-xs nav-user user">
       <li class="hidden-xs">
-        <a href="/#!/signin">Login</a>
+        <a href="/modules/users/views/signin.partial.client.view.html" data-toggle="modal">Login</a>
       </li>
       <li>
-        <a href="/#!/signup">Sumbit CV</a>
+        <a href="/#!/signup">Post Job</a>
       </li>
       <li>
-        <a href="/#!/employer-landing" class="btn btn-primary btn-small emp-button-header">Employers</a>
+        <a href="/#!" class="btn btn-primary btn-small emp-button-header">Candidates</a>
       </li>
     </ul>      
   </header>

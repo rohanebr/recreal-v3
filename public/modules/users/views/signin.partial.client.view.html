@@ -1,0 +1,49 @@
+<section data-ng-controller="AuthenticationController">
+	<div class="modal-dialog">
+	  <div class="modal-content">
+	  	<div class="modal-header">
+	      	<h3 class="col-md-12 text-center">Sign in using your social accounts</h3>
+			<div class="col-md-12 text-center">
+				<a href="/auth/facebook" class="undecorated-link">
+					<img class="img30_30" src="/modules/users/img/buttons/facebook.png">
+				</a>
+				<a href="/auth/twitter" class="undecorated-link">
+					<img class="img30_30" src="/modules/users/img/buttons/twitter.png">
+				</a>
+				<a href="/auth/google" class="undecorated-link">
+					<img class="img30_30" src="/modules/users/img/buttons/google.png">
+				</a>
+				<a href="/auth/linkedin" class="undecorated-link">
+					<img class="img30_30" src="/modules/users/img/buttons/linkedin.png">
+				</a>
+			</div>
+			<h3 class="text-center">Or with your account</h3>
+	    </div>
+	    <form data-ng-submit="signin()" class="signin form-horizontal" autocomplete="off">
+		    <div class="modal-body">
+				<div >
+					<fieldset>
+						<div >
+							<label for="username">Username</label>
+							<input type="text" id="username" name="username" class="form-control" data-ng-model="credentials.username" placeholder="Username">
+						</div>
+						<div>
+							<label for="password">Password</label>
+							<input type="password" id="password" name="password" class="form-control" data-ng-model="credentials.password" placeholder="Password">
+						</div>
+					</fieldset>
+				</div>
+		    </div>
+		    <div class="modal-footer">
+		      	<div class="text-center form-group">
+					<button type="submit" class="btn btn-primary">Sign in</button>&nbsp; or&nbsp;
+					<a href="/#!/signup">Sign up</a>
+				</div>
+				<div data-ng-show="error" class="text-center text-danger">
+					<strong data-ng-bind="error"></strong>
+				</div>
+		    </div>
+	    </form>
+	  </div>
+	</div>
+	</section>

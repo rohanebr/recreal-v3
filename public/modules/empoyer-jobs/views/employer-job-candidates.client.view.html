@@ -43,19 +43,67 @@
             </aside>
 
             <article>
-                <section class="logo text-center col-md-8">
+                <section class="logo text-center col-md-12">
                     <h2>{{job.title}}</h2>
                 </section>
+
+
+
+
+
+                <section class="panel panel-default">
+                    <header class="panel-heading">                    
+                      <span class="label bg-dark">{{candidates.length}}</span> Candidates
+                    </header>
+                    <section class="panel-body slim-scroll" data-height="230px" data-size="10px">
+                      <article ng-repeat="candidate in candidates" class="media">
+                        <span class="pull-left thumb-md"><img src="{{candidate.picture_url}}"></span>
+                        <div class="media-body">
+                          <div class="pull-right media-xs text-center text-muted">
+
+                            <aside class="">
+                                <a href="" ng-hide="isShortListed(candidate)" ng-click="addCandidateToShortList(candidate) "><i class="fa fa-star-o fa-2x" style="padding-top:20px;"></i>
+                                </a>
+
+                                <a href="" ng-show="isShortListed(candidate)" ng-click=" removeCandidateFromShortList(candidate)"><i class="fa fa-star fa-2x" style="color:#f1d104; padding-top:20px;"></i>
+                                </a>
+                            </aside>
+                          </div>
+                          <a data-ng-href="#!/candidates/{{candidate._id}}" class="h4">{{candidate.displayName}}</a>
+                          <small class="block">
+                              <a href="#" class="">{{candidate.title}}</a> 
+                              <span ng-show="candidate.isOnline == 'Online'" class="label label-success">{{candidate.isOnline}}</span>
+                              <span ng-show="candidate.isOnline == 'Offline'" class="label label-danger">{{candidate.isOnline}}</span>
+                          </small>
+                          <small class="block m-t-sm">
+                            <span class="r bg-light wrapper-xxs text-sm" data-ng-repeat="skill in candidate.skills">{{skill.title}}</span>
+                          </small>
+                          <small class="block m-t-sm">
+                              <span class="label label-success">{{candidate.location}}</span>
+                              <span class="label label-danger">{{candidate.salary_expectation}}</span>
+                              <span class="label label-success">{{candidate.visa_status}}</span>
+                              <span class="label label-danger">{{candidate.employee_type}}</span>
+                              <span class="label label-success">{{candidate.employee_status}}</span>
+                            </small>
+                        </div>
+                        <hr>
+                      </article>
+                      
+                    </section>
+                  </section>
+
+
+
+
+
                 <table class="table table-striped">
                     <tbody>
                         <tr ng-repeat="candidate in candidates">
                             <td>
                                 <section class="col-md-3 " style="padding-top:20px;">
-
                                     <a data-ng-href="#!/candidates/{{candidate._id}}">
                                         <img width="150" src="{{candidate.picture_url}}">
                                     </a>
-                                    </div>
                                 </section>
                                 <section class="col-md-9">
                                     <header class="col-md-8">
@@ -96,21 +144,22 @@
                             </td>
                         </tr>
                     </tbody>
-                    <tfoot>
-                        <ul class="pagination">
-                            <li ng-class="prevPageDisabled()">
-                                <a href ng-click="prevPage()">« Prev</a>
-                            </li>
-                            <li ng-repeat="n in range()" ng-class="{active: n == currentPage}" ng-click="setPage(n)">
-                                <a href="#">{{n+1}}</a>
-                            </li>
-                            <li ng-class="nextPageDisabled()">
-                                <a href ng-click="nextPage()">Next »</a>
-                            </li>
-                        </ul>
+                </table>    
+                <section class="text-right col-md-12">
+                    <ul class="pagination pagination-sm m-t-none m-b-none">
+                        <li ng-class="prevPageDisabled()">
+                            <a href ng-click="prevPage()"><i class="fa fa-chevron-left"></i></a>
+                        </li>
+                        <li ng-repeat="n in range()" ng-class="{active: n == currentPage}" ng-click="setPage(n)">
+                            <a href="#">{{n+1}}</a>
+                        </li>
+                        <li ng-class="nextPageDisabled()">
+                            <a href ng-click="nextPage()"><i class="fa fa-chevron-right"></i></a>
+                        </li>
+                    </ul>
 
-                    </tfoot>
-                </table>
+                </section>
+                
                 </article>
             </section>
         </section>

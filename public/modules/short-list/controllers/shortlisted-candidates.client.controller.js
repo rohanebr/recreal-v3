@@ -47,11 +47,11 @@ $scope.formData = {userType:''};
 			});
 		};
 
-					// send message
+		// send message
 		$scope.openMessageModal = function(reciever) {
 	     
 	     	var mesg = $modal.open({
-	        templateUrl: '/modules/short-list/views/message/message.html',
+	        templateUrl: '/modules/users/views/signin.partial.client.view.html',
 	        controller: 'messageController',
 	        resolve:{
 	        	reciever: function () {
@@ -67,6 +67,8 @@ $scope.formData = {userType:''};
 
 	      });
 	    };
+
+					
 
 
 	}
