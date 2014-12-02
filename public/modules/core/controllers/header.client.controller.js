@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('core').controller('HeaderController', ['$scope', 'Authentication', 'Menus', 'Socket', '$http','$location','$rootScope',
-    function($scope, Authentication, Menus, Socket, $http,$location,$rootScope) {
+angular.module('core').controller('HeaderController', ['$scope', 'Authentication', 'Menus', 'Socket', '$http','$location','$rootScope', 'toaster',
+    function($scope, Authentication, Menus, Socket, $http,$location,$rootScope, toaster) {
         $scope.authentication = Authentication;
         $scope.isCollapsed = false;
         $scope.menu = Menus.getMenu('topbar');
@@ -168,6 +168,7 @@ else return false;
                     if (!alreadyexists) {
                         $scope.threads.push(thread);
                         $scope.$apply();
+                        toaster.pop('success', "Message recieved", data.message.sender.displayName);
                     }
                 }
 

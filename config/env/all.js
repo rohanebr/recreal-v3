@@ -27,6 +27,10 @@ module.exports = {
 				"public/theme/js/calendar/bootstrap_calendar.css" ,
 
 
+				//toaster
+				'public/lib/angularjs-toaster/toaster.css'
+
+
 			],
 			js: [
 
@@ -91,7 +95,16 @@ module.exports = {
 				'public/lib/textAngular/dist/textAngular-sanitize.min.js',
 				'public/lib/textAngular/dist/textAngular.min.js',
 				'public/lib/ng-sortable/dist/ng-sortable.js',
-				'http://maps.google.com/maps/api/js'
+				'http://maps.google.com/maps/api/js',
+
+
+				//angularjs-toaster
+				//https://github.com/jirikavi/AngularJS-Toaster
+
+				
+				
+				'http://code.angularjs.org/1.3.2/angular-animate.min.js',
+				'public/lib/angularjs-toaster/toaster.js'
 				
 
 

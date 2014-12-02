@@ -1,79 +1,351 @@
 <section data-ng-controller="ListUserMessagesController">
-<!-- 	This is the List user messages view
-	<div data-ng-repeat="thread in user.threads">
-		<h2>{{thread.subject}}</h2>
-		<p>{{thread.created | date}}</p>
-		<div data-ng-repeat="message in thread.messages">
-			<h3>{{message.messageBody}}</h3>
-			<p>{{message.created | date}}</p>
-		</div>
-	</div>
+  <section class="">
+    <section>
+      <section class="hbox stretch">
+            <!-- .aside -->
+            <aside class="aside bg-primary hidden-xs" id="nav">
+              <section class="vbox">
+                <header class="header dker">
+                  <p class="h4 text-white">Mailbox</p>
+                </header>
+                <section class="w-f">
+                  <section>
+                    <section>
+                      <div class="wrapper">
+                        <button class="btn btn-sm btn-success btn-s-md m-t font-bold">Compose</button>
+                      </div>
+                      <div class="wrapper">
+                        <ul class="nav nav-pills nav-stacked">
+                          <li class="active">
+                            <a href="#">
+                              <span class="badge bg-info pull-right">5</span> 
+                              <i class="fa fa-fw fa-inbox"></i>
+                              Inbox
+                            </a>
+                          </li>
+                          <li>
+                            <a href="#">
+                              <i class="fa fa-fw fa-envelope-o"></i>
+                              Sent mail
+                            </a>
+                          </li>
+                          <li>
+                            <a href="#">
+                              <span class="badge badge-empty pull-right">4</span>
+                              <i class="fa fa-fw fa-bookmark-o"></i>                            
+                              Important
+                            </a>
+                          </li>
+                          <li>
+                            <a href="#">
+                              <i class="fa fa-fw fa-pencil"></i>
+                              Draft
+                            </a>
+                          </li>
+                          <li>                
+                            <a href="#">
+                              <span class="badge badge-empty pull-right">3</span>
+                              <i class="fa fa-fw fa-star-o"></i>                            
+                              Spam
+                            </a>
+                          </li>
+                        </ul>
+                      </div>
+                      <div class="line dk"></div>
+                      <div class="padder m-t">Labels</div>
+                      <ul class="nav nav-pills nav-stacked no-radius m-t-sm">                        
+                        <li>
+                          <a href="#">
+                            <i class="fa fa-circle-o text-warning pull-right m-t-xs m-r-xs"></i>
+                            Work
+                          </a>
+                        </li>
+                        <li>
+                          <a href="#">
+                            <i class="fa fa-circle-o pull-right m-t-xs m-r-xs"></i>
+                            Private
+                          </a>
+                        </li>
+                        <li>
+                          <a href="#">
+                            <i class="fa fa-circle-o text-success pull-right m-t-xs m-r-xs"></i>
+                            Clients
+                          </a>
+                        </li>
+                      </ul>
+                    </section>
+                  </section>
+                </section>
+                <footer class="footer dker hidden-xs text-center">
+                  <a href="#chat" class="inline wrapper animated " data-toggle="class:show"><i class="i i-chat3"></i></a>
+                </footer>
+              </section>
+            </aside>
+            <!-- /.aside -->
+            <section>
+              <section class="hbox stretch">
+                <aside class="aside bg-primary lt hide" id="chat">
+                  <section class="vbox animated fadeInLeft">
+                    <header class="dk header">
+                      <p>Contacts (25)</p>
+                    </header>
+                    <section class="scrollable">
+                      <div class="list-group auto list-group-alt no-radius no-borders">
+                        <a class="list-group-item" href="#">
+                            <i class="fa fa-fw fa-circle-o text-success text-xs"></i>
+                            <span>Cris Labiso</span>
+                        </a>
+                        <a class="list-group-item" href="#">
+                            <i class="fa fa-fw fa-circle-o text-muted text-xs"></i>
+                            <span>Daniel Sandvid</span>
+                        </a>
+                        <a class="list-group-item" href="#">
+                            <i class="fa fa-fw fa-circle-o text-warning text-xs"></i>
+                            <span>Helder Oliveira</span>
+                        </a>
+                        <a class="list-group-item" href="#">
+                            <i class="fa fa-fw fa-circle-o text-muted text-xs"></i>
+                            <span>Jeff Broderik</span>
+                        </a>
+                        <a class="list-group-item" href="#">
+                            <i class="fa fa-fw fa-circle-o text-muted text-xs"></i>
+                            <span>Jonathan Morina</span>
+                        </a>
+                        <a class="list-group-item" href="#">
+                            <i class="fa fa-fw fa-circle-o text-success text-xs"></i>
+                            <span>Mason Yarnell</span>
+                        </a>
+                        <a class="list-group-item" href="#">
+                            <i class="fa fa-fw fa-circle-o text-warning text-xs"></i>
+                            <span>Mike Mcalidek</span>
+                        </a>
+                      </div>
+                    </section>
+                    <footer class="footer bg text-center">
+                      <button class="btn btn-primary bg-empty btn-sm"><i class="fa fa-plus"></i> New contact</button>
+                    </footer>
+                  </section>
+                </aside>
+                <!-- .aside -->
+                <section class="">
+					<aside class="aside-lg col-md-4" id="email-list">
+	                  <section class="vbox">
+	                    <header class="dker header clearfix">
+	                      <div class="btn-group pull-right">
+	                        <button type="button" class="btn btn-sm btn-bg btn-default"><i class="fa fa-chevron-left"></i></button>
+	                        <button type="button" class="btn btn-sm btn-bg btn-default"><i class="fa fa-chevron-right"></i></button>
+	                      </div>
+	                      <div class="btn-toolbar">
+	                        <div class="btn-group select">
+	                          <button class="btn btn-default btn-sm btn-bg dropdown-toggle" data-toggle="dropdown">
+	                            <span class="dropdown-label" style="width: 65px;">Filter</span>                    
+	                            <span class="caret"></span>
+	                          </button>
+	                          <ul class="dropdown-menu text-left text-sm">
+	                            <li><a href="#">Read</a></li>
+	                            <li><a href="#">Unread</a></li>
+	                            <li><a href="#">Starred</a></li>
+	                            <li><a href="#">Unstarred</a></li>
+	                          </ul>
+	                        </div>
+	                        <div class="btn-group">
+	                          <button class="btn btn-sm btn-bg btn-default" data-toggle="tooltip" data-placement="bottom" data-title="Refresh"><i class="fa fa-refresh"></i></button>
+	                        </div>
+	                      </div>
+	                    </header>
+	                    <section class="scrollable hover w-f">
+	                      <ul class="list-group auto no-radius m-b-none m-t-n-xxs list-group-lg">
+	                        <li class="list-group-item">
+	                          <a href="#" class="thumb-sm pull-left m-r-sm">
+	                            <img src="/theme/images/a0.png" class="img-circle">
+	                          </a>
+	                          <a href="#" class="clear text-ellipsis">
+	                            <small class="pull-right">3 minuts ago</small>
+	                            <strong class="block">Drew Wllon</strong>
+	                            <small>Wellcome and play this web application template  </small>
+	                          </a>
+	                        </li>
+	                        <li class="list-group-item">
+	                          <a href="#" class="thumb-sm pull-left m-r-sm">
+	                            <img src="/theme/images/a1.png" class="img-circle">
+	                          </a>
+	                          <a href="#" class="clear text-ellipsis">
+	                            <small class="pull-right">1 hour ago</small>
+	                            <strong class="block">Jonathan George</strong>
+	                            <small>Morbi nec nunc condimentum</small>
+	                          </a>
+	                        </li>
+	                        <li class="list-group-item">
+	                          <a href="#" class="thumb-sm pull-left m-r-sm">
+	                            <img src="/theme/images/a2.png" class="img-circle">
+	                          </a>
+	                          <a href="#" class="clear text-ellipsis">
+	                            <small class="pull-right">2 hours ago</small>
+	                            <strong class="block">Josh Long</strong>
+	                            <small>Vestibulum ullamcorper sodales nisi nec</small>
+	                          </a>
+	                        </li>
+	                        <li class="list-group-item">
+	                          <a href="#" class="thumb-sm pull-left m-r-sm">
+	                            <img src="/theme/images/a3.png" class="img-circle">
+	                          </a>
+	                          <a href="#" class="clear text-ellipsis">
+	                            <small class="pull-right">1 day ago</small>
+	                            <strong class="block">Jack Dorsty</strong>
+	                            <small>Morbi nec nunc condimentum</small>
+	                          </a>
+	                        </li>
+	                        <li class="list-group-item">
+	                          <a href="#" class="thumb-sm pull-left m-r-sm">
+	                            <img src="/theme/images/a4.png" class="img-circle">
+	                          </a>
+	                          <a href="#" class="clear text-ellipsis">
+	                            <small class="pull-right">3 days ago</small>
+	                            <strong class="block">Morgen Kntooh</strong>
+	                            <small>Mobile first web app for startup</small>
+	                          </a>
+	                        </li>
+	                        <li class="list-group-item">
+	                          <a href="#" class="thumb-sm pull-left m-r-sm">
+	                            <img src="/theme/images/a5.png" class="img-circle">
+	                          </a>
+	                          <a href="#" class="clear text-ellipsis">
+	                            <small class="pull-right">Jun 21</small>
+	                            <strong class="block">Yoha Omish</strong>
+	                            <small>Morbi nec nunc condimentum</small>
+	                          </a>
+	                        </li>
+	                        <li class="list-group-item">
+	                          <a href="#" class="thumb-sm pull-left m-r-sm">
+	                            <img src="/theme/images/a6.png" class="img-circle">
+	                          </a>
+	                          <a href="#" class="clear text-ellipsis">
+	                            <small class="pull-right">May 10</small>
+	                            <strong class="block">Gole Lido</strong>
+	                            <small>Vestibulum ullamcorper sodales nisi nec</small>
+	                          </a>
+	                        </li>
+	                        <li class="list-group-item">
+	                          <a href="#" class="thumb-sm pull-left m-r-sm">
+	                            <img src="/theme/images/a7.png" class="img-circle">
+	                          </a>
+	                          <a href="#" class="clear text-ellipsis">
+	                            <small class="pull-right">Jan 2</small>
+	                            <strong class="block">Jonthan Snow</strong>
+	                            <small>Morbi nec nunc condimentum</small>
+	                          </a>
+	                        </li>
+	                        <li class="list-group-item" href="#email-content" data-toggle="class:show">
+	                          <a href="#" class="thumb-sm pull-left m-r-sm">
+	                            <img src="/theme/images/a8.png" class="img-circle">
+	                          </a>
+	                          <a href="#" class="clear text-ellipsis">
+	                            <small class="pull-right">3 minuts ago</small>
+	                            <strong class="block">Drew Wllon</strong>
+	                            <small>Vestibulum ullamcorper sodales nisi nec sodales nisi nec sodales nisi nec</small>
+	                          </a>
+	                        </li>
+	                        <li class="list-group-item">
+	                          <a href="#" class="thumb-sm pull-left m-r-sm">
+	                            <img src="/theme/images/a9.png" class="img-circle">
+	                          </a>
+	                          <a href="#" class="clear text-ellipsis">
+	                            <small class="pull-right">1 hour ago</small>
+	                            <strong class="block">Jonathan George</strong>
+	                            <small>Morbi nec nunc condimentum</small>
+	                          </a>
+	                        </li>
+	                        <li class="list-group-item">
+	                          <a href="#" class="thumb-sm pull-left m-r-sm">
+	                            <img src="/theme/images/a0.png" class="img-circle">
+	                          </a>
+	                          <a href="#" class="clear text-ellipsis">
+	                            <small class="pull-right">2 hours ago</small>
+	                            <strong class="block">Josh Long</strong>
+	                            <small>Vestibulum ullamcorper sodales nisi nec</small>
+	                          </a>
+	                        </li>
+	                      </ul>
+	                    </section>
+	                    <footer class="footer dk clearfix">
+	                      <form class="m-t-sm">
+	                        <div class="input-group">
+	                          <input type="text" class="input-sm form-control input-s-sm" placeholder="Search">
+	                          <div class="input-group-btn">
+	                            <button class="btn btn-sm btn-default"><i class="fa fa-search"></i></button>
+	                          </div>
+	                        </div>
+	                      </form>
+	                    </footer>
+	                  </section>
+	                </aside>
+	                <!-- /.aside -->
+	                <!-- .aside -->
+	                
+
+		            <!-- chat -->
+		            <aside id="email-content" class="bg-light lter col-md-8">
+	                  <section class="panel panel-default">
+	                    <header class="panel-heading">Chat</header>
+	                    <section class="chat-list panel-body">
+	                      <article id="chat-id-1" class="chat-item left">
+	                        <a href="#" class="pull-left thumb-sm avatar"><img src="images/a2.png"></a>
+	                        <section class="chat-body">
+	                          <div class="panel b-light text-sm m-b-none">
+	                            <div class="panel-body">
+	                              <span class="arrow left"></span>
+	                              <p class="m-b-none">Hi John, What's up...</p>
+	                            </div>
+	                          </div>
+	                          <small class="text-muted"><i class="fa fa-ok text-success"></i> 2 minutes ago</small>
+	                        </section>
+	                      </article>
+	                      <article id="chat-id-1" class="chat-item right">
+	                        <a href="#" class="pull-right thumb-sm avatar"><img src="images/a3.png" class="img-circle"></a>
+	                        <section class="chat-body">                      
+	                          <div class="panel bg-light text-sm m-b-none">
+	                            <div class="panel-body">
+	                              <span class="arrow right"></span>
+	                              <p class="m-b-none">Lorem ipsum dolor sit amet, conse <br>adipiscing eli...<br>:)</p>
+	                            </div>
+	                          </div>
+	                          <small class="text-muted">1 minutes ago</small>
+	                        </section>
+	                      </article>                          
+	                    </section>
+	                    <footer class="panel-footer">
+	                      <!-- chat form -->
+	                      <article class="chat-item" id="chat-form">
+	                        <a class="pull-left thumb-sm avatar"><img src="images/a3.png" class="img-circle"></a>
+	                        <section class="chat-body">
+	                          <form action="" class="m-b-none">
+	                            <div class="input-group">
+	                              <input type="text" class="form-control" placeholder="Say something">
+	                              <span class="input-group-btn">
+	                                <button class="btn btn-default" type="button">SEND</button>
+	                              </span>
+	                            </div>
+	                          </form>
+	                        </section>
+	                      </article>
+	                    </footer>
+	                  </section>
+	                </aside>
+	                <!-- /chat --> 
 
 
-
-
-
- -->
-
-
-
-
-
-
-<div class="page">
-    <div class="row">
-        <div class="col-sm-3">
-            <section class="panel panel-default mail-categories">
-                <div class="panel-heading">
-                    <a href="#/mail/compose" class="btn btn-block btn-lg btn-primary">Compose</a>
-                </div>
-                <ul class="list-group">
-                    <li class="list-group-item active"><a href="javascript:;">
-                        <i class="fa fa-inbox"></i>Inbox
-                        <span class="badge badge-info pull-right">6</span>
-                    </a></li>
-                    <li class="list-group-item"><a href="javascript:;">
-                        <i class="fa fa-envelope-o"></i>Send mail
-                    </a></li>
-                    <li class="list-group-item"><a href="javascript:;">
-                        <i class="fa fa-star"></i>Starred
-                        <span class="badge badge-danger pull-right">3</span>
-                    </a></li>
-                    <li class="list-group-item"><a href="javascript:;">
-                        <i class="fa fa-comment-o"></i>Chat
-                        <span class="badge badge-success pull-right">9</span>
-                    </a></li>
-                    <li class="list-group-item"><a href="javascript:;">
-                        <i class="fa fa-pencil"></i>Draft
-                        <span class="badge badge-warning pull-right">1</span>
-                    </a></li>
-                    <li class="list-group-item"><a href="javascript:;">
-                        <i class="fa fa-trash-o"></i>Spam
-                    </a></li>
-                </ul>
-            </section>
-
-            
-        </div>
-        <div class="col-sm-9">
-            <section class="panel panel-default mail-container">
-                <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Inbox</strong></div>
-                <div class="mail-options">
-                    <label class="ui-checkbox"><input name="checkbox1" type="checkbox" value="option1" ><span>Toggle All</span></label>
-                </div>
-                <table class="table table-hover">
-                    <tr class="mail-unread" data-ng-repeat="thread in user.threads">
-                        <td><label class="ui-checkbox"><input name="checkbox1" type="checkbox" value="option1" ><span></span></label></td>
-                        <td>{{thread.senderName}}</td>
-                        <td>{{thread.subject}}</td>
-                        <td>{{thread.created | date}}</td>
-                        <td><i class="fa fa-star-o"></i></td>
-                    </tr>
-                </table>
-            </section>
-        </div>
-    </div>
-</div>
-
-
+	                <!-- /.aside --> 
+                </section>
+                 
+              </section>
+            </section>          
+          </section>
+    </section>
+  </section>
 </section>
+
+
+
+
+
+  

@@ -8,7 +8,7 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
         $scope.firstTimeFetching=true;
         $scope.locationFilters = [];
         $scope.user = Authentication.user;
-        $scope.itemsPerPage = 10;
+        $scope.itemsPerPage = 5;
         $scope.currentPage = 0;
         $scope.candidates=[];
         $scope.skip = 0;
@@ -130,6 +130,11 @@ $scope.sortableOptions = {
                 isPageChange: isPageChange,
                 priority:$scope.itemsList.items1
             }).success(function(job) {
+
+
+                console.log(job);
+
+
             	  $scope.filters1=[];
                 $scope.job = job.job;
                 // $scope.locationFilters=job.filters.locationFilters;
@@ -350,6 +355,18 @@ $scope.findCandidates($scope.skip,$scope.itemsPerPage,$scope.filters, false);
        
     });
   };
+
+
+
+
+  $scope.compareType = function(typeName, value){
+    if($scope.job[typeName] === value){
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
 
 }
 

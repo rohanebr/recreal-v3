@@ -24,14 +24,10 @@
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
                         </article>
                     </div>
-
-
                     </div>
-
                     <div class="col-sm-12">
                         <div data-ng-repeat="filtername in completefilternames">
                             <filter-list filter-name="{{filtername}}">
@@ -46,11 +42,6 @@
                 <section class="logo text-center col-md-12">
                     <h2>{{job.title}}</h2>
                 </section>
-
-
-
-
-
                 <section class="panel panel-default">
                     <header class="panel-heading">                    
                       <span class="label bg-dark">{{candidates.length}}</span> Candidates
@@ -79,11 +70,19 @@
                             <span class="r bg-light wrapper-xxs text-sm" data-ng-repeat="skill in candidate.skills">{{skill.title}}</span>
                           </small>
                           <small class="block m-t-sm">
-                              <span class="label label-success">{{candidate.location}}</span>
-                              <span class="label label-danger">{{candidate.salary_expectation}}</span>
-                              <span class="label label-success">{{candidate.visa_status}}</span>
-                              <span class="label label-danger">{{candidate.employee_type}}</span>
-                              <span class="label label-success">{{candidate.employee_status}}</span>
+
+                              <span data-ng-show="compareType('location',candidate.location)" class="label label-success">{{candidate.location}}</span>
+                              <span data-ng-show="!compareType('location',candidate.location)" class="label label-danger">{{candidate.location}}</span>
+
+                              <span data-ng-show="compareType('salary_range',candidate.salary_expectation)" class="label label-success">{{candidate.salary_expectation}}</span>
+                              <span data-ng-show="!compareType('salary_range',candidate.salary_expectation)" class="label label-danger">{{candidate.salary_expectation}}</span>
+
+                              <span data-ng-show="compareType('employee_type',candidate.employee_type)" class="label label-success">{{candidate.employee_type}}</span>
+                              <span data-ng-show="!compareType('employee_type',candidate.employee_type)" class="label label-danger">{{candidate.employee_type}}</span>
+
+                              <span data-ng-show="compareType('employee_status',candidate.employee_status)" class="label label-success">{{candidate.employee_status}}</span>
+                              <span data-ng-show="!compareType('employee_status',candidate.employee_status)" class="label label-danger">{{candidate.employee_status}}</span>
+
                             </small>
                         </div>
                         <hr>
@@ -92,59 +91,6 @@
                     </section>
                   </section>
 
-
-
-
-
-                <table class="table table-striped">
-                    <tbody>
-                        <tr ng-repeat="candidate in candidates">
-                            <td>
-                                <section class="col-md-3 " style="padding-top:20px;">
-                                    <a data-ng-href="#!/candidates/{{candidate._id}}">
-                                        <img width="150" src="{{candidate.picture_url}}">
-                                    </a>
-                                </section>
-                                <section class="col-md-9">
-                                    <header class="col-md-8">
-                                        <a data-ng-href="#!/candidates/{{candidate._id}}">
-                                            <h3 style="color:#00afef;">{{candidate.displayName}}</h3>
-                                        </a>
-                                    </header>
-
-                                    <aside class="col-md-4">
-
-                                        <a href="" ng-hide="isShortListed(candidate)" ng-click="addCandidateToShortList(candidate) "><i class="fa fa-star-o fa-2x" style="padding-top:20px;"></i>
-                                        </a>
-
-                                        <a href="" ng-show="isShortListed(candidate)" ng-click=" removeCandidateFromShortList(candidate)"><i class="fa fa-star fa-2x" style="color:#f1d104; padding-top:20px;"></i>
-                                        </a>
-                                    </aside>
-
-
-                                    <section class="col-md-12">
-
-                                        <h4>{{candidate.title}}</h4>
-                                        <p style="color:rgb(83, 82, 82)">
-                                            {{candidate.objective}}
-                                        </p>
-                                        <div style="line-height: 2">
-                                            <span class="skill-div" data-ng-repeat="skill in candidate.skills">{{skill.title}}</span>
-                                        </div>
-
-                                        <h6 style="padding-top:15px">
-                                            Location : {{candidate.location}}  &nbsp;&nbsp;|&nbsp;&nbsp;  Salary Range : {{candidate.salary_expectation}}  &nbsp;&nbsp;|&nbsp;&nbsp;Visa : {{candidate.visa_status}}  &nbsp;&nbsp;|&nbsp;&nbsp; Employee Type : {{candidate.employee_type}}  &nbsp;&nbsp;|&nbsp;&nbsp; Employee Status : {{candidate.employee_status}}
-                                          </h6>
-
-                                        <hr>
-                                    </section>
-                                    <br>
-
-                                </section>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>    
                 <section class="text-right col-md-12">
                     <ul class="pagination pagination-sm m-t-none m-b-none">
                         <li ng-class="prevPageDisabled()">
