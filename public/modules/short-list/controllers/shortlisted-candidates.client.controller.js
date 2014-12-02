@@ -51,7 +51,7 @@ $scope.formData = {userType:''};
 		$scope.openMessageModal = function(reciever) {
 	     
 	     	var mesg = $modal.open({
-	        templateUrl: '/modules/users/views/signin.partial.client.view.html',
+	        templateUrl: '/modules/short-list/views/message/message.html',
 	        controller: 'messageController',
 	        resolve:{
 	        	reciever: function () {
