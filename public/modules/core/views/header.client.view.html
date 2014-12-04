@@ -225,7 +225,7 @@
              <div class="panel-heading b-light bg-light">
             <strong>You have <span class="count"> {{threads.length}} </span> messages</strong>
           </div>
-          <div class="list-group list-group-alt">
+          <div class="list-group-alt">
             <li class="list-group-item" data-ng-repeat="thread in threads">
                 <a href="#!/threads/{{thread.id}}" class="media">
                             <span class="pull-left media-icon">
@@ -252,7 +252,7 @@
           <div class="panel-heading b-light bg-light">
             <strong>You have <span class="count">{{unreadnotificationslength}}</span> notifications</strong>
           </div>
-          <div class="list-group list-group-alt">
+          <div class="list-group-alt">
             <li class="list-group-item" data-ng-repeat="notification in notifications">
                         <a href="#!{{notification.hiddendata}}" class="media list-group-item" ng-click="notificationRead(notification)">
                             <span class="pull-left media-icon">
