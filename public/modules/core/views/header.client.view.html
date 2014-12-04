@@ -215,10 +215,10 @@
 
     
   <ul class="nav navbar-nav navbar-right m-n hidden-xs nav-user user">
-    <li class="hidden-xs" class="dropdown-toggle" data-toggle="dropdown">
+    <li class="hidden-xs dropdown" class="dropdown-toggle" data-toggle="dropdown">
       <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-        <i class="i i-chat7"></i>
-        <span class="badge badge-sm up bg-danger count">2</span>
+        <i class="fa fa-envelope"></i>
+        <span class="badge badge-sm up bg-danger count">4</span>
       </a>
       <section class="dropdown-menu aside-xl animated flipInY">
         <section class="panel bg-white">
@@ -252,9 +252,9 @@
     <li class="dropdown">
       <a href="#" class="dropdown-toggle" data-toggle="dropdown">
         <span class="thumb-sm avatar pull-left">
-          <img src="/theme/images/a0.png" alt="...">
+          <img src="{{authentication.user.picture_url}}" alt="...">
         </span>
-        John.Smith <b class="caret"></b>
+        {{authentication.user.displayName}} <b class="caret"></b>
       </a>
       <ul class="dropdown-menu animated fadeInRight">            
         <li>
