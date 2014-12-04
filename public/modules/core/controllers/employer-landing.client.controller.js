@@ -1,17 +1,17 @@
 'use strict';
 
-angular.module('core').controller('EmployerLandingController', ['$scope',
-	function($scope) {
+angular.module('core').controller('EmployerLandingController', ['$scope', '$modal',
+	function($scope, $modal) {
 		// Controller Logic
 		// ...
 		// open signin
-		$scope.openSigninModal = function() {
+		$scope.openPostjobModal = function() {
 	     
-	     	var mesg = $modal.open({
-	        templateUrl: '/modules/short-list/views/message/message.html',
-	        controller: 'AuthenticationController'
+	     	var modalInstance = $modal.open({
+	        templateUrl: '/modules/employer-signup-wizard/views/partials/employer-signup-partial.html',
+	        controller: 'EmpSignupController'
 	      });
-	      mesg.result.then(function(result) 
+	      modalInstance.result.then(function(result) 
 	       {
 	       	console.log(result);
 	      //    $scope.sendmessage = result.sendmessage;
