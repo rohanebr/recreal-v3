@@ -1,5 +1,4 @@
-<section data-ng-controller="EmpWizardOneController">
-	<!-- <button ng-click="pop()">Show a Toaster</button> -->
+<section data-ng-controller="EmpWizardTwoController">
 	<section class="row">
     <section class="container custom-wrapper">
       <section class="hbox">
@@ -127,98 +126,14 @@
             <section>
               <section class="vbox">
                 <section class="scrollable padder">
-	                <article>
-	                	<h3>About You</h3><hr/>
-	                	<label>A few additional details about you will help your colleagues to know you</label>
-	                	
-                		<section class="row">
-                      <section class="col-md-3">
-                        <img src="https://media.licdn.com/mpr/mpr/shrink_200_200/p/6/005/089/3a9/1024247.jpg" width="140px" height="140px">
-                      </section>
-                      <section class="col-md-4">
-                         <div class="form-group">
-                          <label>First Name</label>
-                          <input type="email" class="form-control" placeholder="John">
-                        </div>
-                        <div class="form-group">
-                          <label>Email Address</label>
-                          <input type="email" class="form-control" placeholder="Carter">
-                        </div>
-                      </section>
-                      <section class="col-md-4">
-                        <div class="form-group">
-                          <label>Last Name</label>
-                          <input type="email" class="form-control" placeholder="Enter email">
-                        </div>
-                        <div class="form-group">
-                          <label>Role</label>
-                          <div class="col-md-4">
-                            <div class="btn-group m-r">
-                              <button data-toggle="dropdown" class="btn btn-sm btn-default dropdown-toggle">
-                                <span class="dropdown-label" data-placeholder="Please select">Please select</span> 
-                                <span class="caret"></span>
-                              </button>
-                              <ul class="dropdown-menu dropdown-select">
-                                  <li><a href="#"><input type="checkbox" name="d-s-c-1">Option1</a></li>
-                                  <li><a href="#"><input type="checkbox" name="d-s-c-2">Option2</a></li>
-                                  <li><a href="#"><input type="checkbox" name="d-s-c-3">Option3</a></li>
-                                  <li><a href="#"><input type="checkbox" name="d-s-c-4">Option4</a></li>
-                                  <li><a href="#"><input type="checkbox" name="d-s-c-5">Option5</a></li>
-                              </ul>
-                            </div>
-                          </div>
-                        </div>
-                      </section>
-                    </section>
-	                </article><hr/>
-                  <article>
-                    <h3>About Your Company</h3><hr/>
-                    <label>A few additional details about your Comapany will help candidates to know about you</label>
-                    
-                    <section class="row">
-                      <section class="col-md-3">
-                        <img src="https://media.licdn.com/media/p/1/000/2bc/329/09e8946.png" width="80px" height="50px">
-                      </section>
-                      <section class="col-md-8">
-                          <div class="form-group">
-                            <label>Company Name</label>
-                            <input type="email" class="form-control" placeholder="General Network Solutions,Ltd">
-                          </div>
-                      </section>
-                    </section>
-                    <section class="row">
-                      <section class="col-md-3">
-                        
-                      </section>
-                        <section class="col-md-4">
-                         <div class="form-group">
-                          <label>Industry</label>
-                          <input type="email" class="form-control" placeholder="John">
-                        </div>
-                        <div class="form-group">
-                          <label>Company Type</label>
-                          <input type="email" class="form-control" placeholder="John">
-                        </div>
-                      </section>
-                      <section class="col-md-4">
-                        <div class="form-group">
-                          <label>Website</label>
-                          <input type="email" class="form-control" placeholder="50-100">
-                        </div>
-                        <div class="form-group">
-                          <label>No of Employees</label>
-                          <input type="email" class="form-control" placeholder="Carter">
-                        </div>
-                      </section>
-                    </section>
-                    <section>
-                      <div class="form-group">
-                        <label class="col-sm-2 control-label">Markdown</label>
-                        <div id="epiceditor" class="col-lg-10"></div>
-                      </div>
-                    </section>
-                  </article><hr/>
-                  <section class="pull-right"><a href="#!/emp-wizard-two">Next</a></section>
+                	<div ng-hide="!isTabMap">
+                       <map zoom="11" center="[{{lat}},{{longi}}]">
+                            <marker position="[{{lat}},{{longi}}]"
+                            draggable="true" />
+                            <control name="overviewMap" opened="false" />
+                        </map>
+                    </div>
+                  <section class="pull-right"><a href="#!/emp-wizard-one">Back</a><a href="#!/emp-wizard-two">Next</a></section>
                 </section>
               </section>
             </section>
