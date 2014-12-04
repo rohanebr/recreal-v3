@@ -11,7 +11,7 @@ angular.module('employer-signup-wizard').controller('EmpSignupController', ['$mo
 				//If successful we assign the response to the global user model
 				if(response.status){
 					$location.path('/signup-email-activation');
-					// $modalInstance.dismiss();
+					 $modalInstance.dismiss();
 				}
 				//And redirect to the index page
 				// $location.path('/');
