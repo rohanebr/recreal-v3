@@ -1,6 +1,7 @@
 'use strict';
 
-angular.module('empoyer-jobs').controller('PostJobController', ['$scope', 'Industries','Countries','Studyfields', '$location', 'Authentication', 'Jobs','$rootScope',
+var gt=angular.module('empoyer-jobs');
+gt.controller('PostJobController', ['$scope', 'Industries','Countries','Studyfields', '$location', 'Authentication', 'Jobs','$rootScope',
 	function($scope, Industries, Countries,Studyfields, $location, Authentication, Jobs,$rootScope) {
 		$scope.user = Authentication.user;
 		// If user is not signed in then redirect back home

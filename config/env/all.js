@@ -95,7 +95,8 @@ module.exports = {
 				'public/lib/textAngular/dist/textAngular-sanitize.min.js',
 				'public/lib/textAngular/dist/textAngular.min.js',
 				'public/lib/ng-sortable/dist/ng-sortable.js',
-				'http://maps.google.com/maps/api/js',
+				'https://maps.google.com/maps/api/js?sensor=false',
+				'public/lib/ngmap/build/scripts/ng-map.js',
 
 
 				//angularjs-toaster

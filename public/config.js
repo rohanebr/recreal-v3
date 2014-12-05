@@ -4,7 +4,7 @@
 var ApplicationConfiguration = (function() {
 	// Init module configuration options
 	var applicationModuleName = 'recreal';
-	var applicationModuleVendorDependencies = ['ngResource', 'ui.router', 'ui.bootstrap', 'ui.utils','ui.date', 'angularFileUpload', 'textAngular', 'timer', 'angularCharts','geolocation','ui.sortable', 'toaster'];
+	var applicationModuleVendorDependencies = ['ngResource', 'ui.router', 'ui.bootstrap', 'ui.utils','ui.date', 'angularFileUpload', 'textAngular', 'timer', 'angularCharts','geolocation','ui.sortable', 'toaster','ngMap'];
 
 	// Add a new vertical module
 	var registerModule = function(moduleName) {
