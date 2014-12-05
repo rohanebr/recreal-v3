@@ -30,10 +30,12 @@ angular.module('core').controller('HeaderController', ['$scope', 'Authentication
       };
 
 $scope.notificationRead=function(data){
-  console.log("WORKS");
-              $scope.unreadnotificationslength--;
+ 
+              
 
                 $http.post('/users/readNotification/' + $scope.authentication.user._id,data).success(function(res) {
+                  if(res.outgoing=="not-read")
+                    $scope.unreadnotificationslength--;
                     for (var i in $scope.notifications ) {
                     if ($scope.notifications [i] === data  && $scope.notifications.length>10) {
                         $scope.notifications.splice(i, 1);

@@ -6,6 +6,7 @@ gt.controller('PostJobController', ['$scope', 'Industries','Countries','Studyfie
 		$scope.user = Authentication.user;
 		// If user is not signed in then redirect back home
 		if (!$scope.user) $location.path('/signin');
+		
 
 		$scope.industries = Industries.getIndustries();
 		

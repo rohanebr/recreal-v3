@@ -126,14 +126,24 @@ exports.readNotification=function(req,res)
 
 {
 	var g=req.body;
-	
+	var status='';
 	var id = mongoose.Types.ObjectId(g._id);
 	   User.findById(req.user.id,function(err,user){
 var len=user.notifications.length;
             for(var g=0;g<len;g++)
             {
                if(id.equals(user.notifications[g]._id))
-               	user.notifications[g].isRead=true;
+               {
+               if(user.notifications[g].isRead)
+               {
+                status="read";
+               }
+                else
+               	{user.notifications[g].isRead=true;
+               		status="not-read";
+
+               	}
+           }
 
 
             }
@@ -141,7 +151,7 @@ var len=user.notifications.length;
             user.markModified('notifications');
             user.save();
 
-
+res.jsonp({outgoing:status});
 
 	   });
 // 	var notification=req.user.notifications[0];
