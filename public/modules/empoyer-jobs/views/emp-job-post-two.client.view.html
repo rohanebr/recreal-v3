@@ -1,5 +1,5 @@
 <section data-ng-controller="EmpJobPostTwoController">
-	<section class="row">
+	 <section class="row">
     <section class="container custom-wrapper">
       <section class="hbox">
         <!-- .aside -->
@@ -126,11 +126,27 @@
             <section>
               <section class="vbox">
                 <section class="scrollable padder">
-                	<article>
-                		<div><h3>Create Job</h3><hr/></div>
-                		<label>Your job description has automatically been populated. You can change it on the next page if you have your own job description, but make sure to fill in the skills portion of this page!</label>
-                		<section>
-                			<div class="row form-group">
+                  <article>
+                    <header style="margin-bottom:20px">
+                      <div><h3>2) New Job - Education, Experience, Skills</h3><hr/></div>
+                      <span>Your job description has automatically been populated. You can change it on the next page if you have your own job description, but make sure to fill in the skills portion of this page!</span>
+                    </header>
+                    <section style="margin-left:50px">
+                       <div class="row form-group">
+                        <div class="col-md-3">
+                            <label for="">Responsibilities 
+                                <span class="required-css">*</span>
+                            </label>
+                        </div>
+                        <div class="col-md-4">
+                          <input  type="text"class="form-control" required data-ng-model="title">
+                          <input  type="text"class="form-control" required data-ng-model="title">
+                          
+                        </div>
+                      </div>
+                    </section>             
+                    <section style="margin-left:50px">
+                      <div class="row form-group">
                         <div class="col-md-3">
                             <label for="">Degree 
                                 <span class="required-css">*</span>
@@ -256,9 +272,9 @@
                                 </tr>
                             </table>
                         </section>
-                		</section>
-                	</article>
-                  <section class="pull-right"><a href="#!/emp-job-post-two">Next</a></section>
+                    </section>
+                  </article>
+                    <section class="pull-right"><a href="#!/emp-job-post-one">Back</a><a href="#!/emp-job-post-three">Next</a></section>
                 </section>
               </section>
             </section>

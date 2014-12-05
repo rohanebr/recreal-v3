@@ -5,6 +5,10 @@ angular.module('empoyer-jobs').config(['$stateProvider',
 	function($stateProvider) {
 		// Empoyer jobs state routing   /jobs/:jobId
 		$stateProvider.
+		state('emp-job-post-three', {
+			url: '/emp-job-post-three',
+			templateUrl: 'modules/empoyer-jobs/views/emp-job-post-three.client.view.html'
+		}).
 		state('emp-job-post-two', {
 			url: '/emp-job-post-two',
 			templateUrl: 'modules/empoyer-jobs/views/emp-job-post-two.client.view.html'
