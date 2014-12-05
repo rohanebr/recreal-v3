@@ -1,0 +1,211 @@
+<section data-ng-controller="EmpJobPostOneController">
+	<section class="row">
+    <section class="container custom-wrapper">
+      <section class="hbox">
+        <!-- .aside -->
+        <aside class="bg-light lt b-r b-light aside-md hidden-print" id="nav">          
+        </aside>
+        <!-- /.aside -->
+
+        <section id="content">
+          <section class="hbox stretch">
+
+            <section>
+              <section class="vbox">
+                <section class="scrollable padder">
+                	<article>
+                		<div><h2>Job Details</h2><hr/></div>
+                		<label>Think about your job title as the headline of an ad to attract candidates.</label>
+                		<section style="margin-left:50px">
+                			<div class="row form-group">
+                        <div class="col-md-2">
+                            <label for="">Industry 
+                                <span class="required-css">*</span>
+                            </label>
+                        </div>
+                        <div class="col-md-4">
+                            <span>
+                                <select required data-ng-model="industry" class="form-control">
+                                    <option>Telecommunication</option>
+                                </select>
+                            </span>
+                        </div>
+                    	</div>
+                    	<div class="row form-group">
+                        <div class="col-md-2">
+                            <label for="">Job Role 
+                                <span class="required-css">*</span>
+                            </label>
+                        </div>
+                        <div class="col-md-4">
+                            <span class="ui-select">
+                                <select required data-ng-model="industry" class="form-control">
+                                    <option>Drive Test Engineer</option>
+                                </select>
+                            </span>
+                        </div>
+                    	</div>
+                    	<div class="row form-group">
+                        <div class="col-md-2">
+                            <label for="">Title 
+                                <span class="required-css">*</span>
+                            </label>
+                        </div>
+                        <div class="col-md-4">
+                          <input  type="text"class="form-control" required data-ng-model="title">
+                        </div>
+                    	</div>
+                    	<div class="row form-group">
+                        <div class="col-md-2">
+                            <label for="">Description 
+                                <span class="required-css">*</span>
+                            </label>
+                        </div>
+                        <div class="col-md-4">
+                            <textarea class="form-control" required data-ng-model="description" />
+                        </div>
+                      </div>
+                      <div class="row form-group">
+                          <div class="col-md-2">
+                              <label for="">Due Date 
+                                  <span class="required-css">*</span>
+                              </label>
+                          </div>
+                          <div class="col-md-4">
+                              <input type="date" class="form-control" required data-ng-model="due_date" />
+                          </div>
+                      </div>
+                      <div class="row form-group">
+                        <div class="col-md-2">
+                            <label for="">Job Type</label>
+                        </div>
+                        <div class="col-md-4">
+                            <span class="ui-select">
+                                <select data-ng-model="employee_type" class="form-control">
+                                    <option>Contract</option>
+                                    <option>Daily Wages</option>
+                                    <option>Internship</option>
+                                    <option>Permanent</option>
+                                    <option>Temporary</option>
+                                </select>
+                            </span>
+                        </div>
+                    	</div>
+                    	<div class="row form-group">
+                        <div class="col-md-2">
+                            <label for="">Salary/Month</label>
+                        </div>
+                        <div class="col-md-4">
+                            <span class="ui-select">
+                                <select data-ng-model="salary_range" class="form-control">
+                                    <option>Less than $1000</option>
+                                    <option>$1000 - $2000</option>
+                                    <option>$2000 - $3000</option>
+                                    <option>$3000 - $4000</option>
+                                    <option>$4000 - $5000</option>
+                                    <option>$5000 - $6000</option>
+                                    <option>$6000 - $8000</option>
+                                    <option>$8000 - $10000</option>
+                                    <option>$10000 - $15000</option>
+                                    <option>$15000 - $20000</option>
+                                </select>
+                            </span>
+                        </div>
+                    	</div>
+                    	<div class="row form-group">
+                        <div class="col-md-2">
+                            <label for="">Shift</label>
+                        </div>
+                        <div class="col-md-4">
+                            <span class="ui-select">
+                                <select ng-model="shift" class="form-control">
+                                    <option>Morning</option>
+                                    <option>Evening</option>
+                                    <option>Night</option>
+                                    <option>Rotation</option>
+                                </select>
+                            </span>
+                        </div>
+	                    </div>
+                      <div class="row form-group">
+                          <div class="col-md-2">
+                              <label for="">No Of Positions</label>
+                          </div>
+                          <div class="col-md-4">
+                              <span class="ui-select">
+                                  <select ng-model="no_of_positions" class="form-control">
+                                      <option>1</option>
+                                      <option>2</option>
+                                      <option>3</option>
+                                      <option>4</option>
+                                      <option>5</option>
+                                      <option>6</option>
+                                      <option>7</option>
+                                      <option>8</option>
+                                      <option>9</option>
+                                      <option>10</option>
+                                  </select>
+                              </span>
+                          </div>
+                      </div>
+                      <div class="row form-group">
+                          <div class="col-md-2">
+                              <label for="">Country 
+                                  <span class="required-css">*</span>
+                              </label>
+                          </div>
+                          <div class="col-md-4">
+                              <span class="ui-select">
+                                  <select ng-model="country" required class="form-control">
+                                      <option data-ng-repeat="count in countries">{{count.name}}
+                                  </option>
+                                  </select>
+                              </span>
+                          </div>
+                      </div>
+                      <div class="row form-group">
+                          <div class="col-md-2">
+                              <label for="">Location 
+                                  <span class="required-css">*</span>
+                              </label>
+                          </div>
+                          <div class="col-md-4">
+                              <span class="ui-select">
+                                  <select ng-model="location" required class="form-control">
+                                      <option>Islamabad</option>
+                                      <option>Lahore</option>
+                                      <option>Multan</option>
+                                      <option>Karachi</option>
+                                  </select>
+                              </span>
+                          </div>
+                      </div>
+											<div class="row form-group">
+											    <div class="col-md-2">
+											        <label for="required_checkbox">Travelling required</label>
+											    </div>
+											    <div class="col-md-4">
+											        <span class="ui-select">
+											            <select ng-model="travel_required" class="form-control">
+											                <option>No Travelling</option>
+											                <option>25% or less</option>
+											                <option>50% or less </option>
+											                <option>75% or less</option>
+											                <option>more than 75%</option>
+											            </select>
+											        </span>
+											    </div>
+											</div>
+                		</section>
+                	</article>
+                  <section class="pull-right"><a href="#!/emp-job-post-two">Next</a></section>
+                </section>
+              </section>
+            </section>
+          </section>
+          <a href="#!" class="hide nav-off-screen-block" data-toggle="class:nav-off-screen" data-target="#nav"></a>
+        </section>
+      </section>
+    </section>
+  </section>
+</section>
