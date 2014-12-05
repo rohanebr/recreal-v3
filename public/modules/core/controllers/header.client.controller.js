@@ -32,6 +32,7 @@ angular.module('core').controller('HeaderController', ['$scope', 'Authentication
 $scope.notificationRead=function(data){
   console.log("WORKS");
               $scope.unreadnotificationslength--;
+
                 $http.post('/users/readNotification/' + $scope.authentication.user._id,data).success(function(res) {
                     for (var i in $scope.notifications ) {
                     if ($scope.notifications [i] === data  && $scope.notifications.length>10) {
@@ -130,7 +131,7 @@ else return false;
 
 
             $http.get('/users/getMessages/' + $scope.authentication.user._id).success(function(res) {
-
+            
                
                 if (res.length > 1) {
                     for (var x = 1; x < res.length; x++)
