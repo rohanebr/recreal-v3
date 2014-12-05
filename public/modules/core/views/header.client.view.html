@@ -154,7 +154,7 @@
                 <span class="m-b-xs block">
                   <i class="i i-paperplane i-2x text-info-lt"></i>
                 </span>
-                <small class="text-muted">Trainning</small>
+                <small class="text-muted">Training</small>
               </a>
             </div>
           </div>
@@ -215,18 +215,56 @@
 
     
   <ul class="nav navbar-nav navbar-right m-n hidden-xs nav-user user">
-    <li class="hidden-xs" class="dropdown-toggle" data-toggle="dropdown">
+    <li class="hidden-xs dropdown" class="dropdown-toggle" data-toggle="dropdown">
+       <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+       <i class="i i-mail i-2x text-primary-lt"></i>
+        <span class="badge badge-sm up bg-danger">{{threads.length}}</span>
+       </a>
+       <section class="dropdown-menu aside-xl animated flipInY">
+          <section class="panel bg-white">
+             <div class="panel-heading b-light bg-light">
+            <strong>You have <span> {{threads.length}} </span> messages</strong>
+          </div>
+          <div class="list-group-alt">
+            <li class="list-group-item" data-ng-repeat="thread in threads">
+                <a href="#!/threads/{{thread.id}}" class="media">
+                            <span class="pull-left media-icon">
+                                <span class="round-icon sm bg-info"><i class="fa fa-comment-o"></i></span>
+                            </span>
+                            <div class="media-body">
+                                <span class="block">
+                                <div><img alt=""class="img30_30" src="{{thread.sender.picture_url}}">{{thread.senderName}}</div></span>
+                                <span class="text-muted">at {{thread.created | date}}</span>
+                            </div>
+                        </a>
+            </li>
+          </div>
+          </section>
+        </section>
+    </li>
+    <li class="hidden-xs dropdown" class="dropdown-toggle" data-toggle="dropdown">
       <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-        <i class="i i-chat7"></i>
-        <span class="badge badge-sm up bg-danger count">2</span>
+        <i class="i i-paperplane i-2x"></i>
+        <span class="badge badge-sm up bg-danger">{{unreadnotificationslength}}</span>
       </a>
       <section class="dropdown-menu aside-xl animated flipInY">
         <section class="panel bg-white">
           <div class="panel-heading b-light bg-light">
-            <strong>You have <span class="count">2</span> notifications</strong>
+            <strong>You have <span>{{unreadnotificationslength}}</span> notifications</strong>
           </div>
-          <div class="list-group list-group-alt">
-            <a href="#" class="media list-group-item">
+          <div class="list-group-alt">
+            <li class="list-group-item" data-ng-repeat="notification in notifications">
+                        <a href="#!{{notification.hiddendata}}" class="media list-group-item" ng-click="notificationRead(notification)">
+                            <span class="pull-left media-icon">
+                                <span class="round-icon sm bg-success"><i class="fa fa-bell-o"></i></span>
+                            </span>
+                            <div class="media-body">
+                                <span class="block">{{notification.generalmessage}}</span>
+                                <span class="text-muted block">{{notification.created |date }}</span>
+                            </div>
+                        </a>
+                    </li>
+      <!--       <a href="#" class="media list-group-item">
               <span class="pull-left thumb-sm">
                 <img src="/theme/images/a0.png" alt="..." class="img-circle">
               </span>
@@ -240,7 +278,7 @@
                 1.0 initial released<br>
                 <small class="text-muted">1 hour ago</small>
               </span>
-            </a>
+            </a> -->
           </div>
           <div class="panel-footer text-sm">
             <a href="#" class="pull-right"><i class="fa fa-cog"></i></a>
@@ -252,9 +290,9 @@
     <li class="dropdown">
       <a href="#" class="dropdown-toggle" data-toggle="dropdown">
         <span class="thumb-sm avatar pull-left">
-          <img src="/theme/images/a0.png" alt="...">
+          <img src="{{authentication.user.picture_url}}" alt="...">
         </span>
-        John.Smith <b class="caret"></b>
+        {{authentication.user.displayName}} <b class="caret"></b>
       </a>
       <ul class="dropdown-menu animated fadeInRight">            
         <li>

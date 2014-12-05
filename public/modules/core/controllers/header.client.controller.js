@@ -30,6 +30,7 @@ angular.module('core').controller('HeaderController', ['$scope', 'Authentication
       };
 
 $scope.notificationRead=function(data){
+  console.log("WORKS");
               $scope.unreadnotificationslength--;
                 $http.post('/users/readNotification/' + $scope.authentication.user._id,data).success(function(res) {
                     for (var i in $scope.notifications ) {

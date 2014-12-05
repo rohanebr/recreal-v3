@@ -103,7 +103,8 @@ module.exports = {
 
 				
 				
-				'http://code.angularjs.org/1.3.2/angular-animate.min.js',
+				// 'http://code.angularjs.org/1.3.2/angular-animate.min.js',
+				'public/lib/angular-animate/angular-animate.js',
 				'public/lib/angularjs-toaster/toaster.js'
 				
 
