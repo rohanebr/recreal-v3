@@ -218,12 +218,12 @@
     <li class="hidden-xs dropdown" class="dropdown-toggle" data-toggle="dropdown">
        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
        <i class="i i-mail i-2x text-primary-lt"></i>
-        <span class="badge badge-sm up bg-danger count">{{threads.length}}</span>
+        <span class="badge badge-sm up bg-danger">{{threads.length}}</span>
        </a>
        <section class="dropdown-menu aside-xl animated flipInY">
           <section class="panel bg-white">
              <div class="panel-heading b-light bg-light">
-            <strong>You have <span class="count"> {{threads.length}} </span> messages</strong>
+            <strong>You have <span> {{threads.length}} </span> messages</strong>
           </div>
           <div class="list-group-alt">
             <li class="list-group-item" data-ng-repeat="thread in threads">
@@ -245,12 +245,12 @@
     <li class="hidden-xs dropdown" class="dropdown-toggle" data-toggle="dropdown">
       <a href="#" class="dropdown-toggle" data-toggle="dropdown">
         <i class="i i-paperplane i-2x"></i>
-        <span class="badge badge-sm up bg-danger count">{{unreadnotificationslength}}</span>
+        <span class="badge badge-sm up bg-danger">{{unreadnotificationslength}}</span>
       </a>
       <section class="dropdown-menu aside-xl animated flipInY">
         <section class="panel bg-white">
           <div class="panel-heading b-light bg-light">
-            <strong>You have <span class="count">{{unreadnotificationslength}}</span> notifications</strong>
+            <strong>You have <span>{{unreadnotificationslength}}</span> notifications</strong>
           </div>
           <div class="list-group-alt">
             <li class="list-group-item" data-ng-repeat="notification in notifications">
