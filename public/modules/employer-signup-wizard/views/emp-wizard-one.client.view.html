@@ -215,8 +215,8 @@
                           <label>Country</label>
                           <span class="ui-select">
                             <select ng-model="country" data-ng-change="getCountryCities()" required class="form-control">
-                                <option selected value="">Please choose a level</option>
-                                <option data-ng-repeat="count in countries">{{count.name}}
+                                
+                                <option selected data-ng-repeat="count in countries">{{count.name}}
                             </option>
                             </select>
                           </span>
@@ -225,7 +225,7 @@
                           <label>City</label>
                           <span class="ui-select">
                             <select ng-model="city" required class="form-control">
-                                <option data-ng-repeat="city in cities">{{city.name}}
+                                <option selected data-ng-repeat="city in cities">{{city.name}}
                             </option>
                             </select>
                           </span>

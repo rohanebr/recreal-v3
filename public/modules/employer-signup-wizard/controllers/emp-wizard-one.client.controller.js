@@ -11,7 +11,7 @@ angular.module('employer-signup-wizard').controller('EmpWizardOneController', ['
 		Countries.getCountries(function(countries){
 			$scope.countries = countries;
 			// $scope.countries.splice(0, 1);
-			$scope.country = $scope.countries[0].name;
+			$scope.country = $scope.countries[$scope.countries.length-1].name;
 			$scope.getCountryCities();
 		});
 		
@@ -27,7 +27,7 @@ angular.module('employer-signup-wizard').controller('EmpWizardOneController', ['
 		$scope.getCountryCities = function(){
 				$http.get('/countries/'+ $scope.country).success(function (response){
 				$scope.cities = response.cities;
-				$scope.city = $scope.cities[0].name;
+				$scope.city = $scope.cities[$scope.cities.length-1].name;
 			});
 		}
 		
