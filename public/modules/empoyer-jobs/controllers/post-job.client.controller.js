@@ -13,6 +13,7 @@ gt.controller('PostJobController', ['$scope', 'Industries','Countries','Studyfie
 		Countries.getCountries(function(countries){
 			$scope.countries = countries;
 		});
+		// $scope.countries = Countries.getCountries();
 		$scope.studyFields = Studyfields.getStudyFields();
    
 		$scope.skills = [];

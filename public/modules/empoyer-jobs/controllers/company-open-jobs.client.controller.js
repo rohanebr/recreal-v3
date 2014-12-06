@@ -34,15 +34,13 @@ angular.module('empoyer-jobs').controller('CompanyOpenJobsController', ['$scope'
                     break;
                 }
             }
-
-
         });
     }
 
 
 	// 	$scope.employer = Employers.get({
- //                employerId: $scope.user.employer
- //            }, function(employer){
+    //                employerId: $scope.user.employer
+    //            }, function(employer){
 	// 			$scope.company = Companies.get({
 	// 				companyId: employer.company
 	// 			}, function(company){
