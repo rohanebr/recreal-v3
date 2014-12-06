@@ -18,7 +18,7 @@ exports.create = function(req, res) {
  * Show the current Country
  */
 exports.read = function(req, res) {
-
+	res.jsonp(req.country);
 };
 
 /**
@@ -33,6 +33,14 @@ exports.update = function(req, res) {
  */
 exports.delete = function(req, res) {
 
+};
+
+exports.countryByName = function(req, res, next, name) { Country.findOne({name:name}).exec(function(err, country) {
+		if (err) return next(err);
+		if (! country) return next(new Error('Failed to load Country ' + name));
+		req.country = country ;
+		next();
+	});
 };
 
 /**

@@ -213,11 +213,21 @@
                        <section class="col-md-4">
                          <div class="form-group">
                           <label>Country</label>
-                          <input type="email" class="form-control" placeholder="John">
+                          <span class="ui-select">
+                            <select ng-model="country" data-ng-change="getCountryCities()" required class="form-control">
+                                <option data-ng-repeat="count in countries">{{count.name}}
+                            </option>
+                            </select>
+                          </span>
                         </div>
                         <div class="form-group">
                           <label>City</label>
-                          <input type="email" class="form-control" placeholder="John">
+                          <span class="ui-select">
+                            <select ng-model="city" required class="form-control">
+                                <option data-ng-repeat="city in cities">{{city.name}}
+                            </option>
+                            </select>
+                          </span>
                         </div>
                       </section>
                     </section>

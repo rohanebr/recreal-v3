@@ -8,9 +8,12 @@ angular.module('static-factories').factory('Countries', [
 		
 
 		// Public API
-		factory.getCountries = function() {
-				return countries;
-			};
+		factory.getCountries = function(callback) {
+			$http.get('/countries').success(function(countries) {
+				callback(countries);			
+			});	
+			
+		};
 		return factory;
 	}
 ]);

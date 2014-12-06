@@ -1,12 +1,21 @@
 'use strict';
 
-angular.module('employer-signup-wizard').controller('EmpWizardOneController', ['$scope', 'toaster',
-	function($scope, toaster) {
+angular.module('employer-signup-wizard').controller('EmpWizardOneController', ['$scope', '$http',
+	function($scope, $http) {
 		// Controller Logic
 		// ...
-		$scope.pop = function(){
-            toaster.pop('success', "title", "text");
-        };
+		$http.get('/countries').success(function(countries) {
+			$scope.countries = countries;
+			$scope.country = $scope.countries[0].name;
+			getCountryCities();
+		});
+		$scope.getCountryCities = function(){
+			$http.get('/countries/'+ $scope.country).success(function (response){
+			
+			$scope.cities = response.cities;
+			$scope.city = $scope.cities[0].name;
+			});
+		}
 
 	}
 ]);

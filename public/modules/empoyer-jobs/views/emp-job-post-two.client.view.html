@@ -65,89 +65,24 @@
                       </a>
                     </li>
                   </ul>
-                  <div class="line dk hidden-nav-xs"></div>
-                  <div class="text-muted text-xs hidden-nav-xs padder m-t-sm m-b-sm">Lables</div>
-                  <ul class="nav">
-                    <li>
-                      <a href="mail.html#work">
-                        <i class="i i-circle-sm text-info-dk"></i>
-                        <span>3 Jobs Posted by Jhon</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="mail.html#social">
-                        <i class="i i-circle-sm text-success-dk"></i>
-                        <span>6 Jobs Posted by David</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="mail.html#projects">
-                        <i class="i i-circle-sm text-danger-dk"></i>
-                        <span>1 Job posted by Nathan</span>
-                      </a>
-                    </li>
-                  </ul>
-                  <div class="text-muted text-xs hidden-nav-xs padder m-t-sm m-b-sm">Circles</div>
-                  <ul class="nav">
-                    <li>
-                      <a href="#!">
-                        <i class="i i-circle-sm-o text-success-lt"></i>
-                        <span>College</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#!">
-                        <i class="i i-circle-sm-o text-warning"></i>
-                        <span>Social</span>
-                      </a>
-                    </li>
-                  </ul>
                 </nav>
                 <!-- / nav -->
               </div>
             </section>
-            
-            <footer class="footer hidden-xs no-padder text-center-nav-xs">
-              <a href="modal.lockme.html" data-toggle="ajaxModal" class="btn btn-icon icon-muted btn-inactive pull-right m-l-xs m-r-xs hidden-nav-xs">
-                <i class="i i-logout"></i>
-              </a>
-              <a href="#nav" data-toggle="class:nav-xs" class="btn btn-icon icon-muted btn-inactive m-l-xs m-r-xs">
-                <i class="i i-circleleft text"></i>
-                <i class="i i-circleright text-active"></i>
-              </a>
-            </footer>
           </section>
         </aside>
         <!-- /.aside -->
 
-        <section id="content">
-          <section class="hbox stretch">
-
-            <section>
-              <section class="vbox">
-                <section class="scrollable padder">
-                  <article>
-                    <header style="margin-bottom:20px">
-                      <div><h3>2) New Job - Education, Experience, Skills</h3><hr/></div>
-                      <span>Your job description has automatically been populated. You can change it on the next page if you have your own job description, but make sure to fill in the skills portion of this page!</span>
-                    </header>
-                    <section style="margin-left:50px">
-                       <div class="row form-group">
-                        <div class="col-md-3">
-                            <label for="">Responsibilities 
-                                <span class="required-css">*</span>
-                            </label>
-                        </div>
-                        <div class="col-md-4">
-                          <input  type="text"class="form-control" required data-ng-model="title">
-                          <input  type="text"class="form-control" required data-ng-model="title">
-                          
-                        </div>
-                      </div>
-                    </section>             
-                    <section style="margin-left:50px">
-                      <div class="row form-group">
-                        <div class="col-md-3">
+        <section id="content" class="scrollable padder">
+            <article>
+                <header class="article-header-wizard">
+                    <div><h3>2) New Job - Requirements</h3><hr/></div>
+                    <span>Your job description has automatically been populated. You can change it on the next page if you have your own job description, but make sure to fill in the skills portion of this page!</span>
+                </header>
+                <h4>Education</h4>
+                <section class="article-section-wizard">
+                    <div class="row form-group">
+                        <div class="col-md-2">
                             <label for="">Degree 
                                 <span class="required-css">*</span>
                             </label>
@@ -166,120 +101,137 @@
                                 </select>
                             </span>
                         </div>
-                      </div>
-
-                      <div class="row form-group">
-                          <div class="col-md-3">
-                              <label for="">Study Field 
-                                  <span class="required-css">*</span>
-                              </label>
-                          </div>
-                          <div class="col-md-4">
-                              <span>
-
-                                  <select ng-model="study_field" required class="form-control">
-                                      <option data-ng-repeat="studyfeild in studyFields">{{studyfeild.name}}</option>
-                                  </select>
-                              </span>
-                          </div>
-                      </div>
-                      <div class="row form-group">
-                          <div class="col-md-3">
-                              <label for="">Career Level 
-                                  <span class="required-css">*</span>
-                              </label>
-
-                          </div>
-                          <div class="col-md-4">
-                              <span>
-                                  <select ng-model="career_level" required class="form-control" style="width: 300px;">
-                                      <option>Student/Internship</option>
-                                      <option>Entry Level</option>
-                                      <option>Mid Career</option>
-                                      <option>Management</option>
-                                      <option>Executive (Director)</option>
-                                      <option>Senior Executive (CEO)</option>
-                                  </select>
-                              </span>
-                          </div>
-
-                      </div>
-                      <div class="row form-group">
-
-                          <div class="col-md-3">
-                              <label for="">Minimum Experience 
-                                  <span class="required-css">*</span>
-                              </label>
-                          </div>
-                          <div class="col-md-9">
-                              <input  type="number" class="form-control" style="width:200px;"data-ng-model="experience">
-                          </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-md-2">
+                            <label for="">Study Field 
+                                <span class="required-css">*</span>
+                            </label>
                         </div>
-
-                        <div class="row form-group">
-                            <div class="col-md-3">
-                                <label for="">Certificates</label>
-                            </div>
-                            <div class="col-md-9">
-                                <span data-ng-repeat="certificate in certificates">
-                                    <input  type="text" class="form-control" style="width:200px;" data-ng-model="certificate.name">
-                                        <a ng-click="removeCertificate($index)">
-                                            <i class="fa fa-times pull-right"></i>
-                                        </a>
-                                </span>
-                                  <a class= "btn btn-default btn-xs" data-ng-click="addCertificate()">Add more</a>
-                            </div>
+                        <div class="col-md-4">
+                            <span>
+                                <select ng-model="study_field" required class="form-control">
+                                    <option data-ng-repeat="studyfeild in studyFields">{{studyfeild.name}}</option>
+                                </select>
+                            </span>
                         </div>
-                                            <section>
-                        <h3> Required Skills</h3>
-                        <table class="table">
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-md-3">
+                            <label for="">Certificates</label>
+                        </div>
+                        <div class="col-md-9">
+                            <span data-ng-repeat="certificate in certificates">
+                                <input  type="text" class="form-control" style="width:200px;" data-ng-model="certificate.name">
+                                <a ng-click="removeCertificate($index)">
+                                    <i class="fa fa-times pull-right"></i>
+                                </a>
+                            </span>
+                            <a class= "btn btn-default btn-xs" data-ng-click="addCertificate()">Add more</a>
+                        </div>
+                    </div>
+                </section>
+                <h4>Experience</h4>
+                <section class="article-section-wizard">
+                    <div class="row form-group">
+                        <div class="col-md-2">
+                            <label for="">Career Level 
+                                <span class="required-css">*</span>
+                            </label>
+
+                        </div>
+                        <div class="col-md-4">
+                            <span>
+                                <select ng-model="career_level" required class="form-control" style="width: 300px;">
+                                    <option>Student/Internship</option>
+                                    <option>Entry Level</option>
+                                    <option>Mid Career</option>
+                                    <option>Management</option>
+                                    <option>Executive (Director)</option>
+                                    <option>Senior Executive (CEO)</option>
+                                </select>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-md-2">
+                            <label for="">Experience 
+                                <span class="required-css">*</span>
+                            </label>
+                        </div>
+                        <div class="col-md-3">
+                            <input  type="number" class="form-control" style="width:200px;"data-ng-model="experience">
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-md-2">
+                            <label for="">Qulification 
+                                <span class="required-css">*</span>
+                            </label>
+                        </div>
+                        <div class="col-md-4">
+                            <input  type="text"class="form-control" required data-ng-model="title">
+                            <input  type="text"class="form-control" required data-ng-model="title">
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-md-2">
+                            <label for="">Responsibilities 
+                                <span class="required-css">*</span>
+                            </label>
+                        </div>
+                        <div class="col-md-4">
+                            <input  type="text"class="form-control" required data-ng-model="title">
+                            <input  type="text"class="form-control" required data-ng-model="title">
+                        </div>
+                    </div>
+                </section>
+                <h4>Skills</h4>         
+                <section class="article-section-wizard">
+                    <table class="table">
+                        <tr>
+                            <td>
+                                <label for="">Skill 
+                                    <span class="required-css">*</span>
+                                </label>
+                            </td>
+                            <td>
+                                <label for="">Level</label>
+                            </td>
+                            <td></td>
+                        </tr>
+                        <tr data-ng-repeat="skill in skills">
+                            <td>
+                                <input type="text" placeholder="e.g Communication" ng-model="skill.title"class="form-control">
+                                </td>
+                                <td>
+                                    <span class="ui-select">
+                                        <select data-ng-model="skill.level"  style="width: 150px;">
+                                            <option selected="selected">Beginner</option>
+                                            <option>Intermediate</option>
+                                            <option>Expert</option>
+                                        </select>
+                                    </span>
+                                </td>
+                                <td>
+                                    <a ng-click="removeSkill($index)">
+                                        <i class="fa fa-times pull-right"></i>
+                                    </a>
+                                </td>
+                            </tr>
                             <tr>
                                 <td>
-                                    <label for="">Skill 
-                                        <span class="required-css">*</span>
-                                    </label>
-                                </td>
-                                <td>
-                                    <label for="">Level</label>
+                                    <a data-ng-click="addSkill()" class="btn btn-small btn-primary">Add Skill</a>
                                 </td>
                                 <td></td>
+                                <td></td>
                             </tr>
-                            <tr data-ng-repeat="skill in skills">
-                                <td>
-                                    <input type="text" placeholder="e.g Communication" ng-model="skill.title"class="form-control">
-                                    </td>
-                                    <td>
-                                        <span class="ui-select">
-                                            <select data-ng-model="skill.level"  style="width: 150px;">
-                                                <option selected="selected">Beginner</option>
-                                                <option>Intermediate</option>
-                                                <option>Expert</option>
-                                            </select>
-                                        </span>
-                                    </td>
-                                    <td>
-                                        <a ng-click="removeSkill($index)">
-                                            <i class="fa fa-times pull-right"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <a data-ng-click="addSkill()" class="btn btn-small btn-primary">Add Skill</a>
-                                    </td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                            </table>
-                        </section>
-                    </section>
-                  </article>
-                    <section class="pull-right"><a href="#!/emp-job-post-one">Back</a><a href="#!/emp-job-post-three">Next</a></section>
+                        </table>
                 </section>
-              </section>
-            </section>
-          </section>
-          <a href="#!" class="hide nav-off-screen-block" data-toggle="class:nav-off-screen" data-target="#nav"></a>
+                <footer class="col-md-10 article-footer-wizard">
+                    <section class="pull-right"><a href="#!/emp-job-post-one">Back</a><a href="#!/emp-job-post-three">Next</a></section>
+                </footer>
+            </article>
         </section>
       </section>
     </section>

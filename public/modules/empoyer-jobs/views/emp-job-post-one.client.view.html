@@ -1,259 +1,255 @@
 <section data-ng-controller="EmpJobPostOneController">
 	<section class="row">
-    <section class="container custom-wrapper">
-      <section class="hbox">
-        <!-- .aside -->
-        <aside class="bg-light lt b-r b-light aside-md hidden-print" id="nav">          
-          <section class="vbox">
-            <section class="w-f scrollable">
-              <div class="slim-scroll" data-height="auto" data-disable-fade-out="true" data-distance="0" data-size="10px" data-railOpacity="0.2">
-                <div class="clearfix wrapper dk nav-user hidden-xs">
-                  
-                </div>                
+        <section class="container custom-wrapper">
+            <section class="hbox">
+                <!-- .aside -->
+                <aside class="bg-light lt b-r b-light aside-md hidden-print" id="nav">          
+                  <section class="vbox">
+                    <section class="w-f scrollable">
+                      <div class="slim-scroll" data-height="auto" data-disable-fade-out="true" data-distance="0" data-size="10px" data-railOpacity="0.2">
+                        <div class="clearfix wrapper dk nav-user hidden-xs">
+                          
+                        </div>                
 
 
-                <!-- nav -->                 
-                <nav class="nav-primary hidden-xs">
-                  <ul class="nav nav-main" data-ride="collapse">
-                    <li class="nav-search">
-                        <span>
-                          <input id="searchBox" class="form-control" type="text" data-ng-model="searchText" placeholder="Search Jobs, Candidates" />
-                        </span>
-                    </li>
-                    <div style="margin-top:100px"></div>
-                    <li  class="active">
-                      <a href="index.html" class="auto">
-                        <i class="i i-statistics icon">
-                        </i>
-                        <span class="font-bold">About Your Company</span>
-                      </a>
-                    </li>
-                    <li >
-                      <a href="" class="auto">
-                        <span class="pull-right text-muted">
-                          <i class="i i-circle-sm-o text"></i>
-                          <i class="i i-circle-sm text-active"></i>
-                        </span>
-                        <b class="badge bg-danger pull-right">4</b>
-                        <i class="i i-stack icon">
-                        </i>
-                        <span class="font-bold">Active Jobs</span>
-                      </a>
-                    </li>
-                    <li >
-                      <a href="" class="auto">
-                        <span class="pull-right text-muted">
-                          <i class="i i-circle-sm-o text"></i>
-                          <i class="i i-circle-sm text-active"></i>
-                        </span>
-                        <b class="badge bg-danger pull-right">1</b>
-                        <i class="i i-stack icon">
-                        </i>
-                        <span class="font-bold">Draft Jobs</span>
-                      </a>
-                      
-                    </li>
-                  </ul>
-                </nav>
-                <!-- / nav -->
-              </div>
-            </section>
-          </section>
-        </aside>
-        <!-- /.aside -->
-
-        <section id="content">
-          <section class="hbox stretch">
-
-            <section>
-              <section class="vbox">
-                <section class="scrollable padder">
-                	<article>
-                		<div><h2>1. New Job - Job Details</h2><hr/></div>
-                		<span>Think about your job title as the headline of an ad to attract candidates.</span>
-                    <p class="bottom-space-20"></p>
-                		<section style="margin-left:100px">
-                			<div class="row form-group">
-                        <div class="col-md-2">
-                            <label for="">Industry 
-                                <span class="required-css">*</span>
-                            </label>
-                        </div>
-                        <div class="col-md-4">
-                            <span>
-                                <select required data-ng-model="industry" class="form-control">
-                                    <option>Telecommunication</option>
-                                </select>
-                            </span>
-                        </div>
-                    	</div>
-                    	<div class="row form-group">
-                        <div class="col-md-2">
-                            <label for="">Job Role 
-                                <span class="required-css">*</span>
-                            </label>
-                        </div>
-                        <div class="col-md-4">
-                            <span class="ui-select">
-                                <select required data-ng-model="industry" class="form-control">
-                                    <option>Drive Test Engineer</option>
-                                </select>
-                            </span>
-                        </div>
-                    	</div>
-                    	<div class="row form-group">
-                        <div class="col-md-2">
-                            <label for="">Title 
-                                <span class="required-css">*</span>
-                            </label>
-                        </div>
-                        <div class="col-md-4">
-                          <input  type="text"class="form-control" required data-ng-model="title">
-                        </div>
-                    	</div>
-                    	<div class="row form-group">
-                        <div class="col-md-2">
-                            <label for="">Description 
-                                <span class="required-css">*</span>
-                            </label>
-                        </div>
-                        <div class="col-md-8">
-                            <textarea class="form-control" required data-ng-model="description" rows="6" cols="5" />
-                        </div>
+                        <!-- nav -->                 
+                        <nav class="nav-primary hidden-xs">
+                          <ul class="nav nav-main" data-ride="collapse">
+                            <li class="nav-search">
+                                <span>
+                                  <input id="searchBox" class="form-control" type="text" data-ng-model="searchText" placeholder="Search Jobs, Candidates" />
+                                </span>
+                            </li>
+                            <div style="margin-top:100px"></div>
+                            <li  class="active">
+                              <a href="index.html" class="auto">
+                                <i class="i i-statistics icon">
+                                </i>
+                                <span class="font-bold">About Your Company</span>
+                              </a>
+                            </li>
+                            <li >
+                              <a href="" class="auto">
+                                <span class="pull-right text-muted">
+                                  <i class="i i-circle-sm-o text"></i>
+                                  <i class="i i-circle-sm text-active"></i>
+                                </span>
+                                <b class="badge bg-danger pull-right">4</b>
+                                <i class="i i-stack icon">
+                                </i>
+                                <span class="font-bold">Active Jobs</span>
+                              </a>
+                            </li>
+                            <li >
+                              <a href="" class="auto">
+                                <span class="pull-right text-muted">
+                                  <i class="i i-circle-sm-o text"></i>
+                                  <i class="i i-circle-sm text-active"></i>
+                                </span>
+                                <b class="badge bg-danger pull-right">1</b>
+                                <i class="i i-stack icon">
+                                </i>
+                                <span class="font-bold">Draft Jobs</span>
+                              </a>
+                              
+                            </li>
+                          </ul>
+                        </nav>
+                        <!-- / nav -->
                       </div>
-                      <div class="row form-group">
-                        <div class="col-md-2">
-                            <label for="">Job Type</label>
-                        </div>
-                        <div class="col-md-3">
-                            <span class="ui-select">
-                                <select data-ng-model="employee_type" class="form-control">
-                                    <option>Contract</option>
-                                    <option>Daily Wages</option>
-                                    <option>Internship</option>
-                                    <option>Permanent</option>
-                                    <option>Temporary</option>
-                                </select>
-                            </span>
-                        </div>
-                        <div class="col-md-2">
-                            <label for="">Employee Status</label>
-                        </div>
-                        <div class="col-md-3">
-                            <span class="ui-select">
-                                <select data-ng-model="employee_type" class="form-control">
-                                    <option>Contract</option>
-                                    <option>Daily Wages</option>
-                                    <option>Internship</option>
-                                    <option>Permanent</option>
-                                    <option>Temporary</option>
-                                </select>
-                            </span>
-                        </div>
-                    	</div>
-                    	<div class="row form-group">
-                        <div class="col-md-2">
-                            <label for="">Shift</label>
-                        </div>
-                        <div class="col-md-3">
-                            <span class="ui-select">
-                                <select ng-model="shift" class="form-control">
-                                    <option>Morning</option>
-                                    <option>Evening</option>
-                                    <option>Night</option>
-                                    <option>Rotation</option>
-                                </select>
-                            </span>
-                        </div>
-                         <div class="col-md-2">
-                              <label for="">No Of Positions</label>
-                          </div>
-                          <div class="col-md-3">
-                              <span class="ui-select">
-                                  <select ng-model="no_of_positions" class="form-control">
-                                      <option>1</option>
-                                      <option>2</option>
-                                      <option>3</option>
-                                      <option>4</option>
-                                      <option>5</option>
-                                      <option>6</option>
-                                      <option>7</option>
-                                      <option>8</option>
-                                      <option>9</option>
-                                      <option>10</option>
-                                  </select>
-                              </span>
-                          </div>
-	                    </div>
-											<div class="row form-group">
-											    <div class="col-md-2">
-											        <label for="required_checkbox">Travelling</label>
-											    </div>
-											    <div class="col-md-3">
-											        <span class="ui-select">
-											            <select ng-model="travel_required" class="form-control">
-											                <option>No Travelling</option>
-											                <option>25% or less</option>
-											                <option>50% or less </option>
-											                <option>75% or less</option>
-											                <option>more than 75%</option>
-											            </select>
-											        </span>
-											    </div>
-                          <div class="col-md-2">
-                              <label for="required_checkbox">Visa Status</label>
-                          </div>
-                          <div class="col-md-3">
-                              <span class="ui-select">
-                                  <select ng-model="travel_required" class="form-control">
-                                      <option>Citizen</option>
-                                      <option>25% or less</option>
-                                      <option>50% or less </option>
-                                      <option>75% or less</option>
-                                      <option>more than 75%</option>
-                                  </select>
-                              </span>
-                          </div>
-											</div>
-                      <div class="row form-group">
-                        <div class="col-md-2">
-                            <label for="">Salary/Month</label>
-                        </div>
-                        <div class="col-md-3">
-                            <span class="ui-select">
-                                <select data-ng-model="salary_range" class="form-control">
-                                    <option>Less than $1000</option>
-                                    <option>$1000 - $2000</option>
-                                    <option>$2000 - $3000</option>
-                                    <option>$3000 - $4000</option>
-                                    <option>$4000 - $5000</option>
-                                    <option>$5000 - $6000</option>
-                                    <option>$6000 - $8000</option>
-                                    <option>$8000 - $10000</option>
-                                    <option>$10000 - $15000</option>
-                                    <option>$15000 - $20000</option>
-                                </select>
-                            </span>
-                        </div>
-                        <div class="col-md-2">
-                            <label for="">Due Date 
-                                <span class="required-css">*</span>
-                            </label>
-                        </div>
-                        <div class="col-md-3">
-                            <input type="date" class="form-control" required data-ng-model="due_date" />
-                        </div>
-                      </div>
-                		</section>
-                	</article>
-                  <section class="pull-right"><a href="#!/emp-job-post-two">Next</a></section>
+                    </section>
+                  </section>
+                </aside>
+                <!-- /.aside -->
+
+                <section id="content" class="scrollable padder">
+                    <article>
+                        <header class="article-header-wizard">
+                            <div><h3>1. New Job - Job Details</h3><hr/></div>
+                            <span>Think about your job title as the headline of an ad to attract candidates.</span>
+                            <p class="bottom-space-20"></p>
+                        </header>
+                        <section class="article-section-wizard">
+                            <div class="row form-group">
+                                <div class="col-md-2">
+                                    <label for="">Industry 
+                                        <span class="required-css">*</span>
+                                    </label>
+                                </div>
+                                <div class="col-md-4">
+                                    <span>
+                                        <select required data-ng-model="industry" class="form-control">
+                                            <option>Telecommunication</option>
+                                        </select>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-2">
+                                    <label for="">Job Role 
+                                        <span class="required-css">*</span>
+                                    </label>
+                                </div>
+                                <div class="col-md-4">
+                                    <span class="ui-select">
+                                        <select required data-ng-model="industry" class="form-control">
+                                            <option>Drive Test Engineer</option>
+                                        </select>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-2">
+                                    <label for="">Title 
+                                        <span class="required-css">*</span>
+                                    </label>
+                                </div>
+                                <div class="col-md-4">
+                                  <input  type="text"class="form-control" required data-ng-model="title">
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-2">
+                                    <label for="">Description 
+                                        <span class="required-css">*</span>
+                                    </label>
+                                </div>
+                                <div class="col-md-8">
+                                    <textarea class="form-control" required data-ng-model="description" rows="6" cols="5" />
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-2">
+                                    <label for="">Job Type</label>
+                                </div>
+                                <div class="col-md-3">
+                                    <span class="ui-select">
+                                        <select data-ng-model="employee_type" class="form-control">
+                                            <option>Contract</option>
+                                            <option>Daily Wages</option>
+                                            <option>Internship</option>
+                                            <option>Permanent</option>
+                                            <option>Temporary</option>
+                                        </select>
+                                    </span>
+                                </div>
+                                <div class="col-md-2">
+                                    <label for="">Employee Status</label>
+                                </div>
+                                <div class="col-md-3">
+                                    <span class="ui-select">
+                                        <select data-ng-model="employee_type" class="form-control">
+                                            <option>Contract</option>
+                                            <option>Daily Wages</option>
+                                            <option>Internship</option>
+                                            <option>Permanent</option>
+                                            <option>Temporary</option>
+                                        </select>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-2">
+                                    <label for="">Shift</label>
+                                </div>
+                                <div class="col-md-3">
+                                    <span class="ui-select">
+                                        <select ng-model="shift" class="form-control">
+                                            <option>Morning</option>
+                                            <option>Evening</option>
+                                            <option>Night</option>
+                                            <option>Rotation</option>
+                                        </select>
+                                    </span>
+                                </div>
+                                <div class="col-md-2">
+                                    <label for="">No Of Positions</label>
+                                </div>
+                                <div class="col-md-3">
+                                    <span class="ui-select">
+                                        <select ng-model="no_of_positions" class="form-control">
+                                            <option>1</option>
+                                              <option>2</option>
+                                              <option>3</option>
+                                              <option>4</option>
+                                              <option>5</option>
+                                              <option>6</option>
+                                              <option>7</option>
+                                              <option>8</option>
+                                              <option>9</option>
+                                              <option>10</option>
+                                        </select>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-2">
+                                    <label for="required_checkbox">Travelling</label>
+                                </div>
+                                <div class="col-md-3">
+                                    <span class="ui-select">
+                                        <select ng-model="travel_required" class="form-control">
+                                              <option>No Travelling</option>
+                                              <option>25% or less</option>
+                                              <option>50% or less </option>
+                                              <option>75% or less</option>
+                                              <option>more than 75%</option>
+                                        </select>
+                                    </span>
+                                </div>
+                                <div class="col-md-2">
+                                        <label for="required_checkbox">Visa Status</label>
+                                </div>
+                                <div class="col-md-3">
+                                  <span class="ui-select">
+                                      <select ng-model="travel_required" class="form-control">
+                                          <option>Citizen</option>
+                                          <option>25% or less</option>
+                                          <option>50% or less </option>
+                                          <option>75% or less</option>
+                                          <option>more than 75%</option>
+                                      </select>
+                                  </span>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-2">
+                                    <label for="">Salary/Month</label>
+                                </div>
+                                <div class="col-md-3">
+                                    <span class="ui-select">
+                                        <select data-ng-model="salary_range" class="form-control">
+                                            <option>Less than $1000</option>
+                                            <option>$1000 - $2000</option>
+                                            <option>$2000 - $3000</option>
+                                            <option>$3000 - $4000</option>
+                                            <option>$4000 - $5000</option>
+                                            <option>$5000 - $6000</option>
+                                            <option>$6000 - $8000</option>
+                                            <option>$8000 - $10000</option>
+                                            <option>$10000 - $15000</option>
+                                            <option>$15000 - $20000</option>
+                                        </select>
+                                    </span>
+                                </div>
+                                <div class="col-md-2">
+                                    <label for="">Due Date 
+                                        <span class="required-css">*</span>
+                                    </label>
+                                </div>
+                                <div class="col-md-3">
+                                    <input type="date" class="form-control" required data-ng-model="due_date" />
+                                </div>
+                            </div>
+                        </section>
+                        <footer class="col-md-10 article-footer-wizard">
+                            <div class="pull-right">
+                                <a href="#!/emp-job-post-two">Next</a>
+                            </div>
+                        </footer>
+                    </article> 
                 </section>
-              </section>
             </section>
-          </section>
-          <a href="#!" class="hide nav-off-screen-block" data-toggle="class:nav-off-screen" data-target="#nav"></a>
         </section>
-      </section>
     </section>
-  </section>
 </section>
