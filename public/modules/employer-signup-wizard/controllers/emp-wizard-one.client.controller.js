@@ -1,11 +1,12 @@
 'use strict';
 
-angular.module('employer-signup-wizard').controller('EmpWizardOneController', ['$scope', '$http', 'Countries',
-	function($scope, $http, Countries) {
+angular.module('employer-signup-wizard').controller('EmpWizardOneController', ['$scope', '$http', 'Countries','$rootScope',
+	function($scope, $http, Countries,$rootScope) {
 		// Controller Logic
 		// ...
-		
-
+		$scope.longi= $rootScope.coords.longi;
+		$scope.lat=$rootScope.coords.lat;
+      
 		
 		Countries.getCountries(function(countries){
 			$scope.countries = countries;

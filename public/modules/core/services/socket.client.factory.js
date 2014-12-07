@@ -13,6 +13,7 @@ geolocation.getLocation().then(function(data){
      
     });
 	var socket = io.connect('http://localhost:3000');
+
 socket.emit("user_data",Authentication.user);
 }
 
