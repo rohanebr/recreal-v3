@@ -7,7 +7,9 @@ angular.module('candidate-features').controller('CandidateCvController', ['$scop
     $scope.user = Authentication.user;
     $scope.isEditing = false;
     $scope.industries = Industries.getIndustries();
-    $scope.countries = Countries.getCountries();
+    Countries.getCountries(function(countries){
+      $scope.countries = countries;
+    });
     // If user is not signed in then redirect back home
     if (!$scope.user) $location.path('/signin');
 

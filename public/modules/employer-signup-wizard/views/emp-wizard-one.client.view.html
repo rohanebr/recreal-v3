@@ -214,18 +214,17 @@
                          <div class="form-group">
                           <label>Country</label>
                           <span class="ui-select">
-                            <select ng-model="country" data-ng-change="getCountryCities()" required class="form-control">
-                                <option data-ng-repeat="count in countries">{{count.name}}
-                            </option>
+                            <select ng-model="country" ng-options="count.name for count in countries" data-ng-change="getCountryCities()" required class="form-control">
+                                
+                               
                             </select>
                           </span>
                         </div>
                         <div class="form-group">
                           <label>City</label>
                           <span class="ui-select">
-                            <select ng-model="city" required class="form-control">
-                                <option data-ng-repeat="city in cities">{{city.name}}
-                            </option>
+                            <select ng-model="city" ng-options="sity.name for sity in cities" required class="form-control">
+                                
                             </select>
                           </span>
                         </div>
