@@ -120,7 +120,7 @@
 
         <section id="content" class="scrollable padder">
             <section>
-	                <article>
+	                <article data-ng-init=>
 	                	<h3>About You</h3><hr/>
 	                	<label>A few additional details about you will help your colleagues to know you</label>
 	                	
@@ -248,15 +248,15 @@
                             <label for="">Specialities</label>
                         </div>
                         <div class="col-md-4">
-                          <section class="row" ng-repeat="speciality in company.specialties">
+                          <section class="row" ng-repeat="speciality in company.specialities">
                             <div class="input-group">
-                              <input type="text" placeholder="e.g Software" data-ng-model="company.speciality.name" class="form-control">
+                              <input type="text" placeholder="e.g Software" data-ng-model="company.specialities.name" class="form-control">
                               <span class="input-group-btn">
-                                <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-remove-sign"></span></button>
+                                <button type="button" ng-click="removeSpeciality($index)" class="btn btn-default"><i class="fa fa-times"></i></button>
                               </span>
                             </div>
                           </section>
-                          <p><button ng-click="addSpeciality()" class="btn btn-small btn-success pull-right">Add Speciality</button></p>
+                          <p><a ng-click="addSpeciality()">+ Add Speciality</a></p>
                         </div>
                       </div>
                     </section>

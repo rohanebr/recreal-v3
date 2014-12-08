@@ -81,7 +81,7 @@ var CompanySchema = new Schema({
     default:0
    }
   },
-  specialties:[{
+  specialities:[{
     name:{
       type: 'String',
       trim: true
