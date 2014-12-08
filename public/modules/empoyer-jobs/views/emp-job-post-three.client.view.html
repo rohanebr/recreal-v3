@@ -120,60 +120,52 @@
         </aside>
         <!-- /.aside -->
 
-        <section id="content">
-          <section class="hbox stretch">
-
-            <section>
-              <section class="vbox">
-                <section class="scrollable padder">
-                  <article>
-                    <header>
-                      <div><h3>3. New Job - Job Location</h3><hr/></div>
-                      <span>Share your Job location to meet with nearest candidate</span>
-                    </header>
-                    <section style="margin-left:50px">
-                      <p class="bottom-space-20"></p>
-                      <div class="row form-group">
-                          <div class="col-md-2">
-                              <label for="">Country 
-                                  <span class="required-css">*</span>
-                              </label>
-                          </div>
-                          <div class="col-md-3">
-                              <span class="ui-select">
-                                  <select ng-model="country" required class="form-control">
-                                      <option data-ng-repeat="count in countries">{{count.name}}
-                                  </option>
-                                  </select>
-                              </span>
-                          </div>
-                          <div class="col-md-2">
-                              <label for="">Location 
-                                  <span class="required-css">*</span>
-                              </label>
-                          </div>
-                          <div class="col-md-3">
-                              <span class="ui-select">
-                                  <select ng-model="location" required class="form-control">
-                                      <option>Islamabad</option>
-                                      <option>Lahore</option>
-                                      <option>Multan</option>
-                                      <option>Karachi</option>
-                                  </select>
-                              </span>
-                          </div>
-                        </div>
-                      </div>
-                       <map zoom="11" center="[22,33]"><marker position="[33,22]" draggable="true" /><control name="overviewMap" opened="true" /></map>  
-                    </section>
-                  </article>
-                  <section class="pull-right"><a href="#!/emp-job-post-two">Back</a><a href="">Post</a></section>
-                </section>
-              </section>
+        <section id="content" class="scrollable padder">
+          <article>
+            <header>
+              <div><h3>3. New Job - Job Location</h3><hr/></div>
+              <span>Share your Job location to meet with nearest candidate</span>
+            </header>
+            <section style="margin-left:50px">
+              <p class="bottom-space-20"></p>
+              <div class="row form-group">
+                  <div class="col-md-2">
+                      <label for="">Country 
+                          <span class="required-css">*</span>
+                      </label>
+                  </div>
+                  <div class="col-md-3">
+                      <span class="ui-select">
+                          <select ng-model="country" required class="form-control">
+                              <option data-ng-repeat="count in countries">{{count.name}}
+                          </option>
+                          </select>
+                      </span>
+                  </div>
+                  <div class="col-md-2">
+                      <label for="">Location 
+                          <span class="required-css">*</span>
+                      </label>
+                  </div>
+                  <div class="col-md-3">
+                      <span class="ui-select">
+                          <select ng-model="location" required class="form-control">
+                              <option>Islamabad</option>
+                              <option>Lahore</option>
+                              <option>Multan</option>
+                              <option>Karachi</option>
+                          </select>
+                      </span>
+                  </div>
+                </div>
+              </div>
+               <map zoom="11" center="[22,33]"><marker position="[33,22]" draggable="true" /><control name="overviewMap" opened="true" /></map>  
             </section>
-          </section>
+          </article>
+          <section class="pull-right"><a href="#!/emp-job-post-two">Back</a><a href="">Post</a></section>
           <a href="#!" class="hide nav-off-screen-block" data-toggle="class:nav-off-screen" data-target="#nav"></a>
         </section>
+        
       </section>
     </section>
   </section>

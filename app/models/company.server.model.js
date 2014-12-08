@@ -63,6 +63,24 @@ var CompanySchema = new Schema({
     type: 'String',
     trim: true
   },
+  country:{
+    type: 'String',
+    trim: true
+  },
+  city:{
+    type: 'String',
+    trim: true
+  },
+  coordinates:{
+    latitude:{
+    type:Number,
+    default:0
+   },
+    longitude:{
+    type:Number,
+    default:0
+   }
+  },
   specialties:[{
     name:{
       type: 'String',

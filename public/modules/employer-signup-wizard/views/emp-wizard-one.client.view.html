@@ -9,10 +9,7 @@
             <section class="w-f scrollable">
               <div class="slim-scroll" data-height="auto" data-disable-fade-out="true" data-distance="0" data-size="10px" data-railOpacity="0.2">
                 <div class="clearfix wrapper dk nav-user hidden-xs">
-                  
                 </div>                
-
-
                 <!-- nav -->                 
                 <nav class="nav-primary hidden-xs">
                   <ul class="nav nav-main" data-ride="collapse">
@@ -121,12 +118,8 @@
         </aside>
         <!-- /.aside -->
 
-        <section id="content">
-          <section class="hbox stretch">
-
+        <section id="content" class="scrollable padder">
             <section>
-              <section class="vbox">
-                <section class="scrollable padder">
 	                <article>
 	                	<h3>About You</h3><hr/>
 	                	<label>A few additional details about you will help your colleagues to know you</label>
@@ -187,17 +180,15 @@
                          <div class="form-group">
                           <label>Industry</label>
                           <span class="ui-select">
-                            <select class="form-control">
-                              <option>Admin</option>
-                              <option>Viewer</option>
-                              <option>Restricted</option>
+                            <select class="form-control" data-ng-model="company.industry">
+                              <option data-ng-repeat="ind in industries">{{ind.name}}</option>
                             </select>
                           </span>
                         </div>
                         <div class="form-group">
                           <label>Company Type</label>
                           <span class="ui-select">
-                            <select class="form-control">
+                            <select class="form-control" data-ng-model="company.company_type">
                               <option>Sole Proprietorship</option>
                               <option>Public</option>
                               <option>Private</option>
@@ -208,7 +199,7 @@
                         <div class="form-group">
                           <label>Country</label>
                           <span class="ui-select">
-                            <select ng-model="country" ng-options="count.name for count in countries" data-ng-change="getCountryCities()" required class="form-control">
+                            <select data-ng-model="company.country" ng-options="count.name for count in countries" data-ng-change="getCountryCities()" required class="form-control">
                             </select>
                           </span>
                         </div>
@@ -216,12 +207,12 @@
                       <section class="col-md-4">
                         <div class="form-group">
                           <label>Website</label>
-                          <input type="email" class="form-control" placeholder="50-100">
+                          <input type="email" class="form-control" placeholder="www.apple.com" data-ng-model="company.website">
                         </div>
                         <div class="form-group">
                           <label>No of Employees</label>
                           <span class="ui-select">
-                            <select class="form-control">
+                            <select class="form-control" data-ng-model="company.company_size">
                               <option>1 - 10</option>
                               <option>11 - 50</option>
                               <option>51 - 100</option>
@@ -235,7 +226,7 @@
                         <div class="form-group">
                           <label>City</label>
                           <span class="ui-select">
-                            <select ng-model="city" ng-options="sity.name for sity in cities" required class="form-control">
+                            <select ng-model="company.city" ng-options="sity.name for sity in cities" required class="form-control">
                             </select>
                           </span>
                         </div>
@@ -247,16 +238,28 @@
                             <label for="">Description</label>
                         </div>
                         <div class="col-md-8">
-                            <textarea class="form-control" required data-ng-model="description" rows="6" cols="5" />
+                            <textarea class="form-control" required data-ng-model="company.description" rows="6" cols="5" />
+                        </div>
+                      </div>
+                    </section>
+                    <section>
+                      <div class="row form-group">
+                        <div class="col-md-3">
+                            <label for="">Specialities</label>
+                        </div>
+                        <div class="col-md-8">
+                          <section class="row" ng-repeat="speciality in company.specialties">
+                            <input type="text" placeholder="e.g Software" data-ng-model="speciality.name" class="form-control">
+                          </section>
                         </div>
                       </div>
                     </section>
                   </article><hr/>
-                  <section class="pull-right"><a href="#!/emp-wizard-two">Next</a></section>
+                  <!-- <section class="pull-right"><a href="#!/emp-wizard-two">Next</a></section> -->
+                  <button type="submit" class="btn btn-primary btn-block btn-lg" ng-click="SaveAndRedirect()">Next</button><br>                            
+                <section data-ng-show="error" class="text-danger"><strong data-ng-bind="error"></strong>
                 </section>
-              </section>
             </section>
-          </section>
           <a href="#!" class="hide nav-off-screen-block" data-toggle="class:nav-off-screen" data-target="#nav"></a>
         </section>
       </section>

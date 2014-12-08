@@ -83,9 +83,7 @@
                 <section class="article-section-wizard">
                     <div class="row form-group">
                         <div class="col-md-2">
-                            <label for="">Degree 
-                                <span class="required-css">*</span>
-                            </label>
+                            <label for="">Degree</label>
                         </div>
                         <div class="col-md-4">
                             <span>
@@ -104,9 +102,7 @@
                     </div>
                     <div class="row form-group">
                         <div class="col-md-2">
-                            <label for="">Study Field 
-                                <span class="required-css">*</span>
-                            </label>
+                            <label for="">Study Field</label>
                         </div>
                         <div class="col-md-4">
                             <span>
@@ -138,11 +134,10 @@
                             <label for="">Career Level 
                                 <span class="required-css">*</span>
                             </label>
-
                         </div>
                         <div class="col-md-4">
                             <span>
-                                <select ng-model="career_level" required class="form-control" style="width: 300px;">
+                                <select ng-model="job.career_level" required class="form-control" style="width: 300px;">
                                     <option>Student/Internship</option>
                                     <option>Entry Level</option>
                                     <option>Mid Career</option>
@@ -155,12 +150,10 @@
                     </div>
                     <div class="row form-group">
                         <div class="col-md-2">
-                            <label for="">Experience 
-                                <span class="required-css">*</span>
-                            </label>
+                            <label for="">Experience</label>
                         </div>
                         <div class="col-md-3">
-                            <input  type="number" class="form-control" style="width:200px;"data-ng-model="experience">
+                            <input  type="number" class="form-control" style="width:200px;"data-ng-model="job.experience">
                         </div>
                     </div>
                     <div class="row form-group">
@@ -229,7 +222,7 @@
                         </table>
                 </section>
                 <footer class="col-md-10 article-footer-wizard">
-                    <section class="pull-right"><a href="#!/emp-job-post-one">Back</a><a href="#!/emp-job-post-three">Next</a></section>
+                    <section class="pull-right"><button type="submit" class="btn btn-primary btn-block btn-lg" ng-click="SaveAndRedirect()">Next</button><br></section>
                 </footer>
             </article>
         </section>

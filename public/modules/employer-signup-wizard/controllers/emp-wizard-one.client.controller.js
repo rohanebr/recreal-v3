@@ -1,13 +1,13 @@
 'use strict';
 
-angular.module('employer-signup-wizard').controller('EmpWizardOneController', ['$scope', '$http', 'Countries','$rootScope',
-	function($scope, $http, Countries,$rootScope) {
+angular.module('employer-signup-wizard').controller('EmpWizardOneController', ['$scope', '$http','Industries', 'Countries','$rootScope',
+	function($scope, $http,Industries, Countries,$rootScope) {
 		// Controller Logic
 		// ...
 		$scope.longi= $rootScope.coords.longi;
 		$scope.lat=$rootScope.coords.lat;
-      
-		
+      	$scope.industries = Industries.getIndustries();
+
 		Countries.getCountries(function(countries){
 			$scope.countries = countries;
 			// $scope.countries.splice(0, 1);
@@ -30,6 +30,20 @@ angular.module('employer-signup-wizard').controller('EmpWizardOneController', ['
 				$scope.city = $scope.cities[0];
 			});
 		}
+
+		$scope.SaveAndRedirect = function() {
+			$scope.success = $scope.error = null;
+			
+			$http.post('/SaveEmpSignUpWizardOneData', {company:$scope.company, employer:$scope.employer}).success(function(response) {
+				// If successful show success message and clear form
+				
+			}).error(function(response) {
+				$scope.error = response.message;
+			});
+		};
+
+
+
 		
 	}
 ]);
