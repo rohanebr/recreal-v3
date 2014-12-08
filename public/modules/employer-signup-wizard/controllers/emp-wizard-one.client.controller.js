@@ -4,13 +4,28 @@ angular.module('employer-signup-wizard').controller('EmpWizardOneController', ['
 	function($scope, $http,Industries, Countries,$rootScope,geolocation) {
 		// Controller Logic
 		// ...
+		var city1="";
+		var country1="";
 		$scope.company={};
 		$scope.employer={};
 		$scope.company.specialities = [];
-		$scope.company.specialities.push({name: 'Product Development'});
-
-		var city1="";
-  		var country1="";
+		//Load initial data
+		$scope.LoadInitialData = function() {
+			
+			$scope.company.specialities.push({name: 'Product Development'});
+			$scope.industries = Industries.getIndustries();
+			Countries.getCountries(function(countries){
+				$scope.countries = countries;
+				// $scope.countries.splice(0, 1);
+				$scope.company.country = $scope.countries[1];
+				$scope.getCountryCities();
+			});
+	      	$scope.company.industry = $scope.industries[0].name;
+	      	$scope.company.company_size = '1 - 10';
+	      	$scope.company.company_type = 'Sole Proprietorship';
+	      	InitlocationData();
+		};
+	var InitlocationData = function(){
 		var geocoder = new google.maps.Geocoder();
 		geolocation.getLocation().then(function(data){
 		var lat = parseFloat(data.coords.latitude);
@@ -19,42 +34,32 @@ angular.module('employer-signup-wizard').controller('EmpWizardOneController', ['
   		var latlng = new google.maps.LatLng(lat, lng);
   		geocoder.geocode({'latLng': latlng}, function(results, status) {
     	if (status == google.maps.GeocoderStatus.OK) {
-      	if (results[1]) {
-      	var citycountry=results[1].formatted_address;
-      	var res = citycountry.split(",");
-    	country1=res[res.length-1];
-    	city1=res[res.length-2];
-    	city1=city1.trim();
-     	country1=country1.trim();
-   
-     	angular.forEach($scope.countries,function(country){
-          if(country1==country.name)
-          {
-             $scope.company.country=country;
-             $scope.getCountryCities();
-          }
-     });
-      } else {
-        alert('No results found');
-      }
-    } else {
-      alert('Geocoder failed due to: ' + status);
-    }
-  });
-     
-    });
+	      	if (results[1]) {
+		      	var citycountry=results[1].formatted_address;
+		      	var res = citycountry.split(",");
+		    	country1=res[res.length-1];
+		    	city1=res[res.length-2];
+		    	city1=city1.trim();
+		     	country1=country1.trim();
+		   
+		     	angular.forEach($scope.countries,function(country){
+		          if(country1==country.name)
+		          {
+		             $scope.company.country=country;
+		             $scope.getCountryCities();
+		          }
+			    });
+		    } else {
+		        alert('No results found');
+		      }
+		    } else {
+	      alert('Geocoder failed due to: ' + status);
+	    }
+	  });
+	     
+	    });
+	}
 	
-      	$scope.industries = Industries.getIndustries();
-
-		Countries.getCountries(function(countries){
-			$scope.countries = countries;
-			// $scope.countries.splice(0, 1);
-			$scope.company.country = $scope.countries[1];
-			$scope.getCountryCities();
-		});
-		
-
-		
 
 		// $http.get('/countries').success(function(countries) {
 		// 	$scope.countries = countries;
@@ -100,7 +105,7 @@ angular.module('employer-signup-wizard').controller('EmpWizardOneController', ['
 	    $scope.removeSpeciality = function(index) {
 	      $scope.company.specialities.splice(index, 1);
 	    };
+}
 
-		
-	}
+
 ]);
