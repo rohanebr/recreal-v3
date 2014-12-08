@@ -1,17 +1,38 @@
 'use strict';
 
-angular.module('employer-signup-wizard').controller('EmpWizardOneController', ['$scope', '$http','Industries', 'Countries','$rootScope',
-	function($scope, $http,Industries, Countries,$rootScope) {
+angular.module('employer-signup-wizard').controller('EmpWizardOneController', ['$scope', '$http','Industries', 'Countries','$rootScope','geolocation',
+	function($scope, $http,Industries, Countries,$rootScope,geolocation) {
 		// Controller Logic
 		// ...
-		$scope.longi= $rootScope.coords.longi;
-		$scope.lat=$rootScope.coords.lat;
+		$scope.company={};
+		$scope.employer={};
+		var geocoder = new google.maps.Geocoder();
+		geolocation.getLocation().then(function(data){
+	var lat = parseFloat(data.coords.latitude);
+  var lng = parseFloat(data.coords.longitude);
+  var latlng = new google.maps.LatLng(lat, lng);
+  geocoder.geocode({'latLng': latlng}, function(results, status) {
+    if (status == google.maps.GeocoderStatus.OK) {
+      if (results[1]) {
+      	var citycountry=results[1].formatted_address;
+
+       console.log(citycountry);
+      } else {
+        alert('No results found');
+      }
+    } else {
+      alert('Geocoder failed due to: ' + status);
+    }
+  });
+     
+    });
+	
       	$scope.industries = Industries.getIndustries();
 
 		Countries.getCountries(function(countries){
 			$scope.countries = countries;
 			// $scope.countries.splice(0, 1);
-			$scope.country = $scope.countries[0];
+			$scope.company.country = $scope.countries[0];
 			$scope.getCountryCities();
 		});
 		
@@ -25,9 +46,9 @@ angular.module('employer-signup-wizard').controller('EmpWizardOneController', ['
 		// });
 
 		$scope.getCountryCities = function(){
-				$http.get('/countries/'+ $scope.country.name).success(function (response){
+				$http.get('/countries/'+ $scope.company.country.name).success(function (response){
 				$scope.cities = response.cities;
-				$scope.city = $scope.cities[0];
+				$scope.company.city = $scope.cities[0];
 			});
 		}
 
