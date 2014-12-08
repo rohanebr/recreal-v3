@@ -58,7 +58,7 @@ var getErrorMessage = function(err) {
  * Signup
  */
 exports.signup = function(req, res) {
-	console.log("SIGNUP");
+
 	// For security measurement we remove the roles from the req.body object
 	delete req.body.roles;
 
@@ -102,17 +102,7 @@ exports.signup = function(req, res) {
 				message: getErrorMessage(err)
 			});
 		} else {
-			// Remove sensitive data before login
-			// user.password = undefined;
-			// user.salt = undefined;
-
-			// req.login(user, function(err) {
-			// 	if (err) {
-			// 		res.send(400, err);
-			// 	} else {
-			// 		res.jsonp(user);
-			// 	}
-			// });
+	
 
 			res.jsonp({status: true});
 
