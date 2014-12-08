@@ -10,38 +10,30 @@ angular.module('employer-signup-wizard').controller('EmpWizardOneController', ['
 		$scope.company.specialities.push({name: 'Product Development'});
 
 		var city1="";
-  var country1="";
+  		var country1="";
 		var geocoder = new google.maps.Geocoder();
 		geolocation.getLocation().then(function(data){
-	var lat = parseFloat(data.coords.latitude);
-  var lng = parseFloat(data.coords.longitude);
+		var lat = parseFloat(data.coords.latitude);
+  		var lng = parseFloat(data.coords.longitude);
   
-  var latlng = new google.maps.LatLng(lat, lng);
-  geocoder.geocode({'latLng': latlng}, function(results, status) {
-    if (status == google.maps.GeocoderStatus.OK) {
-      if (results[1]) {
+  		var latlng = new google.maps.LatLng(lat, lng);
+  		geocoder.geocode({'latLng': latlng}, function(results, status) {
+    	if (status == google.maps.GeocoderStatus.OK) {
+      	if (results[1]) {
       	var citycountry=results[1].formatted_address;
-      var res = citycountry.split(",");
-    country1=res[res.length-1];
-    city1=res[res.length-2];
-    city1=city1.trim();
-     country1=country1.trim();
+      	var res = citycountry.split(",");
+    	country1=res[res.length-1];
+    	city1=res[res.length-2];
+    	city1=city1.trim();
+     	country1=country1.trim();
    
-     angular.forEach($scope.countries,function(country){
-
+     	angular.forEach($scope.countries,function(country){
           if(country1==country.name)
           {
-          	  
              $scope.company.country=country;
-           
              $scope.getCountryCities();
-
-         
           }
-        
-
      });
-        
       } else {
         alert('No results found');
       }
@@ -74,16 +66,15 @@ angular.module('employer-signup-wizard').controller('EmpWizardOneController', ['
 			var foundit=false;
 				$http.get('/countries/'+ $scope.company.country.name).success(function (response){
 				$scope.cities = response.cities;
-angular.forEach($scope.cities,function(city){
-	console.log(city.name+" "+city1);
-	if(city.name==city1)//fuck my life
-		{
-console.log(city);
-			$scope.company.city=city;
-			foundit=true;
-		}
-
-});if(!foundit)
+				angular.forEach($scope.cities,function(city){
+				console.log(city.name+" "+city1);
+				if(city.name==city1)//fuck my life
+				{
+				console.log(city);
+				$scope.company.city=city;
+				foundit=true;
+				}
+			});if(!foundit)
 				$scope.company.city = $scope.cities[0];
 			});
 		};
