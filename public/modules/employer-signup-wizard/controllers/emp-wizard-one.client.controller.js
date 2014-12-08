@@ -29,7 +29,7 @@ angular.module('employer-signup-wizard').controller('EmpWizardOneController', ['
 				$scope.cities = response.cities;
 				$scope.city = $scope.cities[0];
 			});
-		}
+		};
 
 		$scope.SaveAndRedirect = function() {
 			$scope.success = $scope.error = null;
@@ -42,7 +42,16 @@ angular.module('employer-signup-wizard').controller('EmpWizardOneController', ['
 			});
 		};
 
-
+		//Add specialities
+		$scope.addSpeciality = function() {
+	      $scope.company.specialties.push({
+	        speciality.name: ''
+	      });
+	    };
+	    //Remove Speciality
+	    $scope.removeSpeciality = function(index) {
+	      $scope.company.specialties.splice(index, 1);
+	    };
 
 		
 	}
