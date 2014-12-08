@@ -1,0 +1,79 @@
+<section data-ng-controller="ListUserMessagesController">
+<!-- 	This is the List user messages view
+	<div data-ng-repeat="thread in user.threads">
+		<h2>{{thread.subject}}</h2>
+		<p>{{thread.created | date}}</p>
+		<div data-ng-repeat="message in thread.messages">
+			<h3>{{message.messageBody}}</h3>
+			<p>{{message.created | date}}</p>
+		</div>
+	</div>
+
+
+
+
+
+ -->
+
+
+
+
+
+
+<div class="page">
+    <div class="row">
+        <div class="col-sm-3">
+            <section class="panel panel-default mail-categories">
+                <div class="panel-heading">
+                    <a href="#/mail/compose" class="btn btn-block btn-lg btn-primary">Compose</a>
+                </div>
+                <ul class="list-group">
+                    <li class="list-group-item active"><a href="javascript:;">
+                        <i class="fa fa-inbox"></i>Inbox
+                        <span class="badge badge-info pull-right">6</span>
+                    </a></li>
+                    <li class="list-group-item"><a href="javascript:;">
+                        <i class="fa fa-envelope-o"></i>Send mail
+                    </a></li>
+                    <li class="list-group-item"><a href="javascript:;">
+                        <i class="fa fa-star"></i>Starred
+                        <span class="badge badge-danger pull-right">3</span>
+                    </a></li>
+                    <li class="list-group-item"><a href="javascript:;">
+                        <i class="fa fa-comment-o"></i>Chat
+                        <span class="badge badge-success pull-right">9</span>
+                    </a></li>
+                    <li class="list-group-item"><a href="javascript:;">
+                        <i class="fa fa-pencil"></i>Draft
+                        <span class="badge badge-warning pull-right">1</span>
+                    </a></li>
+                    <li class="list-group-item"><a href="javascript:;">
+                        <i class="fa fa-trash-o"></i>Spam
+                    </a></li>
+                </ul>
+            </section>
+
+            
+        </div>
+        <div class="col-sm-9">
+            <section class="panel panel-default mail-container">
+                <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Inbox</strong></div>
+                <div class="mail-options">
+                    <label class="ui-checkbox"><input name="checkbox1" type="checkbox" value="option1" ><span>Toggle All</span></label>
+                </div>
+                <table class="table table-hover">
+                    <tr class="mail-unread" data-ng-repeat="thread in user.threads">
+                        <td><label class="ui-checkbox"><input name="checkbox1" type="checkbox" value="option1" ><span></span></label></td>
+                        <td>{{thread.senderName}}</td>
+                        <td>{{thread.subject}}</td>
+                        <td>{{thread.created | date}}</td>
+                        <td><i class="fa fa-star-o"></i></td>
+                    </tr>
+                </table>
+            </section>
+        </div>
+    </div>
+</div>
+
+
+</section>
