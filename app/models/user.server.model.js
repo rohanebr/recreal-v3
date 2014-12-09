@@ -140,9 +140,15 @@ var UserSchema = new Schema({
   	resetPasswordExpires: {
   		type: Date
   	},
-  	active:{
-		type:Boolean,
-		default:false
+  	activeToken: {
+        type: String
+
+  	},
+    stage:{
+      type: String,
+  	enum: ['DeActive', 'Basic','CompanyLocation','JobOne','JobTwo','JobLocation','Active'],
+  	default:'DeActive'
+
     }
 });
 

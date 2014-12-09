@@ -79,6 +79,8 @@
                                         <select required data-ng-model="job.industry" class="form-control">
                                             <option data-ng-repeat="ind in industries">{{ind.name}}</option>
                                         </select>
+                                         <select data-ng-model="job.industry" ng-options="ind.name for ind in industries" data-ng-change="getIndustryJobRoles()" required class="form-control">
+                            </select>
                                     </span>
                                 </div>
                             </div>
