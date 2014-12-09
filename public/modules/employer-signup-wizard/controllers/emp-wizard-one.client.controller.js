@@ -18,6 +18,7 @@ $scope.user='';
 			$scope.user=response.user;
 			console.log($scope.user);
 
+
 			}).error(function(response) {
 				$scope.error = response.message;
 				

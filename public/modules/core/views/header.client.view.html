@@ -254,16 +254,20 @@
           </div>
           <div class="list-group-alt">
             <li class="list-group-item" data-ng-repeat="notification in notifications">
-                        <a href="#!{{notification.hiddendata}}" class="media list-group-item" ng-click="notificationRead(notification)">
-                            <span class="pull-left media-icon">
-                                <span class="round-icon sm bg-success"><i class="fa fa-bell-o"></i></span>
-                            </span>
-                            <div class="media-body">
-                                <span class="block">{{notification.generalmessage}}</span>
-                                <span class="text-muted block">{{notification.created |date }}</span>
-                            </div>
-                        </a>
-                    </li>
+                <a href="#!{{notification.hiddendata}}" class="media list-group-item" ng-click="notificationRead(notification)">
+                    <span class="pull-left media-icon">
+                        <span class="round-icon sm bg-success"><i class="fa fa-bell-o"></i></span>
+                    </span>
+                    <div data-ng-hide="notification.isRead" class="media-body" style="background-color: #ddd;">
+                        <span class="block">{{notification.generalmessage}}</span>
+                        <span class="text-muted block">{{notification.created | date }}</span>
+                    </div>
+                    <div data-ng-show="notification.isRead" class="media-body">
+                        <span class="block">{{notification.generalmessage}}</span>
+                        <span class="text-muted block">{{notification.created | date }}</span>
+                    </div>
+                </a>
+            </li>
       <!--       <a href="#" class="media list-group-item">
               <span class="pull-left thumb-sm">
                 <img src="/theme/images/a0.png" alt="..." class="img-circle">
