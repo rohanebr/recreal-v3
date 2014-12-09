@@ -250,13 +250,18 @@
                         <div class="col-md-4">
                           <section class="row" ng-repeat="speciality in company.specialities">
                             <div class="input-group">
-                              <input type="text" placeholder="e.g Software" data-ng-model="company.specialities.name" class="form-control">
+                              <input disabled type="text" placeholder="e.g Software" data-ng-model="speciality.name" class="form-control">
                               <span class="input-group-btn">
                                 <button type="button" ng-click="removeSpeciality($index)" class="btn btn-default"><i class="fa fa-times"></i></button>
                               </span>
                             </div>
                           </section>
-                          <p><a ng-click="addSpeciality()">+ Add Speciality</a></p>
+                          <div class="addThingy" ng-show="isAddingSpeciality">
+                              <input type="text" placeholder="Add a speciality" data-ng-model="newSpeciality.name" class="form-control">
+                              <button class="btn btn-default btn-sm" ng-click="addSpeciality()">Add</button>
+                              <a ng-click="isAddingSpeciality = false">Done Adding</a>
+                          </div>
+                          <p><a ng-click="isAddingSpeciality = true">+ Add Speciality</a></p>
                         </div>
                       </div>
                     </section>
