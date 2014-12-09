@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('employer-signup-wizard').controller('EmpWizardOneController', ['$scope', '$http','Industries', 'Countries','$rootScope','geolocation','$stateParams','$location',
-	function($scope, $http,Industries, Countries,$rootScope,geolocation,$stateParams,$location) {
+angular.module('employer-signup-wizard').controller('EmpWizardOneController', ['$scope', '$http','Industries', 'Countries','$rootScope','geolocation','$stateParams','$state',
+	function($scope, $http,Industries, Countries,$rootScope,geolocation,$stateParams,$state) {
 		// Controller Logic
 		// ...
 		var city1="";
@@ -9,7 +9,8 @@ angular.module('employer-signup-wizard').controller('EmpWizardOneController', ['
 		$scope.company={};
 		$scope.employer={};
 		$scope.company.specialities = [];
-$scope.user='';
+		$scope.newSpeciality = {name: ''};
+		$scope.user='';
 		//Load initial data
 		$scope.LoadInitialData = function() {
 			if($stateParams.tokenId)
@@ -24,13 +25,11 @@ $scope.user='';
 				
 			});
 
-    console.log($stateParams.tokenId);
+    		console.log($stateParams.tokenId);
 		}
 		else
 		{
-			
-$location.path('/');
-
+			$location.path('/');
 		}
 			$scope.company.specialities.push({name: 'Product Development'});
 			$scope.industries = Industries.getIndustries();
@@ -109,7 +108,8 @@ $location.path('/');
 			$scope.success = $scope.error = null;
 			
 			$http.post('/SaveEmpSignUpWizardOneData', {user:$scope.user,company:$scope.company, employer:$scope.employer}).success(function(response) {
-				$location.path('/emp-wizard-two/');
+				// $location.path('/');
+				$state.go('emp-wizard-two');
 				
 			}).error(function(response) {
 				$scope.error = response.message;
@@ -118,9 +118,11 @@ $location.path('/');
 
 		//Add specialities
 		$scope.addSpeciality = function() {
-	      $scope.company.specialities.push({
-	        name: ''
-	      });
+			if($scope.newSpeciality.name != ''){
+				$scope.company.specialities.push($scope.newSpeciality);
+				$scope.newSpeciality = {name: ''};
+			}
+
 	    };
 	    //Remove Speciality
 	    $scope.removeSpeciality = function(index) {
