@@ -16,16 +16,16 @@ var IndustrySchema = new Schema({
 	    type: 'String',
 	    trim: true
   	},
-  	group:{
-	    type: 'String',
-	    trim: true
-  	},
-  	job_roles:[{
-    	name:{
-      		type: 'String',
-      		trim: true
-      		}
-  	}]
+	group:{
+    type: 'String',
+    trim: true
+	},
+	job_roles:[{
+  	name:{
+    		type: 'String',
+    		trim: true
+    		}
+	}]
 });
 
 mongoose.model('Industry', IndustrySchema);
