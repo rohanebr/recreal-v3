@@ -6,18 +6,27 @@ angular.module('employer-signup-wizard').controller('EmpWizardOneController', ['
 		// ...
 		var city1="";
 		var country1="";
-		$scope.company={};
+		var lat=0,lng=0;
+		$scope.company={website:"",coordinates:{longitude:0,latitude:0}};
 		$scope.employer={};
 		$scope.company.specialities = [];
+
 		$scope.newSpeciality = {name: ''};
+		$scope.employer.role="Admin";
 		$scope.user='';
 		//Load initial data
 		$scope.LoadInitialData = function() {
 			if($stateParams.tokenId)
 		{
 			$http.post('/validatetoken', {token:$stateParams.tokenId}).success(function(response) {
-			$scope.user=response.user;
-			console.log($scope.user);
+			$scope.user=response;
+			console.log(response);
+			if($scope.user!=="nothing")
+			{
+
+
+
+			}
 
 
 			}).error(function(response) {
@@ -47,8 +56,8 @@ angular.module('employer-signup-wizard').controller('EmpWizardOneController', ['
 	var InitlocationData = function(){
 		var geocoder = new google.maps.Geocoder();
 		geolocation.getLocation().then(function(data){
-		var lat = parseFloat(data.coords.latitude);
-  		var lng = parseFloat(data.coords.longitude);
+		 lat = parseFloat(data.coords.latitude);
+  		 lng = parseFloat(data.coords.longitude);
   
   		var latlng = new google.maps.LatLng(lat, lng);
   		geocoder.geocode({'latLng': latlng}, function(results, status) {
@@ -69,10 +78,12 @@ angular.module('employer-signup-wizard').controller('EmpWizardOneController', ['
 		          }
 			    });
 		    } else {
-		        alert('No results found');
+		        $scope.company.country=$scope.countries[0];
+		          $scope.getCountryCities();
 		      }
 		    } else {
-	      alert('Geocoder failed due to: ' + status);
+	       $scope.company.country=$scope.countries[0];
+		          $scope.getCountryCities();
 	    }
 	  });
 	     
@@ -104,7 +115,29 @@ angular.module('employer-signup-wizard').controller('EmpWizardOneController', ['
 		};
 
 		$scope.SaveAndRedirect = function() {
+			if(lng!=0 && lat!=0)
+		{	$scope.company.coordinates.longitude=lng;
+$scope.company.coordinates.latitude=lat;
 
+$rootScope.coords.lat=lat;
+$rootScope.coords.longi=lng;
+$rootScope.country="none";
+$rootScope.city="none";
+
+}
+else
+{
+$rootScope.coords.lat=0;
+$rootScope.coords.longi=0;
+$rootScope.country=$scope.company.country;
+$rootScope.city=$scope.company.city;
+
+}
+
+// coordinates: {
+//         longitude: 0,
+//         latitude: 0
+//     },
 			$scope.success = $scope.error = null;
 			
 			$http.post('/SaveEmpSignUpWizardOneData', {user:$scope.user,company:$scope.company, employer:$scope.employer}).success(function(response) {

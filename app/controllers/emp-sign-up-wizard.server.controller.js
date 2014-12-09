@@ -11,7 +11,31 @@ var mongoose = require('mongoose'),
 	crypto = require('crypto'),
 	config = require('../../config/config'),
 	Employer = mongoose.model('Employer'),
-	Company = mongoose.model('Company');
+	Company = mongoose.model('Company'),
+	passport = require('passport');
+
+
+	var signin = function(req, res, next) {
+		console.log("SIGNIN"+req);
+	passport.authenticate('local', function(err, user, info) {
+		if (err || !user) {
+			res.send(400, info);
+		} else {
+			// Remove sensitive data before login
+			user.password = undefined;
+			user.salt = undefined;
+
+	
+			req.login(user, function(err) {
+				if (err) {
+					res.send(400, err);
+				} else {
+					res.jsonp(user);
+				}
+			});
+		}
+	})(req, res, next);
+};
 	/**
  * Get the error message from error object
  */
@@ -144,7 +168,28 @@ exports.ValidateToken = function(req,res){
 console.log(req.body.token);
 User.findOne({"activeToken":req.body.token}).exec(function(err, user){
 if(user)
-	res.jsonp({user:user});
+	{	
+
+	
+		if (err || !user) {
+			res.send(400, info);
+		} else {
+			// Remove sensitive data before login
+			user.password = undefined;
+			user.salt = undefined;
+
+	
+			req.login(user, function(err) {
+				if (err) {
+					res.send(400, err);
+				} else {
+					res.jsonp(user);
+				}
+			});
+		}
+	
+
+}
 if(!user)
 	res.jsonp({user:"nothing"});
 
@@ -160,17 +205,31 @@ exports.SaveEmpSignUpWizardOneData = function(req,res)
 {
 	console.log("SAVEEMPSIGNUP"+req.body.user._id);
  User.findById(req.body.user._id,function(err,user){
-if(user)
+if(user.stage=='DeActive')
 {
    			var employer = new Employer();
 			user.employer = employer;
-			if(user.stage=='DeActive')
-				{
+			employer.role=req.body.employer.role;
 
 			var company = new Company();
+
 			employer.company = company;
 			company.employers.push(employer);
 			company.user = user;
+			company.website=req.body.company.website;
+			for(var i=0,len=req.body.company.specialities.length;i<len;i++)
+			{
+			company.specialities.push(req.body.company.specialities[i]);
+
+			}
+			company.industry=req.body.company.industry;
+			company.company_size=req.body.company.company_size;
+			company.company_type=req.body.company.company_type;
+			company.country=req.body.company.country.name;
+			company.city=req.body.company.city.name;
+			company.description=req.body.company.description;
+			company.company_name=req.body.company.name;
+			company.coordinates=req.body.company.coordinates;
 			company.save();
 			employer.firstName = user.firstName;
 			employer.lastName = user.lastName;
@@ -194,15 +253,15 @@ if(user)
 
 		}
 	});
-	}
-	else
-		res.jsonp({status:false});
-
-
+	
+	
 
 
 
 }
+else
+		res.jsonp({status:false});
+
 
 
 
