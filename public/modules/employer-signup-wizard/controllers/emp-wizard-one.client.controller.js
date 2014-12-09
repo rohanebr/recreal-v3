@@ -10,6 +10,7 @@ angular.module('employer-signup-wizard').controller('EmpWizardOneController', ['
 		$scope.company={website:"",coordinates:{longitude:0,latitude:0}};
 		$scope.employer={};
 		$scope.company.specialities = [];
+$scope.authentication = Authentication;
 
 		$scope.newSpeciality = {name: ''};
 		$scope.employer.role="Admin";
@@ -20,6 +21,7 @@ angular.module('employer-signup-wizard').controller('EmpWizardOneController', ['
 		{
 			$http.post('/validatetoken', {token:$stateParams.tokenId}).success(function(response) {
 			$scope.user=response;
+			$scope.authentication.user = response;
 			console.log(response);
 			if($scope.user.user=="nothing")
 			{
