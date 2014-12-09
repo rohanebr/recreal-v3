@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('employer-signup-wizard').controller('EmpWizardOneController', ['$scope', '$http','Industries', 'Countries','$rootScope','geolocation','$stateParams','$state',
-	function($scope, $http,Industries, Countries,$rootScope,geolocation,$stateParams,$state) {
+angular.module('employer-signup-wizard').controller('EmpWizardOneController', ['$scope', '$http','Industries', 'Countries','$rootScope','geolocation','$stateParams','$state','Authentication',
+	function($scope, $http,Industries, Countries,$rootScope,geolocation,$stateParams,$state,Authentication) {
 		// Controller Logic
 		// ...
 		var city1="";
@@ -21,10 +21,10 @@ angular.module('employer-signup-wizard').controller('EmpWizardOneController', ['
 			$http.post('/validatetoken', {token:$stateParams.tokenId}).success(function(response) {
 			$scope.user=response;
 			console.log(response);
-			if($scope.user!=="nothing")
+			if($scope.user.user=="nothing")
 			{
 
-
+$state.go('home');
 
 			}
 
@@ -38,7 +38,7 @@ angular.module('employer-signup-wizard').controller('EmpWizardOneController', ['
 		}
 		else
 		{
-			$location.path('/');
+			$state.go('home');
 		}
 			$scope.company.specialities.push({name: 'Product Development'});
 			$scope.industries = Industries.getIndustries();
