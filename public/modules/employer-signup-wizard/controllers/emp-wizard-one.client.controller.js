@@ -9,7 +9,7 @@ angular.module('employer-signup-wizard').controller('EmpWizardOneController', ['
 		$scope.company={};
 		$scope.employer={};
 		$scope.company.specialities = [];
-$scope.user='';
+		$scope.user='';
 		//Load initial data
 		$scope.LoadInitialData = function() {
 			if($stateParams.tokenId)
