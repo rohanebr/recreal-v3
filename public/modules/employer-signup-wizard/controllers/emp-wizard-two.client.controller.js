@@ -1,7 +1,8 @@
 'use strict';
 
-angular.module('employer-signup-wizard').controller('EmpWizardTwoController', ['$scope','$interval',
-	function($scope,$interval) {
+angular.module('employer-signup-wizard').controller('EmpWizardTwoController', ['$scope','$interval', 'Authentication',
+	function($scope,$interval, Authentication) {
+      $scope.authentication = Authentication;
       var geocoder = new google.maps.Geocoder();
   geocoder.geocode( { 'address':"Sydney, NSW"}, function(results, status) {
     if (status == google.maps.GeocoderStatus.OK) {
