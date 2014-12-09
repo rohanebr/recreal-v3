@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('employer-signup-wizard').controller('EmpWizardOneController', ['$scope', '$http','Industries', 'Countries','$rootScope','geolocation',
-	function($scope, $http,Industries, Countries,$rootScope,geolocation) {
+angular.module('employer-signup-wizard').controller('EmpWizardOneController', ['$scope', '$http','Industries', 'Countries','$rootScope','geolocation','$stateParams','$location',
+	function($scope, $http,Industries, Countries,$rootScope,geolocation,$stateParams,$location) {
 		// Controller Logic
 		// ...
 		var city1="";
@@ -9,9 +9,28 @@ angular.module('employer-signup-wizard').controller('EmpWizardOneController', ['
 		$scope.company={};
 		$scope.employer={};
 		$scope.company.specialities = [];
+$scope.user='';
 		//Load initial data
 		$scope.LoadInitialData = function() {
+			if($stateParams.tokenId)
+		{
+			$http.post('/validatetoken', {token:$stateParams.tokenId}).success(function(response) {
+			$scope.user=response.user;
+			console.log($scope.user);
+
+			}).error(function(response) {
+				$scope.error = response.message;
+				
+			});
+
+    console.log($stateParams.tokenId);
+		}
+		else
+		{
 			
+$location.path('/');
+
+		}
 			$scope.company.specialities.push({name: 'Product Development'});
 			$scope.industries = Industries.getIndustries();
 			Countries.getCountries(function(countries){
@@ -85,10 +104,11 @@ angular.module('employer-signup-wizard').controller('EmpWizardOneController', ['
 		};
 
 		$scope.SaveAndRedirect = function() {
+
 			$scope.success = $scope.error = null;
 			
-			$http.post('/SaveEmpSignUpWizardOneData', {company:$scope.company, employer:$scope.employer}).success(function(response) {
-				// If successful show success message and clear form
+			$http.post('/SaveEmpSignUpWizardOneData', {user:$scope.user,company:$scope.company, employer:$scope.employer}).success(function(response) {
+				$location.path('/emp-wizard-two/');
 				
 			}).error(function(response) {
 				$scope.error = response.message;

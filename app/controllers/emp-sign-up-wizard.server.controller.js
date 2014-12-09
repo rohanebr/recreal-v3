@@ -9,7 +9,9 @@ var mongoose = require('mongoose'),
 	nodemailer = require('nodemailer'),
 	async = require('async'),
 	crypto = require('crypto'),
-	config = require('../../config/config');
+	config = require('../../config/config'),
+	Employer = mongoose.model('Employer'),
+	Company = mongoose.model('Company');
 	/**
  * Get the error message from error object
  */
@@ -133,4 +135,74 @@ console.log("IT CAME");
 
 		}
 	});
+};
+
+/**
+*Validation of the activeToken
+*/
+exports.ValidateToken = function(req,res){
+console.log(req.body.token);
+User.findOne({"activeToken":req.body.token}).exec(function(err, user){
+if(user)
+	res.jsonp({user:user});
+if(!user)
+	res.jsonp({user:"nothing"});
+
+
+});
+	
+};
+
+/**
+*Basic Info of company and employer saved
+*/
+exports.SaveEmpSignUpWizardOneData = function(req,res)
+{
+	console.log("SAVEEMPSIGNUP"+req.body.user._id);
+ User.findById(req.body.user._id,function(err,user){
+if(user)
+{
+   			var employer = new Employer();
+			user.employer = employer;
+			user.stage="Basic";
+			var company = new Company();
+			employer.company = company;
+			company.employers.push(employer);
+			company.user = user;
+			company.save();
+			employer.firstName = user.firstName;
+			employer.lastName = user.lastName;
+			employer.displayName = user.displayName;
+			employer.user = user;
+			employer.save();
+			user.markModified('employer');
+			user.markModified('stage');
+				// Then save the user 
+	user.save(function(err) {
+		if (err) {
+			typeObject.remove();
+			return res.send(400, {
+				message: getErrorMessage(err)
+			});
+		} else {
+	
+
+			res.jsonp({status: true});
+
+
+		}
+	});
+
+
+
+
+
+}
+
+
+
+ });
+
+
+
 };
