@@ -164,7 +164,8 @@ if(user)
 {
    			var employer = new Employer();
 			user.employer = employer;
-			user.stage="Basic";
+			if(user.stage=='Basic')
+				res.jsonp({status:false});
 			var company = new Company();
 			employer.company = company;
 			company.employers.push(employer);
@@ -177,7 +178,7 @@ if(user)
 			employer.save();
 			user.markModified('employer');
 			user.markModified('stage');
-				// Then save the user 
+			user.stage="Basic";
 	user.save(function(err) {
 		if (err) {
 			typeObject.remove();
