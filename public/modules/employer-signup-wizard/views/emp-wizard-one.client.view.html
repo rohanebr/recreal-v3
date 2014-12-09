@@ -248,7 +248,7 @@
                             <label for="">Specialities</label>
                         </div>
                         <div class="col-md-4">
-                          <section class="row" ng-repeat="speciality in company.specialities">
+                          <section class="listThingy" class="row" ng-repeat="speciality in company.specialities">
                             <div class="input-group">
                               <input disabled type="text" placeholder="e.g Software" data-ng-model="speciality.name" class="form-control">
                               <span class="input-group-btn">
@@ -256,12 +256,12 @@
                               </span>
                             </div>
                           </section>
-                          <div class="addThingy" ng-show="isAddingSpeciality">
-                              <input type="text" placeholder="Add a speciality" data-ng-model="newSpeciality.name" class="form-control">
+                          <form class="addThingy" data-ng-submit="addSpeciality()" ng-show="isAddingSpeciality">
+                              <input type="text"  type="submit" placeholder="Add a speciality" data-ng-model="newSpeciality.name" class="form-control">
                               <button class="btn btn-default btn-sm" ng-click="addSpeciality()">Add</button>
-                              <a ng-click="isAddingSpeciality = false">Done Adding</a>
-                          </div>
-                          <p><a ng-click="isAddingSpeciality = true">+ Add Speciality</a></p>
+                              <a href="" ng-click="isAddingSpeciality = false">Done Adding</a>
+                          </form>
+                          <p><a href="" ng-click="isAddingSpeciality = true">+ Add Speciality</a></p>
                         </div>
                       </div>
                     </section>

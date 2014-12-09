@@ -246,11 +246,7 @@ if(user.stage=='DeActive')
 				message: getErrorMessage(err)
 			});
 		} else {
-	
-
 			res.jsonp({status: true});
-
-
 		}
 	});
 	
