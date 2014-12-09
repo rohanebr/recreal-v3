@@ -28,12 +28,8 @@ angular.module('employer-signup-wizard').controller('EmpWizardOneController', ['
 
           if(country1==country.name)
           {
-          	  
-             $scope.company.country=country;
-           
-             $scope.getCountryCities();
-
-         
+            $scope.company.country=country;
+            $scope.getCountryCities();
           }
         
 
