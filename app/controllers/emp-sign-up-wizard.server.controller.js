@@ -186,11 +186,7 @@ if(user)
 				message: getErrorMessage(err)
 			});
 		} else {
-	
-
 			res.jsonp({status: true});
-
-
 		}
 	});
 
