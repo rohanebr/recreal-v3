@@ -18,46 +18,52 @@ var JobSchema = new Schema({
 	// 	required: 'Please fill Job name',
 	// 	trim: true
 	// },
-	  title:{
-	    type: 'String',
-	    trim: true
-	  },
-	   location:{
-	    type: 'String',
-	    trim: true
-	  },
+
+	industry:{
+		type: 'String',
+		trim: true
+	},
+	job_role:{
+		type: 'String',
+		trim: true
+	},
+	title:{
+		type: 'String',
+		trim: true
+	},
+	location:{
+		type: 'String',
+		trim: true
+	},
 	views: [{
        type:Schema.ObjectId,
        ref: 'User'
     }],
-	  description:{
+	description:{
 	    type: 'String'
 	  },
-	  coordinates:{
-            latitude:{
+	coordinates:{
+		latitude:{
          	type:Number,
            	default:0
            },
-           longitude:{
+        longitude:{
            	type:Number,
            	default:0
            }
-
 	  },
-	  requirement:{
+	requirement:{
 	    type: 'String',
 	    trim: true
 	  },
-	  responsibilities:{
-	    type: 'String',
-	    trim: true
-	  },
+	responsibilities:[{
+	  	name: {
+	  		type:'String',
+	  		trim: true
+	  		}
+	}],
 	  due_date:{
 	    type: 'date'
-	  },
-	  industry:{
-	    type: 'String',
-	    trim: true
 	  },
 	  department:{
 	    type: 'String',
