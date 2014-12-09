@@ -12,7 +12,7 @@ var mongoose = require('mongoose'),
 	Threads = mongoose.model('Thread'), 
 	_ = require('lodash'),
 	mongoose = require('mongoose'),
-	passport = require('passport'),
+	
 	User = mongoose.model('User'),
 	config = require('../../config/config'),
 	nodemailer = require('nodemailer'),

@@ -35,19 +35,18 @@ var EmployerSchema = new Schema({
     type: 'String',
     trim: true
   },
+  role:{
+  type: String,
+    enum: ['Admin', 'Viewer','Restricted'],
+    default:'Admin'
+
+  },
+
   skype_id:{
     type: 'String',
     trim: true
   },
   contact_email:{
-    type: 'String',
-    trim: true
-  },
-  country:{
-    type: 'String',
-    trim: true
-  },
-  location:{
     type: 'String',
     trim: true
   },

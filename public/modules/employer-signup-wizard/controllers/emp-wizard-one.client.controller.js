@@ -1,22 +1,32 @@
 'use strict';
 
-angular.module('employer-signup-wizard').controller('EmpWizardOneController', ['$scope', '$http','Industries', 'Countries','$rootScope','geolocation','$stateParams','$location',
-	function($scope, $http,Industries, Countries,$rootScope,geolocation,$stateParams,$location) {
+angular.module('employer-signup-wizard').controller('EmpWizardOneController', ['$scope', '$http','Industries', 'Countries','$rootScope','geolocation','$stateParams','$state',
+	function($scope, $http,Industries, Countries,$rootScope,geolocation,$stateParams,$state) {
 		// Controller Logic
 		// ...
 		var city1="";
 		var country1="";
-		$scope.company={};
+		var lat=0,lng=0;
+		$scope.company={website:"",coordinates:{longitude:0,latitude:0}};
 		$scope.employer={};
 		$scope.company.specialities = [];
+
+		$scope.newSpeciality = {name: ''};
+		$scope.employer.role="Admin";
 		$scope.user='';
 		//Load initial data
 		$scope.LoadInitialData = function() {
 			if($stateParams.tokenId)
 		{
 			$http.post('/validatetoken', {token:$stateParams.tokenId}).success(function(response) {
-			$scope.user=response.user;
-			console.log($scope.user);
+			$scope.user=response;
+			console.log(response);
+			if($scope.user!=="nothing")
+			{
+
+
+
+			}
 
 
 			}).error(function(response) {
@@ -24,13 +34,11 @@ angular.module('employer-signup-wizard').controller('EmpWizardOneController', ['
 				
 			});
 
-    console.log($stateParams.tokenId);
+    		console.log($stateParams.tokenId);
 		}
 		else
 		{
-			
-$location.path('/');
-
+			$location.path('/');
 		}
 			$scope.company.specialities.push({name: 'Product Development'});
 			$scope.industries = Industries.getIndustries();
@@ -48,8 +56,8 @@ $location.path('/');
 	var InitlocationData = function(){
 		var geocoder = new google.maps.Geocoder();
 		geolocation.getLocation().then(function(data){
-		var lat = parseFloat(data.coords.latitude);
-  		var lng = parseFloat(data.coords.longitude);
+		 lat = parseFloat(data.coords.latitude);
+  		 lng = parseFloat(data.coords.longitude);
   
   		var latlng = new google.maps.LatLng(lat, lng);
   		geocoder.geocode({'latLng': latlng}, function(results, status) {
@@ -70,10 +78,12 @@ $location.path('/');
 		          }
 			    });
 		    } else {
-		        alert('No results found');
+		        $scope.company.country=$scope.countries[0];
+		          $scope.getCountryCities();
 		      }
 		    } else {
-	      alert('Geocoder failed due to: ' + status);
+	       $scope.company.country=$scope.countries[0];
+		          $scope.getCountryCities();
 	    }
 	  });
 	     
@@ -105,11 +115,34 @@ $location.path('/');
 		};
 
 		$scope.SaveAndRedirect = function() {
+			if(lng!=0 && lat!=0)
+		{	$scope.company.coordinates.longitude=lng;
+$scope.company.coordinates.latitude=lat;
 
+$rootScope.coords.lat=lat;
+$rootScope.coords.longi=lng;
+$rootScope.country="none";
+$rootScope.city="none";
+
+}
+else
+{
+$rootScope.coords.lat=0;
+$rootScope.coords.longi=0;
+$rootScope.country=$scope.company.country;
+$rootScope.city=$scope.company.city;
+
+}
+
+// coordinates: {
+//         longitude: 0,
+//         latitude: 0
+//     },
 			$scope.success = $scope.error = null;
 			
 			$http.post('/SaveEmpSignUpWizardOneData', {user:$scope.user,company:$scope.company, employer:$scope.employer}).success(function(response) {
-				$location.path('/emp-wizard-two/');
+				// $location.path('/');
+				$state.go('emp-wizard-two');
 				
 			}).error(function(response) {
 				$scope.error = response.message;
@@ -118,9 +151,11 @@ $location.path('/');
 
 		//Add specialities
 		$scope.addSpeciality = function() {
-	      $scope.company.specialities.push({
-	        name: ''
-	      });
+			if($scope.newSpeciality.name != ''){
+				$scope.company.specialities.push($scope.newSpeciality);
+				$scope.newSpeciality = {name: ''};
+			}
+
 	    };
 	    //Remove Speciality
 	    $scope.removeSpeciality = function(index) {
