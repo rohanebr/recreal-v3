@@ -164,8 +164,9 @@ if(user)
 {
    			var employer = new Employer();
 			user.employer = employer;
-			if(user.stage=='Basic')
-				res.jsonp({status:false});
+			if(user.stage=='DeActive')
+				{
+
 			var company = new Company();
 			employer.company = company;
 			company.employers.push(employer);
@@ -179,7 +180,7 @@ if(user)
 			user.markModified('employer');
 			user.markModified('stage');
 			user.stage="Basic";
-	user.save(function(err) {
+		user.save(function(err) {
 		if (err) {
 			typeObject.remove();
 			return res.send(400, {
@@ -193,6 +194,9 @@ if(user)
 
 		}
 	});
+	}
+	else
+		res.jsonp({status:false});
 
 
 
