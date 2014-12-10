@@ -10,7 +10,7 @@ angular.module('employer-signup-wizard').controller('EmpWizardOneController', ['
 		$scope.company={website:"",coordinates:{longitude:0,latitude:0}};
 		$scope.employer={};
 		$scope.company.specialities = [];
-
+      $rootScope.coords={};
 
 		$scope.newSpeciality = {name: ''};
 		$scope.employer.role="Admin";

@@ -213,6 +213,7 @@ exports.SaveEmpSignUpWizardOneData = function(req,res)
 {
 	console.log("SAVEEMPSIGNUP"+req.body.user._id);
  User.findById(req.body.user._id,function(err,user){
+
 if(user.stage=='DeActive')
 {
    			var employer = new Employer();
@@ -264,7 +265,40 @@ if(user.stage=='DeActive')
 
 }
 else
-		res.jsonp({status:false});
+		{
+Company.findOne({"user":req.body.user._id}).exec(function(err,company){
+			company.industry=req.body.company.industry;
+			company.company_size=req.body.company.company_size;
+			company.company_type=req.body.company.company_type;
+			company.country=req.body.company.country.name;
+			company.city=req.body.company.city.name;
+			company.description=req.body.company.description;
+			company.company_name=req.body.company.company_name;
+			company.coordinates=req.body.company.coordinates;
+			company.specialities=[];
+			for(var i=0,len=req.body.company.specialities.length;i<len;i++)
+			
+				
+			company.specialities.push(req.body.company.specialities[i]);
+
+			
+			company.markModified('specialities');
+			company.markModified('industry');
+			company.markModified('company_size');
+			company.markModified('company_type');
+			company.markModified('country');
+			company.markModified('city');
+			company.markModified('description');
+			company.markModified('company_name');
+		    company.markModified('coordinates');
+		    company.save();
+	res.jsonp({status:false});
+});
+
+
+
+
+			}
 
 
 
