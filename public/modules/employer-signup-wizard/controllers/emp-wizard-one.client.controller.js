@@ -11,7 +11,7 @@ angular.module('employer-signup-wizard').controller('EmpWizardOneController', ['
 		$scope.company={website:"",coordinates:{longitude:0,latitude:0}};
 		$scope.employer={};
 		$scope.company.specialities = [];
-
+$rootScope.coords={};
 
 		$scope.newSpeciality = {name: ''};
 		$scope.employer.role="Admin";
@@ -160,16 +160,16 @@ $scope.company.coordinates.latitude=lat;
 
 $rootScope.coords.lat=lat;
 $rootScope.coords.longi=lng;
-$rootScope.country="none";
-$rootScope.city="none";
+$rootScope.country=$scope.company.country.name;
+$rootScope.city=$scope.company.city.name;
 
 }
 else
 {
 $rootScope.coords.lat=0;
 $rootScope.coords.longi=0;
-$rootScope.country=$scope.company.country;
-$rootScope.city=$scope.company.city;
+$rootScope.country=$scope.company.country.name;
+$rootScope.city=$scope.company.city.name;
 
 }
 

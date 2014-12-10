@@ -8,5 +8,7 @@ module.exports = function(app) {
 	app.route('/signupemployer').post(empSignUpWizard.signupemployer);
 	app.route('/validatetoken').post(empSignUpWizard.ValidateToken);
 	app.route('/SaveEmpSignUpWizardOneData').post(empSignUpWizard.SaveEmpSignUpWizardOneData);
+	app.route('/getCountryCity').post(empSignUpWizard.getCountryCity);
+	app.route('/savelatlong').post(empSignUpWizard.saveLatLong);
 //	app.param('userId', users.userByID);
 };

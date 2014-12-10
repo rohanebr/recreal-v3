@@ -238,7 +238,8 @@ if(user.stage=='DeActive')
 			company.city=req.body.company.city.name;
 			company.description=req.body.company.description;
 			company.company_name=req.body.company.company_name;
-			company.coordinates=req.body.company.coordinates;
+			company.coordinates.latitude=0;
+			company.coordinates.longitude=0;
 			company.save();
 			employer.firstName = user.firstName;
 			employer.lastName = user.lastName;
@@ -274,7 +275,8 @@ Company.findOne({"user":req.body.user._id}).exec(function(err,company){
 			company.city=req.body.company.city.name;
 			company.description=req.body.company.description;
 			company.company_name=req.body.company.company_name;
-			company.coordinates=req.body.company.coordinates;
+			company.coordinates.latitude=0;
+			company.coordinates.longitude=0;
 			company.specialities=[];
 			for(var i=0,len=req.body.company.specialities.length;i<len;i++)
 			
@@ -306,5 +308,32 @@ Company.findOne({"user":req.body.user._id}).exec(function(err,company){
  });
 
 
+
+};
+
+exports.getCountryCity = function (req,res)
+{
+Company.findOne({"user":req.body.user._id}).exec(function(err,company){
+res.jsonp({city:company.city,country:company.country,latitude:company.coordinates.latitude,longitude:company.coordinates.longitude});
+
+});
+
+
+
+};
+
+exports.saveLatLong = function(req,res)
+{
+Company.findOne({"user":req.body.user._id}).exec(function(err,company){
+company.coordinates.latitude=req.body.latitude;
+company.coordinates.longitude=req.body.longitude;
+company.markModified('coordinates');
+company.save();
+res.jsonp({stat:"Saved"});
+
+
+
+
+});
 
 };
