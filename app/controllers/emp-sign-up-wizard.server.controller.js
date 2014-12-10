@@ -170,8 +170,11 @@ User.findOne({"activeToken":req.body.token}).exec(function(err, user){
 if(user)
 	{	
 
-	
-		if (err || !user) {
+		Company.findOne({"user":user._id}).exec(function(err,company){
+
+
+			console.log("COMPANY"+company);
+			if (err || !user) {
 			res.send(400, info);
 		} else {
 			// Remove sensitive data before login
@@ -183,10 +186,15 @@ if(user)
 				if (err) {
 					res.send(400, err);
 				} else {
-					res.jsonp(user);
+					
+					res.jsonp({user:user,company:company});
 				}
 			});
 		}
+		});
+
+	
+		
 	
 
 }
@@ -228,7 +236,7 @@ if(user.stage=='DeActive')
 			company.country=req.body.company.country.name;
 			company.city=req.body.company.city.name;
 			company.description=req.body.company.description;
-			company.company_name=req.body.company.name;
+			company.company_name=req.body.company.company_name;
 			company.coordinates=req.body.company.coordinates;
 			company.save();
 			employer.firstName = user.firstName;

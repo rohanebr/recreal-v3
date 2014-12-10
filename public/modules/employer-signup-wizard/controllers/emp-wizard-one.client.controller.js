@@ -20,8 +20,9 @@ angular.module('employer-signup-wizard').controller('EmpWizardOneController', ['
 			if($stateParams.tokenId)
 		{
 			$http.post('/validatetoken', {token:$stateParams.tokenId}).success(function(response) {
-			$scope.user=response;
-			
+			$scope.user=response.user;
+			if(response.company!=null)
+			$scope.company=response.company;
 			console.log(response);
 			if($scope.user.user=="nothing")
 			{
@@ -33,7 +34,7 @@ $state.go('home');
 			{
 
 				$scope.authentication = Authentication;
-				$scope.authentication.user = response;
+				$scope.authentication.user = response.user;
 			}
 
 
@@ -71,6 +72,7 @@ $state.go('home');
   		geocoder.geocode({'latLng': latlng}, function(results, status) {
     	if (status == google.maps.GeocoderStatus.OK) {
 	      	if (results[1]) {
+	      		console.log(results[1]);
 		      	var citycountry=results[1].formatted_address;
 		      	var res = citycountry.split(",");
 		    	country1=res[res.length-1];
@@ -86,10 +88,12 @@ $state.go('home');
 		          }
 			    });
 		    } else {
+		    	alert("no country found");
 		        $scope.company.country=$scope.countries[0];
 		          $scope.getCountryCities();
 		      }
 		    } else {
+		    	alert("QUERY LIMIT REACHED");
 	       $scope.company.country=$scope.countries[0];
 		          $scope.getCountryCities();
 	    }
