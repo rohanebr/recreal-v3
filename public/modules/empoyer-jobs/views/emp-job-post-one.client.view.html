@@ -1,4 +1,4 @@
-<section data-ng-controller="EmpJobPostOneController">
+<section data-ng-controller="EmpJobPostOneController" data-ng-init="LoadInitialData()">
 	<section class="row">
         <section class="container custom-wrapper">
             <section class="hbox">
@@ -76,11 +76,8 @@
                                 </div>
                                 <div class="col-md-4">
                                     <span>
-                                        <select required data-ng-model="job.industry" class="form-control">
-                                            <option data-ng-repeat="ind in industries">{{ind.name}}</option>
-                                        </select>
                                          <select data-ng-model="job.industry" ng-options="ind.name for ind in industries" data-ng-change="getIndustryJobRoles()" required class="form-control">
-                            </select>
+                                        </select>
                                     </span>
                                 </div>
                             </div>
@@ -90,8 +87,7 @@
                                 </div>
                                 <div class="col-md-4">
                                     <span class="ui-select">
-                                        <select required data-ng-model="job.role" class="form-control">
-                                            <option>Drive Test Engineer</option>
+                                        <select ng-model="job.job_role" ng-options="job_role.name for job_role in job_roles" required class="form-control">
                                         </select>
                                     </span>
                                 </div>
@@ -134,12 +130,9 @@
                                 </div>
                                 <div class="col-md-3">
                                     <span class="ui-select">
-                                        <select data-ng-model="job.employee_type" class="form-control">
-                                            <option>Contract</option>
-                                            <option>Daily Wages</option>
-                                            <option>Internship</option>
-                                            <option>Permanent</option>
-                                            <option>Temporary</option>
+                                        <select data-ng-model="job.employee_status" class="form-control">
+                                            <option>Full Time</option>
+                                            <option>Part Time</option>
                                         </select>
                                     </span>
                                 </div>
@@ -198,12 +191,14 @@
                                 </div>
                                 <div class="col-md-3">
                                   <span class="ui-select">
-                                      <select data-ng-model="job.travel_required" class="form-control">
+                                      <select data-ng-model="job.visa_status" class="form-control">
                                           <option>Citizen</option>
-                                          <option>25% or less</option>
-                                          <option>50% or less </option>
-                                          <option>75% or less</option>
-                                          <option>more than 75%</option>
+                                          <option>No Visa</option>
+                                          <option>Residency Visa (Non-Transferable)</option>
+                                          <option>Residency Visa (Transferable)</option>
+                                          <option>Student Visa</option>
+                                          <option>Transit Visa</option>
+                                          <option>Work Visa</option>
                                       </select>
                                   </span>
                                 </div>

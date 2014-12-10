@@ -35,7 +35,8 @@ exports.delete = function(req, res) {
 
 };
 
-exports.industryByName = function(req, res, next, name) { Industry.findOne({name:name}).exec(function(err, industry) {
+exports.industryByName = function(req, res, next, name) { 
+	Industry.findOne({name:name}).populate('job_roles').exec(function(err, industry) {
 		if (err) return next(err);
 		if (! industry) return next(new Error('Failed to load industry ' + name));
 		req.industry = industry ;
