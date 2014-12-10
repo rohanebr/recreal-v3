@@ -85,6 +85,10 @@ var JobSchema = new Schema({
 	    type: 'String',
 	    trim: true
 	  },
+	  visa_status:{
+	    type: 'String',
+	    trim: true
+	  },
 	  employee_status:{
 	    type: 'String',
 	    trim: true
