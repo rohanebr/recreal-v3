@@ -1,12 +1,9 @@
 'use strict';
 
-angular.module('empoyer-jobs').controller('EmpJobPostTwoController', ['$scope',
-	function($scope) {
+angular.module('empoyer-jobs').controller('EmpJobPostTwoController', ['$scope', 'Employers', '$stateParams', '$location',
+	function($scope, Employers, $stateParams, $location) {
 	
 		$scope.job={};
-
-
-
 
 		//**********Responsibilities***********
 		// Add Responsibility
@@ -20,9 +17,6 @@ angular.module('empoyer-jobs').controller('EmpJobPostTwoController', ['$scope',
 	      $scope.job.responsibilities.splice(index, 1);
 	    };
 
-
-
-
 	    //**********Qualification***********
 		// Add Qualification
 		$scope.addQualification = function() {
@@ -34,10 +28,6 @@ angular.module('empoyer-jobs').controller('EmpJobPostTwoController', ['$scope',
 	    $scope.removeQualification = function(index) {
 	      $scope.job.qualifications.splice(index, 1);
 	    };
-
-
-
-
 
 	    //**********Education***********
 		// Add Education
@@ -51,9 +41,6 @@ angular.module('empoyer-jobs').controller('EmpJobPostTwoController', ['$scope',
 	      $scope.job.educations.splice(index, 1);
 	    };
 
-
-
-
 	    //**********Skills***********
 		// Add Skills
 		$scope.addSkill = function() {
@@ -66,7 +53,6 @@ angular.module('empoyer-jobs').controller('EmpJobPostTwoController', ['$scope',
 	      $scope.job.skills.splice(index, 1);
 	    };
 
-
 	    //Save and Redirect
 	    $scope.SaveAndRedirect = function() {
 			$scope.success = $scope.error = null;
@@ -78,5 +64,11 @@ angular.module('empoyer-jobs').controller('EmpJobPostTwoController', ['$scope',
 				$scope.error = response.message;
 			});
 		};
+
+		//Dont save and go back
+		$scope.GoBack = function(){
+			$location.path('emp-job-post-one-edit/' + $stateParams.jobId);
+		}
+
 	}
 ]);

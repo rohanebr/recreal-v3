@@ -10,12 +10,16 @@ angular.module('empoyer-jobs').config(['$stateProvider',
 			templateUrl: 'modules/empoyer-jobs/views/emp-job-post-three.client.view.html'
 		}).
 		state('emp-job-post-two', {
-			url: '/emp-job-post-two',
+			url: '/emp-job-post-two/:jobId',
 			templateUrl: 'modules/empoyer-jobs/views/emp-job-post-two.client.view.html'
 		}).
 		state('emp-job-post-one', {
 			url: '/emp-job-post-one',
 			templateUrl: 'modules/empoyer-jobs/views/emp-job-post-one.client.view.html'
+		}).
+		state('emp-job-post-one-edit', {
+			url: '/emp-job-post-one-edit/:jobId',
+			templateUrl: 'modules/empoyer-jobs/views/emp-job-post-one.edit.client.view.html'
 		}).
 		state('employer-job-candidates', {
 			url: '/employer-job-candidates/:jobId',

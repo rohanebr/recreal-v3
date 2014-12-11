@@ -343,11 +343,8 @@ exports.hasAuthorization = function(req, res, next) {
 
 
 exports.onePlusView = function(req, res) {
-
-
     var numberofviews = req.job.views;
     var alreadyviewedbytheuser = false;
-
     Job.findById(req.job._id).exec(function(err, job) {
         if (req.job.views.length == 0)
             job.views.push(req.body.user._id);
@@ -356,50 +353,36 @@ exports.onePlusView = function(req, res) {
                 var views = job.views[d];
                 if (views.equals(req.user.id))
                     alreadyviewedbytheuser = true;
-
             }
-
             if (!alreadyviewedbytheuser)
                 job.views.push(req.body.user._id);
-
-
-
         }
-
         job.markModified('views');
         job.save();
-
-
     });
-
-
-
-
 };
 
 exports.searchedJobs = function(req,res){
     Job.setKeywords(function(err) {
    
   });
-if(req.body.keyword!='find-me-a-job'){
-Job.search(req.body.keyword,{title: 1}, function (err, output) {
+    if(req.body.keyword!='find-me-a-job'){
+    Job.search(req.body.keyword,{title: 1}, function (err, output) {
     if (err) return handleError(err);
-
     else
-    {console.log(output);
-
-  var totallength=output.results.length;
-var ids=[];
-     for(var a=req.body.skip;a<totallength;a++)
-        if(a<(req.body.skip+req.body.limit))
-         ids.push(output.results[a]._id);
- 
-    Job.find({_id: {$in: ids}}).populate('user', 'displayName').populate('company').exec(function(err,out){
-if(!err)
-{console.log(out);  
-    res.jsonp({jobs:out,total:output.totalCount});
-}
-
+    {
+        console.log(output);
+        var totallength=output.results.length;
+        var ids=[];
+         for(var a=req.body.skip;a<totallength;a++)
+            if(a<(req.body.skip+req.body.limit))
+             ids.push(output.results[a]._id);
+     
+        Job.find({_id: {$in: ids}}).populate('user', 'displayName').populate('company').exec(function(err,out){
+        if(!err)
+        {console.log(out);  
+            res.jsonp({jobs:out,total:output.totalCount});
+        }
     });   
  
 
