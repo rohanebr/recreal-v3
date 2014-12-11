@@ -1,5 +1,6 @@
 'use strict';
 
+
 angular.module('employer-signup-wizard').controller('EmpWizardTwoController', ['$scope','$interval','Authentication','$state','$http','$location',
 	function($scope,$interval,Authentication,$state,$http,$location) {
     $scope.authentication = Authentication;
@@ -12,7 +13,8 @@ angular.module('employer-signup-wizard').controller('EmpWizardTwoController', ['
   var geocoder = new google.maps.Geocoder();
 
 $scope.SaveAndRedirect = function()
-{
+
+{console.log(marker.position.D);
   $http.post('/savelatlong',{user:$scope.authentication.user,latitude:marker.position.k,longitude:marker.position.D}).success(function(response){
 $state.go('emp-job-post-one');
 
@@ -40,6 +42,7 @@ $http.post('/getCountryCity', {user:$scope.authentication.user}).success(functio
 
 
   geocoder.geocode( { 'address':response.city+","+response.country}, function(results, status) {
+
     if (status == google.maps.GeocoderStatus.OK) {
        console.log(results[0].geometry.location.lat());
      $scope.latitude=results[0].geometry.location.lat();

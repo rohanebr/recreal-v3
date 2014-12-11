@@ -8,6 +8,7 @@ angular.module('employer-signup-wizard').controller('EmpWizardOneController', ['
 		var country1="";
 			$scope.gotCompanyFromDB=false;
 		var lat=0,lng=0;
+		$rootScope.coords = {};
 		$scope.company={website:"",coordinates:{longitude:0,latitude:0}};
 		$scope.employer={};
 		$scope.company.specialities = [];
