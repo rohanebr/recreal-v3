@@ -13,8 +13,8 @@ angular.module('employer-signup-wizard').controller('EmpWizardTwoController', ['
   var geocoder = new google.maps.Geocoder();
 
 $scope.SaveAndRedirect = function()
-{
-  $http.post('/savelatlong',{user:$scope.authentication.user,latitude:marker.position.k,longitude:marker.position.B}).success(function(response){
+{console.log(marker.position.D);
+  $http.post('/savelatlong',{user:$scope.authentication.user,latitude:marker.position.k,longitude:marker.position.D}).success(function(response){
 $state.go('emp-job-post-one');
 
 
