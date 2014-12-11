@@ -13,8 +13,8 @@ var mongoose = require('mongoose'),
 	Employer = mongoose.model('Employer'),
 	Company = mongoose.model('Company'),
 	passport = require('passport'),
-	Thread = mongoose.model('Thread');
-
+	Thread = mongoose.model('Thread'),
+	Job = mongoose.model('Job');
 
 	var signin = function(req, res, next) {
 		console.log("SIGNIN"+req);
@@ -352,5 +352,42 @@ res.jsonp({stat:"Saved"});
 
 
 });
+
+};
+
+exports.SaveJobDataOne = function(req,res)
+{
+	console.log("save");
+	var job = new Job();
+	job.employee_status = req.body.employee_status;
+	job.employee_type = req.body.employee_type;
+	job.industry = req.body.industry.name;
+	job.job_role = req.body.job_role.name;
+	// for(var i=0,len=req.body.educations.length;i<len;i++)
+	// 	job.educations.push(req.body.educations[i]);
+	// for(var i=0,len=req.body.responsibilities.length;i<len;i++)
+	// 	job.responsibilities.push(req.body.responsibilities[i]);
+
+	// for(var i=0,len=req.body.skills.length;i<len;i++)
+	// 	job.skills.push(req.body.skills[i]);
+
+	job.title = req.body.title;
+	job.description = req.body.description;
+	job.no_of_positions = req.body.no_of_positions;
+	job.salary_range = req.body.salary_range;
+	job.shift = req.body.shift;
+	job.travel_required = req.body.travel_required;
+	job.visa_status = req.body.visa_status;
+	job.save(function(err) {
+		if(!err)
+		{
+			console.log("save");
+			res.jsonp(job);
+			console.log(err);
+		}
+		else
+			console.log(err);
+	});
+
 
 };

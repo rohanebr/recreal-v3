@@ -51,7 +51,7 @@ var JobroleSchema = new Schema({
       		type: 'String',
       		trim: true
       	},
-      	required:{
+      	priority:{
       		type: 'String',
       		trim: true
       	}

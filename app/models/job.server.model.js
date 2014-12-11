@@ -113,14 +113,20 @@ var JobSchema = new Schema({
 	    type: 'String',
 	    trim: true
 	  },
-	  degree_title:{
-	    type: 'String',
-	    trim: true
-	  },
-	  study_field:{
-	    type: 'String',
-	    trim: true
-	  },
+	  educations:[{
+    	degree_title:{
+      		type: 'String',
+      		trim: true
+      	},
+      	study_feild:{
+      		type: 'String',
+      		trim: true
+      	},
+      	required:{
+      		type: 'String',
+      		trim: true
+      	}
+  	}],
 	  career_level:{
 	    type: 'String',
 	    trim: true
@@ -135,15 +141,15 @@ var JobSchema = new Schema({
 	  		}
 		}],
 	  skills:[{
-	  	title:{
-	  		type:'String',
-	  		trim:true
-	  		},
-	  	level:{
-	  		type:'String',
-	  		trim:true
-	  		}
-	  	}],
+    	title:{
+      		type: 'String',
+      		trim: true
+      	},
+      	priority:{
+      		type: 'String',
+      		trim: true
+      	}
+  	  }],
 	  tags:[{
 	  	name:{
 	  		type:'String'

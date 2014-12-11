@@ -39,10 +39,10 @@ angular.module('empoyer-jobs').controller('EmpJobPostOneController', ['$scope','
 
 		$scope.SaveAndRedirect = function() {
 			$scope.success = $scope.error = null;
-			
+			console.log("saveredirect");
 			$http.post('/SaveEmpJobPostOneData', $scope.job).success(function(response) {
 				// If successful show success message and clear form
-				
+				console.log(response);
 			}).error(function(response) {
 				$scope.error = response.message;
 			});

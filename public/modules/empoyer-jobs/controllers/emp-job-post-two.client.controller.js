@@ -5,16 +5,6 @@ angular.module('empoyer-jobs').controller('EmpJobPostTwoController', ['$scope',
 	
 		$scope.job={};
 
-		$scope.SaveAndRedirect = function() {
-			$scope.success = $scope.error = null;
-			
-			$http.post('/SaveEmpJobPostTwoData', $scope.job).success(function(response) {
-				// If successful show success message and clear form
-				
-			}).error(function(response) {
-				$scope.error = response.message;
-			});
-		};
 
 
 
@@ -76,5 +66,17 @@ angular.module('empoyer-jobs').controller('EmpJobPostTwoController', ['$scope',
 	      $scope.job.skills.splice(index, 1);
 	    };
 
+
+	    //Save and Redirect
+	    $scope.SaveAndRedirect = function() {
+			$scope.success = $scope.error = null;
+			
+			$http.post('/SaveEmpJobPostOneData', $scope.job).success(function(response) {
+				// If successful show success message and clear form
+				
+			}).error(function(response) {
+				$scope.error = response.message;
+			});
+		};
 	}
 ]);
