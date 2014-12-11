@@ -2,12 +2,14 @@
 
 angular.module('core').controller('HeaderController', ['$scope', 'Authentication', 'Menus', 'Socket', '$http','$location','$rootScope', 'toaster',
     function($scope, Authentication, Menus, Socket, $http,$location,$rootScope, toaster) {
+      console.log("HEADER CLIENT CONTROLLER");
         $scope.authentication = Authentication;
         $scope.isCollapsed = false;
         $scope.menu = Menus.getMenu('topbar');
         $scope.threads = [];
         $scope.unreadnotificationslength=0;
         $scope.user=$scope.authentication.user;
+        console.log(Authentication);
         $scope.notifications = [];
         var thread = [];
 
@@ -130,14 +132,19 @@ else return false;
             });
 
 
-
+console.log($scope.authentication.user._id);
 
             $http.get('/users/getMessages/' + $scope.authentication.user._id).success(function(res) {
-            
+              console.log("GETMESSAGE"+res);
                
                 if (res.length > 1) {
                     for (var x = 1; x < res.length; x++)
+                       { 
+                          if(res[x].senderName==null)
+                            res[x].senderName="From Recreal Team";
                         $scope.threads.push(res[x]);
+
+                      }
 
                 }
 

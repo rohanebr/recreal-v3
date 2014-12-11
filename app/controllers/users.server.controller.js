@@ -508,7 +508,7 @@ var threadId;
  		  for(var x=0;x<docs.length;x++)
  		  {
  		  	var isRead=false;
- 		  	if(docs[x].sender.equals(userId))
+ 		  	if(docs[x].sender!=null && docs[x].sender.equals(userId))
  		  	{
                 if(docs[x].readBySender==true)
                 	isRead=true;
@@ -522,15 +522,25 @@ var threadId;
 
  		  	}	  	
             var lengths=docs[x].messages.length;
+       if(!docs[x].messages[lengths-1].author)
+       {
+       
 
+ 		  	  	var messagebody= docs[x].messages[lengths-1].messageBody;
+ 		  	  	var created=docs[x].messages[lengths-1].created;
+ 		  	  	var attr={id: docs[x]._id,messageBody:messagebody,created:created};
+ 		  	  	gotmessages.push(attr);
+       }
+   else{
  		  if(!isRead && !userId.equals(docs[x].messages[lengths-1].author._id))
- 		  	  {var sendername=docs[x].messages[lengths-1].author.displayName;
+ 		  	  {
+ 		  	  	var sendername=docs[x].messages[lengths-1].author.displayName;
  		  	  	var messagebody= docs[x].messages[lengths-1].messageBody;
  		  	  	var created=docs[x].messages[lengths-1].created;
  		  	  	var attr={id: docs[x]._id,senderName : sendername,messageBody:messagebody,created:created};
  		  	  	gotmessages.push(attr);
 
- 		  	  }
+ 		  	  }}
  	}
  	
  	  

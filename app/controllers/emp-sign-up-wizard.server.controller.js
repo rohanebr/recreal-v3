@@ -12,7 +12,8 @@ var mongoose = require('mongoose'),
 	config = require('../../config/config'),
 	Employer = mongoose.model('Employer'),
 	Company = mongoose.model('Company'),
-	passport = require('passport');
+	passport = require('passport'),
+	Thread = mongoose.model('Thread');
 
 
 	var signin = function(req, res, next) {
@@ -73,6 +74,15 @@ console.log("IT CAME");
 	// Add missing user fields
 	user.provider = 'local';
 	user.displayName = user.firstName + ' ' + user.lastName;
+var thread = new Thread();
+thread.created= Date.now();
+thread.updated= Date.now();
+thread.receiver=user;
+thread.subject="Welcome to Recreal";
+thread.messages.push({messageBody:"Our team welcomes you to Recreal. The only site which provides real time synergetic hiring!!",created:Date.now()});
+thread.save();
+user.threads.push(thread);
+
 	
 
 
@@ -324,6 +334,13 @@ res.jsonp({city:company.city,country:company.country,latitude:company.coordinate
 
 exports.saveLatLong = function(req,res)
 {
+	User.findById(req.body.user._id).exec(function(err,user){
+user.stage="CompanyLocation";
+user.markModified("stage");
+user.save();
+
+
+	});
 Company.findOne({"user":req.body.user._id}).exec(function(err,company){
 company.coordinates.latitude=req.body.latitude;
 company.coordinates.longitude=req.body.longitude;
