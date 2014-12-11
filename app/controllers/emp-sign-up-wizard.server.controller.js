@@ -12,7 +12,8 @@ var mongoose = require('mongoose'),
 	config = require('../../config/config'),
 	Employer = mongoose.model('Employer'),
 	Company = mongoose.model('Company'),
-	passport = require('passport');
+	passport = require('passport'),
+	Thread = mongoose.model('Thread');
 
 
 	var signin = function(req, res, next) {
@@ -73,6 +74,15 @@ console.log("IT CAME");
 	// Add missing user fields
 	user.provider = 'local';
 	user.displayName = user.firstName + ' ' + user.lastName;
+var thread = new Thread();
+thread.created= Date.now();
+thread.updated= Date.now();
+thread.receiver=user;
+thread.subject="Welcome to Recreal";
+thread.messages.push({messageBody:"Our team welcomes you to Recreal. The only site which provides real time synergetic hiring!!",created:Date.now()});
+thread.save();
+user.threads.push(thread);
+
 	
 
 
@@ -170,8 +180,11 @@ User.findOne({"activeToken":req.body.token}).exec(function(err, user){
 if(user)
 	{	
 
-	
-		if (err || !user) {
+		Company.findOne({"user":user._id}).exec(function(err,company){
+
+
+			console.log("COMPANY"+company);
+			if (err || !user) {
 			res.send(400, info);
 		} else {
 			// Remove sensitive data before login
@@ -183,10 +196,15 @@ if(user)
 				if (err) {
 					res.send(400, err);
 				} else {
-					res.jsonp(user);
+					
+					res.jsonp({user:user,company:company});
 				}
 			});
 		}
+		});
+
+	
+		
 	
 
 }
@@ -205,6 +223,7 @@ exports.SaveEmpSignUpWizardOneData = function(req,res)
 {
 	console.log("SAVEEMPSIGNUP"+req.body.user._id);
  User.findById(req.body.user._id,function(err,user){
+
 if(user.stage=='DeActive')
 {
    			var employer = new Employer();
@@ -228,8 +247,9 @@ if(user.stage=='DeActive')
 			company.country=req.body.company.country.name;
 			company.city=req.body.company.city.name;
 			company.description=req.body.company.description;
-			company.company_name=req.body.company.name;
-			company.coordinates=req.body.company.coordinates;
+			company.company_name=req.body.company.company_name;
+			company.coordinates.latitude=0;
+			company.coordinates.longitude=0;
 			company.save();
 			employer.firstName = user.firstName;
 			employer.lastName = user.lastName;
@@ -256,7 +276,41 @@ if(user.stage=='DeActive')
 
 }
 else
-		res.jsonp({status:false});
+		{
+Company.findOne({"user":req.body.user._id}).exec(function(err,company){
+			company.industry=req.body.company.industry;
+			company.company_size=req.body.company.company_size;
+			company.company_type=req.body.company.company_type;
+			company.country=req.body.company.country.name;
+			company.city=req.body.company.city.name;
+			company.description=req.body.company.description;
+			company.company_name=req.body.company.company_name;
+			company.coordinates.latitude=0;
+			company.coordinates.longitude=0;
+			company.specialities=[];
+			for(var i=0,len=req.body.company.specialities.length;i<len;i++)
+			
+				
+			company.specialities.push(req.body.company.specialities[i]);
+
+			
+			company.markModified('specialities');
+			company.markModified('industry');
+			company.markModified('company_size');
+			company.markModified('company_type');
+			company.markModified('country');
+			company.markModified('city');
+			company.markModified('description');
+			company.markModified('company_name');
+		    company.markModified('coordinates');
+		    company.save();
+	res.jsonp({status:false});
+});
+
+
+
+
+			}
 
 
 
@@ -264,5 +318,39 @@ else
  });
 
 
+
+};
+
+exports.getCountryCity = function (req,res)
+{
+Company.findOne({"user":req.body.user._id}).exec(function(err,company){
+res.jsonp({city:company.city,country:company.country,latitude:company.coordinates.latitude,longitude:company.coordinates.longitude});
+
+});
+
+
+
+};
+
+exports.saveLatLong = function(req,res)
+{
+	User.findById(req.body.user._id).exec(function(err,user){
+user.stage="CompanyLocation";
+user.markModified("stage");
+user.save();
+
+
+	});
+Company.findOne({"user":req.body.user._id}).exec(function(err,company){
+company.coordinates.latitude=req.body.latitude;
+company.coordinates.longitude=req.body.longitude;
+company.markModified('coordinates');
+company.save();
+res.jsonp({stat:"Saved"});
+
+
+
+
+});
 
 };

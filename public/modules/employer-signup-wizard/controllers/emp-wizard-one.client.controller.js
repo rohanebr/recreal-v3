@@ -6,12 +6,13 @@ angular.module('employer-signup-wizard').controller('EmpWizardOneController', ['
 		// ...
 		var city1="";
 		var country1="";
+			$scope.gotCompanyFromDB=false;
 		var lat=0,lng=0;
 		$rootScope.coords = {};
 		$scope.company={website:"",coordinates:{longitude:0,latitude:0}};
 		$scope.employer={};
 		$scope.company.specialities = [];
-
+$rootScope.coords={};
 
 		$scope.newSpeciality = {name: ''};
 		$scope.employer.role="Admin";
@@ -21,8 +22,13 @@ angular.module('employer-signup-wizard').controller('EmpWizardOneController', ['
 			if($stateParams.tokenId)
 		{
 			$http.post('/validatetoken', {token:$stateParams.tokenId}).success(function(response) {
-			$scope.user=response;
-			
+			$scope.user=response.user;
+			if(response.company!=null)
+			{
+			$scope.company=response.company;
+			$scope.gotCompanyFromDB=true;
+
+		}
 			console.log(response);
 			if($scope.user.user=="nothing")
 			{
@@ -34,7 +40,7 @@ $state.go('home');
 			{
 
 				$scope.authentication = Authentication;
-				$scope.authentication.user = response;
+				$scope.authentication.user = response.user;
 			}
 
 
@@ -54,12 +60,31 @@ $state.go('home');
 			Countries.getCountries(function(countries){
 				$scope.countries = countries;
 				// $scope.countries.splice(0, 1);
-				$scope.company.country = $scope.countries[1];
-				$scope.getCountryCities();
+				if(!$scope.gotCompanyFromDB)
+				{$scope.company.country = $scope.countries[1];
+$scope.getCountryCities();
+
+				}
+			else
+			{
+                  	angular.forEach($scope.countries,function(country){
+		     		
+		     			country1=$scope.company.country;
+		          if(country1==country.name)
+		          {
+		             $scope.company.country=country;
+		             $scope.getCountryCities();
+		          }
+			    });
+
+
+			}
+				
 			});
 	      	$scope.company.industry = $scope.industries[0].name;
 	      	$scope.company.company_size = '1 - 10';
 	      	$scope.company.company_type = 'Sole Proprietorship';
+	      	if(!$scope.gotCompanyFromDB)
 	      	InitlocationData();
 		};
 	var InitlocationData = function(){
@@ -80,6 +105,8 @@ $state.go('home');
 		     	country1=country1.trim();
 		   
 		     	angular.forEach($scope.countries,function(country){
+		     		if($scope.gotCompanyFromDB)
+		     			country1=$scope.company.country;
 		          if(country1==country.name)
 		          {
 		             $scope.company.country=country;
@@ -112,9 +139,13 @@ $state.go('home');
 				$scope.cities = response.cities;
 				angular.forEach($scope.cities,function(city){
 				console.log(city.name+" "+city1);
+				if($scope.gotCompanyFromDB)
+		     			city1=$scope.company.city;
+
 				if(city.name==city1)//fuck my life
 				{
 				console.log(city);
+
 				$scope.company.city=city;
 				foundit=true;
 				}
@@ -130,16 +161,16 @@ $scope.company.coordinates.latitude=lat;
 
 $rootScope.coords.lat=lat;
 $rootScope.coords.longi=lng;
-$rootScope.country="none";
-$rootScope.city="none";
+$rootScope.country=$scope.company.country.name;
+$rootScope.city=$scope.company.city.name;
 
 }
 else
 {
 $rootScope.coords.lat=0;
 $rootScope.coords.longi=0;
-$rootScope.country=$scope.company.country;
-$rootScope.city=$scope.company.city;
+$rootScope.country=$scope.company.country.name;
+$rootScope.city=$scope.company.city.name;
 
 }
 

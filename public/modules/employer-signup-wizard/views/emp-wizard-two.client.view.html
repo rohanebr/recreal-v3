@@ -1,4 +1,4 @@
-<section data-ng-controller="EmpWizardTwoController">
+<section data-ng-controller="EmpWizardTwoController"  data-ng-init="LoadInitialData()">
 	<section class="row">
     <section class="container custom-wrapper">
       <section class="hbox">
@@ -128,11 +128,11 @@
                 <section class="scrollable padder">
                 	
                      
-                     <input type="button" value="Auto Rotate" ng-click="autoRotate();">
-      <ng-map center="45.518970, -122.672899"
-        zoom="18"
-        map-type-id="SATELLITE"
-        tilt="45"
+                     
+      <ng-map data-ng-model="map" center="45.518970, -122.672899"
+        zoom="11"
+        map-type-id="ROADMAP"
+        
         heading="90">
       </ng-map> 
        <section class="col-md-8">
@@ -145,7 +145,17 @@
                             <input type="email" class="form-control" placeholder="Abu Dhabi...">
                           </div>
                       </section>
-                  <section class="pull-right"><a href="#!/emp-wizard-one/{{authentication.user.activeToken}}">Back</a><a href="#!/emp-job-post-one">Next</a></section>
+                      <footer>
+                      <section class="col-md-2 pull-right">
+                        <button type="submit" class="btn btn-primary btn-block btn-lg" ng-click="SaveAndRedirect()">Next</button>  
+                      </section>
+                    </footer>
+                    <footer>
+                      <section class="col-md-2 pull-right">
+                        <button type="submit" class="btn btn-primary btn-block btn-lg" ng-click="Back()">Back</button>  
+                      </section>
+                    </footer>
+                  <!-- <section class="pull-right"><a href="#!/emp-wizard-one">Back</a><a href="#!/emp-job-post-one">Next</a></section> -->
                 </section>
               </section>
 

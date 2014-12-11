@@ -17,14 +17,12 @@ var IndustrySchema = new Schema({
 	    trim: true
   	},
 	group:{
-    type: 'String',
-    trim: true
+    	type: 'String',
+    	trim: true
 	},
 	job_roles:[{
-  	name:{
-    		type: 'String',
-    		trim: true
-    		}
+		type: Schema.ObjectId,
+		ref: 'Jobrole'
 	}]
 });
 
