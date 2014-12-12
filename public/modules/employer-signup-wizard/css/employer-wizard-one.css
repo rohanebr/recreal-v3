@@ -12,3 +12,22 @@ border-radius: 5px;
 .listThingy {
 	margin: 3px;
 }
+
+.company-image
+{
+	display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top:2%;
+}
+
+.profile-image
+{
+	display: block;
+  width: 130px;
+  height: 130px;
+  margin: auto;
+  margin-top:2%; 
+
+  box-shadow: 0 3px 2px rgba(0, 0, 0, 0.3); 
+}
