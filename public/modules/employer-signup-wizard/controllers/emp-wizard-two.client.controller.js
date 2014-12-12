@@ -1,9 +1,11 @@
 'use strict';
 
 
-angular.module('employer-signup-wizard').controller('EmpWizardTwoController', ['$scope', 'Employers', '$interval', 'Authentication', '$state', '$http', '$location',
-    function($scope, Employers, $interval, Authentication, $state, $http, $location) {
+angular.module('employer-signup-wizard').controller('EmpWizardTwoController', ['$scope', 'Employers', '$interval', 'Authentication', '$state', '$http', '$location','$rootScope','locationVarification',
+    function($scope, Employers, $interval, Authentication, $state, $http, $location,$rootScope,locationVarification) {
         $scope.authentication = Authentication;
+        var cityFromRootScope,countryFromRootScope;
+        var useGeoLocationInformation=false;        
         if (!$scope.authentication.user)
             $state.go("home");
         $scope.latitude = 0;
@@ -37,11 +39,43 @@ angular.module('employer-signup-wizard').controller('EmpWizardTwoController', ['
           $location.path("emp-wizard-one/" + $scope.authentication.user.activeToken);
         };
 
+
+
+
         $scope.LoadInitialData = function() {
             $http.post('/getCountryCity', {
                 user: $scope.authentication.user
             }).success(function(response) {
+                  
+                      var promise = locationVarification.validateLocation(response.city,response.country,response.latitude,response.longitude).then
+
+                     ( function(responseFromLocationFactory){
+
+         if(responseFromLocationFactory[0]=='true'){
                 geocoder.geocode({
+                    'address': response.city + "," + response.country
+                }, function(results, status) {
+                    if (status == google.maps.GeocoderStatus.OK) {
+                        var map = $scope.map;
+                        map.center = results[0].geometry.location;
+                        $scope.map.setCenter(results[0].geometry.location);
+                        marker = new google.maps.Marker({
+                                position: new google.maps.LatLng(response.latitude, response.longitude),
+                                map: map,
+                                draggable: true,
+                                animation: google.maps.Animation.DROP,
+                                title: "Select your company Location!"
+                            });
+                        
+                    } else {
+                        alert('Geocode was not successful for the following reason: ' + status);
+                    }
+                });
+            }
+            else
+            {
+
+             geocoder.geocode({
                     'address': response.city + "," + response.country
                 }, function(results, status) {
                     if (status == google.maps.GeocoderStatus.OK) {
@@ -51,28 +85,36 @@ angular.module('employer-signup-wizard').controller('EmpWizardTwoController', ['
                         var map = $scope.map;
                         map.center = results[0].geometry.location;
                         $scope.map.setCenter(results[0].geometry.location);
-                        console.log($scope.map);
-                        if (response.latitude != 0) {
-                            marker = new google.maps.Marker({
-                                position: new google.maps.LatLng(response.latitude, response.longitude),
-                                map: map,
-                                draggable: true,
-                                animation: google.maps.Animation.DROP,
-                                title: "Hello World!"
-                            });
-                        } else {
-                            marker = new google.maps.Marker({
+                        marker = new google.maps.Marker({
                                 position: new google.maps.LatLng($scope.latitude, $scope.longitude),
                                 map: map,
                                 draggable: true,
                                 animation: google.maps.Animation.DROP,
-                                title: "Select your company location"
+                                title: "Select your company Location!"
                             });
-                        }
+                        
                     } else {
                         alert('Geocode was not successful for the following reason: ' + status);
                     }
                 });
+
+
+            }
+
+
+
+
+
+
+
+
+
+
+                      });
+           
+
+
+                
             });
         };
     }

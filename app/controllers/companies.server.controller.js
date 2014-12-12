@@ -62,7 +62,7 @@ exports.read = function(req, res) {
 
 exports.update = function(req, res) {
 	var company = req.company ;
-
+console.log("COMPANY UPDATED CALLED");
 	company = _.extend(company , req.body);
 
 	company.save(function(err) {

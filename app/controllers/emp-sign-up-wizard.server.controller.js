@@ -228,39 +228,21 @@ exports.SaveEmpSignUpWizardOneData = function(req,res)
 if(user.stage=='DeActive')
 {
    			var employer = new Employer();
-			user.employer = employer;
+			user.employer = employer
+			var company=new Company(req.body.company);
 			employer.role=req.body.employer.role;
-
-			var company = new Company();
-
-			employer.company = company;
-			company.employers.push(employer);
+            company.employers.push(employer);
+            company.country=req.body.company.country.name;
+            company.city=req.body.company.city.name;
 			company.user = user;
-			company.website=req.body.company.website;
-			for(var i=0,len=req.body.company.specialities.length;i<len;i++)
-			{
-			company.specialities.push(req.body.company.specialities[i]);
-
-			}
-			company.industry=req.body.company.industry;
-			company.company_size=req.body.company.company_size;
-			company.company_type=req.body.company.company_type;
-			company.country=req.body.company.country.name;
-			company.city=req.body.company.city.name;
-			company.description=req.body.company.description;
-			company.company_name=req.body.company.company_name;
-			company.coordinates.latitude=0;
-			company.coordinates.longitude=0;
 			company.save();
 			employer.firstName = user.firstName;
 			employer.lastName = user.lastName;
 			employer.displayName = user.displayName;
 			employer.user = user;
 			employer.save();
-			user.markModified('employer');
-			user.markModified('stage');
 			user.stage="Basic";
-		user.save(function(err) {
+			user.save(function(err) {
 		if (err) {
 			typeObject.remove();
 			return res.send(400, {
@@ -279,33 +261,21 @@ if(user.stage=='DeActive')
 else
 		{
 Company.findOne({"user":req.body.user._id}).exec(function(err,company){
-			company.industry=req.body.company.industry;
-			company.company_size=req.body.company.company_size;
-			company.company_type=req.body.company.company_type;
-			company.country=req.body.company.country.name;
-			company.city=req.body.company.city.name;
-			company.description=req.body.company.description;
-			company.company_name=req.body.company.company_name;
-			company.coordinates.latitude=0;
-			company.coordinates.longitude=0;
-			company.specialities=[];
-			for(var i=0,len=req.body.company.specialities.length;i<len;i++)
-			
-				
-			company.specialities.push(req.body.company.specialities[i]);
+	
+	company = _.extend(company , req.body.company);
+	company.country=req.body.company.country.name;
+	company.city=req.body.company.city.name;
+	company.save(function(err) {
+		if (err) {
+			return res.send(400, {
+				message: getErrorMessage(err)
+			});
+		} else {
+			res.jsonp(company);
+		}
+	});
 
-			
-			company.markModified('specialities');
-			company.markModified('industry');
-			company.markModified('company_size');
-			company.markModified('company_type');
-			company.markModified('country');
-			company.markModified('city');
-			company.markModified('description');
-			company.markModified('company_name');
-		    company.markModified('coordinates');
-		    company.save();
-	res.jsonp({status:false});
+	
 });
 
 
@@ -346,8 +316,14 @@ Company.findOne({"user":req.body.user._id}).exec(function(err,company){
 company.coordinates.latitude=req.body.latitude;
 company.coordinates.longitude=req.body.longitude;
 company.markModified('coordinates');
-company.save();
+company.save(function(err){
+if(!err)
 res.jsonp({stat:"Saved"});
+else
+res.jsonp({stat:"Couldnt save company. check backend"});
+
+});
+
 
 
 

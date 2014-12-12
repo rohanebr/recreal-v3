@@ -92,7 +92,8 @@ $scope.getCountryCities();
 		geolocation.getLocation().then(function(data){
 		 lat = parseFloat(data.coords.latitude);
   		 lng = parseFloat(data.coords.longitude);
-  
+  $scope.company.coordinates.longitude=lng;
+  $scope.company.coordinates.latitude=lat;
   		var latlng = new google.maps.LatLng(lat, lng);
   		geocoder.geocode({'latLng': latlng}, function(results, status) {
     	if (status == google.maps.GeocoderStatus.OK) {
@@ -127,11 +128,7 @@ $scope.getCountryCities();
 	}
 	
 
-		// $http.get('/countries').success(function(countries) {
-		// 	$scope.countries = countries;
-		// 	$scope.country = $scope.countries[0].name;
-		// 	$scope.getCountryCities();
-		// });
+		
 
 		$scope.getCountryCities = function(){
 			var foundit=false;
@@ -155,35 +152,11 @@ $scope.getCountryCities();
 		};
 
 		$scope.SaveAndRedirect = function() {
-			if(lng!=0 && lat!=0)
-		{	$scope.company.coordinates.longitude=lng;
-$scope.company.coordinates.latitude=lat;
-
-$rootScope.coords.lat=lat;
-$rootScope.coords.longi=lng;
-$rootScope.country=$scope.company.country.name;
-$rootScope.city=$scope.company.city.name;
-
-}
-else
-{
-$rootScope.coords.lat=0;
-$rootScope.coords.longi=0;
-$rootScope.country=$scope.company.country.name;
-$rootScope.city=$scope.company.city.name;
-
-}
-
-// coordinates: {
-//         longitude: 0,
-//         latitude: 0
-//     },
-			$scope.success = $scope.error = null;
 			
-			$http.post('/SaveEmpSignUpWizardOneData', {user:$scope.user,company:$scope.company, employer:$scope.employer}).success(function(response) {
-				// $location.path('/');
-				$state.go('emp-wizard-two');
-				
+
+		$scope.success = $scope.error = null;
+		$http.post('/SaveEmpSignUpWizardOneData', {user:$scope.user,company:$scope.company, employer:$scope.employer}).success(function(response) {
+		$state.go('emp-wizard-two');
 			}).error(function(response) {
 				$scope.error = response.message;
 			});
