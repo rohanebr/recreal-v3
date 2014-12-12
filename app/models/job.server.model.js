@@ -122,7 +122,17 @@ var JobSchema = new Schema({
       		type: 'String',
       		trim: true
       	},
-      	required:{
+      	priority:{
+      		type: 'String',
+      		trim: true
+      	}
+  	}],
+  	qualifications:[{
+    	name:{
+      		type: 'String',
+      		trim: true
+      	},
+      	priority:{
       		type: 'String',
       		trim: true
       	}
