@@ -240,6 +240,7 @@ if(user.stage=='DeActive')
 			employer.lastName = user.lastName;
 			employer.displayName = user.displayName;
 			employer.user = user;
+			employer.company = company;
 			employer.save();
 			user.stage="Basic";
 			user.save(function(err) {
@@ -309,18 +310,21 @@ exports.saveLatLong = function(req,res)
 user.stage="CompanyLocation";
 user.markModified("stage");
 user.save();
-
-
-	});
 Company.findOne({"user":req.body.user._id}).exec(function(err,company){
 company.coordinates.latitude=req.body.latitude;
 company.coordinates.longitude=req.body.longitude;
 company.markModified('coordinates');
 company.save(function(err){
 if(!err)
+{
+	console.log(company);
 res.jsonp({stat:"Saved"});
+}
 else
+{
+	console.log("SAVE LAT LONG");
 res.jsonp({stat:"Couldnt save company. check backend"});
+}
 
 });
 
@@ -329,6 +333,9 @@ res.jsonp({stat:"Couldnt save company. check backend"});
 
 
 });
+
+	});
+
 
 };
 

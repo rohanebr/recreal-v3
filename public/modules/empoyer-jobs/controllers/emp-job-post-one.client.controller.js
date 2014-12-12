@@ -35,7 +35,6 @@ angular.module('empoyer-jobs').controller('EmpJobPostOneController', ['$scope','
 				$scope.industries = response;
 				$scope.job.industry = $scope.industries[0];
 				$scope.getIndustryJobRoles();
-				$scope.job.title = $scope.job.job_role.name;
 			});
 		};
 
@@ -43,7 +42,7 @@ angular.module('empoyer-jobs').controller('EmpJobPostOneController', ['$scope','
 			$http.get('/industries/'+ $scope.job.industry.name).success(function (response){
 				$scope.job_roles = response.job_roles;
 				$scope.job.job_role = $scope.job_roles[0];
-				
+				$scope.job.title = $scope.job.job_role.name;
 			});
 		};
 

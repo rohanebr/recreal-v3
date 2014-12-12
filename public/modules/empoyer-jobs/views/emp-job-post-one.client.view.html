@@ -62,7 +62,7 @@
                 </aside>
                 <!-- /.aside -->
 
-                <section id="content" class="scrollable padder">
+                <form data-ng-submit="SaveAndRedirect()" id="content" class="scrollable padder">
                     <article>
                         <header class="article-header-wizard">
                             <div><h3>1. New Job - Job Details</h3><hr/></div>
@@ -235,12 +235,12 @@
                         </section>
                         <footer class="col-md-10 article-footer-wizard">
                             <div class="pull-right">
-                                <button type="submit" class="btn btn-primary btn-block btn-lg" ng-click="SaveAndRedirect()">Next</button>
+                                <button type="submit" class="btn btn-primary btn-block btn-lg">Next</button>
                                 <a href="/#!/emp-wizard-two" class="btn btn-primary btn-block btn-lg">Back</a><br> 
                             </div>
                         </footer>
                     </article> 
-                </section>
+                </form>
             </section>
         </section>
     </section>

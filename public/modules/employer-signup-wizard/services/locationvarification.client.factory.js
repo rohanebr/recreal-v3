@@ -1,9 +1,6 @@
 angular.module('employer-signup-wizard').factory('locationVarification', ['$rootScope', 'geolocation', '$q',
     function($rootScope, geolocation, $q) {
-
-
         return {
-
             validateLocation: function(city, country, lat, lng) {
                 var deferred = $q.defer();
                 if (lat != 0) {
@@ -20,34 +17,15 @@ angular.module('employer-signup-wizard').factory('locationVarification', ['$root
                                 countryFromDB = res[res.length - 1].trim();
                                 cityFromDB = res[res.length - 2].trim();
                                 if (countryFromDB == country && cityFromDB == city)
-
-
-
                                     deferred.resolve(['true']);
-
-
-
-
                                 else
                                     deferred.resolve(['false']);
-
-
-
-
                             }
                         }
                     });
                     return deferred.promise;
-
                 }
-
-
             }
-
-
-
-
         };
-
     }
 ]);
