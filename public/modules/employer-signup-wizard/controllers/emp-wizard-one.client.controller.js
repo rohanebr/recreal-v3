@@ -144,6 +144,7 @@ $scope.getCountryCities();
 				console.log(city);
 
 				$scope.company.city=city;
+				$scope.$apply();
 				foundit=true;
 				}
 			});if(!foundit)

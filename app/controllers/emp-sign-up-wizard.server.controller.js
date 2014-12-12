@@ -192,7 +192,7 @@ if(user)
 			user.password = undefined;
 			user.salt = undefined;
 
-	
+	    
 			req.login(user, function(err) {
 				if (err) {
 					res.send(400, err);
