@@ -57,8 +57,29 @@ img.img180_180 {
     border-right: 1px solid #cbd5dd;
     background-color: #fff;
   }
+.left-aside-top-margin
+{
+  margin-top: 150px;
+}
 
+.hr-margin15
+{
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
 
+.header-message
+{
+  margin-bottom: 20px;
+  font-size: 14px;
+  font-style: italic;
+  margin-left: 2%;
+}
+
+.section-left-margin
+{
+  margin-left: 2%;
+}
 
 /*h1 {font-size: 40px; letter-spacing: -3px; color: #727171; font-weight: 700;}
 */

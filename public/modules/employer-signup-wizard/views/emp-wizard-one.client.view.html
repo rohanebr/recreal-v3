@@ -7,96 +7,36 @@
         <aside class="bg-light lt b-r b-light aside-md hidden-print" id="nav">          
           <section class="vbox">
             <section class="w-f scrollable">
-              <div class="slim-scroll" data-height="auto" data-disable-fade-out="true" data-distance="0" data-size="10px" data-railOpacity="0.2">
-                <div class="clearfix wrapper dk nav-user hidden-xs">
-                </div>                
+              <div class="slim-scroll" data-height="auto" data-disable-fade-out="true" data-distance="0" data-size="10px" data-railOpacity="0.2">              
                 <!-- nav -->                 
                 <nav class="nav-primary hidden-xs">
-                  <ul class="nav nav-main" data-ride="collapse">
-                    <li class="nav-search">
-                        <span>
-                          <input id="searchBox" class="form-control" type="text" data-ng-model="searchText" placeholder="Search Jobs, Candidates" />
-                        </span>
+                  <ul class="nav nav-main left-aside-top-margin" data-ride="collapse">
+                    <li  class="active">
+                      <a href="index.html" class="auto">
+                        <i class="i i-statistics icon">
+                        </i>
+                        <span class="font-bold">Profile</span>
+                      </a>
                     </li>
                     <li  class="active">
                       <a href="index.html" class="auto">
                         <i class="i i-statistics icon">
                         </i>
-                        <span class="font-bold">Overview</span>
+                        <span class="font-bold">Location</span>
                       </a>
                     </li>
-                    <li >
-                      <a href="" class="auto">
-                        <span class="pull-right text-muted">
-                          <i class="i i-circle-sm-o text"></i>
-                          <i class="i i-circle-sm text-active"></i>
-                        </span>
-                        <b class="badge bg-danger pull-right">4</b>
-                        <i class="i i-stack icon">
+                    <li  class="active">
+                      <a href="index.html" class="auto">
+                        <i class="i i-statistics icon">
                         </i>
-                        <span class="font-bold">Active Jobs</span>
+                        <span class="font-bold">Post Job - Job Details</span>
                       </a>
                     </li>
-                    <li >
-                      <a href="" class="auto">
-                        <span class="pull-right text-muted">
-                          <i class="i i-circle-sm-o text"></i>
-                          <i class="i i-circle-sm text-active"></i>
-                        </span>
-                        <b class="badge bg-danger pull-right">1</b>
-                        <i class="i i-stack icon">
+                    <li  class="active">
+                      <a href="index.html" class="auto">
+                        <i class="i i-statistics icon">
                         </i>
-                        <span class="font-bold">Draft Jobs</span>
-                      </a>
-                      
-                    </li>
-                    <li >
-                      <a href="" class="auto">
-                        <span class="pull-right text-muted">
-                          <i class="i i-circle-sm-o text"></i>
-                          <i class="i i-circle-sm text-active"></i>
-                        </span>
-                        <b class="badge bg-danger pull-right">32</b>
-                        <i class="i i-stack icon">
-                        </i>
-                        <span class="font-bold">Expired Jobs</span>
-                      </a>
-                    </li>
-                  </ul>
-                  <div class="line dk hidden-nav-xs"></div>
-                  <div class="text-muted text-xs hidden-nav-xs padder m-t-sm m-b-sm">Lables</div>
-                  <ul class="nav">
-                    <li>
-                      <a href="mail.html#work">
-                        <i class="i i-circle-sm text-info-dk"></i>
-                        <span>3 Jobs Posted by Jhon</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="mail.html#social">
-                        <i class="i i-circle-sm text-success-dk"></i>
-                        <span>6 Jobs Posted by David</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="mail.html#projects">
-                        <i class="i i-circle-sm text-danger-dk"></i>
-                        <span>1 Job posted by Nathan</span>
-                      </a>
-                    </li>
-                  </ul>
-                  <div class="text-muted text-xs hidden-nav-xs padder m-t-sm m-b-sm">Circles</div>
-                  <ul class="nav">
-                    <li>
-                      <a href="#!">
-                        <i class="i i-circle-sm-o text-success-lt"></i>
-                        <span>College</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#!">
-                        <i class="i i-circle-sm-o text-warning"></i>
-                        <span>Social</span>
+                        <span class="font-bold">Post Job - Job Requirement</span>
                       </a>
                     </li>
                   </ul>
@@ -104,16 +44,6 @@
                 <!-- / nav -->
               </div>
             </section>
-            
-            <footer class="footer hidden-xs no-padder text-center-nav-xs">
-              <a href="modal.lockme.html" data-toggle="ajaxModal" class="btn btn-icon icon-muted btn-inactive pull-right m-l-xs m-r-xs hidden-nav-xs">
-                <i class="i i-logout"></i>
-              </a>
-              <a href="#nav" data-toggle="class:nav-xs" class="btn btn-icon icon-muted btn-inactive m-l-xs m-r-xs">
-                <i class="i i-circleleft text"></i>
-                <i class="i i-circleright text-active"></i>
-              </a>
-            </footer>
           </section>
         </aside>
         <!-- /.aside -->
@@ -121,12 +51,13 @@
         <form data-ng-submit="SaveAndRedirect()" id="content" class="scrollable padder">
             <section>
 	                <article>
-	                	<h3>About You</h3><hr/>
-	                	<label>A few additional details about you will help your colleagues to know you</label>
-	                	
-                		<section class="row">
+                    <header>
+                      <h3>About You</h3><hr class="hr-margin15" />
+                      <p class="header-message">A few additional details about you will help your colleagues to know you</p>
+                    </header>
+                		<section class="row section-left-margin">
                       <section class="col-md-3">
-                        <img src="https://media.licdn.com/mpr/mpr/shrink_200_200/p/6/005/089/3a9/1024247.jpg" width="140px" height="140px">
+                        <img class="img-circle m-b"src="https://media.licdn.com/mpr/mpr/shrink_200_200/p/6/005/089/3a9/1024247.jpg" width="140px" height="140px">
                       </section>
                       <section class="col-md-4">
                          <div class="form-group">
@@ -157,13 +88,13 @@
                     </section>
 	                </article><hr/>
                   <article>
-                    <header>
+                    <header class="hr-margin15">
                       <h3>About Your Company</h3><hr/>
-                      <label>A few additional details about your Comapany will help candidates to know about you</label>
+                      <p class="header-message">A few additional details about your Comapany will help candidates to know about you</p>
                     </header>
                     <section class="row">
                       <section class="col-md-3">
-                        <img src="https://media.licdn.com/media/p/1/000/2bc/329/09e8946.png" width="80px" height="50px">
+                        <img  class="company-image" src="https://media.licdn.com/media/p/1/000/2bc/329/09e8946.png" width="80px" height="50px">
                       </section>
                       <section class="col-md-8">
                           <div class="form-group">
@@ -235,7 +166,7 @@
                     <section>
                       <div class="row form-group">
                         <div class="col-md-3">
-                            <label for="">Description</label>
+                            <label for="" class="pull-right">Description</label>
                         </div>
                         <div class="col-md-8">
                             <textarea required class="form-control" required data-ng-model="company.description" rows="6" cols="5" />
@@ -245,7 +176,7 @@
                     <section>
                       <div class="row form-group">
                         <div class="col-md-3">
-                            <label for="">Specialities</label>
+                            <label for="" class="pull-right">Specialities</label>
                         </div>
                         <div class="col-md-4">
                           <section class="listThingy" class="row" ng-repeat="speciality in company.specialities">
