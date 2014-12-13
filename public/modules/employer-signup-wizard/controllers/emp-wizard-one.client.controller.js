@@ -143,8 +143,9 @@ $scope.getCountryCities();
 				{
 				console.log(city);
 
-				$scope.company.city=city;
-				$scope.$apply();
+				
+$scope.company.city=city;
+			
 				foundit=true;
 				}
 			});if(!foundit)

@@ -228,7 +228,7 @@ exports.SaveEmpSignUpWizardOneData = function(req,res)
 if(user.stage=='DeActive')
 {
    			var employer = new Employer();
-			user.employer = employer
+			user.employer = employer;
 			var company=new Company(req.body.company);
 			employer.role=req.body.employer.role;
             company.employers.push(employer);
@@ -241,6 +241,7 @@ if(user.stage=='DeActive')
 			employer.displayName = user.displayName;
 			employer.user = user;
 			employer.company = company;
+			
 			employer.save();
 			user.stage="Basic";
 			user.save(function(err) {
@@ -306,25 +307,31 @@ res.jsonp({city:company.city,country:company.country,latitude:company.coordinate
 
 exports.saveLatLong = function(req,res)
 {
-	User.findById(req.body.user._id).exec(function(err,user){
+	var user=req.body.user;
+	User.findOne({_id:req.body.user._id}).exec(function(err,user){
+
+
+
+if(user)
+{
+
 user.stage="CompanyLocation";
-user.markModified("stage");
-user.save();
+user.markModified('stage');
 Company.findOne({"user":req.body.user._id}).exec(function(err,company){
+	console.log(company);
 company.coordinates.latitude=req.body.latitude;
 company.coordinates.longitude=req.body.longitude;
 company.markModified('coordinates');
 company.save(function(err){
 if(!err)
 {
-	console.log(company);
-res.jsonp({stat:"Saved"});
+	user.save(function(err){if(!err){console.log(company);
+res.jsonp(user.employer);}else{console.log("SAVE LAT LONG");
+
+res.jsonp({stat:"Couldnt save company. check backend"});}});
+	
 }
-else
-{
-	console.log("SAVE LAT LONG");
-res.jsonp({stat:"Couldnt save company. check backend"});
-}
+
 
 });
 
@@ -333,8 +340,47 @@ res.jsonp({stat:"Couldnt save company. check backend"});
 
 
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 	});
+
+
+
+
 
 
 };
