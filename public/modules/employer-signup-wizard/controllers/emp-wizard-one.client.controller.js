@@ -130,7 +130,8 @@ $scope.getCountryCities();
 		
 
 		$scope.getCountryCities = function(){
-			var foundit=false if(!$scope.gotCompanyFromDB)
+			var foundit=false;
+			if(!$scope.gotCompanyFromDB)
                country=$scope.company.country.name;
            else
            	country=$scope.company.country;			
