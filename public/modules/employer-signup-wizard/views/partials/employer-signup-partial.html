@@ -1,68 +1,78 @@
-<article class="row">
-    <h3>Sign up as an employer and start by posting your first job.</h3>
-    <section class="col-xs-offset-2 col-xs-8 col-md-offset-4 col-md-4">
-        <form data-ng-submit="signup()" class="signin form-horizontal" novalidate autocomplete="off">
-            <section data-ng-show="error" class="text-center text-danger">
-                <strong data-ng-bind="error"></strong>
-            </section>
-            <section class="form-group">
-                <div class="col-md-5 text-right">
-                    <label for="">First Name:</label>
-                </div>
-                <div class="col-md-7">
-                    <input type="text" required id="firstName" name="firstName" class="form-control" data-ng-model="credentials.firstName" placeholder="John">
-                </div>
-            </section>
+<div>
+    <article class="row">
+        <header class="signUp-Header">
+            <h3>Sign Up </h3>
+            <p>Sign Up with recreal to meet with most compatible candidate for your job</p>
+        </header>
+        <section class="col-md-9">
+            <form data-ng-submit="signup()" class="signin form-horizontal" novalidate autocomplete="off">
+                <section data-ng-show="error" class="text-center text-danger">
+                    <strong data-ng-bind="error"></strong>
+                </section>
+                <section class="form-group">
+                    <div class="col-md-5 text-right">
+                        <label for="">First Name:</label>
+                    </div>
+                    <div class="col-md-7">
+                        <input type="text" required id="firstName" name="firstName" class="form-control" data-ng-model="credentials.firstName" placeholder="John">
+                    </div>
+                </section>
 
-            <section class="form-group">
-                <div class="col-md-5 text-right">
-                    <label for="">Last Name:</label>
-                </div>
-                <div class="col-md-7">
-                    <input type="text" id="lastName" name="lastName" class="form-control" data-ng-model="credentials.lastName" placeholder="Carter">
-                </div>
-            </section>
+                <section class="form-group">
+                    <div class="col-md-5 text-right">
+                        <label for="">Last Name:</label>
+                    </div>
+                    <div class="col-md-7">
+                        <input required type="text" id="lastName" name="lastName" class="form-control" data-ng-model="credentials.lastName" placeholder="Carter">
+                    </div>
+                </section>
 
-            <section class="form-group">
-                <div class="col-md-5 text-right">
-                    <label for="">Email:</label>
-                </div>
-                <div class="col-md-7">
-                    <input type="text" id="email" name="email" class="form-control" data-ng-model="credentials.email" placeholder="xyz@domain.com">
-                </div>
-            </section>
+                <section class="form-group">
+                    <div class="col-md-5 text-right">
+                        <label for="">Email:</label>
+                    </div>
+                    <div class="col-md-7">
+                        <input required type="email" id="email" name="email" class="form-control" data-ng-model="credentials.email" placeholder="xyz@domain.com">
+                    </div>
+                </section>
 
-            <section class="form-group">
-                <div class="col-md-5 text-right">
-                    <label for="">Username:</label>
-                </div>
-                <div class="col-md-7">
-                    <input type="text" id="username" name="username" class="form-control" data-ng-model="credentials.username" placeholder="johncarter">
-                </div>
-            </section>
+                <section class="form-group">
+                    <div class="col-md-5 text-right">
+                        <label for="">Username:</label>
+                    </div>
+                    <div class="col-md-7">
+                        <input required type="text" id="username" name="username" class="form-control" data-ng-model="credentials.username" placeholder="johncarter">
+                    </div>
+                </section>
 
-            <section class="form-group">
-                <div class="col-md-5 text-right">
-                    <label for="">Password:</label>
-                </div>
-                <div class="col-md-7">
-                    <input type="password" id="password" name="password" class="form-control" data-ng-model="credentials.password" placeholder="Password">
-                </div>
-            </section>
+                <section class="form-group">
+                    <div class="col-md-5 text-right">
+                        <label for="">Password:</label>
+                    </div>
+                    <div class="col-md-7">
+                        <input required type="password" id="password" name="password" class="form-control" data-ng-model="credentials.password" placeholder="Password">
+                    </div>
+                </section>
 
-            <section class="form-group">
-                <div class="col-md-5 text-right">
-                    <label for="">Confirm Password:</label>
-                </div>
-                <div class="col-md-7">
-                    <input type="password" id="password" name="password" class="form-control" data-ng-model="credentials.password" placeholder="Password">
-                </div>
-            </section>
+                <section class="form-group">
+                    <div class="col-md-5 text-right">
+                        <label for="">Confirm Password:</label>
+                    </div>
+                    <div class="col-md-7">
+                        <input required type="password" id="password" name="password" class="form-control"  placeholder="Confirm Password">
+                    </div>
+                </section>
 
+                
+                <section class="text-center form-group">
+                    <button type="submit" class="btn btn-large btn-primary">Sign Up</button>
+                </section>
+            </form>
+        </section>
+        <footer>
             
-            <section class="text-center form-group">
-                <button type="submit" class="btn btn-large btn-primary">Sign up</button>
-            </section>
-        </form>
-    </section>
-</article>
+        </footer>
+    </article>
+    
+    
+</div>
