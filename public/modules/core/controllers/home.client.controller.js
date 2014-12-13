@@ -12,8 +12,19 @@ angular.module('core').controller('HomeController', ['$scope', 'Authentication',
  	$location.path("emp-wizard-one/"+$scope.authentication.user.activeToken);
   if($scope.authentication.user.stage=="Basic")
   	$location.path("emp-wizard-two");
-  if($scope.authentication.user.stage=="CompanyLocation")
-  	$location.path("emp-job-post-one");
+  if($scope.authentication.user.stage=="CompanyLocation"){
+	  	$scope.employer = Employers.get({
+	        employerId: $scope.authentication.user.employer
+	    }, function(employer) {
+	        console.log(employer);
+	        if (employer.jobs.length > 0) { // edit first job
+	            $location.path('emp-job-post-one-edit/' + employer.jobs[0]);
+	        } else { // create new job
+	            $location.path('emp-job-post-one');
+	        }
+	    });
+  }
+  	
       
 		if(!user)
 			$state.go('home');

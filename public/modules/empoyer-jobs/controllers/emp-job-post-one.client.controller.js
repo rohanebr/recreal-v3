@@ -6,6 +6,9 @@ angular.module('empoyer-jobs').controller('EmpJobPostOneController', ['$scope','
 		// ...
 		// $scope.industries = Industries.getIndustries();
 
+		$scope.job = {};
+		$scope.job.industry = {};	
+
 		//checks whether if this is going to create or update a job 
 		$scope.initialize = function(){
 			if(!$stateParams.jobId){    		// new job
@@ -16,8 +19,7 @@ angular.module('empoyer-jobs').controller('EmpJobPostOneController', ['$scope','
 			}
 		}
 		var LoadDefaultData = function(){
-			$scope.job = {};
-			$scope.job.industry = {};
+			
 			$scope.job.employee_type = "Contract";
 			$scope.job.employee_status = "Full Time";
 			$scope.job.shift = "Morning";
@@ -43,19 +45,47 @@ angular.module('empoyer-jobs').controller('EmpJobPostOneController', ['$scope','
 				$scope.job_roles = response.job_roles;
 				$scope.job.job_role = $scope.job_roles[0];
 				$scope.job.title = $scope.job.job_role.name;
+
+				angular.forEach($scope.job_roles, function(job_role){
+					if(job_role == $scope.job.job_role){
+						$scope.job.job_role = job_role;
+					}
+				});
+
+
 			});
 		};
 
 		// Find existing Job
 		var findOne = function() {
+
 			getIndustry();
-			$scope.job = Jobs.get({ 
+			Jobs.get({ 
 				jobId: $stateParams.jobId
+			}, function(job){
+
+				$scope.job = job;
+				angular.forEach($scope.industries, function(industry){
+					if(industry.name === $scope.job.industry){
+						$scope.job.industry = industry;
+					}
+				});
+
+				
+
+				
+
+
+				
 			});
+
+
 		};
 
 		$scope.SaveAndRedirect = function() {
 			$scope.success = $scope.error = null;
+
+			$scope.job.industry = $scope.job.industry.name;
 
 			if(!$stateParams.jobId){    		// new job
 				$http.post('/SaveEmpJobPostOneData', $scope.job).success(function(response) {

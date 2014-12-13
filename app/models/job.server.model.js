@@ -11,6 +11,7 @@ Schema = mongoose.Schema,
 /**
  * Job Schema
  */
+ 
 var JobSchema = new Schema({
 	// name: {
 	// 	type: String,
