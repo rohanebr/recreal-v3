@@ -59,7 +59,7 @@ angular.module('empoyer-jobs').controller('EmpJobPostOneController', ['$scope','
 
 			if(!$stateParams.jobId){    		// new job
 				$http.post('/SaveEmpJobPostOneData', $scope.job).success(function(response) {
-					$location.path('/emp-job-post-two');
+					$location.path('emp-job-post-two/' + response._id);
 				}).error(function(response) {
 					$scope.error = response.message;
 				});

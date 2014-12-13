@@ -27,7 +27,6 @@ $rootScope.coords={};
 			{
 			$scope.company=response.company;
 			$scope.gotCompanyFromDB=true;
-
 		}
 			console.log(response);
 			if($scope.user.user=="nothing")
@@ -132,24 +131,21 @@ $scope.getCountryCities();
 
 		$scope.getCountryCities = function(){
 			var foundit=false;
-				$http.get('/countries/'+ $scope.company.country.name).success(function (response){
-				$scope.cities = response.cities;
-				angular.forEach($scope.cities,function(city){
-				console.log(city.name+" "+city1);
-				if($scope.gotCompanyFromDB)
-		     			city1=$scope.company.city;
-
-				if(city.name==city1)//fuck my life
-				{
-				console.log(city);
-
-				
-$scope.company.city=city;
-			
-				foundit=true;
-				}
-			});if(!foundit)
-				$scope.company.city = $scope.cities[0];
+				$http.get('/countries/'+ $scope.company.country.name ).success(function (response){
+					$scope.cities = response.cities;
+					angular.forEach($scope.cities,function(city){
+						console.log(city.name+" "+city1);
+						if($scope.gotCompanyFromDB)
+				     			city1=$scope.company.city;
+						if(city.name==city1)//fuck my life
+						{
+							console.log(city);
+							$scope.company.city=city;
+							foundit=true;
+						}
+					});
+					if(!foundit)
+						$scope.company.city = $scope.cities[0];
 			});
 		};
 
