@@ -130,8 +130,11 @@ $scope.getCountryCities();
 		
 
 		$scope.getCountryCities = function(){
-			var foundit=false;
-				$http.get('/countries/'+ $scope.company.country.name ).success(function (response){
+			var foundit=false if(!$scope.gotCompanyFromDB)
+               country=$scope.company.country.name;
+           else
+           	country=$scope.company.country;			
+				$http.get('/countries/'+ country ).success(function (response){
 					$scope.cities = response.cities;
 					angular.forEach($scope.cities,function(city){
 						console.log(city.name+" "+city1);
