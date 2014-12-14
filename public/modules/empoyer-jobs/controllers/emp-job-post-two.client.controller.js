@@ -4,13 +4,26 @@ angular.module('empoyer-jobs').controller('EmpJobPostTwoController', ['$scope', 
 	function($scope, Employers, $stateParams, $location) {
 	
 		$scope.job={};
+		$scope.job.responsibilities = [];
+		$scope.newResponsibility = {
+            name: ''
+        };
+        $scope.job.responsibilities.push({
+                            name: 'Product Development'
+                        });
 
+
+
+        
 		//**********Responsibilities***********
 		// Add Responsibility
 		$scope.addResponsibility = function() {
-	      $scope.job.responsibilities.push({
-	        name: ''
-	      });
+	      if ($scope.newResponsibility.name != '') {
+                $scope.job.responsibilities.push($scope.newResponsibility);
+                $scope.newResponsibility = {
+                    name: ''
+                };
+            }
 	    };
 	    //Remove Responsibility
 	    $scope.removeResponsibility = function(index) {

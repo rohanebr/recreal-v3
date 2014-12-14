@@ -183,22 +183,27 @@
                             <p><a ng-click="addQualification()">+ Add Qualification</a></p>
                         </div>
                     </div>
-                    <div class="row form-group">
+                      <div class="row form-group">
                         <div class="col-md-2">
                             <label for="">Responsibilities</label>
                         </div>
-                        <div class="col-md-6">
-                            <section class="row" ng-repeat="responsibility in job.responsibilities">
-                                <div class="input-group">
-                                    <input type="text" placeholder="e.g Software" data-ng-model="job.responsibility.name" class="form-control">
-                                    <span class="input-group-btn">
-                                    <button type="button" ng-click="removeResponsibility($index)" class="btn btn-default"><i class="fa fa-times"></i></button>
-                                  </span>
-                                </div>
-                            </section>
-                            <p><a ng-click="addResponsibility()">+ Add Responsibility</a></p>
+                        <div class="col-md-8">
+                          <section class="listThingy" class="row" ng-repeat="responsibility in job.responsibilities">
+                            <div class="input-group">
+                              <input disabled type="text" placeholder="e.g Software" data-ng-model="job.responsibility.name" class="form-control">
+                              <span class="input-group-btn">
+                                <button type="button" ng-click="removeResponsibility($index)" class="btn btn-default"><i class="fa fa-times"></i></button>
+                              </span>
+                            </div>
+                          </section>
+                          <div class="addThingy" data-ng-submit="addResponsibility()" ng-show="isAddingResponsibility">
+                              <input type="text" placeholder="Add a Responsibility" data-ng-model="job.responsibility.name" class="form-control">
+                              <button class="btn btn-default btn-sm" ng-click="addResponsibility()">Add</button>
+                              <a href="" ng-click="isAddingResponsibility = false">Done Adding</a>
+                          </div>
+                          <p><a href="" ng-click="isAddingResponsibility = true">+ Add Responsibility</a></p>
                         </div>
-                    </div>
+                      </div>
                 </section>
                 <h4>Skills</h4>         
                 <section class="article-section-wizard">
