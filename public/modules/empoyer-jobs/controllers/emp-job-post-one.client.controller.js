@@ -63,7 +63,7 @@ angular.module('empoyer-jobs').controller('EmpJobPostOneController', ['$scope','
 					jobId: $stateParams.jobId
 				}, function(job){
 					$scope.job = job;
-
+                    $scope.job.due_date=new Date($scope.job.due_date);
 					//get industry job_roles
 					$http.get('/industries/'+ $scope.job.industry).success(function (response){
 						$scope.job_roles = response.job_roles;
@@ -82,24 +82,13 @@ angular.module('empoyer-jobs').controller('EmpJobPostOneController', ['$scope','
 
 						// set job_role
 						angular.forEach($scope.job_roles, function(job_role){
-
-
 							if(job_role._id == $scope.job.job_role){
-
 								// never executes. even when the statement is true
 								$scope.job.job_role = job_role;
 							}
 						});
-
-
 					});
-
-					
 				});
-
-
-				
-
 			});
 		};
 
@@ -109,6 +98,7 @@ angular.module('empoyer-jobs').controller('EmpJobPostOneController', ['$scope','
 			$scope.success = $scope.error = null;
 
 			$scope.job.industry = $scope.job.industry.name;
+			$scope.job.job_role = $scope.job.job_role._id;
 
 			if(!$stateParams.jobId){    		// new job
 				$http.post('/SaveEmpJobPostOneData', $scope.job).success(function(response) {

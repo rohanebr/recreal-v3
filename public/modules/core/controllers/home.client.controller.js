@@ -8,6 +8,12 @@ angular.module('core').controller('HomeController', ['$scope', 'Authentication',
 		var user = $scope.authentication.user;
 		console.log(user);
 
+  	
+      
+		if(!user)
+			$state.go('home');
+		else if(user.userType === 'employer'){
+			
         if($scope.authentication.user.stage=="DeActive")
  	$location.path("emp-wizard-one/"+$scope.authentication.user.activeToken);
   if($scope.authentication.user.stage=="Basic")
@@ -24,12 +30,6 @@ angular.module('core').controller('HomeController', ['$scope', 'Authentication',
 	        }
 	    });
   }
-  	
-      
-		if(!user)
-			$state.go('home');
-		else if(user.userType === 'employer'){
-			console.log("EMPLOYER");
 			$rootScope.employer = Employers.get({
 				employerId: $scope.authentication.user.employer
 			}, function(employer){
