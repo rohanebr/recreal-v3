@@ -18,8 +18,8 @@ angular.module('empoyer-jobs').controller('EmpJobPostOneController', ['$scope','
 				findOne();
 			}
 		}
+
 		var LoadDefaultData = function(){
-			
 			$scope.job.employee_type = "Contract";
 			$scope.job.employee_status = "Full Time";
 			$scope.job.shift = "Morning";
@@ -29,7 +29,6 @@ angular.module('empoyer-jobs').controller('EmpJobPostOneController', ['$scope','
 			$scope.job.salary_range = "Less than $1000";
 			// $scope.job.due_date = "2014-08-14";
 			getIndustry();
-
 		}
 
 		var getIndustry = function(){	
@@ -46,41 +45,61 @@ angular.module('empoyer-jobs').controller('EmpJobPostOneController', ['$scope','
 				$scope.job.job_role = $scope.job_roles[0];
 				$scope.job.title = $scope.job.job_role.name;
 
-				angular.forEach($scope.job_roles, function(job_role){
-					if(job_role == $scope.job.job_role){
-						$scope.job.job_role = job_role;
-					}
-				});
+				
 
-
+				
 			});
 		};
 
 		// Find existing Job
 		var findOne = function() {
 
-			getIndustry();
-			Jobs.get({ 
-				jobId: $stateParams.jobId
-			}, function(job){
+			//get industries
+			$http.get('/industries').success(function (response){
+				$scope.industries = response;
+				
+				//get the job
+				Jobs.get({ 
+					jobId: $stateParams.jobId
+				}, function(job){
+					$scope.job = job;
 
-				$scope.job = job;
-				angular.forEach($scope.industries, function(industry){
-					if(industry.name === $scope.job.industry){
-						$scope.job.industry = industry;
-					}
+					//get industry job_roles
+					$http.get('/industries/'+ $scope.job.industry).success(function (response){
+						$scope.job_roles = response.job_roles;
+						$scope.job.title = $scope.job.job_role.name;
+
+						//set industry
+						angular.forEach($scope.industries, function(industry){
+							if(industry.name === $scope.job.industry){
+								$scope.job.industry = industry;
+							}
+						});
+
+						// set job_role
+						angular.forEach($scope.job_roles, function(job_role){
+
+
+							if(job_role._id == $scope.job.job_role){
+
+								// never executes. even when the statement is true
+								$scope.job.job_role = job_role;
+							}
+						});
+
+
+					});
+
+					
 				});
 
-				
 
 				
 
-
-				
 			});
-
-
 		};
+
+					
 
 		$scope.SaveAndRedirect = function() {
 			$scope.success = $scope.error = null;
