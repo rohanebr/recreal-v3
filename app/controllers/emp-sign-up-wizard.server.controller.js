@@ -222,7 +222,7 @@ if(!user)
 */
 exports.SaveEmpSignUpWizardOneData = function(req,res)
 {
-	console.log("SAVEEMPSIGNUP"+req.body.user._id);
+	console.log("SAVEEMPSIGNUP"+req.body.job);
  User.findById(req.body.user._id,function(err,user){
 
 if(user.stage=='DeActive')
@@ -415,4 +415,24 @@ exports.SaveJobDataOne = function(req,res)
             });
         });
     }
+};
+
+
+
+exports.companyByUserId = function(req,res)
+{
+	console.log(req.body+ "  COMPANY BY USER ID");
+Company.findOne({"user":req.body.id}).exec(function(err,company){
+if(company)
+{
+res.jsonp({country:company.country,city:company.city,latitude:company.coordinates.latitude,longitude:company.coordinates.longitude});
+
+}
+
+
+
+});
+
+
+
 };

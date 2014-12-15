@@ -110,6 +110,10 @@ var JobSchema = new Schema({
 	    type: 'String',
 	    trim: true
 	  },
+	  city:{
+	  	type:'String',
+	  	trim:true
+	  },
 	  job_status:{
 	    type: 'String',
 	    trim: true

@@ -232,6 +232,28 @@
                                     <input type="date" class="form-control" required data-ng-model="job.due_date" />
                                 </div>
                             </div>
+                            <div class="row form-group">
+                                  <div class="col-md-2">
+                                    <label for="">Country</label>
+                                </div>
+                                 <div class="col-md-3">
+                                <span class="ui-select">
+                            <select data-ng-model="country" ng-options="count.name for count in countries" data-ng-change="getCountryCities()" required class="form-control">
+                            </select>
+                          </span>
+                      </div>
+                          <div class="col-md-2">
+                          <label>City</label>
+                          </div>
+                          <div class="col-md-3">
+                          <span class="ui-select">
+                            <select ng-model="city" ng-options="sity.name for sity in cities" required class="form-control">
+                            </select>
+                          </span>
+                      </div>
+                       
+
+                            </div>
                         </section>
                         <footer class="col-md-10 article-footer-wizard">
                             <div class="pull-right">

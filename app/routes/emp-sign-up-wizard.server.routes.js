@@ -11,5 +11,6 @@ module.exports = function(app) {
 	app.route('/getCountryCity').post(empSignUpWizard.getCountryCity);
 	app.route('/savelatlong').post(empSignUpWizard.saveLatLong);
 	app.route('/SaveEmpJobPostOneData').post(empSignUpWizard.SaveJobDataOne);
+	app.route('/getCompanyByUserId').post(empSignUpWizard.companyByUserId);
 //	app.param('userId', users.userByID);
 };
