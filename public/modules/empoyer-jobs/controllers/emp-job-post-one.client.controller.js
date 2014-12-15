@@ -48,7 +48,7 @@ angular.module('empoyer-jobs').controller('EmpJobPostOneController', ['$scope','
 				
 			});
 		};
-		$scope.bindJobRoles = function(var jobRole){
+		$scope.bindJobRoles = function(jobRole){
 			$scope.job.title = jobRole.name
 			$scope.job.educations = jobRole.educations;
 			$scope.job.educations = jobRole.educations;
