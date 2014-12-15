@@ -44,13 +44,17 @@ angular.module('empoyer-jobs').controller('EmpJobPostOneController', ['$scope','
 				$scope.job_roles = response.job_roles;
 				$scope.job.job_role = $scope.job_roles[0];
 				$scope.job.title = $scope.job.job_role.name;
-
-				
-
+				$scope.job.responsibilities = $scope.job.job_role.responsibilities;
 				
 			});
 		};
-
+		$scope.bindJobRoles = function(var jobRole){
+			$scope.job.title = jobRole.name
+			$scope.job.educations = jobRole.educations;
+			$scope.job.educations = jobRole.educations;
+			$scope.job.qualifications = jobRole.qualifications;
+			$scope.job.skills = jobRole.skills;
+		};
 		// Find existing Job
 		var findOne = function() {
 
@@ -67,12 +71,7 @@ angular.module('empoyer-jobs').controller('EmpJobPostOneController', ['$scope','
 					//get industry job_roles
 					$http.get('/industries/'+ $scope.job.industry).success(function (response){
 						$scope.job_roles = response.job_roles;
-						$scope.job.title = $scope.job.job_role.name;
-						$scope.job.responsibilities = response.job_roles.responsibilities;
-						$scope.job.educations = response.job_roles.educations;
-						$scope.job.qualifications = response.job_roles.qualifications;
-						for(var i=0;i<response.job_role.skills.length;i++)
-							$scope.job.skills[0] = response.job_role.skills[0];
+
 						//set industry
 						angular.forEach($scope.industries, function(industry){
 							if(industry.name === $scope.job.industry){
