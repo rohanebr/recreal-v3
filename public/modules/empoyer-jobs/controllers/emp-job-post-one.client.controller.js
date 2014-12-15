@@ -67,6 +67,7 @@ angular.module('empoyer-jobs').controller('EmpJobPostOneController', ['$scope','
 					jobId: $stateParams.jobId
 				}, function(job){
 					$scope.job = job;
+					console.log($scope.job.travel_required);
                     $scope.job.due_date=new Date($scope.job.due_date);
 					//get industry job_roles
 					$http.get('/industries/'+ $scope.job.industry).success(function (response){
