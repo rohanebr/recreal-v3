@@ -110,12 +110,11 @@ angular.module('empoyer-jobs').controller('EmpJobPostOneController', ['$scope','
 			});
 		};
 		$scope.bindJobRoles = function(jobRole){
-			$scope.job.title = jobRole.name
-			$scope.job.educations = jobRole.educations;
+			$scope.job.title = jobRole.name;
+			$scope.job.responsibilities = jobRole.responsibilities;
 			$scope.job.educations = jobRole.educations;
 			$scope.job.qualifications = jobRole.qualifications;
 			$scope.job.skills = jobRole.skills;
-		
 		};
 		// Find existing Job
 		var findOne = function() {
@@ -163,24 +162,7 @@ angular.module('empoyer-jobs').controller('EmpJobPostOneController', ['$scope','
 			$scope.success = $scope.error = null;
             $scope.job.country=$scope.country.name;
             $scope.job.city=$scope.city.name;
-            locationVarification.validateLocation().then(function(response){
-            	if(response[0]=='false')
-            	{
-   				 var geocoder = new google.maps.Geocoder();
-                       geocoder.geocode({
-                    'address': $scope.job.city + "," + $scope.job.country
-                }, function(results, status) {
-                    if (status == google.maps.GeocoderStatus.OK) {
-                        console.log(results[0].geometry.location.lat());
-                        $scope.job.coordinates.latitude = results[0].geometry.location.lat();
-                        $scope.job.coordinates.longitude = results[0].geometry.location.lng();
-                                              
-                    } else {
-                        alert('Geocode was not successful for the following reason: ' + status);
-                    }
-                });
 
-            	}
 
             $scope.job.industry = $scope.job.industry.name;
 			$scope.job.job_role = $scope.job.job_role._id;
@@ -202,20 +184,26 @@ angular.module('empoyer-jobs').controller('EmpJobPostOneController', ['$scope','
 				});
 			}
 
+        //     locationVarification.validateLocation().then(function(response){
+        // //     	if(response[0]=='false')
+        // //     	{
+   				 // // var geocoder = new google.maps.Geocoder();
+        // //                geocoder.geocode({
+        // //             'address': $scope.job.city + "," + $scope.job.country
+        // //         }, function(results, status) {
+        // //             if (status == google.maps.GeocoderStatus.OK) {
+        // //                 console.log(results[0].geometry.location.lat());
+        // //                 $scope.job.coordinates.latitude = results[0].geometry.location.lat();
+        // //                 $scope.job.coordinates.longitude = results[0].geometry.location.lng();
+                                              
+        // //             } else {
+        // //                 alert('Geocode was not successful for the following reason: ' + status);
+        // //             }
+        // //         });
 
+        // //     	}
 
-
-
-
-
-
-
-
-
-
-
-
-            });
+        //     });
 
 		};
 	}
