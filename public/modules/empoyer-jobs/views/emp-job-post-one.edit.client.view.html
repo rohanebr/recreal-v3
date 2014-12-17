@@ -87,7 +87,7 @@
                                 </div>
                                 <div class="col-md-4">
                                     <span class="ui-select">
-                                        <select ng-model="job.job_role"  ng-change="job.title = job.job_role.name" ng-options="job_role.name for job_role in job_roles" required class="form-control">
+                                        <select ng-model="job.job_role" data-ng-change="bindJobRoles(job.job_role)" ng-options="job_role.name for job_role in job_roles" required class="form-control">
                                         </select>
                                     </span>
                                 </div>

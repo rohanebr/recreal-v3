@@ -73,7 +73,6 @@ angular.module('empoyer-jobs').controller('EmpJobPostOneController', ['$scope','
                             $scope.countries = countries;
                          
                                 angular.forEach($scope.countries, function(cunt) {
-
                                     country1 = $scope.job.country;
                                     if (country1 == cunt.name) {
                                     	foundit=true;
@@ -106,9 +105,13 @@ angular.module('empoyer-jobs').controller('EmpJobPostOneController', ['$scope','
 				$scope.job.job_role = $scope.job_roles[0];
 				$scope.job.title = $scope.job.job_role.name;
 				$scope.job.responsibilities = $scope.job.job_role.responsibilities;
+				$scope.job.educations = jobRole.educations;
+				$scope.job.qualifications = jobRole.qualifications;
+				$scope.job.skills = jobRole.skills;
 				
 			});
 		};
+
 		$scope.bindJobRoles = function(jobRole){
 			$scope.job.title = jobRole.name;
 			$scope.job.responsibilities = jobRole.responsibilities;
@@ -116,6 +119,7 @@ angular.module('empoyer-jobs').controller('EmpJobPostOneController', ['$scope','
 			$scope.job.qualifications = jobRole.qualifications;
 			$scope.job.skills = jobRole.skills;
 		};
+
 		// Find existing Job
 		var findOne = function() {
       		
@@ -151,9 +155,6 @@ angular.module('empoyer-jobs').controller('EmpJobPostOneController', ['$scope','
 					});
 				});
 			});
-
-                
-	
 		};
 
 					

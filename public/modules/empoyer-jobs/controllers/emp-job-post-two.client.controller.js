@@ -1,16 +1,34 @@
 'use strict';
 
-angular.module('empoyer-jobs').controller('EmpJobPostTwoController', ['$scope', 'Employers', '$stateParams', '$location',
-	function($scope, Employers, $stateParams, $location) {
+angular.module('empoyer-jobs').controller('EmpJobPostTwoController', ['$scope','$http', 'Jobs', '$stateParams', '$location',
+	function($scope,$http, Jobs, $stateParams, $location) {
 	
 		$scope.job={};
 		$scope.job.responsibilities = [];
+		$scope.job.qualifications = [];
 		$scope.newResponsibility = {
             name: ''
         };
-        $scope.job.responsibilities.push({
-                            name: 'Product Development'
-                        });
+        $scope.newSkill = {
+            title: ''
+        };
+        $scope.priorities = ['Must','Important','Nice to have'];
+        $scope.degree_titles = ['High School','Associate Degree','Bachelor Degree','Master Degree','Master of Business Administration (M.B.A.)',
+        						'Juris Doctor (J.D.)','Doctor of Medicine (M.D.)','Doctor of Philosophy (Ph.D.)',
+        						'Engineers Degree'];
+        $scope.newQualification = {
+            name: ''
+        };
+        //Find Job
+        $scope.findOne = function() {
+      		$scope.job = Jobs.get({ 
+					jobId: $stateParams.jobId
+				});
+		};
+
+        // $scope.job.responsibilities.push({
+        //                     name: 'Product Development'
+        //                 });
 
 
 
@@ -33,9 +51,12 @@ angular.module('empoyer-jobs').controller('EmpJobPostTwoController', ['$scope', 
 	    //**********Qualification***********
 		// Add Qualification
 		$scope.addQualification = function() {
-	      $scope.job.qualifications.push({
-	        name: ''
-	      });
+	     if ($scope.newQualification.name != '') {
+                $scope.job.qualifications.push($scope.newQualification);
+                $scope.newQualification = {
+                    name: ''
+                };
+            }
 	    };
 	    //Remove Qualification
 	    $scope.removeQualification = function(index) {
@@ -45,9 +66,12 @@ angular.module('empoyer-jobs').controller('EmpJobPostTwoController', ['$scope', 
 	    //**********Education***********
 		// Add Education
 		$scope.addEducation = function() {
-	      $scope.job.educations.push({
-	        title: ''
-	      });
+	    	if ($scope.newEducation.degree_title != '') {
+                $scope.job.educations.push($scope.newEducation);
+                $scope.newEducation = {
+                    name: ''
+                };
+            }
 	    };
 	    //Remove Education
 	    $scope.removeEducation = function(index) {
@@ -57,9 +81,12 @@ angular.module('empoyer-jobs').controller('EmpJobPostTwoController', ['$scope', 
 	    //**********Skills***********
 		// Add Skills
 		$scope.addSkill = function() {
-	      $scope.job.skills.push({
-	        title: ''
-	      });
+	     	if ($scope.newSkill.title != '') {
+                $scope.job.skills.push($scope.newSkill);
+                $scope.newSkill = {
+                    title: ''
+                };
+            }
 	    };
 	    //Remove Skills
 	    $scope.removeSkill = function(index) {

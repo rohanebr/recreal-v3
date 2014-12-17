@@ -1,4 +1,4 @@
-<section data-ng-controller="EmpJobPostTwoController">
+<section data-ng-controller="EmpJobPostTwoController" data-ng-init="findOne()">
 	 <section class="row">
     <section class="container custom-wrapper">
       <section class="hbox">
@@ -79,53 +79,132 @@
                     <div><h3>2) New Job - Requirements</h3><hr/></div>
                     <span>Your job description has automatically been populated. You can change it on the next page if you have your own job description, but make sure to fill in the skills portion of this page!</span>
                 </header>
-                <h4>Education</h4>
                 <section class="article-section-wizard">
-                    <div class="row form-group">
+                	<div class="row form-group">
                         <div class="col-md-2">
-                            <label for="">Degree</label>
+                            <label for="">Responsibilities</label>
                         </div>
-                        <div class="col-md-4">
-                            <span>
-                                <select ng-model="degree_title" required class="form-control">
-                                    <option>Pre-Matriculation</option>
-                                    <option>O-level/Matriculation</option>
-                                    <option>Intermediate/A-Level</option>
-                                    <option>Bachelor's Degree</option>
-                                    <option>Master's Degree</option>
-                                    <option>Doctorate</option>
-                                    <option>Certificate</option>
-                                    <option>Diploma</option>
-                                </select>
-                            </span>
-                        </div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col-md-2">
-                            <label for="">Study Field</label>
-                        </div>
-                        <div class="col-md-4">
-                            <span>
-                                <select ng-model="study_field" required class="form-control">
-                                    <option data-ng-repeat="studyfeild in studyFields">{{studyfeild.name}}</option>
-                                </select>
-                            </span>
+                        <div class="col-md-8">
+                            <section class="listThingy" class="row" ng-repeat="responsibility in job.responsibilities">
+                            	<div class="input-group">
+	                                <input type="text" placeholder="e.g Software" data-ng-model="responsibility.name" class="form-control">
+	                                <span class="input-group-btn">
+	                                <button type="button" ng-click="removeResponsibility($index)" class="btn btn-default"><i class="fa fa-times"></i></button>
+	                                </span>
+                                </div>
+                            </section>
+                            <div class="addThingy" data-ng-submit="addResponsibility()" ng-show="isAddingResponsibility">
+                                <input type="text" placeholder="Add a Responsibility" data-ng-model="newResponsibility.name" class="form-control">
+                                <button class="btn btn-default btn-sm" ng-click="addResponsibility()">Add</button>
+                                <a href="" ng-click="isAddingResponsibility = false">Done Adding</a>
+                            </div>
+                            <p><a href="" ng-click="isAddingResponsibility = true">+ Add Responsibility</a></p>
                         </div>
                     </div>
-                    <div class="row form-group">
-                        <div class="col-md-3">
-                            <label for="">Certificates</label>
-                        </div>
-                        <div class="col-md-9">
-                            <span data-ng-repeat="certificate in certificates">
-                                <input  type="text" class="form-control" style="width:200px;" data-ng-model="certificate.name">
-                                <a ng-click="removeCertificate($index)">
-                                    <i class="fa fa-times pull-right"></i>
-                                </a>
-                            </span>
-                            <a class= "btn btn-default btn-xs" data-ng-click="addCertificate()">Add more</a>
-                        </div>
-                    </div>
+                </section>
+                <section class="article-section-wizard">
+                  	<div class="row form-group">
+	                    <div class="col-md-2">
+	                        <label for="">Education</label>
+	                    </div>
+	                    <div class="col-md-10">
+		                    <section class="listThingy" class="row" ng-repeat="education in job.educations">
+		                        <div class="col-md-4 group-block1">
+		                            <select data-ng-model="education.degree_title"required class="form-control" >
+                                        <option ng-repeat="degree in degree_titles">{{degree}}</option>
+                                  </select>
+		                        </div>
+		                        <div class="col-md-4 group-block2">
+		                            <input type="text" placeholder="Majors" data-ng-model="education.study_feild" class="form-control">
+		                        </div>
+		                        <div class="input-group col-md-4 group-block3">
+		                            <select data-ng-model="education.priority"required class="form-control" >
+                                        <option ng-repeat="priority in priorities">{{priority}}</option>
+                                    </select>
+		                            <span class="input-group-btn">
+		                                <button type="button" ng-click="removeResponsibility($index)" class="btn btn-default"><i class="fa fa-times"></i></button>
+		                            </span>
+		                        </div>
+		                    </section>
+	                      	<section class="addThingy" data-ng-submit="addEducation()" ng-show="isAddingEducation">
+		                        <div class="row">
+			                        <div class="col-md-4">
+			                            <select data-ng-model="newEducation.degree_title"required class="form-control" >
+                                            <option ng-repeat="degree in degree_titles">{{degree}}</option>
+                                        </select>
+			                        </div>
+			                        <div class="col-md-4">
+			                            <input type="text" placeholder="Add an Education" data-ng-model="newEducation.study_feild" class="form-control">
+			                        </div>
+			                        <div class="col-md-4">
+			                            <select data-ng-model="newEducation.priority"required class="form-control" >
+                                            <option ng-repeat="priority in priorities">{{priority}}</option>
+                                        </select>
+			                        </div>
+		                        </div>
+	                            <button class="btn btn-default btn-sm" ng-click="addEducation()">Add</button>
+                                <a href="" ng-click="isAddingEducation = false">Done Adding</a>
+	                      	</section>
+	                      	<p><a href="" ng-click="isAddingEducation = true">+ Add Education</a></p>
+	                    </div>
+                  	</div>
+	                  <!-- <div class="row form-group">
+	                    <div class="col-md-2">
+	                        <label for="">Experience</label>
+	                    </div>
+	                    <div class="col-md-3">
+	                        <input  type="number" class="form-control" style="width:200px;"data-ng-model="job.experience">
+	                    </div>
+	                  </div> -->
+	                  <!-- <div class="row form-group">
+	                      <div class="col-md-2">
+	                          <label for="">Educations</label>
+	                      </div>
+	                      <div class="col-md-6">
+	                        <section class="listThingy" class="row" ng-repeat="education in job.educations">
+	                          <div class="input-group">
+	                              <select data-ng-model="education.degree_title"required class="form-control" >
+	                                  <option ng-repeat="degree in degree_titles">{{degree}}</option>
+	                              </select>
+	                              <span class="input-group-btn">
+	                              <button type="button" ng-click="removeEducation($index)" class="btn btn-default"><i class="fa fa-times"></i></button>
+	                            </span>
+	                          </div>
+	                          <div>
+	                              <input type="text" placeholder="Majors" data-ng-model="education.study_feild" class="form-control">
+	                              <select data-ng-model="education.priority"required class="form-control" >
+	                                  <option ng-repeat="priority in priorities">{{priority}}</option>
+	                              </select>
+	                          </div>
+	                        </section>
+	                        <div class="addThingy" data-ng-submit="addEducation" ng-show="isAddingEducation">
+	                              <select data-ng-model="newEducation.degree_title"required class="form-control" >
+	                                  <option ng-repeat="degree in degree_titles">{{degree}}</option>
+	                              </select>
+	                              <input type="text" placeholder="Add an Education" data-ng-model="newEducation.study_feild" class="form-control">
+	                              <select data-ng-model="newEducation.priority"required class="form-control" >
+	                                  <option ng-repeat="priority in priorities">{{priority}}</option>
+	                              </select>
+	                              <button class="btn btn-default btn-sm" ng-click="addEducation()">Add</button>
+	                              <a href="" ng-click="isAddingEducation = false">Done Adding</a>
+	                        </div>
+	                        <p><a href="" ng-click="isAddingEducation = true">+ Add Education</a></p>
+	                      </div>
+	                  </div> -->
+	                  <!-- <div class="row form-group">
+	                      <div class="col-md-3">
+	                          <label for="">Certificates</label>
+	                      </div>
+	                      <div class="col-md-9">
+	                          <span data-ng-repeat="certificate in certificates">
+	                              <input  type="text" class="form-control" style="width:200px;" data-ng-model="certificate.name">
+	                              <a ng-click="removeCertificate($index)">
+	                                  <i class="fa fa-times pull-right"></i>
+	                              </a>
+	                          </span>
+	                          <a class= "btn btn-default btn-xs" data-ng-click="addCertificate()">Add more</a>
+	                      </div>
+	                  </div> -->
                 </section>
                 <h4>Experience</h4>
                 <section class="article-section-wizard">
@@ -158,94 +237,77 @@
                     </div>
                     <div class="row form-group">
                         <div class="col-md-2">
-                            <label for="">Qulification 
-                                <span class="required-css">*</span>
-                            </label>
+                            <label for="">Qualifications</label>
                         </div>
-                        <div class="col-md-6">
-                            <section class="row" ng-repeat="qualification in job.qualifications">
-                                <div class="input-group">
-                                    <input type="text" placeholder="e.g Software" data-ng-model="job.qualification.name" class="form-control">
-                                    <span class="input-group-btn">
-                                    <button type="button" ng-click="removeQualification($index)" class="btn btn-default"><i class="fa fa-times"></i></button>
-                                  </span>
+                        <div class="col-md-10">
+                            <section class="listThingy" class="row" ng-repeat="qualification in job.qualifications">
+                                <div class="col-md-8 group-block1">
+                                    <input type="text" placeholder="e.g Software" data-ng-model="qualification.name" class="form-control">
                                 </div>
-                                <div class="col-md-2">
-                                    <span>
-                                        <select ng-model="job.career_level" required class="form-control" style="width: 300px;">
-                                            <option>Important</option>
-                                            <option>Nice to have</option>
-                                            <option>Must have</option>
-                                        </select>
+                                <div class="input-group col-md-4 group-block3">
+                                    <select data-ng-model="qualification.priority"required class="form-control" >
+                                        <option ng-repeat="priority in priorities">{{priority}}</option>
+                                    </select>
+                                    <span class="input-group-btn">
+                                        <button type="button" ng-click="removeQualification($index)" class="btn btn-default"><i class="fa fa-times"></i></button>
                                     </span>
                                 </div>
                             </section>
-                            <p><a ng-click="addQualification()">+ Add Qualification</a></p>
+                            <div class="addThingy" data-ng-submit="addQualification" ng-show="isAddingQualification">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <input type="text" placeholder="Add a Qualification" data-ng-model="newQualification.name" class="form-control">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <select data-ng-model="newQualification.priority"required class="form-control" >
+                                            <option ng-repeat="priority in priorities">{{priority}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <button class="btn btn-default btn-sm" ng-click="addQualification()">Add</button>
+                                <a href="" ng-click="isAddingQualification = false">Done Adding</a>
+                            </div>
+                            <p><a href="" ng-click="isAddingQualification = true">+ Add Qualification</a></p>
                         </div>
                     </div>
-                      <div class="row form-group">
+
+                </section>        
+                <section class="article-section-wizard">
+                    <div class="row form-group">
                         <div class="col-md-2">
-                            <label for="">Responsibilities</label>
+                            <label for="">Skills</label>
                         </div>
                         <div class="col-md-8">
-                          <section class="listThingy" class="row" ng-repeat="responsibility in job.responsibilities">
-                            <div class="input-group">
-                              <input disabled type="text" placeholder="e.g Software" data-ng-model="job.responsibility.name" class="form-control">
-                              <span class="input-group-btn">
-                                <button type="button" ng-click="removeResponsibility($index)" class="btn btn-default"><i class="fa fa-times"></i></button>
-                              </span>
-                            </div>
-                          </section>
-                          <div class="addThingy" data-ng-submit="addResponsibility()" ng-show="isAddingResponsibility">
-                              <input type="text" placeholder="Add a Responsibility" data-ng-model="job.responsibility.name" class="form-control">
-                              <button class="btn btn-default btn-sm" ng-click="addResponsibility()">Add</button>
-                              <a href="" ng-click="isAddingResponsibility = false">Done Adding</a>
-                          </div>
-                          <p><a href="" ng-click="isAddingResponsibility = true">+ Add Responsibility</a></p>
-                        </div>
-                      </div>
-                </section>
-                <h4>Skills</h4>         
-                <section class="article-section-wizard">
-                    <table class="table">
-                        <tr>
-                            <td>
-                                <label for="">Skill 
-                                    <span class="required-css">*</span>
-                                </label>
-                            </td>
-                            <td>
-                                <label for="">Level</label>
-                            </td>
-                            <td></td>
-                        </tr>
-                        <tr data-ng-repeat="skill in skills">
-                            <td>
-                                <input type="text" placeholder="e.g Communication" ng-model="skill.title"class="form-control">
-                                </td>
-                                <td>
-                                    <span class="ui-select">
-                                        <select data-ng-model="skill.level"  style="width: 150px;">
-                                            <option selected="selected">Beginner</option>
-                                            <option>Intermediate</option>
-                                            <option>Expert</option>
-                                        </select>
+                            <section class="listThingy" class="row" ng-repeat="skill in job.skills">
+                                <div class="col-md-8 group-block1">
+                                    <input type="text" placeholder="e.g Software" data-ng-model="skill.title" class="form-control">
+                                </div>
+                                <div class="input-group col-md-4 group-block3">
+                                    <select data-ng-model="skill.priority"required class="form-control" >
+                                        <option ng-repeat="priority in priorities">{{priority}}</option>
+                                    </select>
+                                    <span class="input-group-btn">
+                                        <button type="button" ng-click="removeSkill($index)" class="btn btn-default"><i class="fa fa-times"></i></button>
                                     </span>
-                                </td>
-                                <td>
-                                    <a ng-click="removeSkill($index)">
-                                        <i class="fa fa-times pull-right"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <a data-ng-click="addSkill()" class="btn btn-small btn-primary">Add Skill</a>
-                                </td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                        </table>
+                                </div>
+                            </section>
+                            <div class="addThingy" data-ng-submit="addSkill" ng-show="isAddingSkill">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <input type="text" placeholder="Add a Skill" data-ng-model="newSkill.title" class="form-control">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <select data-ng-model="newSkill.priority"required class="form-control" >
+                                            <option ng-repeat="priority in priorities">{{priority}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <button class="btn btn-default btn-sm" ng-click="addSkill()">Add</button>
+                                <a href="" ng-click="isAddingSkill = false">Done Adding</a>
+                            </div>
+                            <p><a href="" ng-click="isAddingSkill = true">+ Add Skill</a></p>
+                        </div>
+                    </div>
                 </section>
                 <footer class="col-md-10 article-footer-wizard">
                     <section class="pull-right">
