@@ -205,7 +205,12 @@ var JobSchema = new Schema({
 	user: {
 		type: Schema.ObjectId,
 		ref: 'User'
-	}
+	},
+	stage:{
+      type: String,
+  	enum: ['JobOne','JobTwo','JobLocation','Active'],
+  	default:'JobOne'
+    }
 
 
 	

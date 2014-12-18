@@ -146,7 +146,7 @@ var UserSchema = new Schema({
   	},
     stage:{
       type: String,
-  	enum: ['DeActive', 'Basic','CompanyLocation','JobOne','JobTwo','JobLocation','Active'],
+  	enum: ['DeActive', 'Basic','CompanyLocation','NoJobs','Active'],
   	default:'DeActive'
 
     }

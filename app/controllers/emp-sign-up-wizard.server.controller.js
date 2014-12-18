@@ -180,7 +180,20 @@ console.log(req.body.token);
 User.findOne({"activeToken":req.body.token}).exec(function(err, user){
 if(user)
 	{	
-
+		if(user.stage == "Deactive")
+		{
+			user.stage = "Basic";
+			user.save(function(err) {
+				if (err) {
+					typeObject.remove();
+					return res.send(400, {
+						message: getErrorMessage(err)
+					});
+				} else {
+					res.jsonp({status: true});
+				}
+			});
+		}
 		Company.findOne({"user":user._id}).exec(function(err,company){
 
 
@@ -223,10 +236,9 @@ if(!user)
 exports.SaveEmpSignUpWizardOneData = function(req,res)
 {
 	console.log("SAVEEMPSIGNUP"+req.body.job);
- User.findById(req.body.user._id,function(err,user){
-
-if(user.stage=='DeActive')
-{
+ 	User.findById(req.body.user._id,function(err,user){
+		if(user.stage=='Basic')
+		{
    			var employer = new Employer();
 			user.employer = employer;
 			var company=new Company(req.body.company);
@@ -243,55 +255,36 @@ if(user.stage=='DeActive')
 			employer.company = company;
 			
 			employer.save();
-			user.stage="Basic";
+			user.stage="CompanyLocation";
 			user.save(function(err) {
-		if (err) {
-			typeObject.remove();
-			return res.send(400, {
-				message: getErrorMessage(err)
+				if (err) {
+					typeObject.remove();
+					return res.send(400, {
+						message: getErrorMessage(err)
+					});
+				} else {
+					res.jsonp({status: true});
+				}
 			});
-		} else {
-			res.jsonp({status: true});
 		}
-	});
-	
-	
-
-
-
-}
-else
+		else
 		{
-Company.findOne({"user":req.body.user._id}).exec(function(err,company){
-	
-	company = _.extend(company , req.body.company);
-	company.country=req.body.company.country.name;
-	company.city=req.body.company.city.name;
-	company.save(function(err) {
-		if (err) {
-			return res.send(400, {
-				message: getErrorMessage(err)
+			Company.findOne({"user":req.body.user._id}).exec(function(err,company){
+				company = _.extend(company , req.body.company);
+				company.country=req.body.company.country.name;
+				company.city=req.body.company.city.name;
+				company.save(function(err) {
+					if (err) {
+						return res.send(400, {
+							message: getErrorMessage(err)
+						});
+					} else {
+						res.jsonp(company);
+					}
+				});
 			});
-		} else {
-			res.jsonp(company);
 		}
-	});
-
-	
-});
-
-
-
-
-			}
-
-
-
-
- });
-
-
-
+ 	});
 };
 
 exports.getCountryCity = function (req,res)
@@ -309,111 +302,71 @@ exports.saveLatLong = function(req,res)
 {
 	var user=req.body.user;
 	User.findOne({_id:req.body.user._id}).exec(function(err,user){
+		if(user)
+		{
+			if(user.stage == "CompanyLocation")
+				user.stage="NoJobs";
+			user.markModified('stage');
+			Company.findOne({"user":req.body.user._id}).exec(function(err,company){
+				console.log(company);
+				company.coordinates.latitude=req.body.latitude;
+				company.coordinates.longitude=req.body.longitude;
+				company.markModified('coordinates');
+				company.save(function(err){
+					if(!err)
+					{
+						user.save(function(err){if(!err){console.log(company);
+						res.jsonp(user.employer);}else{console.log("SAVE LAT LONG");
+						res.jsonp({stat:"Couldnt save company. check backend"});}});
+					}
+				});
+			});
 
-
-
-if(user)
-{
-
-user.stage="CompanyLocation";
-user.markModified('stage');
-Company.findOne({"user":req.body.user._id}).exec(function(err,company){
-	console.log(company);
-company.coordinates.latitude=req.body.latitude;
-company.coordinates.longitude=req.body.longitude;
-company.markModified('coordinates');
-company.save(function(err){
-if(!err)
-{
-	user.save(function(err){if(!err){console.log(company);
-res.jsonp(user.employer);}else{console.log("SAVE LAT LONG");
-
-res.jsonp({stat:"Couldnt save company. check backend"});}});
-	
-}
-
-
-});
-
-
-
-
-
-});
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+		}
 	});
-
-
-
-
-
-
 };
 
 exports.SaveJobDataOne = function(req,res)
 {
-	if (req.user.userType === 'employer') {
+	if (req.user.userType === 'employer') 
+	{
         var job = new Job(req.body);
         job.user = req.user;
-
         var emp = Employer.find({
             user: req.user._id
-        }).populate('company').exec(function(err, employers) {
-            job.employer = employers[0]._id;
-            job.company = employers[0].company._id;
-            employers[0].jobs.push(job);
-            var company = employers[0].company;
-            company.jobs.push(job);
-            company.save();
-            job.save(function(err) {
-                if (err) {
-                    return res.send(400, {
-                        message: getErrorMessage(err)
-                    });
-                } else {
-                    employers[0].save();
-                    JobSocket.jobPosted({
-                        job: job
-                    });
-                    res.jsonp(job);
-                }
-            });
-        });
+        	}).populate('company').exec(function(err, employers) {
+	            job.employer = employers[0]._id;
+	            job.company = employers[0].company._id;
+	            employers[0].jobs.push(job);
+	            var company = employers[0].company;
+	            company.jobs.push(job);
+	            company.save();
+	            job.save(function(err) {
+	                if (err) {
+	                    return res.send(400, {
+	                        message: getErrorMessage(err)
+	                    });
+	                } else {
+	                    employers[0].save();
+	                    if(user.stage=="NoJobs")
+	                    {
+	                    	if(job.stage=="JobTwo")
+	                    	{
+	                    		user.stage="Active";
+	                    		user.markModified('stage');
+	                    		user.save(function(err){
+	                    			if(!err){
+									}
+	                    		});
+	                    	}
+	                    }
+	                    JobSocket.jobPosted({
+	                        job: job
+	                    });
+	                    res.jsonp(job);
+	                }
+	            });
+	        });
     }
 };
 

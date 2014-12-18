@@ -167,7 +167,10 @@ angular.module('empoyer-jobs').controller('EmpJobPostOneController', ['$scope','
 
             $scope.job.industry = $scope.job.industry.name;
 			$scope.job.job_role = $scope.job.job_role._id;
-
+			if( $scope.job.stage=="JobOne")
+			{
+				$scope.job.stage=="JobTwo";
+			}
 			if(!$stateParams.jobId){    		// new job
 				$http.post('/SaveEmpJobPostOneData', $scope.job).success(function(response) {
 					$location.path('emp-job-post-two/' + response._id);

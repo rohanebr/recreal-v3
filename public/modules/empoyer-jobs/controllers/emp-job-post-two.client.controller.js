@@ -97,12 +97,13 @@ angular.module('empoyer-jobs').controller('EmpJobPostTwoController', ['$scope','
 	    $scope.SaveAndRedirect = function() {
 			$scope.success = $scope.error = null;
 			
-			$http.post('/SaveEmpJobPostOneData', $scope.job).success(function(response) {
-				// If successful show success message and clear form
-				
-			}).error(function(response) {
-				$scope.error = response.message;
-			});
+			var job = $scope.job ;
+				job.company = job.company._id;	// find job from backend returns populated company which produces error while saving
+				job.$update(function() {
+					$location.path('/');
+				}, function(errorResponse) {
+					$scope.error = errorResponse.data.message;
+				});
 		};
 
 		//Dont save and go back
