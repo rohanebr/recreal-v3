@@ -203,13 +203,31 @@ exports.update = function(req, res) {
     var job = req.job;
 
     job = _.extend(job, req.body);
-
+    if(job.stage == "JobTwo")
+        job.stage = 'Active';
     job.save(function(err) {
         if (err) {
             return res.send(400, {
                 message: getErrorMessage(err)
             });
         } else {
+            if(job.stage=="Active")
+            {
+                User.findOne({_id:req.body.user}).exec(function(err,user){
+                    if(user)
+                    {
+                        if(user.stage=="NoJobs")
+                        {
+                            user.stage="Active";
+                            user.markModified('stage');
+                            user.save(function(err){
+                                if(!err){
+                                }
+                            });
+                        }
+                    }
+                });
+            }
             res.jsonp(job);
         }
     });

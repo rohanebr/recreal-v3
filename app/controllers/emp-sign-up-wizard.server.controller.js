@@ -180,7 +180,7 @@ console.log(req.body.token);
 User.findOne({"activeToken":req.body.token}).exec(function(err, user){
 if(user)
 	{	
-		if(user.stage == "Deactive")
+		if(user.stage == "DeActive")
 		{
 			user.stage = "Basic";
 			user.save(function(err) {
@@ -330,6 +330,7 @@ exports.SaveJobDataOne = function(req,res)
 {
 	if (req.user.userType === 'employer') 
 	{
+
         var job = new Job(req.body);
         job.user = req.user;
         var emp = Employer.find({
@@ -348,18 +349,6 @@ exports.SaveJobDataOne = function(req,res)
 	                    });
 	                } else {
 	                    employers[0].save();
-	                    if(user.stage=="NoJobs")
-	                    {
-	                    	if(job.stage=="JobTwo")
-	                    	{
-	                    		user.stage="Active";
-	                    		user.markModified('stage');
-	                    		user.save(function(err){
-	                    			if(!err){
-									}
-	                    		});
-	                    	}
-	                    }
 	                    JobSocket.jobPosted({
 	                        job: job
 	                    });

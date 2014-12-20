@@ -105,9 +105,9 @@ angular.module('empoyer-jobs').controller('EmpJobPostOneController', ['$scope','
 				$scope.job.job_role = $scope.job_roles[0];
 				$scope.job.title = $scope.job.job_role.name;
 				$scope.job.responsibilities = $scope.job.job_role.responsibilities;
-				$scope.job.educations = jobRole.educations;
-				$scope.job.qualifications = jobRole.qualifications;
-				$scope.job.skills = jobRole.skills;
+				$scope.job.educations = $scope.job.job_role.educations;
+				$scope.job.qualifications = $scope.job.job_role.qualifications;
+				$scope.job.skills = $scope.job.job_role.skills;
 				
 			});
 		};
@@ -169,7 +169,7 @@ angular.module('empoyer-jobs').controller('EmpJobPostOneController', ['$scope','
 			$scope.job.job_role = $scope.job.job_role._id;
 			if( $scope.job.stage=="JobOne")
 			{
-				$scope.job.stage=="JobTwo";
+				$scope.job.stage="JobTwo";
 			}
 			if(!$stateParams.jobId){    		// new job
 				$http.post('/SaveEmpJobPostOneData', $scope.job).success(function(response) {

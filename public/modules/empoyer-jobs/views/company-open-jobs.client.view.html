@@ -9,10 +9,7 @@
             <section class="w-f scrollable">
               <div class="slim-scroll" data-height="auto" data-disable-fade-out="true" data-distance="0" data-size="10px" data-railOpacity="0.2">
                 <div class="clearfix wrapper dk nav-user hidden-xs">
-                  
-                </div>                
-
-
+                </div>
                 <!-- nav -->                 
                 <nav class="nav-primary hidden-xs">
                   <ul class="nav nav-main" data-ride="collapse">
@@ -131,36 +128,22 @@
                       <header class="row">
                         <div class="col-md-6"><h2>My Jobs</h2></div>
                         <div class="col-md-6 ">
-                          <p><a class="pull-right "href="/#!/post-job"style="color:#126da7;text-decoration: underline; font-size:15px;font-weight:bold; margin-top:25px;">Create New</a></p>
+                          <p><a class="pull-right "href="/#!/emp-job-post-one"style="color:#126da7;text-decoration: underline; font-size:15px;font-weight:bold; margin-top:25px;">Create New</a></p>
                         </div>
                       </header><hr style="margin-bottom: 5px;" />
                         <section>
                         <span><span style="margin-right:2%;font-weight:bold;">Sort By:</span><a href=""style="margin-right:2%;text-decoration: underline; color:#126da7;">A-Z <i class="fa fa-arrow-up"></i></a><a href=""style="margin-right:2%;text-decoration: underline; color:#126da7;">Most Recent Closed</a><a href=""style="margin-right:2%;text-decoration: underline; color:#126da7;">Most Candidates</a><a href=""style="margin-right:2%;text-decoration: underline; color:#126da7;">Most Shortlist</a><hr style="margin-top: 5px;"/>
                         </section>
-                      <section style="margin-left:8px;">
+                      <section style="margin-left:8px;" ng-repeat="job in jobs |filter:searchText">
                         <section>
-                        <h4 style="margin-bottom: 5px;">Senior Software Engineer </h4>
-                          <small class="text-muted" style="margin-left:5px"><i class="fa fa-map-marker fa-lg text-primary"></i> Islamabad, Pakistan</small>
+                        <h4 style="margin-bottom: 5px;"><a href="#!/jobs/{{job._id}}" class="text-info">{{job.title}} <i class="icon-twitter"></i></a></h4>
+                          <small class="text-muted" style="margin-left:5px"><i class="fa fa-map-marker fa-lg text-primary"></i> {{job.location}} , {{job.country}}</small><small class="block text-muted pull-right"> Close Date: {{job.due_date | date}}</small>
                           <p style="margin-top:7px; margin-left:5px;margin-bottom:3px;font-size:13px;text-decoration: underline; color:#126da7;"><span style="margin-right:2%">Candidates: 556</span><span style="margin-right:2%">Short List: 26</span><span style="margin-right:2%">Interview: 0</span></p>
-                          <p><small class="text-muted pull-left" style="margin-left:5px; font-style: italic"> Posted By: Muhammad Ahsin Anwar</small></p>
-                          <p class="row"><hr/></p>
-                        </section>
-                        <section>
-                        <h4 style="margin-bottom: 5px;">Finance Project Manager </h4>
-                          <small class="text-muted" style="margin-left:5px"><i class="fa fa-map-marker fa-lg text-primary"></i> Lahore, Pakistan</small>
-                          <p style="margin-top:7px; margin-left:5px;margin-bottom:3px;font-size:13px;text-decoration: underline; color:#126da7;"><span style="margin-right:2%">Candidates: 556</span><span style="margin-right:2%">Short List: 26</span><span style="margin-right:2%">Interview: 0</span></p>
-                          <p><small class="text-muted pull-left" style="margin-left:5px; font-style: italic"> Posted By: Muhammad Ahsin Anwar</small></p>
-                          <p class="row"><hr/></p>
-                        </section>
-                        <section>
-                        <h4 style="margin-bottom: 5px;">Senior Instrumentation Engineer </h4>
-                          <small class="text-muted" style="margin-left:5px"><i class="fa fa-map-marker fa-lg text-primary"></i> Islamabad, Pakistan</small>
-                          <p style="margin-top:7px; margin-left:5px;margin-bottom:3px;font-size:13px;text-decoration: underline; color:#126da7;"><span style="margin-right:2%">Candidates: 556</span><span style="margin-right:2%">Short List: 26</span><span style="margin-right:2%">Interview: 0</span></p>
-                          <p><small class="text-muted pull-left" style="margin-left:5px; font-style: italic"> Posted By: Muhammad Ahsin Anwar</small></p>
+                          <p><small class="text-muted pull-left" style="margin-left:5px; font-style: italic"> Posted By: {{employer.displayName.toUpperCase()}}</small></p>
                           <p class="row"><hr/></p>
                         </section>
                       <!-- Job panel start -->
-                      <section ng-repeat="job in jobs |filter:searchText" class="panel panel-info">
+                      <!-- <section ng-repeat="job in jobs |filter:searchText" class="panel panel-info">
                         <div class="panel-body">
                           <div class="clear">
                             <a href="#!/jobs/{{job._id}}" class="text-info">{{job.title}} <i class="icon-twitter"></i></a>
@@ -175,13 +158,13 @@
                             </div>
                           </div>
                         </div>
-                      </section>
+                      </section> -->
 
-                    <section ng-repeat="job in jobs |filter:searchText">
+                    <!-- <section ng-repeat="job in jobs |filter:searchText">
                         <a href="#!/jobs/{{job._id}}" ><h2>{{job.title}}</h2></a> 
                         <span class="pull-right" style="color:gray; font-style: italic"> Close Date: {{job.due_date | date}}</span>
                         <p><h4>{{job.location}} , {{job.country}}</h4></p>
-                        <p><span><!-- <strong>Description:</strong> -->
+                        <p><span>
                               <div ng-bind-html="job.description | truncate:270"></div>
                            </span></p> 
                            <p><span class="pull-left" style="color:gray; font-style: italic"> Posted By: {{employer.displayName.toUpperCase()}}</span></p>
@@ -209,7 +192,7 @@
                            </div>
                           <br>
                           <hr>
-                    </section>
+                    </section> -->
                   </article>
                 </section>
               </section>

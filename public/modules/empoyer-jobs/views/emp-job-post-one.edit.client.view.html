@@ -238,7 +238,7 @@
                                 </div>
                                  <div class="col-md-3">
                                 <span class="ui-select">
-                            <select data-ng-model="country" ng-options="count.name for count in countries" data-ng-change="getCountryCities()" required class="form-control">
+                            <select data-ng-model="job.country" ng-options="count.name for count in countries" data-ng-change="getCountryCities()" required class="form-control">
                             </select>
                           </span>
                       </div>
@@ -247,7 +247,7 @@
                           </div>
                           <div class="col-md-3">
                           <span class="ui-select">
-                            <select ng-model="city" ng-options="sity.name for sity in cities" required class="form-control">
+                            <select ng-model="job.location" ng-options="sity.name for sity in cities" required class="form-control">
                             </select>
                           </span>
                       </div>
