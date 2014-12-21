@@ -272,8 +272,10 @@ Thread.findById(threadId).populate('messages.author').exec(function(err, thread)
         thread.markModified('messages');
         thread.markModified('author');
          thread.save();
-           thread.read=false;
-         thread.markModified('read');
+           thread.readByReceiver=false;
+           thread.readBySender=true;
+         thread.markModified('readByReceiver');
+         thread.markModified('readBySender');
          thread.save();
 		if (err) {return res.send(400, {
 				message: getErrorMessage(err)

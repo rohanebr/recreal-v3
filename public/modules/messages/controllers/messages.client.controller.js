@@ -51,7 +51,7 @@ angular.module('messages').controller('MessagesController', ['$scope', '$statePa
 
         $scope.selectedmessage = function(message) {
             $scope.thread = message;
-
+             $scope.displayNameOfReceiver="";
             $scope.messages = message.messages;
 
             console.log($scope.messages);
@@ -226,11 +226,7 @@ angular.module('messages').controller('MessagesController', ['$scope', '$statePa
                 id: $scope.authentication.user._id
             }).success(function(thread) {
                 $scope.balsamic.message = "";
-                console.log($scope.balsamic.message);
-             
-            });
-
-            $scope.newMessage = {
+                  $scope.newMessage = {
                 messageBody: data.messageBody,
                 author: {
                     _id: data.id,
@@ -241,8 +237,22 @@ angular.module('messages').controller('MessagesController', ['$scope', '$statePa
                 created: data.created
             };
 
+                    for(var x=0,len=$scope.threads.length;x<len;x++)
+                    {
+                       if($scope.threads[x]._id==data.threadId)
+                          { $scope.threads[x].messages.unshift($scope.newMessage);
+                            break;
+                          }
 
-            $scope.messages.unshift($scope.newMessage);
+
+
+                    }
+            
+
+             
+            });
+
+
 
 
 

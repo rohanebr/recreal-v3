@@ -647,7 +647,7 @@ User.update(
 
 
 exports.addSubscriber = function(req,res)
-{
+{console.log("ADDSUBSCRIBER");
 	var addsubscriber=true;
 	
 	User.findById(req.body.id, function(err, user)
@@ -669,7 +669,7 @@ User.update(
       { $push: { subscribers : req.user._id } },
       { safe: true },
       function removeConnectionsCB(err, obj) {
-
+         res.jsonp("Subscriber Added");
       });
 
 		});
