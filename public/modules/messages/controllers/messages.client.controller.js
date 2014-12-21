@@ -1,10 +1,28 @@
 'use strict';
 
 // Messages controller
-angular.module('messages').controller('MessagesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Messages',
-	function($scope, $stateParams, $location, Authentication, Messages ) {
+angular.module('messages').controller('MessagesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Messages','$http',
+	function($scope, $stateParams, $location, Authentication, Messages,$http ) {
 		$scope.authentication = Authentication;
+        $scope.messages=[];
+        $scope.unreadmessages=0;
+       $scope.listMessages = function()
+       {
+         $http.get('/getAllMessagesWithFlagForUnread/' + $scope.authentication.user._id).success(function(res)
+         	{
+             $scope.messages=res;
+             console.log(res);
+             for(var s=0,len=$scope.messages.length;s<len;s++)
+             	if(!$scope.messages[s].readByReceiver)
+             		$scope.unreadmessages++;
+             console.log("UNREAD:"+$scope.unreadmessages);
 
+
+         	});
+
+
+
+       };
 		// Create new Message
 		$scope.create = function() {
 			// Create new Message object

@@ -483,19 +483,11 @@ exports.saveOAuthUserProfile = function(req, providerUserProfile, done) {
 // };
 exports.getMessages = function(req,res)
 {
-	console.log("getMessages");
+	
 	Distance.calculate("SDF","SFd");
 	var userId=req.user._id;
-	var username= User.findOne({_id:userId}).exec(function(err,user){
-
-
-
-
-
-
-});
 	var threadsId=req.user.threads;
-console.log('{users}{controller}{getName} Ran USERIDE:'+' df');
+
 var threadId;
 
 
@@ -548,11 +540,11 @@ var threadId;
  	{
  		
     res.end(JSON.stringify(gotmessages));
-    return "ended"; 	}
- 		// res.send(JSON.stringify(gotmessages), null, 2);
+   	}
+ 		
  	else
- 		{res.json("nothing");
- 	return "ended";}
+ 		res.json("nothing");
+ 	
  
  
  
