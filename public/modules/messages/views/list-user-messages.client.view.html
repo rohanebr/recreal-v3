@@ -1,4 +1,4 @@
-<section data-ng-controller="MessagesController" data-ng-init="listMessages()">
+<section data-ng-controller="MessagesController" data-ng-init="listThreads()">
   <section class="">
     <section>
       <section class="hbox stretch">
@@ -18,7 +18,7 @@
                         <ul class="nav nav-pills nav-stacked">
                           <li class="active">
                             <a ui-sref-active="active" ui-sref=".inbox">
-                              <span class="badge bg-info pull-right">{{unreadmessages}}</span> 
+                              <span class="badge bg-info pull-right">{{unreadthreads}}</span> 
                               <i class="fa fa-fw fa-inbox"></i>
                               Inbox
                             </a>
