@@ -174,7 +174,7 @@ angular.module('core').controller('HeaderController', ['$scope', 'Authentication
                     }
                     if (!alreadyexists) {
                         $scope.threads.push(thread);
-                        $scope.$apply();
+                       
                         toaster.pop('success', "Message received", data.message.sender.displayName);
                     }
                 }

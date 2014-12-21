@@ -20,7 +20,8 @@ exports.create = function(server) {
                     id: data.author._id,
                     author: data.author.displayName,
                     created: data.created,
-                    authordp: data.authordp
+                    authordp: data.authordp,
+                    threadId:data.threadId
                 };
                 var socketid = fetchmesocketid(data.receiver);
                 for (var x = 0; x < socketid.length; x++) {
