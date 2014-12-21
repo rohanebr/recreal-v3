@@ -184,9 +184,7 @@ if(user)
 				if (err) {
 					res.send(400, err);
 				} else {
-					console.log(user);
-					if(company=='null')
-						company="NO COMPANY";
+					
 					res.jsonp({user:user,company:company});
 				}
 			});
