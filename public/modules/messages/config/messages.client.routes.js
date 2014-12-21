@@ -9,8 +9,8 @@ angular.module('messages').config(['$stateProvider',
 			url: '/list-user-messages',
 			templateUrl: 'modules/messages/views/list-user-messages.client.view.html'
 		}).
-		state('list-user-messages.inbox', {
-			url: '/inbox',
+		state('list-user-messages.inboxs', {
+			url: '/inboxs/:threadId',
 			templateUrl: 'modules/messages/views/inbox.client.view.html'
 			
 		}).

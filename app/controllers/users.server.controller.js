@@ -538,8 +538,9 @@ var threadId;
  	  
  	if(gotmessages.length>=0)
  	{
- 		
+ 		console.log(gotmessages);
     res.end(JSON.stringify(gotmessages));
+
    	}
  		
  	else

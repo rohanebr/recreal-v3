@@ -53,7 +53,10 @@
 	                </aside>
 	              
 		            <aside id="email-content" class="bg-light lter col-md-8">
-	                  <section class="panel panel-default">
+		            	<section class="panel panel-default" data-ng-show="nomessages">
+		            		<header class="panel-heading">No Messages to Show</header>
+		            	</section>
+	                  <section class="panel panel-default" data-ng-hide="nomessages">
 	                    <header class="panel-heading">Chat</header>
 	                    <section class="chat-list panel-body">
 	                      <article   id="chat-id-1" ng:class="{true:'chat-item left', false:'chat-item right'}[message.author._id==authentication.user._id]" data-ng-repeat="message in messages | orderBy:sortMessage:false">
