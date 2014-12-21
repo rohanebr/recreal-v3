@@ -238,10 +238,13 @@ exports.getUserThread = function(req,res)
 					thread.readByReceiver=true;
 					thread.markModified('readByReceiver');
 				}
-        thread.save();
-		if (err) return res.send(err);
+        thread.save(function(err){
+
+        	if (err) return res.send(err);
 		else
 			return res.send(thread);
+        });
+		
 	});
 }
 
@@ -271,21 +274,32 @@ Thread.findById(threadId).populate('messages.author').exec(function(err, thread)
      
         thread.markModified('messages');
         thread.markModified('author');
-         thread.save();
-           thread.readByReceiver=false;
-           thread.readBySender=true;
-         thread.markModified('readByReceiver');
-         thread.markModified('readBySender');
-         thread.save();
-		if (err) {return res.send(400, {
-				message: getErrorMessage(err)
-			});
-	}
-	else
-	{
+        if(author._id==thread.sender)
+        { thread.readByReceiver=false;
+        	 thread.markModified('readByReceiver');
+        }
+        else
+
+        {
+
+        	 thread.readBySender=false;
+        	  thread.markModified('readBySender');
+        }
+          
+        
+        
+         thread.save(function(err){
+
+   if(!err)
+
+	{console.log("THREAD SAVED:"+thread);
 		res.json( {'sender':thread.sender,'receiver':thread.receiver});}
+
+         });
+	
+	
 	});
-console.log("{Threads}{Controller} ran"+message+" author name:"+author);
+
 
 
 

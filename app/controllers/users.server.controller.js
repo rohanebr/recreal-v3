@@ -672,6 +672,9 @@ User.update(
          res.jsonp("Subscriber Added");
       });
 
+
+res.jsonp("Already present");
+
 		});
 
 

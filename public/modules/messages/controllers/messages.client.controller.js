@@ -221,10 +221,7 @@ angular.module('messages').controller('MessagesController', ['$scope', '$statePa
 
         //socket incoming_thread start
         Socket.on("incoming_thread", function(data) {
-            console.log(data);
-            $http.put('/threads/getUserThread/' + $scope.thread._id, {
-                id: $scope.authentication.user._id
-            }).success(function(thread) {
+           
                 $scope.balsamic.message = "";
                   $scope.newMessage = {
                 messageBody: data.messageBody,
@@ -250,7 +247,7 @@ angular.module('messages').controller('MessagesController', ['$scope', '$statePa
             
 
              
-            });
+            
 
 
 
