@@ -189,6 +189,7 @@ Socket.emit('message_sent_from', {message: thread});
         //socket incoming_thread start
         Socket.on("incoming_thread", function (data) {
         	   $http.put('/threads/getUserThread/' + $scope.thread._id,{id:$scope.authentication.user._id}).success(function(thread) {
+        	   	$scope.balsamic="";
 								Socket.emit('watched_thread',$scope.authentication.user._id);
              	});
 
