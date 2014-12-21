@@ -17,27 +17,6 @@ var mongoose = require('mongoose'),
 	JobSocket = require('../sockets/job.server.socket.js'),
 	Job = mongoose.model('Job');
 
-	var signin = function(req, res, next) {
-		console.log("SIGNIN"+req);
-	passport.authenticate('local', function(err, user, info) {
-		if (err || !user) {
-			res.send(400, info);
-		} else {
-			// Remove sensitive data before login
-			user.password = undefined;
-			user.salt = undefined;
-
-	
-			req.login(user, function(err) {
-				if (err) {
-					res.send(400, err);
-				} else {
-					res.jsonp(user);
-				}
-			});
-		}
-	})(req, res, next);
-};
 	/**
  * Get the error message from error object
  */
@@ -178,27 +157,22 @@ user.threads.push(thread);
 exports.ValidateToken = function(req,res){
 console.log(req.body.token);
 User.findOne({"activeToken":req.body.token}).exec(function(err, user){
+	console.log(user);
 if(user)
 	{	
 		if(user.stage == "DeActive")
 		{
 			user.stage = "Basic";
 			user.save(function(err) {
-				if (err) {
-					typeObject.remove();
-					return res.send(400, {
-						message: getErrorMessage(err)
-					});
-				} else {
-					res.jsonp({status: true});
-				}
-			});
+				
+							});
 		}
+	
 		Company.findOne({"user":user._id}).exec(function(err,company){
 
 
 			console.log("COMPANY"+company);
-			if (err || !user) {
+			if (!user) {
 			res.send(400, info);
 		} else {
 			// Remove sensitive data before login
@@ -210,7 +184,9 @@ if(user)
 				if (err) {
 					res.send(400, err);
 				} else {
-					
+					console.log(user);
+					if(company=='null')
+						company="NO COMPANY";
 					res.jsonp({user:user,company:company});
 				}
 			});
