@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('employer-signup-wizard').controller('EmpWizardOneController', ['$scope', '$http', 'Industries', 'Countries', '$rootScope', 'geolocation', '$stateParams', '$state', 'Authentication',
-    function($scope, $http, Industries, Countries, $rootScope, geolocation, $stateParams, $state, Authentication) {
+angular.module('employer-signup-wizard').controller('EmpWizardOneController', ['$scope', '$http', 'Industries', 'Countries', '$rootScope', 'geolocation', '$stateParams', '$state', 'Authentication','$modal',
+    function($scope, $http, Industries, Countries, $rootScope, geolocation, $stateParams, $state, Authentication,$modal) {
         // Controller Logic
         // ...
         var city1 = "";
@@ -18,6 +18,7 @@ angular.module('employer-signup-wizard').controller('EmpWizardOneController', ['
             }
         };
         $scope.employer = {};
+        
         $scope.company.specialities = [];
         $rootScope.coords = {};
 
@@ -187,6 +188,20 @@ angular.module('employer-signup-wizard').controller('EmpWizardOneController', ['
         $scope.removeSpeciality = function(index) {
             $scope.company.specialities.splice(index, 1);
         };
+
+
+      $scope.openEmpPictureModal = function() {
+        var modalInstance;
+        modalInstance = $modal.open({
+          templateUrl: '/modules/employer-signup-wizard/views/partials/emp-wizard-picture-modal.html',
+          controller: 'PictureModalCtrl',
+        });
+        modalInstance.result.then(function(result) {
+           $scope.employer.picture_url = result.picture_url;
+        }, function() {
+
+        });
+      };
     }
 
 
