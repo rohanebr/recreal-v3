@@ -1,108 +1,105 @@
 'use strict';
 
-angular.module('core').controller('HeaderController', ['$scope', 'Authentication', 'Menus', 'Socket', '$http','$location','$rootScope', 'toaster',
-    function($scope, Authentication, Menus, Socket, $http,$location,$rootScope, toaster) {
-      console.log("HEADER CLIENT CONTROLLER");
+angular.module('core').controller('HeaderController', ['$scope', 'Authentication', 'Menus', 'Socket', '$http', '$location', '$rootScope', 'toaster',
+    function($scope, Authentication, Menus, Socket, $http, $location, $rootScope, toaster) {
+        console.log("HEADER CLIENT CONTROLLER");
         $scope.authentication = Authentication;
         $scope.isCollapsed = false;
         $scope.menu = Menus.getMenu('topbar');
         $scope.threads = [];
-        $scope.unreadnotificationslength=0;
-        $scope.user=$scope.authentication.user;
+        $scope.unreadnotificationslength = 0;
+        $scope.user = $scope.authentication.user;
         console.log(Authentication);
         $scope.notifications = [];
         var thread = [];
 
 
 
-       $scope.list =' ';
-      $scope.texts = ' ';
-      $scope.submit = function() {
-        if ($scope.texts) {
-          $scope.list=this.texts;
-          $rootScope=$scope.list;
-          $scope.texts = ' ';
-          $location.path('/search-jobs/'+$scope.list);
-        }
-      };
-      $scope.findMeAJob=function()
-      {
+        $scope.list = ' ';
+        $scope.texts = ' ';
+        $scope.submit = function() {
+            if ($scope.texts) {
+                $scope.list = this.texts;
+                $rootScope = $scope.list;
+                $scope.texts = ' ';
+                $location.path('/search-jobs/' + $scope.list);
+            }
+        };
+        $scope.findMeAJob = function() {
 
-      $location.path('/search-jobs/find-me-a-job');
-      };
+            $location.path('/search-jobs/find-me-a-job');
+        };
 
-$scope.notificationRead=function(data){
- 
-              
+        $scope.notificationRead = function(data) {
 
-                $http.post('/users/readNotification/' + $scope.authentication.user._id,data).success(function(res) {
-                  if(res.outgoing=="not-read")
+
+
+            $http.post('/users/readNotification/' + $scope.authentication.user._id, data).success(function(res) {
+                if (res.outgoing == "not-read")
                     $scope.unreadnotificationslength--;
-                    for (var i in $scope.notifications ) {
-                    if ($scope.notifications [i] === data  && $scope.notifications.length>10) {
+                for (var i in $scope.notifications) {
+                    if ($scope.notifications[i] === data && $scope.notifications.length > 10) {
                         $scope.notifications.splice(i, 1);
                     }
                 }
-                   
-                    $scope.apply();
-                }).error(function(data, status, headers, confige) {
 
-                 
-                });
+                $scope.apply();
+            }).error(function(data, status, headers, confige) {
 
-        		
-        	}
-     
+
+            });
+
+
+        }
+
         if ($scope.authentication.user) {
- $scope.isCandidate=function()
-      {
+            $scope.isCandidate = function() {
 
-       if( $scope.authentication.user.userType==='candidate')
-        return true;
+                if ($scope.authentication.user.userType === 'candidate')
+                    return true;
 
-else return false;
-      };
+                else return false;
+            };
 
-        	var count=0;
-        	var y=$scope.authentication.user.notifications.length;
-                  for(var x=0;x<y;x++)
-                   if(!($scope.authentication.user.notifications[x].isRead))
-                    	{
-                    		$scope.notifications=$scope.authentication.user.notifications[x];
-                    		count++;
-                    	}
-                        $scope.unreadnotificationslength=count--;
-            
-              if(count<10 && y>=10)
-              {var x=0;
-                   while(count<10)
-                   {
-                   	if($scope.authentication.user.notifications[x].isRead)
-                   $scope.notifications=$scope.authentication.user.notifications[x];
-                     count++;
-                      x++;
+            var count = 0;
+            var y = $scope.authentication.user.notifications.length;
+            for (var x = 0; x < y; x++)
+                if (!($scope.authentication.user.notifications[x].isRead)) {
+                    $scope.notifications = $scope.authentication.user.notifications[x];
+                    count++;
+                }
+            $scope.unreadnotificationslength = count--;
 
-                   }
+            if (count < 10 && y >= 10) {
+                var x = 0;
+                while (count < 10) {
+                    if ($scope.authentication.user.notifications[x].isRead)
+                        $scope.notifications = $scope.authentication.user.notifications[x];
+                    count++;
+                    x++;
 
-              }
+                }
 
-                  
-        	$scope.notifications=$scope.authentication.user.notifications;
+            }
+
+
+            $scope.notifications = $scope.authentication.user.notifications;
             Socket.on('take_the_test_notification', function(data) {
                 console.log("GOT A HIT");
-                if (data.userid == $scope.authentication.user._id)
-                {
-                 var present=false;
+                if (data.userid == $scope.authentication.user._id) {
+                    var present = false;
 
-                        for(var d=0,len=$scope.notifications.length;d<len;d++)
-                        {
-                            if($scope.notifications[d]._id==data.notification._id)
-                              {  present=true;break;}
-
+                    for (var d = 0, len = $scope.notifications.length; d < len; d++) {
+                        if ($scope.notifications[d]._id == data.notification._id) {
+                            present = true;
+                            break;
                         }
-                        if(!present){
-                    $scope.notifications.push(data.notification);
-                     $scope.unreadnotificationslength++;}
+
+                    }
+                    if (!present) {
+                        $scope.notifications.push(data.notification);
+                        $scope.unreadnotificationslength++;
+                    }
                 }
 
             });
@@ -132,19 +129,18 @@ else return false;
             });
 
 
-console.log($scope.authentication.user._id);
+            console.log($scope.authentication.user._id);
 
             $http.get('/users/getMessages/' + $scope.authentication.user._id).success(function(res) {
-              console.log("GETMESSAGE"+res);
-               
+                console.log("GETMESSAGE" + res);
+
                 if (res.length > 1) {
-                    for (var x = 1; x < res.length; x++)
-                       { 
-                          if(res[x].senderName==null)
-                            res[x].senderName="From Recreal Team";
+                    for (var x = 1; x < res.length; x++) {
+                        if (res[x].senderName == null)
+                            res[x].senderName = "From Recreal Team";
                         $scope.threads.push(res[x]);
 
-                      }
+                    }
 
                 }
 
@@ -179,7 +175,7 @@ console.log($scope.authentication.user._id);
                     if (!alreadyexists) {
                         $scope.threads.push(thread);
                         $scope.$apply();
-                        toaster.pop('success', "Message recieved", data.message.sender.displayName);
+                        toaster.pop('success', "Message received", data.message.sender.displayName);
                     }
                 }
 
