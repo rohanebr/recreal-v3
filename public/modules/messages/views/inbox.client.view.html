@@ -56,7 +56,7 @@
 	                  <section class="panel panel-default">
 	                    <header class="panel-heading">Chat</header>
 	                    <section class="chat-list panel-body">
-	                      <article   id="chat-id-1" ng:class="{true:'chat-item left', false:'chat-item right'}[message.author._id==authentication.user._id]" data-ng-repeat="message in messages | orderBy:'created':false">
+	                      <article   id="chat-id-1" ng:class="{true:'chat-item left', false:'chat-item right'}[message.author._id==authentication.user._id]" data-ng-repeat="message in messages | orderBy:sortMessage:false">
 	                      
 	                        <a href="#" ng:class="{true:'pull-left thumb-sm avatar', false:'pull-right thumb-sm avatar'}[message.author._id==authentication.user._id]"><img src="{{message.author.picture_url}}"></a>
 	                        <div ng-if="showOnline(message)">
@@ -94,13 +94,13 @@
 	                      <article class="chat-item" id="chat-form">
 	                        <a class="pull-left thumb-sm avatar"><img src="{{authentication.user.picture_url}}" class="img-circle"></a>
 	                        <section class="chat-body">
-	                          <form action="" class="m-b-none">
+	                         
 	                            <div class="input-group">
-	                            	<input type="text" data-ng-model="messageBody" class="form-control input-sm rounded" placeholder="{{displayNameOfReceiver}}..."> <span class="input-group-btn"> <button class="btn btn-sm btn-danger font-bold btn-rounded" ng-click="sendMessage(messageBody)"  type="button">Send
+	                            	<input type="text" ng-model="balsamic" class="form-control input-sm rounded" placeholder="{{displayNameOfReceiver}}..."> <span class="input-group-btn"> <button class="btn btn-sm btn-danger font-bold btn-rounded" ng-click="sendMessage(balsamic)" type="button">Send
 	                            </button> </span>
 	                              
 	                            </div>
-	                          </form>
+	                         
 	                        </section>
 	                      </article>
 	                    </footer>

@@ -7,8 +7,8 @@ angular.module('messages').controller('MessagesController', ['$scope', '$statePa
         $scope.threads=[];
         $scope.message={};
         $scope.thread;
-        $scope.messageBody;
-        $scope.message.messages=[];
+        $scope.balsamic;
+                $scope.message.messages=[];
         $scope.displayNameOfReceiver;
         $scope.unreadthreads=0;
        $scope.listThreads = function()
@@ -106,14 +106,13 @@ angular.module('messages').controller('MessagesController', ['$scope', '$statePa
 
 
         
-	$scope.sendMessage=function(messagebody){
-	$scope.messageBody=messagebody;
-            
+	$scope.sendMessage=function(message){
+
+            $scope.balsamic=message;
              var threadId=$scope.thread._id;
-             console.log("{Thread} {SendMessage} running"+" THREAD ID"+threadId+" "+$scope.messageBody);
-          var message={threadId:$scope.thread._id,messageBody : $scope.messageBody,author:$scope.authentication.user};
-           console.log("USER ID:"+$scope.authentication.user._id+' Sender ID'+$scope.thread.sender+' Receiver ID:'+$scope.thread.receiver);
-//
+        
+          var message={threadId:$scope.thread._id,messageBody :   $scope.balsamic,author:$scope.authentication.user};
+         
       if($scope.authentication.user._id == $scope.thread.sender._id)
       {
 
@@ -152,19 +151,19 @@ Socket.emit('message_sent_from', {message: thread});
                 Socket.emit('update_threads', { sender : messageBody.sender,
 	                                            receiver :messageBody.receiver,
  	                                            threadId: $scope.thread._id,
- 	                                            messageBody: $scope.messageBody,
+ 	                                            messageBody:   $scope.balsamic,
 								                author: $scope.authentication.user,
 								                authordp: $scope.authentication.user.picture_url,
 								                created: Date.now()
 
                      });
-            $scope.messageBody="";
+           
 
              
              });
 
  		
-
+ 
 
 
 
@@ -195,7 +194,7 @@ Socket.emit('message_sent_from', {message: thread});
 
              $scope.newMessage={
             	                         messageBody:data.messageBody,
-						                 author:{authorid:data.id,
+						                 author:{_id:data.id,
 						                 	     displayName:data.author,
 						                 	     picture_url:data.authordp,
 						                 	     isOnline:"Online" },
@@ -210,6 +209,10 @@ Socket.emit('message_sent_from', {message: thread});
         });
 
 
+$scope.sortMessage = function(message) {
+    var date = new Date(message.created);
+    return date;
+};
 
 
 	}
