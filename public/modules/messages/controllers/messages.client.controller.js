@@ -7,7 +7,7 @@ angular.module('messages').controller('MessagesController', ['$scope', '$statePa
         $scope.threads=[];
         $scope.message={};
         $scope.thread;
-        $scope.balsamic;
+        $scope.balsamic={};
                 $scope.message.messages=[];
         $scope.displayNameOfReceiver;
         $scope.unreadthreads=0;
@@ -106,12 +106,12 @@ angular.module('messages').controller('MessagesController', ['$scope', '$statePa
 
 
         
-	$scope.sendMessage=function(message){
+	$scope.sendMessage=function(){
 
-            $scope.balsamic=message;
+           
              var threadId=$scope.thread._id;
         
-          var message={threadId:$scope.thread._id,messageBody :   $scope.balsamic,author:$scope.authentication.user};
+          var message={threadId:$scope.thread._id,messageBody :   $scope.balsamic.message,author:$scope.authentication.user};
          
       if($scope.authentication.user._id == $scope.thread.sender._id)
       {
@@ -151,7 +151,7 @@ Socket.emit('message_sent_from', {message: thread});
                 Socket.emit('update_threads', { sender : messageBody.sender,
 	                                            receiver :messageBody.receiver,
  	                                            threadId: $scope.thread._id,
- 	                                            messageBody:   $scope.balsamic,
+ 	                                            messageBody:   $scope.balsamic.message,
 								                author: $scope.authentication.user,
 								                authordp: $scope.authentication.user.picture_url,
 								                created: Date.now()
@@ -189,7 +189,8 @@ Socket.emit('message_sent_from', {message: thread});
         //socket incoming_thread start
         Socket.on("incoming_thread", function (data) {
         	   $http.put('/threads/getUserThread/' + $scope.thread._id,{id:$scope.authentication.user._id}).success(function(thread) {
-        	   	$scope.balsamic="";
+        	   	$scope.balsamic.message="";
+        	   	console.log($scope.balsamic.message);
 								Socket.emit('watched_thread',$scope.authentication.user._id);
              	});
 
