@@ -224,9 +224,12 @@ exports.setRead = function(req,res)
 }
 exports.getUserThread = function(req,res)
 {
+	var alreadyRead=false;
 	var idofuser=req.body.id;
      	var id=req.thread._id;
  		Thread.findById(id).populate('sender').populate('receiver').populate('messages.author').exec(function(err, thread) {
+ 			if(thread.readBySender && thread.readByReceiver)
+ 				alreadyRead=true;
 	if(thread.sender._id==idofuser)
 		 {
 		 	thread.readBySender=true;
@@ -242,7 +245,7 @@ exports.getUserThread = function(req,res)
 
         	if (err) return res.send(err);
 		else
-			return res.send(thread);
+			return res.send({thread:thread,alreadyRead:alreadyRead});
         });
 		
 	});

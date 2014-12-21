@@ -22,12 +22,17 @@ angular.module('messages').controller('MessagesController', ['$scope', '$statePa
                 $scope.threads = res;
                 console.log(res);
                 for (var s = 0, len = $scope.threads.length; s < len; s++)
-
+{
                 
                    
-
-                    if (!$scope.threads[s].readByReceiver)
+if($scope.threads[s].receiver==$scope.authentication.user._id)
+                if (!$scope.threads[s].readByReceiver)
                         $scope.unreadthreads++;
+
+if($scope.threads[s].sender==$scope.authentication.user._id)
+                if (!$scope.threads[s].readBySender)
+                        $scope.unreadthreads++;
+                }
                 
                 for (var s = 0, len = $scope.threads.length; s < len; s++)
                      if ($stateParams.threadId != "main" && $stateParams.threadId == $scope.threads[s]._id)
@@ -267,15 +272,18 @@ angular.module('messages').controller('MessagesController', ['$scope', '$statePa
             $http.put('/threads/getUserThread/' + $scope.thread._id, {
                 id: $scope.authentication.user._id
             }).success(function(thread) {
-                $scope.thread = thread;
-                console.log(thread.sender._id);
-                if (thread.sender._id === $scope.authentication.user._id)
+                $scope.thread = thread.thread;
+                if(!thread.alreadyRead)
+                    $scope.unreadthreads--;
+
+               
+                if (thread.thread.sender._id === $scope.authentication.user._id)
                     $http.put('/users/addSubscriber/' + $scope.authentication.user._id, {
-                        id: thread.receiver._id
+                        id: thread.thread.receiver._id
                     }).success(function() {});
                 else
                     $http.put('/users/addSubscriber/' + $scope.authentication.user._id, {
-                        id: thread.sender._id
+                        id: thread.thread.sender._id
                     }).success(function() {});
                 Socket.emit('watched_thread', $scope.authentication.user._id);
             });
