@@ -23,13 +23,18 @@ angular.module('messages').controller('MessagesController', ['$scope', '$statePa
                 console.log(res);
                 for (var s = 0, len = $scope.threads.length; s < len; s++)
 
-                {
-                    if ($stateParams.threadId != "main" && $stateParams.threadId == $scope.threads[s]._id)
-                        $scope.selectedmessage($scope.threads[s]);
+                
+                   
 
                     if (!$scope.threads[s].readByReceiver)
                         $scope.unreadthreads++;
-                }
+                
+                for (var s = 0, len = $scope.threads.length; s < len; s++)
+                     if ($stateParams.threadId != "main" && $stateParams.threadId == $scope.threads[s]._id)
+                       { $scope.selectedmessage($scope.threads[s]);
+                        break;
+                       }
+
                 if ($stateParams.threadId == "main" && $scope.threads.length >= 1)
                     $scope.selectedmessage($scope.threads[0]);
 
@@ -58,6 +63,7 @@ angular.module('messages').controller('MessagesController', ['$scope', '$statePa
                 }
             $scope.displayNameOfReceiver = "Say Something to " + $scope.displayNameOfReceiver + "...";
             $scope.findOneAndMarkAsRead();
+            $stateParams.threadId=$scope.thread._id;
 
         };
         // Create new Message
@@ -176,6 +182,7 @@ angular.module('messages').controller('MessagesController', ['$scope', '$statePa
 
             }
             $http.put('/threads/updateThread/' + $scope.thread._id, message).success(function(messageBody) {
+                console.log(messageBody);
                 Socket.emit('update_threads', {
                     sender: messageBody.sender,
                     receiver: messageBody.receiver,
@@ -214,12 +221,13 @@ angular.module('messages').controller('MessagesController', ['$scope', '$statePa
 
         //socket incoming_thread start
         Socket.on("incoming_thread", function(data) {
+            console.log(data);
             $http.put('/threads/getUserThread/' + $scope.thread._id, {
                 id: $scope.authentication.user._id
             }).success(function(thread) {
                 $scope.balsamic.message = "";
                 console.log($scope.balsamic.message);
-                Socket.emit('watched_thread', $scope.authentication.user._id);
+             
             });
 
             $scope.newMessage = {
