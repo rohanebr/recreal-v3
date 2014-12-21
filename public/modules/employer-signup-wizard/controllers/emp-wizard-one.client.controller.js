@@ -33,7 +33,8 @@ angular.module('employer-signup-wizard').controller('EmpWizardOneController', ['
                     token: $stateParams.tokenId
                 }).success(function(response) {
                     $scope.user = response.user;
-                    if (response.company != null) {
+                    console.log(response.user+" "+response.company);
+                    if (response.company != "NO COMPANY") {
                         $scope.company = response.company;
                         
                         $scope.gotCompanyFromDB = true;
