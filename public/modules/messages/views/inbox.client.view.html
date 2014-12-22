@@ -57,10 +57,11 @@
 		            	<section class="panel panel-default" data-ng-show="nomessages">
 		            		<header class="panel-heading">No Messages to Show</header>
 		            	</section>
+
 	                  <section class="panel panel-default" data-ng-hide="nomessages">
 	                    <header class="panel-heading">Chat with {{displayNameOfReceiver}}
 	                    <a href="profile.html" class="btn btn-sm btn-default pull-right btn-rounded">Profile</a></header>
-	                    <section class="w-f scrollable wrapper">
+	                   
 	                    <section class="chat-list panel-body">
 
 	                      <article   id="chat-id-1" ng:class="{true:'chat-item left', false:'chat-item right'}[message.author._id==authentication.user._id]" data-ng-repeat="message in messages | orderBy:sortMessage:false">
@@ -100,5 +101,5 @@
 	                      </article>
 	                    </footer>
 	                </section>
-	                  </section>
+	                 </section>
 	                </aside>
