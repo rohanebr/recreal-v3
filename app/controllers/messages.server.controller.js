@@ -26,7 +26,10 @@ var threadId;
 
 
 	Threads.find({'_id': { $in: threadsId}})
-       .populate('messages.author').sort('readByReceiver')
+       .populate('messages.author')
+       .sort('updated')
+       .sort('readByReceiver')
+       .limit(10)
        .exec(function(err, docs){
         console.log(docs);
      res.jsonp(docs);
