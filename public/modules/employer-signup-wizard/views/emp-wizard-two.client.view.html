@@ -126,25 +126,18 @@
             <section>
               <section class="vbox">
                 <section class="scrollable padder">
-                	
-                     
-                     
-      <ng-map data-ng-model="map" center="45.518970, -122.672899"
-        zoom="11"
-        map-type-id="ROADMAP"
-        
-        heading="90">
-      </ng-map> 
+                    <ng-map data-ng-model="map" center="45.518970, -122.672899"
+                      zoom="11"
+                      map-type-id="ROADMAP"
+                      
+                      heading="90">
+                    </ng-map> 
  
-                      <footer>
+                      <footer class="footer-button-div">
                       <section class="col-md-2 pull-right">
                         <button type="submit" class="btn btn-primary btn-block btn-lg" ng-click="SaveAndRedirect()">Next</button>  
                         <a href="/#!/emp-job-post-one"><u>Skip</u></a><br> 
-                      </section>
-                    </footer>
-                    <footer>
-                      <section class="col-md-2 pull-right">
-                        <button type="submit" class="btn btn-primary btn-block btn-lg" ng-click="Back()">Back</button>  
+                         <button type="submit" class="btn btn-primary btn-block btn-lg" ng-click="Back()">Back</button>
                       </section>
                     </footer>
                   <!-- <section class="pull-right"><a href="#!/emp-wizard-one">Back</a><a href="#!/emp-job-post-one">Next</a></section> -->
