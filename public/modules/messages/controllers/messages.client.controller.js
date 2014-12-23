@@ -66,7 +66,7 @@ if($scope.threads[s].sender==$scope.authentication.user._id)
                     break;
 
                 }
-            $scope.displayNameOfReceiver = "Say Something to " + $scope.displayNameOfReceiver + "...";
+           
             $scope.findOneAndMarkAsRead();
             $stateParams.threadId=$scope.thread._id;
 
@@ -238,11 +238,12 @@ if($scope.threads[s].sender==$scope.authentication.user._id)
                 },
                 created: data.created
             };
-
+$scope.unreadthreads++;
                     for(var x=0,len=$scope.threads.length;x<len;x++)
                     {
                        if($scope.threads[x]._id==data.threadId)
-                          { $scope.threads[x].messages.unshift($scope.newMessage);
+                          {
+                           $scope.threads[x].messages.unshift($scope.newMessage);
                             break;
                           }
 
@@ -273,7 +274,7 @@ if($scope.threads[s].sender==$scope.authentication.user._id)
                 id: $scope.authentication.user._id
             }).success(function(thread) {
                 $scope.thread = thread.thread;
-                if(!thread.alreadyRead)
+                if(!thread.alreadyRead && $scope.unreadthreads!=0)
                     $scope.unreadthreads--;
 
                
