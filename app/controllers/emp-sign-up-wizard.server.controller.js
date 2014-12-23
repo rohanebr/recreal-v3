@@ -54,14 +54,33 @@ console.log("IT CAME");
 	// Add missing user fields
 	user.provider = 'local';
 	user.displayName = user.firstName + ' ' + user.lastName;
-var thread = new Thread();
-thread.created= Date.now();
-thread.updated= Date.now();
-thread.receiver=user;
-thread.subject="Welcome to Recreal";
-thread.messages.push({messageBody:"Our team welcomes you to Recreal. The only site which provides real time synergetic hiring!!",created:Date.now()});
-thread.save();
-user.threads.push(thread);
+
+	var newEmployer = new Employer();
+	user.employer = newEmployer;
+	var company = new Company();
+	newEmployer.company = company;
+	company.employers.push(newEmployer);
+	company.user = user;
+	company.save();
+
+
+	newEmployer.firstName = user.firstName;
+    newEmployer.lastName = user.lastName;
+    newEmployer.displayName = user.displayName;
+    newEmployer.user = user;
+    newEmployer.save();
+
+
+
+
+	var thread = new Thread();
+	thread.created= Date.now();
+	thread.updated= Date.now();
+	thread.receiver=user;
+	thread.subject="Welcome to Recreal";
+	thread.messages.push({messageBody:"Our team welcomes you to Recreal. The only site which provides real time synergetic hiring!!",created:Date.now()});
+	thread.save();
+	user.threads.push(thread);
 
 	
 
@@ -232,7 +251,7 @@ exports.SaveEmpSignUpWizardOneData = function(req,res)
 			user.stage="CompanyLocation";
 			user.save(function(err) {
 				if (err) {
-					typeObject.remove();
+					newEmployer.remove();
 					return res.send(400, {
 						message: getErrorMessage(err)
 					});
