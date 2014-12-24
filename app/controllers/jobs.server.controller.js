@@ -106,10 +106,6 @@ exports.create = function(req, res) {
             });
         });
     }
-
-
-
-
 };
 
 /**
@@ -194,14 +190,11 @@ exports.apply = function(req, res, next)
             });
     }
 };
-
-
 /**
  * Update a Job
  */
 exports.update = function(req, res) {
     var job = req.job;
-
     job = _.extend(job, req.body);
     if(job.stage == "JobTwo")
         job.stage = 'Active';
@@ -411,45 +404,31 @@ exports.searchedJobs = function(req,res){
 }
 if(req.body.keyword=='find-me-a-job')
 {
-
-   
-
     Candidate.findOne({user:req.params.userId}).exec(function(err,candidate){
 
         if(!err)
            {
            Job.search(candidate.location, {title:1},function (err, output) {
-    if (err) return handleError(err);
+                if (err) return handleError(err);
 
-    else
-    {console.log(output);
-
-  var totallength=output.results.length;
-var ids=[];
-     for(var a=req.body.skip;a<totallength;a++)
-        if(a<(req.body.skip+req.body.limit))
-         ids.push(output.results[a]._id);
- 
-    Job.find({_id: {$in: ids}}).populate('user', 'displayName').populate('company').exec(function(err,out){
-if(!err)
-{
-    res.jsonp({jobs:out,total:output.totalCount});
-}
-
-    });   
- 
-
-
-    }
+                else
+                {console.log(output);
+                    var totallength=output.results.length;
+                    var ids=[];
+                    for(var a=req.body.skip;a<totallength;a++)
+                        if(a<(req.body.skip+req.body.limit))
+                         ids.push(output.results[a]._id);
+             
+                    Job.find({_id: {$in: ids}}).populate('user', 'displayName').populate('company').exec(function(err,out){
+                        if(!err)
+                        {
+                            res.jsonp({jobs:out,total:output.totalCount});
+                        }
+                    });
+                }
      
-});
-
-
-
-
-
-
-           } 
+            });
+        } 
       
     });
 }

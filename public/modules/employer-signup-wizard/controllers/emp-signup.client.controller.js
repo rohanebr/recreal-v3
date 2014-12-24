@@ -7,7 +7,7 @@ angular.module('employer-signup-wizard').controller('EmpSignupController', ['$mo
 		$scope.credentials = {}; 
 		$scope.signup = function() {			
 			$scope.credentials.userType = "employer";
-			$http.post('/signupemployer', $scope.credentials).success(function(response) {
+			$http.post('/signupcandidate', $scope.credentials).success(function(response) {
 				//If successful we assign the response to the global user model
 				if(response.status){
 					$location.path('/signup-email-activation');

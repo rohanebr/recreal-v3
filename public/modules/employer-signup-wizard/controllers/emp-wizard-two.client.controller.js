@@ -1,8 +1,8 @@
 'use strict';
 
 
-angular.module('employer-signup-wizard').controller('EmpWizardTwoController', ['$scope', 'Employers', '$interval', 'Authentication', '$state', '$http', '$location','$rootScope','locationVarification',
-    function($scope, Employers, $interval, Authentication, $state, $http, $location,$rootScope,locationVarification) {
+angular.module('employer-signup-wizard').controller('EmpWizardTwoController', ['$scope','Users', 'Employers', '$interval', 'Authentication', '$state', '$http', '$location','$rootScope','locationVarification',
+    function($scope,Users, Employers, $interval, Authentication, $state, $http, $location,$rootScope,locationVarification) {
         $scope.authentication = Authentication;
         var cityFromRootScope,countryFromRootScope;
         var useGeoLocationInformation=false;        
@@ -36,6 +36,20 @@ angular.module('employer-signup-wizard').controller('EmpWizardTwoController', ['
             });
         };
 
+        $scope.SkipAndRedirect = function (){
+            var user = new Users($scope.authentication.user);
+            if(user.stage == 'CompanyLocation')
+            {
+                user.stage = 'NoJobs';
+            }
+            user.$update(function(response) {
+                $scope.success = true;
+                Authentication.user = response;
+                $location.path('emp-job-post-one/');
+            }, function(response) {
+                $scope.error = response.data.message;
+            });
+        };
 
         $scope.Back = function() {
           $location.path("emp-wizard-one/" + $scope.authentication.user.activeToken);

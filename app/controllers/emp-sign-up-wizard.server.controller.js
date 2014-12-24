@@ -43,7 +43,7 @@ var getErrorMessage = function(err) {
 *SIGNUP FOR EMPLOYER ONLY
 */
 exports.signupemployer = function(req, res) {
-console.log("IT CAME");
+	console.log("IT CAME");
 	// For security measurement we remove the roles from the req.body object
 	delete req.body.roles;
 

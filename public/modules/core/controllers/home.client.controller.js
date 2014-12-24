@@ -1,9 +1,28 @@
 'use strict';
 
 
-angular.module('core').controller('HomeController', ['$scope', 'Authentication', '$state', '$rootScope','Employers', 'Companies', 'Candidates', 'Socket','$location',
-	function($scope, Authentication, $state, $rootScope, Employers, Companies, Candidates , Socket,$location) {
+angular.module('core').controller('HomeController', ['$scope','$modal', 'Authentication', '$state', '$rootScope','Employers', 'Companies', 'Candidates', 'Socket','$location',
+	function($scope,$modal, Authentication, $state, $rootScope, Employers, Companies, Candidates , Socket,$location) {
 		// This provides Authentication context.
+
+
+		$scope.OpenCandidateSignUpModal = function() {
+	     
+	     	var modalInstance = $modal.open({
+	        templateUrl: '/modules/candidate-signup-wizard/views/partials/candidate-signup-partial.html',
+	        controller: 'CandidateSignupController'
+	      	});
+			modalInstance.result.then(function(result) 
+			{
+				console.log(result);
+			//    $scope.sendmessage = result.sendmessage;
+			}, 
+			function() {
+
+			});
+	    };
+
+
 		$scope.authentication = Authentication;
 		var user = $scope.authentication.user;
 		console.log(user);
