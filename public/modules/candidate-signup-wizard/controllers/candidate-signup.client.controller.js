@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('candidate-signup-wizard').controller('CandidateSignupController', ['$modalInstance','$scope','$modal','$http',
-	function($modalInstance,$scope,$modal,$http) {
+angular.module('candidate-signup-wizard').controller('CandidateSignupController', ['$modalInstance','$location','$scope','$modal','$http',
+	function($modalInstance,$location,$scope,$modal,$http) {
 		// Candidate signup controller logic
 		// ...
 		$scope.credentials = {}; 
@@ -39,7 +39,6 @@ angular.module('candidate-signup-wizard').controller('CandidateSignupController'
                         $scope.authentication = Authentication;
                         $scope.authentication.user = response.user;
                     }
-
                 }).error(function(response) {
                     $scope.error = response.message;
 
