@@ -4,6 +4,16 @@ angular.module('candidate-signup-wizard').controller('CandidateWizardFiveControl
 	function($scope,$http,$state) {
 		// Controller Logic
 		// ...
+
+        $scope.candidate={};
+        $scope.LoadInitialData = function() {
+            $scope.authentication = Authentication;
+            $scope.authentication.user = response.user;
+            $scope.candidate = response.candidate;
+        };
+
+
+
 		$scope.SaveAndRedirect = function() {
         $scope.success = $scope.error = null;
         $http.post('/savecandidatewizardfivedata', {
