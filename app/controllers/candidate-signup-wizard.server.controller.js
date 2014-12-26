@@ -189,10 +189,23 @@ exports.ValidateToken = function(req,res){
 	});
 };
 
-exports.SaveCandidateWizardOne = function(req,res){
-	console.log("candidate wizard one called");
-	res.jsonp({status: true});
+exports.SaveCandidate= function(req,res){
+	Candidate.findOne({"user":req.user._id}).exec(function(err,candidate){
+		candidate = _.extend(candidate , req.body.candidate);
+		// candidate.country=req.body.candidate.country.name;
+		// candidate.city=req.body.candidate.city.name;
+		candidate.save(function(err) {
+			if (err) {
+				return res.send(400, {
+					message: getErrorMessage(err)
+				});
+			} else {
+				res.jsonp(candidate);
+			}
+		});
+	});
 };
+
 
 exports.SaveCandidateWizardTwo = function(req,res){
 	console.log("candidate wizard two called");

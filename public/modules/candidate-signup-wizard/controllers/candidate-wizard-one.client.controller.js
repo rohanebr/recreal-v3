@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('candidate-signup-wizard').controller('CandidateWizardOneController', ['$scope','$http','$state','$stateParams','Authentication',
-	function($scope,$http,$state,$stateParams,Authentication) {
+angular.module('candidate-signup-wizard').controller('CandidateWizardOneController', ['$scope','$http','$state','$stateParams','Authentication','$modal',
+	function($scope,$http,$state,$stateParams,Authentication,$modal) {
 		// Controller Logic
 		// ...
 		$scope.candidate={};
@@ -43,5 +43,6 @@ angular.module('candidate-signup-wizard').controller('CandidateWizardOneControll
                  $scope.error = response.message;
             });
         };
+
 	}
 ]);
