@@ -1,0 +1,9 @@
+<section data-ng-controller="CandidateWizardOneController" data-ng-init="LoadInitialData()">
+	This is the Candidate wizard one view
+	<form data-ng-submit="SaveAndRedirect()" id="content" class="scrollable padder">
+		<input type="text" data-ng-model="candidate.country" />
+		<h2>{{candidate.country}}</h2>
+		<button type="submit" class="btn btn-primary btn-block btn-lg">Next</button>  
+
+	</form>
+</section>

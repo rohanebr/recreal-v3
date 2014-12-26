@@ -22,34 +22,5 @@ angular.module('candidate-signup-wizard').controller('CandidateSignupController'
 			});
 		};
 
-		$scope.LoadInitialData = function() {
-            if ($stateParams.tokenId) {
-                $http.post('/validatetoken', {
-                    token: $stateParams.tokenId
-                }).success(function(response) {
-                    $scope.user = response.user;
-                    console.log(response.user+" "+response.company);
-                    console.log(response);
-                    if ($scope.user.user == "nothing") {
-
-                        $state.go('home');
-
-                    } else {
-
-                        $scope.authentication = Authentication;
-                        $scope.authentication.user = response.user;
-                    }
-                }).error(function(response) {
-                    $scope.error = response.message;
-
-                });
-
-                console.log($stateParams.tokenId);
-            } else {
-                $state.go('home');
-            }
-
-        };
-
 	}
 ]);

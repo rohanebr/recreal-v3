@@ -16,37 +16,7 @@ var mongoose = require('mongoose'),
 /**
  * Create a Candidate signup wizard
  */
-exports.create = function(req, res) {
 
-};
-
-/**
- * Show the current Candidate signup wizard
- */
-exports.read = function(req, res) {
-
-};
-
-/**
- * Update a Candidate signup wizard
- */
-exports.update = function(req, res) {
-
-};
-
-/**
- * Delete an Candidate signup wizard
- */
-exports.delete = function(req, res) {
-
-};
-
-/**
- * List of Candidate signup wizards
- */
-exports.list = function(req, res) {
-
-};
 
 var getErrorMessage = function(err) {
 	var message = '';
@@ -151,7 +121,7 @@ exports.signupcandidate = function(req, res) {
 			res.render('templates/active-account', {
 				name: user.displayName,
 				appName: config.app.title,
-				url: 'http://' + req.headers.host + '/#!/candidate-signup-wizard-one/' + token
+				url: 'http://' + req.headers.host + '/#!/candidate-wizard-one/' + token
 			}, function(err, emailHTML) {
 				done(err, emailHTML, user);
 			});
@@ -183,8 +153,6 @@ exports.signupcandidate = function(req, res) {
 	});
 };
 
-
-
 exports.ValidateToken = function(req,res){
 	console.log(req.body.token);
 	User.findOne({"activeToken":req.body.token}).exec(function(err, user){
@@ -196,26 +164,52 @@ exports.ValidateToken = function(req,res){
 				user.stage = "Basic";
 				user.save(function(err) {
 					
-								});
-			}
-			if (!user) {
-				res.send(400, info);
-			} 
-			else {
-				// Remove sensitive data before login
-				user.password = undefined;
-				user.salt = undefined;
-				req.login(user, function(err) {
-					if (err) {
-						res.send(400, err);
-					} else {
-						
-						// res.jsonp({user:user,company:company});
-					}
 				});
 			}
+			Candidate.findOne({"user":user._id}).exec(function(err,candidate){
+				if (!user) {
+					res.send(400, info);
+				} else {
+					// // Remove sensitive data before login
+					// user.password = undefined;
+					// user.salt = undefined;
+					req.login(user, function(err) {
+						if (err) {
+							res.send(400, err);
+						} else {
+							
+							res.jsonp({user:user,candidate:candidate});
+						}
+					});
+				}
+			});
 		}
 		if(!user)
 			res.jsonp({user:"nothing"});
 	});
+};
+
+exports.SaveCandidateWizardOne = function(req,res){
+	console.log("candidate wizard one called");
+	res.jsonp({status: true});
+};
+
+exports.SaveCandidateWizardTwo = function(req,res){
+	console.log("candidate wizard two called");
+	res.jsonp({status: true});
+};
+
+exports.SaveCandidateWizardThree = function(req,res){
+	console.log("candidate wizard three called");
+	res.jsonp({status: true});
+};
+
+exports.SaveCandidateWizardFour = function(req,res){
+	console.log("candidate wizard four called");
+	res.jsonp({status: true});
+};
+
+exports.SaveCandidateWizardFive = function(req,res){
+	console.log("candidate wizard five called");
+	res.jsonp({status: true});
 };

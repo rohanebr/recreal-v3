@@ -282,13 +282,10 @@ exports.SaveEmpSignUpWizardOneData = function(req,res)
 
 exports.getCountryCity = function (req,res)
 {
-Company.findOne({"user":req.body.user._id}).exec(function(err,company){
-res.jsonp({city:company.city,country:company.country,latitude:company.coordinates.latitude,longitude:company.coordinates.longitude});
+	Company.findOne({"user":req.body.user._id}).exec(function(err,company){
+	res.jsonp({city:company.city,country:company.country,latitude:company.coordinates.latitude,longitude:company.coordinates.longitude});
 
-});
-
-
-
+	});
 };
 
 exports.saveLatLong = function(req,res)

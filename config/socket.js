@@ -77,10 +77,10 @@ exports.create = function(server) {
                         Candidate.findOne({user:data._id}).exec(function(err,candidate){
                     if(!err && candidate)
                       {candidate.isOnline="Online";
-                candidate.markModified('isOnline');
-                candidate.save();
-            io.sockets.emit("WatchingJob",{userId:user._id,isOnline:candidate.isOnline});
-              }
+                        candidate.markModified('isOnline');
+                        candidate.save();
+                        io.sockets.emit("WatchingJob",{userId:user._id,isOnline:candidate.isOnline});
+                        }
 
                 });
                     
