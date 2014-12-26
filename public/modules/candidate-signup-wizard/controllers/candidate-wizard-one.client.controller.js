@@ -34,14 +34,14 @@ angular.module('candidate-signup-wizard').controller('CandidateWizardOneControll
 
 
 		$scope.SaveAndRedirect = function() {
-        $scope.success = $scope.error = null;
-        $http.post('/savecandidatewizardonedata', {
-                candidate: $scope.candidate
-            }).success(function(response) {
-                $state.go('candidate-wizard-two');
-            }).error(function(response) {
-                 $scope.error = response.message;
-            });
+            $scope.success = $scope.error = null;
+            $http.post('/savecandidatewizardonedata', {
+                    candidate: $scope.candidate
+                }).success(function(response) {
+                    $state.go('candidate-wizard-two');
+                }).error(function(response) {
+                     $scope.error = response.message;
+                });
         };
 
 	}

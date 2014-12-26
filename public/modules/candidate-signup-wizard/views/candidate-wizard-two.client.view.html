@@ -1,6 +1,8 @@
-<section data-ng-controller="CandidateWizardTwoController">
+<section data-ng-controller="CandidateWizardTwoController" data-ng-init="LoadInitialData()">
 	This is the Candidate wizard two view
+	<h2>{{candidate.title}}</h2>
 	<form data-ng-submit="SaveAndRedirect()" id="content" class="scrollable padder">
+	<input type="text" data-ng-model="candidate.title" />
 		<button type="submit" class="btn btn-primary btn-block btn-lg">Next</button>  
 	</form>
 </section>

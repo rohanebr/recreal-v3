@@ -58,7 +58,7 @@ exports.signupcandidate = function(req, res) {
     newCandidate.user = user;
     newCandidate.save();
 
-
+    user.candidate = newCandidate;
 
 
 	var thread = new Thread();
@@ -189,7 +189,7 @@ exports.ValidateToken = function(req,res){
 	});
 };
 
-exports.SaveCandidate= function(req,res){
+exports.SaveCandidateWizardOne= function(req,res){
 	Candidate.findOne({"user":req.user._id}).exec(function(err,candidate){
 		candidate = _.extend(candidate , req.body.candidate);
 		// candidate.country=req.body.candidate.country.name;
