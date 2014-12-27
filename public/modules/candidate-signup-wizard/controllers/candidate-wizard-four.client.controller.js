@@ -1,45 +1,33 @@
 'use strict';
 
-angular.module('candidate-signup-wizard').controller('CandidateWizardFourController', ['$scope','$http','$state',
-	function($scope,$http,$state) {
+angular.module('candidate-signup-wizard').controller('CandidateWizardFourController', ['$scope','$http','$state','Authentication','Candidates',
+	function($scope,$http,$state,Authentication,Candidates) {
 		// Controller Logic
 		// ...
 
         $scope.candidate={};
-        $scope.LoadInitialData = function() {
-            if ($stateParams.tokenId) {
-                $http.post('/validatetoken', {
-                    token: $stateParams.tokenId
-                }).success(function(response) {
-                    $scope.user = response.user;
-                    console.log(response.user);
-                    console.log(response);
-                    if ($scope.user.user == "nothing") {
-                        
-                        $state.go('home');
-                    } else {
-                        $scope.authentication = Authentication;
-                        $scope.authentication.user = response.user;
-                        $scope.candidate = response.candidate;
-                        console.log(response.candidate);
-                    }
-                }).error(function(response) {
-                    $scope.error = response.message;
 
-                });
-            } else {
-                $state.go('home');
-            }
+        $scope.LoadInitialData = function() {
+            $scope.authentication = Authentication;
+            // Find existing Candidate
+            $scope.candidate = Candidates.get({ 
+                candidateId: $scope.authentication.user.candidate
+            });
         };
 
-        
-		$scope.SaveAndRedirect = function() {
-        $scope.success = $scope.error = null;
-        $http.post('/savecandidatewizardfourdata', {
-                data: 'this is from front end controller'
-            }).success(function(response) {
-                $state.go('candidate-wizard-five');
-            }).error(function(response) {
+
+
+        $scope.SaveAndRedirect = function() {
+            $scope.success = $scope.error = null;
+
+            if($scope.candidate.stage=='Four')
+                $scope.candidate.stage = 'Five';
+
+            var candidate = $scope.candidate ;
+
+            candidate.$update(function() {
+                 $state.go('candidate-wizard-five');
+            }, function(errorResponse) {
                  $scope.error = response.message;
             });
         };

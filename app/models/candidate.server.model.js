@@ -111,6 +111,11 @@ var CandidateSchema = new Schema({
 			default: 'Not Mentioned'
 	  	}
 	}],
+	stage:{
+      type: String,
+	  	enum: ['One', 'Two','Three','Four','Five','Complete'],
+	  	default:'One'
+    },
 	educations:[{
 		degree:{
 			type: String,

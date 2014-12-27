@@ -14,28 +14,28 @@
 			                      <a href="index.html" class="auto">
 			                        <i class="i i-statistics icon">
 			                        </i>
-			                        <span class="font-bold">Profile</span>
+			                        <span class="font-bold">Basic Info</span>
 			                      </a>
 			                    </li>
 			                    <li  class="active">
 			                      <a href="index.html" class="auto">
 			                        <i class="i i-statistics icon">
 			                        </i>
-			                        <span class="font-bold">Location</span>
+			                        <span class="font-bold">Experience</span>
 			                      </a>
 			                    </li>
 			                    <li  class="active">
 			                      <a href="index.html" class="auto">
 			                        <i class="i i-statistics icon">
 			                        </i>
-			                        <span class="font-bold">Post Job - Job Details</span>
+			                        <span class="font-bold">HR Question</span>
 			                      </a>
 			                    </li>
 			                    <li  class="active">
 			                      <a href="index.html" class="auto">
 			                        <i class="i i-statistics icon">
 			                        </i>
-			                        <span class="font-bold">Post Job - Job Requirement</span>
+			                        <span class="font-bold">General</span>
 			                      </a>
 			                    </li>
 			                  </ul>
@@ -92,10 +92,18 @@
                     			
                     		</section>
                     		<section class="col-md-4">
-								
 								<div class="form-group">
-									<label>Email Address</label>
-									<input type="email" class="form-control" data-ng-model="user.email"  placeholder="Carter">
+									<label>Visa Status</label>
+									<span class="ui-select">
+                                        <select data-ng-model="candidate.visa_status" class="form-control">
+                                            <option>No Visa</option>
+                                            <option>Residency Visa (Non-Transferable)</option>
+                                            <option>Residency Visa (Transferable)</option>
+                                            <option>Student Visa</option>
+                                            <option>Transit Visa</option>
+                                            <option>Visit Visa</option>
+                                        </select>
+                                    </span>
 								</div>
 							</section>
                       		<section class="col-md-4">
@@ -108,6 +116,102 @@
 			                            	<option>Not mentioned</option>
 			                            </select>
 			                        </span>
+		                        </div>
+                        	</section>
+                    	</section>
+                    	<section class="row section-left-margin">
+                    		<section class="col-md-3">
+                    			
+                    		</section>
+                    		<section class="col-md-4">
+								<div class="form-group">
+									<label for="">Country</label>
+									<span class="ui-select">
+                                        <select ng-model="candidate.country" class="form-control">
+                                            <option data-ng-repeat="count in countries">{{count.name}}</option>
+                                        </select>
+                                    </span>
+								</div>
+								<div class="form-group">
+									<label for="">Contact No</label>
+									<input  type="text" class="form-control" data-ng-model="candidate.contact_no" >
+								</div>
+							</section>
+                      		<section class="col-md-4">
+                      			<div class="form-group">
+									<label for="">Location</label>
+									<span class="ui-select">
+	                                    <select class="form-control" ng-model="candidate.location">
+		                                    <option>Islamabad</option>
+		                                    <option>Multan</option>
+		                                    <option>Lahore</option>
+		                                    <option>Karachi</option>
+	                                    </select>
+                                    </span>
+								</div>
+								<div class="form-group">
+									<label for="">Skype ID</label>
+									<input  type="text" class="form-control" data-ng-model="candidate.skype_name">
+								</div>
+                        	</section>
+                    	</section>
+                    	<section class="row section-left-margin">
+                    		<section class="col-md-3">
+                    			
+                    		</section>
+                    		<section class="col-md-4">
+								<div class="form-group">
+									<label for="">Career Level</label>
+									<span class="ui-select">
+                                        <select data-ng-model="candidate.career_level" class="form-control" >
+                                            <option>Student/Internship</option>
+                                            <option>Entry Level</option>
+                                            <option>Mid Career</option>
+                                            <option>Management</option>
+                                            <option>Executive (Director)</option>
+                                            <option>Senior Executive (CEO)</option>
+                                        </select>
+                                    </span> 
+								</div>
+								<div class="form-group">
+									<label for="">Employment Status</label>
+									<span class="ui-select">
+                                        <select data-ng-model="candidate.employee_status" class="form-control">
+                                            <option>Part Time</option>
+                                            <option>Full Time</option>
+                                        </select>
+                                    </span>
+								</div>
+							</section>
+                      		<section class="col-md-4">
+		                        <div class="form-group">
+		                          	<label for="">Employee Type</label>
+		                          	<span class="ui-select">
+                                        <select data-ng-model="candidate.employee_type" class="form-control">
+                                            <option>Permanent</option>
+                                            <option>Internship</option>
+                                            <option>Contractor</option>
+                                            <option>Temporary</option>
+                                            <option>Internship</option>
+                                        </select>
+                                    </span>
+		                        </div>
+		                        <div class="form-group">
+		                          	<label for="">Salary Range</label>
+		                          	<span class="ui-select">
+                                        <select data-ng-model="candidate.salary_expectation" class="form-control">
+                                            <option>Less than $1000</option>
+                                            <option>$1000 - $2000</option>
+                                            <option>$2000 - $3000</option>
+                                            <option>$3000 - $4000</option>
+                                            <option>$4000 - $5000</option>
+                                            <option>$5000 - $6000</option>
+                                            <option>$6000 - $8000</option>
+                                            <option>$8000 - $10000</option>
+                                            <option>$10000 - $15000</option>
+                                            <option>$15000 - $20000</option>
+                                        </select>
+                                    </span>
 		                        </div>
                         	</section>
                     	</section>

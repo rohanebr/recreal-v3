@@ -1,8 +1,294 @@
 <section data-ng-controller="CandidateWizardTwoController" data-ng-init="LoadInitialData()">
-	This is the Candidate wizard two view
-	<h2>{{candidate.title}}</h2>
-	<form data-ng-submit="SaveAndRedirect()" id="content" class="scrollable padder">
-	<input type="text" data-ng-model="candidate.title" />
-		<button type="submit" class="btn btn-primary btn-block btn-lg">Next</button>  
-	</form>
+	<section class="row">
+    	<section class="container custom-wrapper">
+     		<section class="hbox">
+        		<!-- .aside -->
+       			<aside class="bg-light lt b-r b-light aside-md hidden-print" id="nav">          
+         			<section class="vbox">
+            			<section class="w-f scrollable">
+              				<div class="slim-scroll" data-height="auto" data-disable-fade-out="true" data-distance="0" data-size="10px" data-railOpacity="0.2">              
+                			<!-- nav -->                 
+			                <nav class="nav-primary hidden-xs">
+			                  <ul class="nav nav-main left-aside-top-margin" data-ride="collapse">
+			                    <li  class="active">
+			                      <a href="index.html" class="auto">
+			                        <i class="i i-statistics icon">
+			                        </i>
+			                        <span class="font-bold">Basic Info</span>
+			                      </a>
+			                    </li>
+			                    <li  class="active">
+			                      <a href="index.html" class="auto">
+			                        <i class="i i-statistics icon">
+			                        </i>
+			                        <span class="font-bold">Experience</span>
+			                      </a>
+			                    </li>
+			                    <li  class="active">
+			                      <a href="index.html" class="auto">
+			                        <i class="i i-statistics icon">
+			                        </i>
+			                        <span class="font-bold">HR Question</span>
+			                      </a>
+			                    </li>
+			                    <li  class="active">
+			                      <a href="index.html" class="auto">
+			                        <i class="i i-statistics icon">
+			                        </i>
+			                        <span class="font-bold">General</span>
+			                      </a>
+			                    </li>
+			                  </ul>
+			                </nav>
+			                <!-- / nav -->
+			                </div>
+            			</section>
+          			</section>
+        		</aside>
+        		<form data-ng-submit="SaveAndRedirect()" id="content" class="scrollable padder">
+	                <article>
+	                    <header>
+	                      <h3>Qualification</h3><hr class="hr-margin15" />
+	                      <p class="header-message">A few additional details about you will help your employers to know you</p>
+	                    </header>
+	                    <section>
+	                    <article>
+	                    	<header>
+	                    		<h2>Education</h2>
+	                    	</header>
+	                    	<section class="col-md-10">
+			                    <section class="listThingy" class="row" ng-repeat="education in candidate.educations">
+			                        <h3><span>{{education.institute}}</span><span><button type="button" ng-click="removeEducation($index)"><i class="fa fa-times"></i></button></span></h3>
+			                        <h4>{{education.degree}}, {{education.study_feild}}</h4>
+			                        <h6>{{education.start_date}} - {{education.end_date}}</h6>
+			                        <p>{{education.notes}}</p>
+			                    </section>
+		                      	<section class="addThingy" data-ng-submit="addEducation()" ng-show="isAddingEducation"  class="form-horizontal form-validation">
+			                        <div class="row form-group">
+					                    <div class="col-md-2">
+					                        <label for="">Degree</label>
+					                    </div>
+					                    <div class="col-md-4">
+					                        <select data-ng-model="newEducation.degree"required class="form-control" >
+                                            	<option ng-repeat="degree in degree_titles">{{degree}}</option>
+                                        	</select>
+					                    </div>
+					                </div>
+					                <div class="row form-group">
+					                    <div class="col-md-2">
+					                        <label for="">Study Feild</label>
+					                    </div>
+					                    <div class="col-md-6">
+					                        <input type="text" placeholder="Add an Education" data-ng-model="newEducation.study_feild" class="form-control">
+					                    </div>
+					                </div>
+					                <div class="row form-group">
+					                    <div class="col-md-2">
+					                        <label for="">Institute</label>
+					                    </div>
+					                    <div class="col-md-6">
+					                         <input type="text" placeholder="Institute" data-ng-model="newEducation.institute" class="form-control">
+					                    </div>
+					                </div>
+					                <div class="row form-group">
+					                    <div class="col-md-2">
+					                        <label for="">Start Date</label>
+					                    </div>
+					                    <div class="col-md-6">
+					                        <input type="date" data-ng-model="newEducation.start_date" class="form-control">
+					                    </div>
+					                </div>
+					                <div class="row form-group">
+					                    <div class="col-md-2">
+					                        <label for="">End Date</label>
+					                    </div>
+					                    <div class="col-md-6">
+					                        <input type="date" data-ng-model="newEducation.end_date" class="form-control">
+					                    </div>
+					                </div>
+			                        <div class="row form-group">
+					                    <div class="col-md-2">
+					                        <label for="">Notes</label>
+					                    </div>
+					                    <div class="col-md-6">
+					                        <textarea class="form-control" data-ng-model="newEducation.notes" rows="3" cols="5" />
+					                    </div>
+					                </div>
+		                            <button class="btn btn-default btn-sm" ng-click="addEducation()">Add</button>
+	                                <a href="" ng-click="isAddingEducation = false">Done Adding</a>
+		                      	</section>
+	                      		<p class="row"><a href="" ng-click="isAddingEducation = true">+ Add Education</a></p>
+	                    	</section>	
+	                    </article>
+	                    <article>
+	                    	<header class="col-md-12">
+	                    		<h2>Experience</h2>
+	                    	</header>
+	                    	<section class="col-md-10">
+			                    <section class="listThingy" class="row" ng-repeat="position in candidate.positions">
+			                        <h3><span>{{position.title}}</span><span><button type="button" ng-click="removeEducation($index)"><i class="fa fa-times"></i></button></span></h3>
+			                        <h4>at, {{position.company_name}}</h4>
+			                        <h6>{{position.start_date}} - {{position.end_date}}</h6>
+			                        <p>{{position.summary}}</p>
+			                    </section>
+		                      	<section class="addThingy" data-ng-submit="addPosition()" ng-show="isAddingPosition"  class="form-horizontal form-validation">
+			                        <div class="row form-group">
+					                    <div class="col-md-2">
+					                        <label for="">Company</label>
+					                    </div>
+					                    <div class="col-md-6">
+					                        <input type="text" placeholder="Computer and Networking Services" data-ng-model="newPosition.company_name" class="form-control">
+					                    </div>
+					                </div>
+					                <div class="row form-group">
+					                    <div class="col-md-2">
+					                        <label for="">Title</label>
+					                    </div>
+					                    <div class="col-md-6">
+					                        <input type="text" placeholder="Senior Developer" data-ng-model="newPosition.title" class="form-control">
+					                    </div>
+					                </div>
+					                <div class="row form-group">
+					                    <div class="col-md-2">
+					                        <label for="">Start Date</label>
+					                    </div>
+					                    <div class="col-md-6">
+					                        <input type="date" data-ng-model="newPosition.start_date" class="form-control">
+					                    </div>
+					                </div>
+					                <div class="row form-group">
+					                    <div class="col-md-2">
+					                        <label for="">End Date</label>
+					                    </div>
+					                    <div class="col-md-6">
+					                        <input type="date" data-ng-model="newPosition.end_date" class="form-control">
+					                    </div>
+					                </div>
+					                <div class="row form-group">
+					                    <div class="col-md-2">
+					                        <label for="">Description</label>
+					                    </div>
+					                    <div class="col-md-6">
+					                         <input type="text" placeholder="Institute" data-ng-model="newPosition.summary" class="form-control">
+					                    </div>
+					                </div>
+		                            <button class="btn btn-default btn-sm" ng-click="addPosition()">Add</button>
+	                                <a href="" ng-click="isAddingPosition = false">Done Adding</a>
+		                      	</section>
+	                      		<p><a href="" ng-click="isAddingPosition = true">+ Add Position</a></p>
+	                    	</section>	
+	                    </article>
+	                    <article>
+	                    	<header class="col-md-12">
+	                    		<h2>Projects</h2>
+	                    	</header>
+	                    	<section class="col-md-10">
+			                    <section class="listThingy" class="row" ng-repeat="project in candidate.projects">
+			                        <h3><span>{{project.name}}</span><span><button type="button" ng-click="removeEducation($index)"><i class="fa fa-times"></i></button></span></h3>
+			                        <h4>{{project.company}}</h4>
+			                        <h6>{{project.start_date}} - {{project.end_date}}</h6>
+			                        <p>{{project.description}}</p>
+			                    </section>
+		                      	<section class="addThingy" data-ng-submit="addProject()" ng-show="isAddingProject"  class="form-horizontal form-validation">
+			                        <div class="row form-group">
+					                    <div class="col-md-2">
+					                        <label for="">Name</label>
+					                    </div>
+					                    <div class="col-md-6">
+					                        <input type="text" placeholder="Computer and Networking Services" data-ng-model="newProject.name" class="form-control">
+					                    </div>
+					                </div>
+					                <div class="row form-group">
+					                    <div class="col-md-2">
+					                        <label for="">Company</label>
+					                    </div>
+					                    <div class="col-md-6">
+					                        <input type="text" placeholder="Senior Developer" data-ng-model="newProject.company" class="form-control">
+					                    </div>
+					                </div>
+					                <div class="row form-group">
+					                    <div class="col-md-2">
+					                        <label for="">Start Date</label>
+					                    </div>
+					                    <div class="col-md-6">
+					                        <input type="date" data-ng-model="newProject.start_date" class="form-control">
+					                    </div>
+					                </div>
+					                <div class="row form-group">
+					                    <div class="col-md-2">
+					                        <label for="">End Date</label>
+					                    </div>
+					                    <div class="col-md-6">
+					                        <input type="date" data-ng-model="newProject.end_date" class="form-control">
+					                    </div>
+					                </div>
+					                <div class="row form-group">
+					                    <div class="col-md-2">
+					                        <label for="">Description</label>
+					                    </div>
+					                    <div class="col-md-6">
+					                         <input type="text" placeholder="Institute" data-ng-model="newProject.description" class="form-control">
+					                    </div>
+					                </div>
+		                            <button class="btn btn-default btn-sm" ng-click="addProject()">Add</button>
+	                                <a href="" ng-click="isAddingProject = false">Done Adding</a>
+		                      	</section>
+	                      		<p><a href="" ng-click="isAddingProject = true">+ Add Project</a></p>
+	                    	</section>	
+	                    </article>
+	                    <article>
+	                    	<header class="col-md-12">
+	                    		<h2>Skills</h2>
+	                    	</header>
+	                    	<section class="col-md-10">
+			                    <section class="listThingy" class="row" ng-repeat="skill in candidate.skills">
+			                        <h3><span>{{skill.title}}</span><span><button type="button" ng-click="removeSkill($index)"><i class="fa fa-times"></i></button></span></h3>
+			                        <h4>{{skill.level}}</h4>
+			                        <h6>{{skill.experience}}</h6>
+			                    </section>
+		                      	<section class="addThingy" data-ng-submit="addSkill()" ng-show="isAddingSkill"  class="form-horizontal form-validation">
+			                        <div class="row form-group">
+					                    <div class="col-md-2">
+					                        <label for="">Title</label>
+					                    </div>
+					                    <div class="col-md-6">
+					                        <input type="text" placeholder="Computer and Networking Services" data-ng-model="newSkill.title" class="form-control">
+					                    </div>
+					                </div>
+					                <div class="row form-group">
+					                    <div class="col-md-2">
+					                        <label for="">Level</label>
+					                    </div>
+					                    <div class="col-md-6">
+					                        <input type="text" placeholder="Senior Developer" data-ng-model="newSkill.level" class="form-control">
+					                    </div>
+					                </div>
+					                <div class="row form-group">
+					                    <div class="col-md-2">
+					                        <label for="">Experience</label>
+					                    </div>
+					                    <div class="col-md-6">
+					                        <input type="text" data-ng-model="newSkill.experience" class="form-control">
+					                    </div>
+					                </div>
+		                            <button class="btn btn-default btn-sm" ng-click="addSkill()">Add</button>
+	                                <a href="" ng-click="isAddingSkill = false">Done Adding</a>
+		                      	</section>
+	                      		<p><a href="" ng-click="isAddingSkill = true">+ Add Skill</a></p>
+	                    	</section>	
+	                    </article>
+	                    </section>
+	                    <footer class="footer-button-div">
+	                      <section class="col-md-2 pull-right">
+	                        <button type="submit" class="btn btn-primary btn-block btn-lg">Next</button>  
+	                      </section>
+	                    </footer>
+                  	</article>                       
+		            <section data-ng-show="error" class="text-danger"><strong data-ng-bind="error"></strong>
+		            </section>
+          			<a href="#!" class="hide nav-off-screen-block" data-toggle="class:nav-off-screen" data-target="#nav"></a>
+       			 </form>
+       		</section>
+       	</section> 
+    </section>
 </section>

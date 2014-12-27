@@ -35,6 +35,8 @@ angular.module('candidate-signup-wizard').controller('CandidateWizardOneControll
 
 		$scope.SaveAndRedirect = function() {
             $scope.success = $scope.error = null;
+            if($scope.candidate.stage=='One')
+                $scope.candidate.stage = 'Two';
             $http.post('/savecandidatewizardonedata', {
                     candidate: $scope.candidate
                 }).success(function(response) {

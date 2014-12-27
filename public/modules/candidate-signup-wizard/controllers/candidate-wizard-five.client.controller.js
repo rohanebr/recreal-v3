@@ -1,28 +1,37 @@
 'use strict';
 
-angular.module('candidate-signup-wizard').controller('CandidateWizardFiveController', ['$scope','$http','$state',
-	function($scope,$http,$state) {
+angular.module('candidate-signup-wizard').controller('CandidateWizardFiveController', ['$scope','$http','$state','Authentication','Candidates',
+	function($scope,$http,$state,Authentication,Candidates) {
 		// Controller Logic
 		// ...
 
         $scope.candidate={};
+
         $scope.LoadInitialData = function() {
             $scope.authentication = Authentication;
-            $scope.authentication.user = response.user;
-            $scope.candidate = response.candidate;
+            // Find existing Candidate
+            $scope.candidate = Candidates.get({ 
+                candidateId: $scope.authentication.user.candidate
+            });
         };
 
 
 
-		$scope.SaveAndRedirect = function() {
-        $scope.success = $scope.error = null;
-        $http.post('/savecandidatewizardfivedata', {
-                data: 'this is from front end controller'
-            }).success(function(response) {
-                $state.go('candidate-wizard-one');
-            }).error(function(response) {
+        $scope.SaveAndRedirect = function() {
+            $scope.success = $scope.error = null;
+
+            if($scope.candidate.stage=='Five')
+                $scope.candidate.stage = 'Complete';
+
+            var candidate = $scope.candidate ;
+
+            candidate.$update(function() {
+                 $state.go('candidate-wizard-four');
+            }, function(errorResponse) {
                  $scope.error = response.message;
             });
         };
+
+
 	}
 ]);
