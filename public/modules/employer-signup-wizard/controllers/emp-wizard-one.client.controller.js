@@ -30,7 +30,7 @@ angular.module('employer-signup-wizard').controller('EmpWizardOneController', ['
         //Load initial data
         $scope.LoadInitialData = function() {
             if ($stateParams.tokenId) {
-                $http.post('/validatetoken', {
+                $http.post('/validateTokenEmployer', {
                     token: $stateParams.tokenId
                 }).success(function(response) {
                     $scope.user = response.user;
@@ -62,6 +62,8 @@ angular.module('employer-signup-wizard').controller('EmpWizardOneController', ['
                                 $scope.getCountryCities();
 
                             } else {
+                                if($scope.company.country!==undefined)
+
                                 angular.forEach($scope.countries, function(country) {
 
                                     country1 = $scope.company.country;
@@ -70,6 +72,13 @@ angular.module('employer-signup-wizard').controller('EmpWizardOneController', ['
                                         $scope.getCountryCities();
                                     }
                                 });
+
+                            else
+                            {$scope.company.country = $scope.countries[1];
+                                $scope.getCountryCities();
+                                  InitlocationData();
+
+                            }
 
 
                             }

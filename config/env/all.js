@@ -38,6 +38,7 @@ module.exports = {
 				// scale theme
 
 				"public/theme/js/jquery.min.js" ,
+				'public/lib/angular/angular.min.js',
 				// <!-- Bootstrap -->
 				"public/theme/js/bootstrap.js" ,
 				// <!-- App -->
@@ -76,7 +77,7 @@ module.exports = {
 
 
 
-				'public/lib/angular/angular.min.js',
+				
 				'public/lib/angular-resource/angular-resource.js', 
 				'public/lib/angular-ui-router/release/angular-ui-router.min.js',
 				'public/lib/angular-ui-utils/ui-utils.min.js',

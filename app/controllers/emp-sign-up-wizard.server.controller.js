@@ -43,18 +43,25 @@ var getErrorMessage = function(err) {
 *SIGNUP FOR EMPLOYER ONLY
 */
 exports.signupemployer = function(req, res) {
-	console.log("IT CAME");
 	// For security measurement we remove the roles from the req.body object
 	delete req.body.roles;
-
-	// Init Variables
 	var user = new User(req.body);
 	var message = null;
-
-	// Add missing user fields
 	user.provider = 'local';
 	user.displayName = user.firstName + ' ' + user.lastName;
-
+	// var employer = new Employer();
+	// user.employer = employer;
+	// var company=new Company();
+	// employer.role=req.body.employer.role;
+ //    company.employers.push(employer);
+ //    company.user = user;
+	// company.save();
+	// employer.firstName = user.firstName;
+	// employer.lastName = user.lastName;
+	// employer.displayName = user.displayName;
+	// employer.user = user;
+	// employer.company = company;
+	// employer.save();
 	var newEmployer = new Employer();
 	user.employer = newEmployer;
 	var company = new Company();
@@ -62,9 +69,7 @@ exports.signupemployer = function(req, res) {
 	company.employers.push(newEmployer);
 	company.user = user;
 	company.save();
-
-
-	newEmployer.firstName = user.firstName;
+    newEmployer.firstName = user.firstName;
     newEmployer.lastName = user.lastName;
     newEmployer.displayName = user.displayName;
     newEmployer.user = user;
@@ -173,7 +178,7 @@ exports.signupemployer = function(req, res) {
 /**
 *Validation of the activeToken
 */
-exports.ValidateToken = function(req,res){
+exports.ValidateTokenEmployer = function(req,res){
 console.log(req.body.token);
 User.findOne({"activeToken":req.body.token}).exec(function(err, user){
 	console.log(user);
