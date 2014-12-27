@@ -6,6 +6,7 @@ angular.module('employer-signup-wizard').controller('EmpWizardOneController', ['
         // ...
         var city1 = "";
         var country1 = "";
+        var gotcompanycountryundefined=false;
         $scope.gotCompanyFromDB = false;
         $scope.user = Authentication.user;
         var lat = 0,
@@ -63,7 +64,7 @@ angular.module('employer-signup-wizard').controller('EmpWizardOneController', ['
 
                             } else {
                                 if($scope.company.country!==undefined)
-
+{gotcompanycountryundefined=true;
                                 angular.forEach($scope.countries, function(country) {
 
                                     country1 = $scope.company.country;
@@ -72,10 +73,12 @@ angular.module('employer-signup-wizard').controller('EmpWizardOneController', ['
                                         $scope.getCountryCities();
                                     }
                                 });
+                        }
 
                             else
                             {$scope.company.country = $scope.countries[1];
-                                $scope.getCountryCities();
+                                 $scope.getCountryCities();
+
                                   InitlocationData();
 
                             }
@@ -122,9 +125,9 @@ angular.module('employer-signup-wizard').controller('EmpWizardOneController', ['
                             city1 = res[res.length - 2];
                             city1 = city1.trim();
                             country1 = country1.trim();
-
+                            console.log(country1+" "+city1);
                             angular.forEach($scope.countries, function(country) {
-                                if ($scope.gotCompanyFromDB)
+                                if ($scope.gotCompanyFromDB && gotcompanycountryundefined)
                                     country1 = $scope.company.country;
                                 if (country1 == country.name) {
                                     $scope.company.country = country;
@@ -154,7 +157,7 @@ angular.module('employer-signup-wizard').controller('EmpWizardOneController', ['
                 $scope.cities = response.cities;
                 angular.forEach($scope.cities, function(city) {
                     console.log(city.name + " " + city1);
-                    if ($scope.gotCompanyFromDB)
+                    if ($scope.gotCompanyFromDB && gotcompanycountryundefined)
                         city1 = $scope.company.city;
                     if (city.name == city1) //fuck my life
                     {
