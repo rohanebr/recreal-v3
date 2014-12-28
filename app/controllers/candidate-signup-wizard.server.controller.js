@@ -191,9 +191,10 @@ exports.ValidateToken = function(req,res){
 
 exports.SaveCandidateWizardOne= function(req,res){
 	Candidate.findOne({"user":req.user._id}).exec(function(err,candidate){
+		console.log(candidate);
 		candidate = _.extend(candidate , req.body.candidate);
-		// candidate.country=req.body.candidate.country.name;
-		// candidate.city=req.body.candidate.city.name;
+		 candidate.country=req.body.candidate.country.name;
+		 candidate.location=req.body.candidate.location.name;
 		candidate.save(function(err) {
 			if (err) {
 				return res.send(400, {
