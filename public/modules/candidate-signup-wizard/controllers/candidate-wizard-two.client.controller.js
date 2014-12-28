@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('candidate-signup-wizard').controller('CandidateWizardTwoController', ['$scope','$http','$state','Authentication','Candidates',
-	function($scope,$http,$state,Authentication,Candidates) {
+angular.module('candidate-signup-wizard').controller('CandidateWizardTwoController', ['$scope','$http','$state','Authentication','Candidates','$location',
+	function($scope,$http,$state,Authentication,Candidates,$location) {
 		// Controller Logic
 		// ...
 
@@ -76,6 +76,9 @@ angular.module('candidate-signup-wizard').controller('CandidateWizardTwoControll
           $scope.candidate.skills.splice(index, 1);
         };
 
+        $scope.GoBack = function(){
+            $location.path('candidate-wizard-one/'+Authentication.user.activeToken);
+        }
 
 		$scope.SaveAndRedirect = function() {
             $scope.success = $scope.error = null;

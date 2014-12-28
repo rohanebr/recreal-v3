@@ -1,6 +1,71 @@
-<section data-ng-controller="CandidateWizardThreeController">
-	This is the Candidate wizard three view
-	<form data-ng-submit="SaveAndRedirect()" id="content" class="scrollable padder">
-		<button type="submit" class="btn btn-primary btn-block btn-lg">Next</button>  
-	</form>
+<section data-ng-controller="CandidateWizardThreeController" data-ng-init="LoadInitialData()">
+	<section class="row">
+    	<section class="container custom-wrapper">
+     		<section class="hbox">
+        		<!-- .aside -->
+       			<aside class="bg-light lt b-r b-light aside-md hidden-print" id="nav">          
+         			<section class="vbox">
+            			<section class="w-f scrollable">
+              				<div class="slim-scroll" data-height="auto" data-disable-fade-out="true" data-distance="0" data-size="10px" data-railOpacity="0.2">              
+                			<!-- nav -->                 
+			                <nav class="nav-primary hidden-xs">
+			                  <ul class="nav nav-main left-aside-top-margin" data-ride="collapse">
+			                    <li  class="active">
+			                      <a href="index.html" class="auto">
+			                        <i class="i i-statistics icon">
+			                        </i>
+			                        <span class="font-bold">Basic Info</span>
+			                      </a>
+			                    </li>
+			                    <li  class="active">
+			                      <a href="index.html" class="auto">
+			                        <i class="i i-statistics icon">
+			                        </i>
+			                        <span class="font-bold">Experience</span>
+			                      </a>
+			                    </li>
+			                    <li  class="active">
+			                      <a href="index.html" class="auto">
+			                        <i class="i i-statistics icon">
+			                        </i>
+			                        <span class="font-bold">HR Question</span>
+			                      </a>
+			                    </li>
+			                    <li  class="active">
+			                      <a href="index.html" class="auto">
+			                        <i class="i i-statistics icon">
+			                        </i>
+			                        <span class="font-bold">General</span>
+			                      </a>
+			                    </li>
+			                  </ul>
+			                </nav>
+			                <!-- / nav -->
+			                </div>
+            			</section>
+          			</section>
+        		</aside>
+        		<form data-ng-submit="SaveAndRedirect()" id="content" class="scrollable padder">
+	                <article>
+	                    <header>
+	                      <h3>Describe yourself</h3><hr class="hr-margin15" />
+	                      <p class="header-message">Answer few additional questions to get maximum chance for hire</p>
+	                    </header>
+	                    <section ng-repeat="question in questions">
+	                    	<label>{{question.title}}</label>
+	                    	<textarea class="form-control" required data-ng-model="question.answer" rows="3" cols="5" />
+	                    </section>
+	                    <footer class="footer-button-div">
+	                    	<section class="col-md-2 pull-right">
+	                        	<button type="submit" class="btn btn-primary btn-block btn-lg">Next</button>  
+	                        </section>
+	                    </footer>
+                  	</article>                       
+		            <section data-ng-show="error" class="text-danger"><strong data-ng-bind="error"></strong>
+		            </section>
+          			<a href="#!" class="hide nav-off-screen-block" data-toggle="class:nav-off-screen" data-target="#nav"></a>
+       			 </form>
+       		</section>
+       	</section> 
+    </section>
 </section>

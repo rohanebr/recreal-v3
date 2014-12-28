@@ -61,10 +61,30 @@ angular.module('core').controller('HomeController', ['$scope','$modal', 'Authent
 		}
 		else if(user.userType === 'candidate'){ 
         		 $rootScope.candidate = Candidates.get({
-					candidate: $scope.authentication.user.candidate
+					candidateId: $scope.authentication.user.candidate
+				}, function(candidate){
+					switch(candidate.stage)
+					{
+						case 'One':
+							$location.path("candidate-wizard-one/"+$scope.authentication.user.activeToken);
+						break;
+						case 'Two':
+							$state.go('candidate-wizard-two');
+						break;
+						case 'Three':
+							$state.go('candidate-wizard-three');
+						break;
+						case 'Four':
+							$state.go('candidate-wizard-four');
+						break;
+						case 'Five':
+							$state.go('candidate-wizard-five');
+						break;
+						case 'Complete':
+							$state.go('candidate-home');
+						break;
+					}
 				});
-        	
-			$state.go('candidate-home');
 		}
 		else if(user.userType === 'transition'){
 			$state.go('transition');
