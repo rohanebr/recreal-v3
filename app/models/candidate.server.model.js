@@ -289,7 +289,21 @@ var CandidateSchema = new Schema({
            	default:0
            }
 
-	  }
+	},
+	interview_questions:[{
+		title:{
+         	type:String,
+           	default:'',
+           	trim:true,
+           	required:true
+           },
+        answer:{
+        	type:String,
+           	default:'',
+           	trim:true,
+           	required:true
+        }
+	}]
 });
 
 
