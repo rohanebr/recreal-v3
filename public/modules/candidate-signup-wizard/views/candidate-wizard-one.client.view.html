@@ -127,7 +127,7 @@
 								<div class="form-group">
 									<label for="">Country</label>
 									<span class="ui-select">
-                                        <select ng-model="candidate.country" class="form-control">
+                                        <select ng-model="candidate.country.name" class="form-control" data-ng-change="getCountryCities()">
                                             <option data-ng-repeat="count in countries">{{count.name}}</option>
                                         </select>
                                     </span>
@@ -141,13 +141,9 @@
                       			<div class="form-group">
 									<label for="">Location</label>
 									<span class="ui-select">
-	                                    <select class="form-control" ng-model="candidate.location">
-		                                    <option>Islamabad</option>
-		                                    <option>Multan</option>
-		                                    <option>Lahore</option>
-		                                    <option>Karachi</option>
-	                                    </select>
-                                    </span>
+                            <select ng-model="candidate.location" ng-options="sity.name for sity in cities" required class="form-control">
+                            </select>
+                          </span>
 								</div>
 								<div class="form-group">
 									<label for="">Skype ID</label>
