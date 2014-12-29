@@ -521,7 +521,7 @@
                         <header class="font-bold padder-v">
                           <div class="pull-right">
                             <div class="btn-group">
-                              <button data-toggle="dropdown" class="btn btn-sm btn-rounded btn-default dropdown-toggle">
+                             <!--  <button data-toggle="dropdown" class="btn btn-sm btn-rounded btn-default dropdown-toggle">
                                 <span class="dropdown-label">Week</span> 
                                 <span class="caret"></span>
                               </button>
@@ -529,7 +529,14 @@
                                   <li><a href="#!"><input type="radio" name="b">Month</a></li>
                                   <li><a href="#!"><input type="radio" name="b">Week</a></li>
                                   <li><a href="#!"><input type="radio" name="b">Day</a></li>
-                              </ul>
+                              </ul> -->
+                             <span class="ui-select">
+                            <select class="btn btn-sm btn-rounded btn-default dropdown-toggle">
+                              <option>Month</option>
+                              <option>Week</option>
+                              <option>Day</option>
+                            </select>
+                          </span>
                             </div>
                             <a href="#!" class="btn btn-default btn-icon btn-rounded btn-sm">Go</a>
                           </div>
@@ -562,7 +569,7 @@
                       <section>
                         <header class="font-bold padder-v">
                           <div class="btn-group pull-right">
-                            <button data-toggle="dropdown" class="btn btn-sm btn-rounded btn-default dropdown-toggle">
+                        <!--     <button data-toggle="dropdown" class="btn btn-sm btn-rounded btn-default dropdown-toggle">
                               <span class="dropdown-label">Last 24 Hours</span> 
                               <span class="caret"></span>
                             </button>
@@ -574,7 +581,19 @@
                                 <li><a href="#!"><input type="radio" name="a">Last 30 days</a></li>
                                 <li><a href="#!"><input type="radio" name="a">Last Month</a></li>
                                 <li><a href="#!"><input type="radio" name="a">All Time</a></li>
-                            </ul>
+                            </ul> -->
+                               
+                          <span class="ui-select">
+                            <select class="btn btn-sm btn-rounded btn-default dropdown-toggle">
+                              <option>Today</option>
+                              <option>Yesterday</option>
+                              <option>Last 24 Hours</option>
+                              <option>Last 7 Days</option>
+                              <option>Last 30 days</option>
+                              <option>Last Month</option>
+                              <option>All Time</option>
+                            </select>
+                          </span>
                           </div>
                           Analysis
                         </header>

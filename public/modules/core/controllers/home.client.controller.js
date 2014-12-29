@@ -596,10 +596,10 @@ $state.go('employerDashboard');
 
   var cTime = new Date(), month = cTime.getMonth()+1, year = cTime.getFullYear();
 
-  theMonths = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  var theMonths = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
-  theDays = ["S", "M", "T", "W", "T", "F", "S"];
-    events = [
+ var theDays = ["S", "M", "T", "W", "T", "F", "S"];
+  var events = [
       [
         "4/"+month+"/"+year, 
         'Meet a friend', 
