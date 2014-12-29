@@ -23,12 +23,9 @@ module.exports = {
 				"public/theme/css/font-awesome.min.css" ,
 				"public/theme/css/icon.css" ,
 				"public/theme/css/font.css" ,
-				"public/theme/css/app.css" ,
-				"public/theme/js/calendar/bootstrap_calendar.css" ,
-
-
-				//toaster
-				'public/lib/angularjs-toaster/toaster.css'
+				"public/theme/css/app.css",
+				"public/theme/js/calendar/bootstrap_calendar.css",
+  			    "public/lib/angularjs-toaster/toaster.css"
 
 
 			],
@@ -38,7 +35,7 @@ module.exports = {
 				// scale theme
 
 				"public/theme/js/jquery.min.js" ,
-				'public/lib/angular/angular.min.js',
+				"public/lib/angular/angular.min.js",
 				// <!-- Bootstrap -->
 				"public/theme/js/bootstrap.js" ,
 				// <!-- App -->
@@ -52,32 +49,10 @@ module.exports = {
 				"public/theme/js/charts/flot/jquery.flot.pie.min.js" ,
 				"public/theme/js/charts/flot/jquery.flot.resize.js" ,
 				"public/theme/js/charts/flot/jquery.flot.grow.js" ,
-				"public/theme/js/charts/flot/demo.js" ,
-
 				"public/theme/js/calendar/bootstrap_calendar.js" ,
-				"public/theme/js/calendar/demo.js" ,
-
 				"public/theme/js/sortable/jquery.sortable.js" ,
-
 				"public/theme/js/app.plugin.js" ,
-				
-				
-
-
-				// 'public/lib/jquery-slimscroll/jquery.slimscroll.js',
-				
-				// 'public/lib/jquery/dist/jquery.js',
 				'public/lib/jquery-ui/jquery-ui.js',
-
-
-				
-
-				
-				
-
-
-
-				
 				'public/lib/angular-resource/angular-resource.js', 
 				'public/lib/angular-ui-router/release/angular-ui-router.min.js',
 				'public/lib/angular-ui-utils/ui-utils.min.js',
@@ -97,15 +72,7 @@ module.exports = {
 				'public/lib/textAngular/dist/textAngular.min.js',
 				'public/lib/ng-sortable/dist/ng-sortable.js',
 				'https://maps.google.com/maps/api/js?sensor=false',
-				'public/lib/ngmap/build/scripts/ng-map.js',
-
-
-				//angularjs-toaster
-				//https://github.com/jirikavi/AngularJS-Toaster
-
-				
-				
-				// 'http://code.angularjs.org/1.3.2/angular-animate.min.js',
+			    'public/lib/ngmap/build/scripts/ng-map.js',
 				'public/lib/angular-animate/angular-animate.js',
 				'public/lib/angularjs-toaster/toaster.js'
 				

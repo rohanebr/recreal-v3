@@ -3,9 +3,9 @@ html {
   overflow-x: hidden;
 }
 body {
-  font-family: "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 13px;
-  color: rgb(64, 64, 64);
+  color: #788288;
   background-color: transparent;
   -webkit-font-smoothing: antialiased;
   line-height: 1.53846154;

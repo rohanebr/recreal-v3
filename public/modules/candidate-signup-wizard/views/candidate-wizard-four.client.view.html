@@ -1,6 +1,156 @@
-<section data-ng-controller="CandidateWizardFourController">
-	This is the Candidate wizard four view
-	<form data-ng-submit="SaveAndRedirect()" id="content" class="scrollable padder">
-		<button type="submit" class="btn btn-primary btn-block btn-lg">Next</button>  
-	</form>
+<section data-ng-controller="CandidateWizardFourController" data-ng-init="LoadInitialData()">
+		<section class="row">
+    <section class="container custom-wrapper">
+      <section class="hbox">
+        <!-- .aside -->
+        <aside class="bg-light lt b-r b-light aside-md hidden-print" id="nav">          
+          <section class="vbox">
+            <section class="w-f scrollable">
+              <div class="slim-scroll" data-height="auto" data-disable-fade-out="true" data-distance="0" data-size="10px" data-railOpacity="0.2">
+                <div class="clearfix wrapper dk nav-user hidden-xs">
+                  
+                </div>                
+
+
+                <!-- nav -->                 
+                <nav class="nav-primary hidden-xs">
+                  <ul class="nav nav-main" data-ride="collapse">
+                    <li class="nav-search">
+                        <span>
+                          <input id="searchBox" class="form-control" type="text" data-ng-model="searchText" placeholder="Search Jobs, Candidates" />
+                        </span>
+                    </li>
+                    <li  class="active">
+                      <a href="index.html" class="auto">
+                        <i class="i i-statistics icon">
+                        </i>
+                        <span class="font-bold">Overview</span>
+                      </a>
+                    </li>
+                    <li >
+                      <a href="" class="auto">
+                        <span class="pull-right text-muted">
+                          <i class="i i-circle-sm-o text"></i>
+                          <i class="i i-circle-sm text-active"></i>
+                        </span>
+                        <b class="badge bg-danger pull-right">4</b>
+                        <i class="i i-stack icon">
+                        </i>
+                        <span class="font-bold">Active Jobs</span>
+                      </a>
+                    </li>
+                    <li >
+                      <a href="" class="auto">
+                        <span class="pull-right text-muted">
+                          <i class="i i-circle-sm-o text"></i>
+                          <i class="i i-circle-sm text-active"></i>
+                        </span>
+                        <b class="badge bg-danger pull-right">1</b>
+                        <i class="i i-stack icon">
+                        </i>
+                        <span class="font-bold">Draft Jobs</span>
+                      </a>
+                      
+                    </li>
+                    <li >
+                      <a href="" class="auto">
+                        <span class="pull-right text-muted">
+                          <i class="i i-circle-sm-o text"></i>
+                          <i class="i i-circle-sm text-active"></i>
+                        </span>
+                        <b class="badge bg-danger pull-right">32</b>
+                        <i class="i i-stack icon">
+                        </i>
+                        <span class="font-bold">Expired Jobs</span>
+                      </a>
+                    </li>
+                  </ul>
+                  <div class="line dk hidden-nav-xs"></div>
+                  <div class="text-muted text-xs hidden-nav-xs padder m-t-sm m-b-sm">Lables</div>
+                  <ul class="nav">
+                    <li>
+                      <a href="mail.html#work">
+                        <i class="i i-circle-sm text-info-dk"></i>
+                        <span>3 Jobs Posted by Jhon</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="mail.html#social">
+                        <i class="i i-circle-sm text-success-dk"></i>
+                        <span>6 Jobs Posted by David</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="mail.html#projects">
+                        <i class="i i-circle-sm text-danger-dk"></i>
+                        <span>1 Job posted by Nathan</span>
+                      </a>
+                    </li>
+                  </ul>
+                  <div class="text-muted text-xs hidden-nav-xs padder m-t-sm m-b-sm">Circles</div>
+                  <ul class="nav">
+                    <li>
+                      <a href="#!">
+                        <i class="i i-circle-sm-o text-success-lt"></i>
+                        <span>College</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#!">
+                        <i class="i i-circle-sm-o text-warning"></i>
+                        <span>Social</span>
+                      </a>
+                    </li>
+                  </ul>
+                </nav>
+                <!-- / nav -->
+              </div>
+            </section>
+            
+            <footer class="footer hidden-xs no-padder text-center-nav-xs">
+              <a href="modal.lockme.html" data-toggle="ajaxModal" class="btn btn-icon icon-muted btn-inactive pull-right m-l-xs m-r-xs hidden-nav-xs">
+                <i class="i i-logout"></i>
+              </a>
+              <a href="#nav" data-toggle="class:nav-xs" class="btn btn-icon icon-muted btn-inactive m-l-xs m-r-xs">
+                <i class="i i-circleleft text"></i>
+                <i class="i i-circleright text-active"></i>
+              </a>
+            </footer>
+          </section>
+        </aside>
+        <!-- /.aside -->
+
+        <section id="content">
+          <section class="hbox stretch">
+
+            <section>
+              <section class="vbox">
+                <section class="scrollable padder">
+                    <ng-map data-ng-model="map" center="45.518970, -122.672899"
+                      zoom="11"
+                      map-type-id="ROADMAP"
+                      
+                      heading="90">
+                    </ng-map> 
+ 
+                      <footer class="footer-button-div">
+                      <section class="col-md-2 pull-right">
+                        <button type="submit" class="btn btn-primary btn-block btn-lg" ng-click="SaveAndRedirect()">Next</button>  
+                        <a href="" data-ng-click="SkipAndRedirect()" ><u>Skip</u></a><br> 
+                         <button type="submit" class="btn btn-primary btn-block btn-lg" ng-click="Back()">Back</button>
+                      </section>
+                    </footer>
+                  <!-- <section class="pull-right"><a href="#!/emp-wizard-one">Back</a><a href="#!/emp-job-post-one">Next</a></section> -->
+                </section>
+              </section>
+
+                   
+            </section>
+          </section>
+
+          <a href="#!" class="hide nav-off-screen-block" data-toggle="class:nav-off-screen" data-target="#nav"></a>
+        </section>
+      </section>
+    </section>
+  </section>
 </section>

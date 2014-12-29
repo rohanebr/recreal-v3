@@ -16,6 +16,7 @@ angular.module('employer-signup-wizard').factory('locationVarification', ['$root
                                 var res = citycountry.split(",");
                                 countryFromDB = res[res.length - 1].trim();
                                 cityFromDB = res[res.length - 2].trim();
+                                console.log(cityFromDB+" "+countryFromDB);
                                 if (countryFromDB == country && cityFromDB == city)
                                     deferred.resolve(['true']);
                                 else
