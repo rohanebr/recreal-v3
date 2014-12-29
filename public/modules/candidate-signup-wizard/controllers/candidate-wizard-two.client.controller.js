@@ -84,12 +84,15 @@ angular.module('candidate-signup-wizard').controller('CandidateWizardTwoControll
             $scope.success = $scope.error = null;
 
             if($scope.candidate.stage=='Two')
-                $scope.candidate.stage = 'Three';
+            {
+               // $scope.candidate.stage = 'Three';
+               $scope.candidate.stage = 'Four';
+            }
 
             var candidate = $scope.candidate ;
 
             candidate.$update(function() {
-                 $state.go('candidate-wizard-three');
+                 $state.go('candidate-wizard-four'); // redirect to page three which contains basic question answers
             }, function(errorResponse) {
                  $scope.error = response.message;
             });

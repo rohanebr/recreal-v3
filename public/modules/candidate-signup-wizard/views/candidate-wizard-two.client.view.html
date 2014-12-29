@@ -78,7 +78,7 @@
 				                        <label for="">Study Feild</label>
 				                    </div>
 				                    <div class="col-md-6">
-				                        <input type="text" placeholder="Add an Education" data-ng-model="newEducation.study_feild" class="form-control">
+				                        <input type="text" placeholder="Computer Engineering" data-ng-model="newEducation.study_feild" class="form-control">
 				                    </div>
 				                </div>
 				                <div class="row form-group">
@@ -86,7 +86,7 @@
 				                        <label for="">Institute</label>
 				                    </div>
 				                    <div class="col-md-6">
-				                         <input type="text" placeholder="Institute" data-ng-model="newEducation.institute" class="form-control">
+				                         <input type="text" placeholder="Comsats University of Technology" data-ng-model="newEducation.institute" class="form-control">
 				                    </div>
 				                </div>
 				                <div class="row form-group">
@@ -168,7 +168,7 @@
 				                        <label for="">Description</label>
 				                    </div>
 				                    <div class="col-md-6">
-				                         <input type="text" placeholder="Institute" data-ng-model="newPosition.summary" class="form-control">
+				                         <textarea class="form-control" data-ng-model="newPosition.summary" rows="3" cols="5" />
 				                    </div>
 				                </div>
 	                            <button class="btn btn-default btn-sm" ng-click="addPosition()">Add</button>
@@ -194,7 +194,7 @@
 				                        <label for="">Name</label>
 				                    </div>
 				                    <div class="col-md-6">
-				                        <input type="text" placeholder="Computer and Networking Services" data-ng-model="newProject.name" class="form-control">
+				                        <input type="text" placeholder="Workforce Management System" data-ng-model="newProject.name" class="form-control">
 				                    </div>
 				                </div>
 				                <div class="row form-group">
@@ -202,7 +202,7 @@
 				                        <label for="">Company</label>
 				                    </div>
 				                    <div class="col-md-6">
-				                        <input type="text" placeholder="Senior Developer" data-ng-model="newProject.company" class="form-control">
+				                        <input type="text" placeholder="Microsoft" data-ng-model="newProject.company" class="form-control">
 				                    </div>
 				                </div>
 				                <div class="row form-group">
@@ -226,7 +226,8 @@
 				                        <label for="">Description</label>
 				                    </div>
 				                    <div class="col-md-6">
-				                         <input type="text" placeholder="Institute" data-ng-model="newProject.description" class="form-control">
+				                         <textarea class="form-control" data-ng-model="newProject.description" rows="3" cols="5" />
+
 				                    </div>
 				                </div>
 	                            <button class="btn btn-default btn-sm" ng-click="addProject()">Add</button>
@@ -257,7 +258,11 @@
 				                        <label for="">Level</label>
 				                    </div>
 				                    <div class="col-md-6">
-				                        <input type="text" placeholder="Senior Developer" data-ng-model="newSkill.level" class="form-control">
+				                        <select data-ng-model="newSkill.level" class="form-control">
+		                                    <option>Beginner</option>
+		                                    <option>Intermidiate</option>
+		                                    <option>Expert</option>
+		                                </select>
 				                    </div>
 				                </div>
 				                <div class="row form-group">
