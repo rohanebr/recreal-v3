@@ -109,33 +109,33 @@
                       <section class="col-md-3">
                         
                       </section>
-                        <section class="col-md-4">
-                         <div class="form-group">
-                          <label>Industry</label>
-                          <span class="ui-select">
-                            <select class="form-control" data-ng-model="company.industry">
-                              <option data-ng-repeat="ind in industries">{{ind.name}}</option>
-                            </select>
-                          </span>
-                        </div>
-                        <div class="form-group">
-                          <label>Company Type</label>
-                          <span class="ui-select">
-                            <select class="form-control" data-ng-model="company.company_type">
-                              <option>Sole Proprietorship</option>
-                              <option>Public</option>
-                              <option>Private</option>
-                              <option>NGO</option>
-                            </select>
-                          </span>
-                        </div>
-                        <div class="form-group">
-                          <label>Country</label>
-                          <span class="ui-select">
-                            <select data-ng-model="company.country" ng-options="count.name for count in countries" data-ng-change="getCountryCities()" required class="form-control">
-                            </select>
-                          </span>
-                        </div>
+                      <section class="col-md-4">
+                          <div class="form-group">
+                            <label>Industry</label>
+                            <span class="ui-select">
+                              <select class="form-control" data-ng-model="company.industry">
+                                <option data-ng-repeat="ind in industries">{{ind.name}}</option>
+                              </select>
+                            </span>
+                          </div>
+                          <div class="form-group">
+                            <label>Company Type</label>
+                            <span class="ui-select">
+                              <select class="form-control" data-ng-model="company.company_type">
+                                <option>Sole Proprietorship</option>
+                                <option>Public</option>
+                                <option>Private</option>
+                                <option>NGO</option>
+                              </select>
+                            </span>
+                          </div>
+                          <div class="form-group">
+                            <label>Country</label>
+                            <span class="ui-select">
+                              <select data-ng-model="company.country" ng-options="count.name for count in countries" data-ng-change="getCountryCities()" required class="form-control">
+                              </select>
+                            </span>
+                          </div>
                       </section>
                       <section class="col-md-4">
                         <div class="form-group">
