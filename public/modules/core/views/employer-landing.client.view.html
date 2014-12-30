@@ -1,283 +1,576 @@
 <section data-ng-controller="EmployerLandingController">
-  <header class="bg-primary header header-md navbar navbar-fixed-top-xs box-shadow">
-    <div class="navbar-header aside-md dk">
-      <a class="btn btn-link visible-xs" data-toggle="class:nav-off-screen" data-target="#nav">
-        <i class="fa fa-bars"></i>
-      </a>
-      <a href="/" class="navbar-brand">
-        <img src="/theme/images/logo.png" class="m-r-sm" alt="scale">
-        <span class="hidden-nav-xs">recreal</span>
-      </a>
-      <a class="btn btn-link visible-xs" data-toggle="dropdown" data-target=".user">
-        <i class="fa fa-cog"></i>
-      </a>
-    </div>
+<head>
+    <!--[if lt IE 9]> <script src="js/ie/html5shiv.js"></script> <script src="js/ie/respond.min.js"></script> <script src="js/ie/excanvas.js"></script> <![endif]-->
+</head>
 
-    <form class="navbar-form navbar-left input-s-lg m-t m-l-n-xs hidden-xs" role="search">
-      <div class="form-group">
-        <div class="input-group">
-          <span class="input-group-btn">
-            <button type="submit" class="btn btn-sm bg-white b-white btn-icon"><i class="fa fa-search"></i></button>
-          </span>
-          <input type="text" class="form-control input-sm no-border" placeholder="Search jobs, companies...">            
+<div class="" data-spy="scroll" data-target="#header">
+    <!-- header -->
+
+    <header class="navbar navbar-fixed-top bg-primary dk affix-top"
+    data-offset-top="1" data-spy="affix" id="header">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand m-r-lg" href="#"><img class="m-r-sm"
+                src="/theme/images/logo.png"><span class="text-lt">recreal</span></a>
+                <button class="btn btn-primary btn-emtpy visible-xs fa fa-bars"
+                data-target=".navbar-collapse" data-toggle="collapse" style=
+                "font-style: italic" type="button"></button>
+            </div>
+
+
+            <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a data-ride="scroll" href="#howitworks">How it
+                        works</a>
+                    </li>
+
+
+                    <li>
+                        <a data-ride="scroll" href="#features">Features</a>
+                    </li>
+
+
+                    <li>
+                        <a data-ride="scroll" href="#pro">Scale Pro</a>
+                    </li>
+
+
+                    <li>
+                        <a data-ride="scroll" href="#download">Download</a>
+                    </li>
+                    <li>
+                        <a data-ride="scroll" href="/#!">Candidates</a>
+                    </li>
+                </ul>
+
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <div class="m-t-sm">
+                            <a class="btn btn-link btn-sm" href="/#!/signin">Sign
+                            in</a> or <a class=
+                            "btn btn-sm btn-success btn-rounded m-l" href=
+                            "" ng-click="openPostjobModal()"><strong>
+                            Post Job</strong></a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
         </div>
-      </div>
-    </form>
-    <ul class="nav navbar-nav navbar-right m-n hidden-xs nav-user user">
-      <li class="hidden-xs">
-        <a href="/#!/signin">Login</a>
-      </li>
-      <li>
-        <a href="" data-ng-click="openPostjobModal()">Post Job</a>
-      </li>
-      <li>
-        <a href="/#!" class="btn btn-primary btn-small emp-button-header">Candidates</a>
-      </li>
-    </ul>      
-  </header>
+    </header>
+    <!-- / header -->
 
-  <section class="header-banner">
-    <section class="container">
-      <div class="row text-center">
-        <img class="img-responsive" src="/theme/images/python-opening.jpg">
-      </div>
+    <section id="content">
+        <div class="bg-primary dk intro">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 text-center">
+                    <div class="m-t-xl m-b-xl padder">
+                        <div class="h1 text-white font-thin l-h-2x">
+                            Modern, Clean &amp; Flat User Interface Kit
+                        </div>
+
+
+                        <div class="carousel slide carousel-fade inline auto"
+                        data-interval="6000">
+                            <div class="carousel-inner">
+                                <div class="item">
+                                    <div class=
+                                    "h1 text-white font-thin l-h-2x">
+                                        Made with <span class=
+                                        "text-u-c text-u-l text-black font-bold">
+                                        Love</span> &amp; <span class=
+                                        "text-u-c text-u-l text-black font-bold">
+                                        Passion</span>
+                                    </div>
+                                </div>
+
+
+                                <div class="item active">
+                                    <div class=
+                                    "h1 text-white font-thin l-h-2x">
+                                        Easy to <span class=
+                                        "text-u-c text-u-l text-black font-bold">
+                                        Use</span> &amp; <span class=
+                                        "text-u-c text-u-l text-black font-bold">
+                                        Extend</span>
+                                    </div>
+                                </div>
+
+
+                                <div class="item">
+                                    <div class=
+                                    "h1 text-white font-thin l-h-2x">
+                                        Fast <span class=
+                                        "text-u-c text-u-l text-black font-bold">
+                                        Integrate</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <p class="text-center m-b-xl"><a class=
+                    "btn b-2x btn-lg b-white btn-default btn-rounded m-sm"
+                    href="http://themeforest.net/user/Flatfull/portfolio?ref=flatfull"
+                    target="_blank">Get It Now</a> <a class=
+                    "btn btn-lg btn-white b-2x b-white btn-rounded bg-empty m-sm"
+                    href="http://flatfull.com/themes/scale/index.html" target=
+                    "_blank">Live Preview</a></p>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="bg-white-only" id="howitworks">
+            <div class="container">
+                <div class="m-t-xl m-b-xl text-center wrapper">
+                    <h3 class="text-u-c text-dark">Start building your
+                    <span class="b-b b-light">Responsive</span> web
+                    application</h3>
+
+
+                    <p class="text-muted">This web based app template give you
+                    much power to build your great application.</p>
+                </div>
+
+
+                <div class="row m-t-xl m-b-xl text-center">
+                    <div class="col-sm-4 appear" data-animation="fadeInLeft"
+                    data-delay="300" data-ride="animated">
+                        <p class=
+                        "h3 m-b-lg i i-cloud i-2x b b-dark rounded wrapper-lg"
+                        style="font-style: italic">
+                        </p>
+
+
+                        <div class="">
+                            <h4 class="m-t-none">Web Application</h4>
+
+
+                            <p class="text-muted m-t-lg">Many mobile app
+                            widgets and components, it's fully responsive, it
+                            can run on all the size of the screens. Start work
+                            on your great idea today!</p>
+                        </div>
+                    </div>
+
+
+                    <div class="col-sm-4 appear" data-animation="fadeInLeft"
+                    data-delay="600" data-ride="animated">
+                        <p class=
+                        "h3 m-b-lg i i-stats i-2x b b-dark rounded wrapper-lg"
+                        style="font-style: italic">
+                        </p>
+
+
+                        <div class="">
+                            <h4 class="m-t-none">Admin Dashboard</h4>
+
+
+                            <p class="text-muted m-t-lg">It also can be used as
+                            admin dashboard, it has tables, charts and other
+                            useful components for system management, graph data
+                            shows and analysis.</p>
+                        </div>
+                    </div>
+
+
+                    <div class="col-sm-4 appear" data-animation="fadeInLeft"
+                    data-delay="900" data-ride="animated">
+                        <p class=
+                        "h3 m-b-lg i i-screen i-2x b b-dark rounded wrapper-lg"
+                        style="font-style: italic">
+                        </p>
+
+
+                        <div class="">
+                            <h4 class="m-t-none">App Landing</h4>
+
+
+                            <p class="text-muted m-t-lg">This template also
+                            have a front end site that for your application
+                            landing, It have the features introduction, blog
+                            section, and a price table included.</p>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="m-t-xl m-b-xl text-center wrapper">
+                    <p class="h5">You can use it to build your <span class=
+                    "text-primary">Content manage system</span>, <span class=
+                    "text-primary">Travel app</span>, <span class=
+                    "text-primary">Medical app</span>...</p>
+
+
+                    <p class="m-t-xl"><a class=
+                    "btn btn-lg btn-white b-2x b-dark btn-rounded bg-empty m-sm"
+                    data-ride="scroll" href="#testimonial">What Clients
+                    Said</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="bg-light" id="features">
+            <div class="container">
+                <div class="row m-t-xl m-b-xl">
+                    <div class="col-sm-6 appear" data-animation="fadeInLeft"
+                    data-delay="300" data-ride="animated">
+                        <div class="phone-img"><img class="img-responsive" src=
+                        "http://flatfull.com/themes/scale/images/phone-2.png">
+                        </div>
+                    </div>
+
+
+                    <div class="col-sm-6 wrapper-xl">
+                        <h3 class="text-dark text-u-c">The <span class=
+                        "b-b b-light">Features</span> You'll Love</h3>
+
+
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing
+                        elit. Morbi id neque quam.</p>
+
+
+                        <ul class="list-unstyled m-t-xl">
+                            <li class="appear" data-animation="fadeInUp"
+                            data-delay="600" data-ride="animated">
+                                <i class=
+                                "i i-bookmark i-1x b b-primary text-primary rounded wrapper pull-left m-r">
+                                </i>
+
+                                <p class="clear m-b-lg">Aliquam sollicitudin
+                                venenatis ipsum ac feugiat. Vestibulum
+                                ullamcorper sodales nisi nec condimentum.</p>
+                            </li>
+
+
+                            <li class="appear" data-animation="fadeInUp"
+                            data-delay="900" data-ride="animated">
+                                <i class=
+                                "i i-bulb i-1x b b-primary text-primary rounded wrapper pull-left m-r">
+                                </i>
+
+                                <p class="clear m-b-lg">Sed ut perspiciatis
+                                unde omnis iste natus error sit voluptatem
+                                accusantium doloremque.</p>
+                            </li>
+
+
+                            <li class="appear" data-animation="fadeInUp"
+                            data-delay="1100" data-ride="animated">
+                                <i class=
+                                "i i-file-plus i-1x b b-primary text-primary rounded wrapper pull-left m-r">
+                                </i>
+
+                                <p class="clear m-b-lg">Mauris convallis mauris
+                                at pellentesque volutpat. iste natus error sit
+                                voluptatem accusantium doloremque.</p>
+                            </li>
+
+
+                            <li class="appear" data-animation="fadeInUp"
+                            data-delay="1200" data-ride="animated">
+                                <i class=
+                                "i i-domain3 i-1x b b-primary text-primary rounded wrapper pull-left m-r">
+                                </i>
+
+                                <p class="clear m-b-lg">Morbi nec nunc
+                                condimentum, egestas dui nec, fermentum diam.
+                                Vivamus vel tincidunt libero.</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="bg-dark" id="pro">
+            <div class="container">
+                <div class="row m-t-xl m-b-xl">
+                    <div class="col-sm-6 wrapper-xl">
+                        <h3 class="text-lt text-u-c">Scale <span class=
+                        "b-b b-light">PRO</span></h3>
+
+
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing
+                        elit. Morbi id neque quam.</p>
+
+
+                        <ul class="list-unstyled m-t-xl">
+                            <li class="appear" data-animation="fadeInUp"
+                            data-delay="600" data-ride="animated">
+                                <span class=
+                                "i-s i-s-2x pull-left m-r-sm m-t-n-xs"><i class="i i-hexagon2-o i-s-base text-info">
+                                </i> <i class=
+                                "i i-plus2 i-1x text-muted"></i></span>
+
+                                <p class="clear m-b-lg">Aliquam sollicitudin
+                                venenatis ipsum ac feugiat. Vestibulum
+                                ullamcorper sodales nisi nec condimentum.</p>
+                            </li>
+
+
+                            <li class="appear" data-animation="fadeInUp"
+                            data-delay="900" data-ride="animated">
+                                <span class=
+                                "i-s i-s-2x pull-left m-r-sm m-t-n-xs"><i class="i i-hexagon2-o i-s-base text-info">
+                                </i> <i class=
+                                "i i-infinity i-sm text-muted"></i></span>
+
+                                <p class="clear m-b-lg">Sed ut perspiciatis
+                                unde omnis iste natus error sit voluptatem
+                                accusantium doloremque.</p>
+                            </li>
+
+
+                            <li class="appear" data-animation="fadeInUp"
+                            data-delay="1100" data-ride="animated">
+                                <span class=
+                                "i-s i-s-2x pull-left m-r-sm m-t-n-xs"><i class="i i-hexagon2-o i-s-base text-info">
+                                </i> <i class=
+                                "i i-stack i-sm text-muted"></i></span>
+
+                                <p class="clear m-b-lg">Mauris convallis mauris
+                                at pellentesque volutpat. iste natus error sit
+                                voluptatem accusantium doloremque.</p>
+                            </li>
+
+
+                            <li class="appear" data-animation="fadeInUp"
+                            data-delay="1200" data-ride="animated">
+                                <span class=
+                                "i-s i-s-2x pull-left m-r-sm m-t-n-xs"><i class="i i-hexagon2-o i-s-base text-info">
+                                </i> <i class=
+                                "i i-link2 i-1x text-muted"></i></span>
+
+                                <p class="clear m-b-lg">Morbi nec nunc
+                                condimentum, egestas dui nec, fermentum diam.
+                                Vivamus vel tincidunt libero.</p>
+                            </li>
+                        </ul>
+                    </div>
+
+
+                    <div class="col-sm-6 appear" data-animation="fadeInLeft"
+                    data-delay="300" data-ride="animated">
+                        <div class="phone-img"><img class="img-responsive" src=
+                        "http://flatfull.com/themes/scale/images/phone-1.png">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="bg-success dker clearfix" id="testimonial">
+            <div class="container m-t-xl m-b-xl">
+                <div class="carousel auto slide clearfix" data-interval="6000"
+                id="b-slide">
+                    <ol class="carousel-indicators">
+                        <li class="" data-slide-to="0" data-target="#b-slide">
+                        </li>
+
+
+                        <li class="" data-slide-to="1" data-target="#b-slide">
+                        </li>
+
+
+                        <li class="active" data-slide-to="2" data-target=
+                        "#b-slide">
+                        </li>
+                    </ol>
+
+
+                    <div class="carousel-inner text-center m-t-xl m-b-xl">
+                        <div class="item">
+                            <div class="row">
+                                <div class="col-sm-6 col-sm-offset-3 m-b-xl">
+                                    <h4 class=
+                                    "font-thin l-h-2x text-white m-b-lg">
+                                    <em>“Vestibulum ullamcorper sodales nisi
+                                    nec condimentum. Mauris convallis mauris at
+                                    pellentesque volutpat. Phasellus at dolor
+                                    sit amet, consectetur adipiscing elit.
+                                    Morbi id neque quam. Aliquam sollicitudin
+                                    venenatis ipsum ac feugiat. Vestibul
+                                    ultricies neque, quis malesuada augue.
+                                    Donec eleifend condimentum.”</em>
+                                    </h4>
+
+
+                                    <p class="text-muted">- Suzanne Oliver,
+                                    Chief Learning Officer</p>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="item">
+                            <div class="row">
+                                <div class="col-sm-6 col-sm-offset-3 m-b-xl">
+                                    <h4 class=
+                                    "font-thin l-h-2x text-white m-b-lg">
+                                    <em>"Integer eleifend, nisl venenatis
+                                    consequat iaculis Duis non malesuada est,
+                                    quis congue nibh. Pellentesque et netus et
+                                    malesuada fames ac turpis malesuada est,
+                                    quis congue nibh. Pellentesque habitant
+                                    morbi tristique senectus et netus et
+                                    malesuada fames ac turpis egestas.”</em>
+                                    </h4>
+
+
+                                    <p class="text-muted">- Leah Tate, PM</p>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="item active">
+                            <div class="row">
+                                <div class="col-sm-6 col-sm-offset-3 m-b-xl">
+                                    <h4 class=
+                                    "font-thin l-h-2x text-white m-b-lg">
+                                    <em>“Lorem ipsum dolor sit amet,
+                                    consectetur adipiscing elit. Morbi id neque
+                                    quam. Aliquam sollicitudin venenatis ipsum
+                                    ac feugiat. Vestibulum ullamcorper sodales
+                                    nisi nec condimentum. Mauris convallis
+                                    mauris at pellentesque volutpat. Phasellus
+                                    at ultricies neque, quis malesuada
+                                    augue.”</em>
+                                    </h4>
+
+
+                                    <p class="text-muted">- Chapman, Employee
+                                    Development Manager</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <a class="left carousel-control fa fa-angle-left"
+                    data-slide="prev" href="#b-slide" style=
+                    "font-style: italic"></a> <a class=
+                    "right carousel-control fa fa-angle-right" data-slide=
+                    "next" href="#b-slide" style="font-style: italic"></a>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="bg-light clearfix wrapper-lg" id="download">
+            <div class="container wrapper text-center">
+                <div class="m-t-xl m-b">
+                    <h3 class="font-thin text-dark text-u-c m-b-xl">Download
+                    Scale <span class="b-b b-light">App</span></h3>
+                    <a class="text-sm btn btn-lg btn-rounded btn-dark m-sm"
+                    href=
+                    "http://themeforest.net/user/Flatfull/portfolio?ref=flatfull"
+                    target="_blank"><i class=
+                    "fa fa-apple fa-3x pull-left m-l-sm"></i> <span class=
+                    "block clear m-t-xs text-left m-r m-l">Available on the
+                    <b class="text-lg block font-bold">App Store</b></span></a>
+                    <a class="text-sm btn btn-lg btn-rounded btn-dark m-sm"
+                    href="http://flatfull.com/themes/scale/index.html" target=
+                    "_blank"><i class=
+                    "fa fa-android fa-3x pull-left m-l-sm"></i> <span class=
+                    "block clear m-t-xs text-left m-r m-l">Get it on <b class=
+                    "text-lg block font-bold">Google Play</b></span></a>
+                </div>
+            </div>
+
+
+            <div class="container text-center m-t-xl m-b-xl appear"
+            data-animation="fadeIn" data-ride="animated">
+                <h3 class="font-thin text-dark text-u-c">Subscribe to our
+                <span class="b-b b-light">newsletter</span> list</h3>
+
+
+                <p>Do not want to miss anything? Subscribe to our newsletter
+                box</p>
+
+
+                <form class="form-inline m-t-xl m-b-xl text-center">
+                    <div class="aside-xl inline">
+                        <div class="input-group">
+                            <input class="form-control btn-rounded" id=
+                            "address" name="address" placeholder="Your email"
+                            type="text"> <span class=
+                            "input-group-btn"><button class=
+                            "btn btn-default btn-rounded" type=
+                            "submit"><span class=
+                            "input-group-btn">Subscribe</span></button></span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
     </section>
-  </section>
+    <!-- footer -->
+
+    <footer class="bg-dark" id="footer">
+        <div class="dk">
+            <div class="container">
+                <div class="row m-t-xl m-b-xl">
+                    <div class="col-sm-4">
+                        <h4 class="text-u-c m-b font-thin text-lt"><span class=
+                        "b-b b-dark">Find</span> Us</h4>
 
 
-  <!-- Services -->
-  <!-- The circle icons use Font Awesome's stacked icon classes. For more information, visit http://fontawesome.io/examples/ -->
-  <section id="services" class="services bg-primary">
-      <div class="container">
-          <div class="row text-center">
-              <div class="col-lg-10 col-lg-offset-1">
-                  <h2>Our Services</h2>
-                  <hr class="small">
-                  <div class="row">
-                      <div class="col-md-3 col-sm-6">
-                          <div class="service-item">
-                              <span class="fa-stack fa-4x">
-                              <i class="fa fa-circle fa-stack-2x"></i>
-                              <i class="fa fa-cloud fa-stack-1x text-primary"></i>
-                          </span>
-                              <h4>
-                                  <strong>Service Name</strong>
-                              </h4>
-                              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                              <a href="#" class="btn btn-light">Learn More</a>
-                          </div>
-                      </div>
-                      <div class="col-md-3 col-sm-6">
-                          <div class="service-item">
-                              <span class="fa-stack fa-4x">
-                              <i class="fa fa-circle fa-stack-2x"></i>
-                              <i class="fa fa-compass fa-stack-1x text-primary"></i>
-                          </span>
-                              <h4>
-                                  <strong>Service Name</strong>
-                              </h4>
-                              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                              <a href="#" class="btn btn-light">Learn More</a>
-                          </div>
-                      </div>
-                      <div class="col-md-3 col-sm-6">
-                          <div class="service-item">
-                              <span class="fa-stack fa-4x">
-                              <i class="fa fa-circle fa-stack-2x"></i>
-                              <i class="fa fa-flask fa-stack-1x text-primary"></i>
-                          </span>
-                              <h4>
-                                  <strong>Service Name</strong>
-                              </h4>
-                              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                              <a href="#" class="btn btn-light">Learn More</a>
-                          </div>
-                      </div>
-                      <div class="col-md-3 col-sm-6">
-                          <div class="service-item">
-                              <span class="fa-stack fa-4x">
-                              <i class="fa fa-circle fa-stack-2x"></i>
-                              <i class="fa fa-shield fa-stack-1x text-primary"></i>
-                          </span>
-                              <h4>
-                                  <strong>Service Name</strong>
-                              </h4>
-                              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                              <a href="#" class="btn btn-light">Learn More</a>
-                          </div>
-                      </div>
-                  </div>
-                  <!-- /.row (nested) -->
-              </div>
-              <!-- /.col-lg-10 -->
-          </div>
-          <!-- /.row -->
-      </div>
-      <!-- /.container -->
-  </section>
+                        <p class="text-sm">23 soe Midlokls<br>
+                        120002 Loki — UNITED KINGDOM<br>
+                        +333 432 321 322</p>
+                    </div>
 
-      <!-- Callout -->
-      <aside class="callout">
-          <div class="text-vertical-center">
-              <h1>Jobs that personally suit you</h1>
-          </div>
-      </aside>
 
-  <section class="container">
-    <section class="vbox">
-      <section>
-        <section class="hbox stretch">
-          <!-- .aside -->
-     
-          <!-- /.aside -->
-          <section id="content">
-            <section class="hbox stretch">
-              <section>
-                <section class="vbox">
-                  <section class="scrollable padder"> 
-                      
-                  </section>
-                </section>
-              </section>
-              <!-- side content -->
-              <aside class="aside-md bg-black hide" id="sidebar">
-                <section class="vbox animated fadeInRight">
-                  <section class="scrollable">
-                    <div class="wrapper"><strong>Live feed</strong></div>
-                    <ul class="list-group no-bg no-borders auto">
-                      <li class="list-group-item">
-                        <span class="fa-stack pull-left m-r-sm">
-                          <i class="fa fa-circle fa-stack-2x text-success"></i>
-                          <i class="fa fa-reply fa-stack-1x text-white"></i>
-                        </span>
-                        <span class="clear">
-                          <a href="#">Goody@gmail.com</a> sent your email
-                          <small class="icon-muted">13 minutes ago</small>
-                        </span>
-                      </li>
-                      <li class="list-group-item">
-                        <span class="fa-stack pull-left m-r-sm">
-                          <i class="fa fa-circle fa-stack-2x text-danger"></i>
-                          <i class="fa fa-file-o fa-stack-1x text-white"></i>
-                        </span>
-                        <span class="clear">
-                          <a href="#">Mide@live.com</a> invite you to join a meeting
-                          <small class="icon-muted">20 minutes ago</small>
-                        </span>
-                      </li>
-                      <li class="list-group-item">
-                        <span class="fa-stack pull-left m-r-sm">
-                          <i class="fa fa-circle fa-stack-2x text-info"></i>
-                          <i class="fa fa-map-marker fa-stack-1x text-white"></i>
-                        </span>
-                        <span class="clear">
-                          <a href="#">Geoge@yahoo.com</a> is online
-                          <small class="icon-muted">1 hour ago</small>
-                        </span>
-                      </li>
-                      <li class="list-group-item">
-                        <span class="fa-stack pull-left m-r-sm">
-                          <i class="fa fa-circle fa-stack-2x text-primary"></i>
-                          <i class="fa fa-info fa-stack-1x text-white"></i>
-                        </span>
-                        <span class="clear">
-                          <a href="#"><strong>Admin</strong></a> post a info
-                          <small class="icon-muted">1 day ago</small>
-                        </span>
-                      </li>
-                    </ul>
-                    <div class="wrapper"><strong>Friends</strong></div>
-                    <ul class="list-group no-bg no-borders auto">
-                      <li class="list-group-item">
-                        <div class="media">
-                          <span class="pull-left thumb-sm avatar">
-                            <img src="/theme/images/a3.png" alt="..." class="img-circle">
-                            <i class="on b-black bottom"></i>
-                          </span>
-                          <div class="media-body">
-                            <div><a href="#">Chris Fox</a></div>
-                            <small class="text-muted">about 2 minutes ago</small>
-                          </div>
-                        </div>
-                      </li>
-                      <li class="list-group-item">
-                        <div class="media">
-                          <span class="pull-left thumb-sm avatar">
-                            <img src="/theme/images/a2.png" alt="...">
-                            <i class="on b-black bottom"></i>
-                          </span>
-                          <div class="media-body">
-                            <div><a href="#">Amanda Conlan</a></div>
-                            <small class="text-muted">about 2 hours ago</small>
-                          </div>
-                        </div>
-                      </li>
-                      <li class="list-group-item">
-                        <div class="media">
-                          <span class="pull-left thumb-sm avatar">
-                            <img src="/theme/images/a1.png" alt="...">
-                            <i class="busy b-black bottom"></i>
-                          </span>
-                          <div class="media-body">
-                            <div><a href="#">Dan Doorack</a></div>
-                            <small class="text-muted">3 days ago</small>
-                          </div>
-                        </div>
-                      </li>
-                      <li class="list-group-item">
-                        <div class="media">
-                          <span class="pull-left thumb-sm avatar">
-                            <img src="/theme/images/a0.png" alt="...">
-                            <i class="away b-black bottom"></i>
-                          </span>
-                          <div class="media-body">
-                            <div><a href="#">Lauren Taylor</a></div>
-                            <small class="text-muted">about 2 minutes ago</small>
-                          </div>
-                        </div>
-                      </li>
-                    </ul>
-                  </section>
-                </section>              
-              </aside>
-              <!-- / side content -->
-            </section>
-            <a href="#" class="hide nav-off-screen-block" data-toggle="class:nav-off-screen" data-target="#nav"></a>
-          </section>
-        </section>
-      </section>
-    </section>
-  </section>
+                    <div class="col-sm-4">
+                        <h4 class="text-u-c m-b font-thin text-lt"><span class=
+                        "b-b b-dark">Mail</span> Us</h4>
 
-  <!-- Footer -->
-      <footer>
-          <div class="container">
-              <div class="row">
-                  <div class="col-lg-10 col-lg-offset-1 text-center">
-                      <h4><strong>recreal</strong>
-                      </h4>
-                      <p>3481 Melrose Place<br>Beverly Hills, CA 90210</p>
-                      <ul class="list-unstyled">
-                          <li><i class="fa fa-phone fa-fw"></i> (123) 456-7890</li>
-                          <li><i class="fa fa-envelope-o fa-fw"></i>  <a href="mailto:name@example.com">support@recreal.com</a>
-                          </li>
-                      </ul>
-                      <br>
-                      <ul class="list-inline">
-                          <li>
-                              <a href="#"><i class="fa fa-facebook fa-fw fa-3x"></i></a>
-                          </li>
-                          <li>
-                              <a href="#"><i class="fa fa-twitter fa-fw fa-3x"></i></a>
-                          </li>
-                          <li>
-                              <a href="#"><i class="fa fa-dribbble fa-fw fa-3x"></i></a>
-                          </li>
-                      </ul>
-                      <hr class="small">
-                      <p class="text-muted">Copyright &copy; recreal.com 2014</p>
-                  </div>
-              </div>
-          </div>
-      </footer>
+
+                        <p class="text-sm"><a href=
+                        "mailto:hey@example.com">info@example.com</a>
+                        </p>
+                    </div>
+
+
+                    <div class="col-sm-4">
+                        <h4 class="text-u-c m-b font-thin text-lt"><span class=
+                        "b-b b-dark">Join</span> Us</h4>
+
+
+                        <p class="text-sm">Send your resume to<br>
+                        <a href=
+                        "mailto:hey@example.com">recruit@example.com</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="dker">
+            <div class="container">
+                <div class="row m-t-xl m-b-xl">
+                    <div class="col-sm-6">
+                        Scale App © 2014
+                    </div>
+
+
+                    <div class="col-sm-6 text-right text-left-xs">
+                        <span>Follow us on</span> <a class=
+                        "btn btn-icon btn-rounded btn-primary m-l m-r fa fa-facebook"
+                        href="#" style="font-style: italic"></a> <a class=
+                        "btn btn-icon btn-rounded btn-info fa fa-twitter" href=
+                        "#" style="font-style: italic"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</div>
 </section>
