@@ -14,6 +14,8 @@ var ApplicationConfiguration = function () {
         'timer',
         'angularCharts',
         'geolocation',
+        'ui.sortable',
+        'toaster',
         'ngMap'
       ];
     // Add a new vertical module
@@ -50,6 +52,8 @@ angular.element(document).ready(function () {
 ApplicationConfiguration.registerModule('candidate-features');'use strict';
 // Use applicaion configuration module to register a new module
 ApplicationConfiguration.registerModule('candidate-jobs');'use strict';
+// Use application configuration module to register a new module
+ApplicationConfiguration.registerModule('candidate-signup-wizard');'use strict';
 // Use applicaion configuration module to register a new module
 ApplicationConfiguration.registerModule('candidates');'use strict';
 // Use applicaion configuration module to register a new module
@@ -58,6 +62,8 @@ ApplicationConfiguration.registerModule('companies');'use strict';
 ApplicationConfiguration.registerModule('core');'use strict';
 // Use applicaion configuration module to register a new module
 ApplicationConfiguration.registerModule('employer-company');'use strict';
+// Use applicaion configuration module to register a new module
+ApplicationConfiguration.registerModule('employer-signup-wizard');'use strict';
 // Use applicaion configuration module to register a new module
 ApplicationConfiguration.registerModule('employers');'use strict';
 // Use applicaion configuration module to register a new module
@@ -109,7 +115,9 @@ angular.module('candidate-features').controller('CandidateCvController', [
     $scope.user = Authentication.user;
     $scope.isEditing = false;
     $scope.industries = Industries.getIndustries();
-    $scope.countries = Countries.getCountries();
+    Countries.getCountries(function (countries) {
+      $scope.countries = countries;
+    });
     // If user is not signed in then redirect back home
     if (!$scope.user)
       $location.path('/signin');
@@ -174,15 +182,15 @@ angular.module('candidate-features').controller('CandidateCvController', [
     // $scope.newProject={name:'',company:'',description:''};
     // $scope.openProjectModal=function(project){
     // var modalInstance;
-    // 	      modalInstance = $modal.open({
-    // 	        templateUrl: '/modules/candidate-features/views/cv-partials/project-partial.html',
-    // 	        controller: 'ProjectModalCtrl',
-    // 	        resolve: {
-    // 	          skill: function() {
-    // 	            return angular.copy(skill);
-    // 	          }
-    // 	        }
-    // 	      });
+    //        modalInstance = $modal.open({
+    //          templateUrl: '/modules/candidate-features/views/cv-partials/project-partial.html',
+    //          controller: 'ProjectModalCtrl',
+    //          resolve: {
+    //            skill: function() {
+    //              return angular.copy(skill);
+    //            }
+    //          }
+    //        });
     // };
     // initialize new project for to pass to the modal when add clicked
     $scope.newProject = {
@@ -215,7 +223,7 @@ angular.module('candidate-features').controller('CandidateCvController', [
                 $scope.error = response.message;
               });
             }
-          });  // else if save was clicked to close the modal : produces two cases: new or update	
+          });  // else if save was clicked to close the modal : produces two cases: new or update  
         } else {
           project.name = project.name.trim();
           // position has an id means its updating an existing position i.e edit
@@ -278,7 +286,7 @@ angular.module('candidate-features').controller('CandidateCvController', [
                 $scope.error = response.message;
               });
             }
-          });  // else if save was clicked to close the modal : produces two cases: new or update	
+          });  // else if save was clicked to close the modal : produces two cases: new or update  
         } else {
           certificate.name = certificate.name.trim();
           // Certificate has an id means its updating an existing certificate i.e edit
@@ -336,7 +344,7 @@ angular.module('candidate-features').controller('CandidateCvController', [
                 $scope.error = response.message;
               });
             }
-          });  // else if save was clicked to close the modal : produces two cases: new or update	
+          });  // else if save was clicked to close the modal : produces two cases: new or update  
         } else {
           language.name = language.name.trim();
           // Language has an id means its updating an existing position i.e edit
@@ -400,7 +408,7 @@ angular.module('candidate-features').controller('CandidateCvController', [
                 $scope.error = response.message;
               });
             }
-          });  // else if save was clicked to close the modal : produces two cases: new or update	
+          });  // else if save was clicked to close the modal : produces two cases: new or update  
         } else {
           education.degree = education.degree.trim();
           // Education has an id means its updating an existing position i.e edit
@@ -503,7 +511,7 @@ angular.module('candidate-features').controller('CandidateCvController', [
       }, function () {
       });
     };
-    $scope.openPictureModal = function () {
+    $scope.openCandidatePictureModal = function () {
       var modalInstance;
       modalInstance = $modal.open({
         templateUrl: '/modules/candidate-features/views/cv-partials/picture-partial.html',
@@ -689,51 +697,6 @@ angular.module('candidate-features').controller('CandidateCvController', [
       $modalInstance.dismiss('cancel');
     };
   }
-]).controller('PictureModalCtrl', [
-  '$scope',
-  '$modalInstance',
-  '$upload',
-  function ($scope, $modalInstance, $upload) {
-    var convert = function convertDataURIToBlob(dataURI, mimetype) {
-      var BASE64_MARKER = ';base64,';
-      var base64Index = dataURI.indexOf(BASE64_MARKER) + BASE64_MARKER.length;
-      var base64 = dataURI.substring(base64Index);
-      var raw = window.atob(base64);
-      var rawLength = raw.length;
-      var uInt8Array = new Uint8Array(rawLength);
-      for (var i = 0; i < rawLength; ++i) {
-        uInt8Array[i] = raw.charCodeAt(i);
-      }
-      var bb = new Blob([uInt8Array.buffer], { type: mimetype });
-      return bb;
-    };
-    $scope.upload = function (image) {
-      $scope.formData = convert(image.dataURL, image.type);
-      $scope.upload = $upload.upload({
-        url: '/uploadpicture',
-        method: 'POST',
-        headers: { 'Content-Type': 'undefined' },
-        data: { myObj: $scope.myModelObj },
-        file: $scope.formData
-      }).progress(function (evt) {
-        console.log('percent: ' + parseInt(100 * evt.loaded / evt.total));
-      }).success(function (data, status, headers, config) {
-        // file is uploaded successfully
-        $scope.response = data;
-        console.log(data);
-        $modalInstance.close({ picture_url: data });
-      });
-    };
-    $scope.ok = function (action) {
-      $modalInstance.close({
-        action: action,
-        skill: $scope.skill
-      });
-    };
-    $scope.cancel = function () {
-      $modalInstance.dismiss('cancel');
-    };
-  }
 ]);'use strict';
 angular.module('candidate-features').controller('CandidateHomeController', [
   '$scope',
@@ -784,7 +747,7 @@ angular.module('candidate-features').controller('LinkedinCvController', [
         $scope.candidate = new Object();
         $scope.candidate.displayName = res.firstName + ' ' + res.lastName;
         $scope.candidate.title = res.headline;
-        $scope.candidate.country = res.location.name;
+        $scope.candidate.country = res.locat.name;
         $scope.candidate.picture_url = res.pictureUrl;
         $scope.candidate.objective = res.summary;
       }).error(function (data, status, headers, confige) {
@@ -804,6 +767,9 @@ angular.module('candidate-jobs').config([
     }).state('candidate-open-jobs', {
       url: '/candidate-open-jobs',
       templateUrl: 'modules/candidate-jobs/views/candidate-open-jobs.client.view.html'
+    }).state('search-jobs', {
+      url: '/search-jobs/:keyword',
+      templateUrl: 'modules/candidate-jobs/views/search-jobs.client.view.html'
     });
   }
 ]);'use strict';
@@ -853,17 +819,341 @@ angular.module('candidate-jobs').controller('CandidateOpenJobsController', [
   '$rootScope',
   function ($scope, Jobs, $http, Authentication, Candidates, $location, Socket, $rootScope) {
     console.log($rootScope.coords.lat + ',' + $rootScope.coords.longi);
+    $scope.itemsPerPage = 10;
+    $scope.currentPage = 0;
+    $scope.locationFilters = [];
+    $scope.isPageChange = false;
+    $scope.skip = 0;
+    $scope.completefilternames = [];
+    $scope.firsttime = true;
+    $scope.jobs = [];
+    $scope.dummyfilters = [];
     $scope.user = Authentication.user;
-    // If user is not signed in then redirect back home
+    $scope.lat = 0;
+    $scope.longi = 0;
+    $scope.filters = [];
+    $scope.filterLimit = 5;
+    $scope.longi = $rootScope.coords.longi;
+    $scope.lat = $rootScope.coords.lat;
     if (!$scope.user)
       $location.path('/signin');
+    var map;
+    $scope.dynMarkers = [];
+    $scope.$on('mapInitialized', function (event, evtMap) {
+      map = evtMap;
+      for (var i = 0; i < 1000; i++) {
+        var latLng = new google.maps.LatLng(markers[i].position[0], markers[i].position[1]);
+        $scope.dynMarkers.push(new google.maps.Marker({ position: latLng }));
+      }
+      $scope.markerClusterer = new MarkerClusterer(map, $scope.dynMarkers, {});
+    });
+    $scope.range = function () {
+      var rangeSize = 5;
+      var ret = [];
+      var start;
+      start = $scope.currentPage;
+      if (start > $scope.pageCount() - rangeSize) {
+        start = $scope.pageCount() - rangeSize;
+      }
+      for (var i = start; i < start + rangeSize; i++) {
+        if (i >= 0)
+          ret.push(i);
+      }
+      return ret;
+    };
+    $scope.prevPage = function () {
+      if ($scope.currentPage > 0) {
+        $scope.currentPage--;
+      }
+    };
+    $scope.prevPageDisabled = function () {
+      return $scope.currentPage === 0 ? 'disabled' : '';
+    };
+    $scope.nextPage = function () {
+      if ($scope.currentPage < $scope.pageCount() - 1) {
+        $scope.currentPage++;
+      }
+    };
+    $scope.nextPageDisabled = function () {
+      return $scope.currentPage === $scope.pageCount() - 1 ? 'disabled' : '';
+    };
+    $scope.pageCount = function () {
+      return Math.ceil($scope.total / $scope.itemsPerPage);
+    };
+    $scope.setPage = function (n) {
+      if (n >= 0 && n < $scope.pageCount()) {
+        $scope.currentPage = n;
+      }
+    };
     $scope.candidate = Candidates.get({ candidateId: $scope.user.candidate });
     Socket.on('job_posted', function (data) {
       console.log(data);
       $scope.jobs.push(data.job);
       console.log($rootScope.coords.lat + ',' + $rootScope.coords.longi);
     });
-    $scope.jobs = Jobs.query();
+    // $scope.findJobs= function(skip,limit, isPageChange) {
+    //   $http.put('jobs/getPaginatedJobs/'+$scope.user._id, {
+    //                 skip: skip,
+    //                 limit: limit,
+    //                 isPageChange:isPageChange
+    //             }).success(function(job) {
+    //                    $scope.jobs=job.jobs;
+    //                    $scope.total=job.total;   
+    //             });
+    // };
+    $scope.findJobs = function (skip, limit, filters, isPageChange) {
+      $http.put('jobs/getPaginatedJobs/' + $scope.user._id, {
+        skip: skip,
+        limit: limit,
+        filter: filters,
+        isPageChange: isPageChange
+      }).success(function (job) {
+        $scope.filters1 = [];
+        $scope.jobs = job.jobs;
+        console.log(job.jobs);
+        // $scope.locationFilters=job.filters.locationFilters;
+        $scope.total = job.total;
+        $scope.candidates = job.candidates;
+        job.filters.forEach(function (entry) {
+          $scope.filters1.push(entry);
+        });
+        if ($scope.firsttime) {
+          $scope.firsttime = false;
+          $scope.filters1.forEach(function (entry) {
+            var alreadyexists = false;
+            for (var h = 0, a = $scope.completefilternames.length; h < a; h++) {
+              if ($scope.completefilternames[h] == entry.type)
+                alreadyexists = true;
+            }
+            if (!alreadyexists)
+              $scope.completefilternames.push(entry.type);
+          });
+          console.log($scope.completefilternames);
+        }
+      });
+    };
+    $scope.$watch('currentPage', function (newValue, oldValue) {
+      $scope.skip = newValue * $scope.itemsPerPage;
+      if ($scope.skip == 0)
+        $scope.findJobs($scope.skip, $scope.itemsPerPage, $scope.filters, false);
+      else
+        $scope.findJobs($scope.skip, $scope.itemsPerPage, $scope.filters, true);
+    });
+    $scope.hasApplied = function (job) {
+      if ($scope.candidate.jobs.indexOf(job._id) > -1)
+        return true;
+      else
+        return false;
+    };
+    // Apply for a Job
+    $scope.apply = function (job) {
+      $http.put('jobs/apply/' + job._id, job).success(function (response) {
+        $scope.candidate.jobs.push(job);
+        $scope.jobs.splice($scope.jobs.indexOf(job), 1);
+        $scope.$apply();
+        //And redirect to the index page
+        $location.path('jobs/' + job._id);
+      }).error(function (response) {
+        $scope.error = response.message;
+      });
+    };
+    $scope.filterChanged = function (type, name) {
+      console.log('FILTERCHANGED');
+      $scope.filters1.forEach(function (entry) {
+        if (name == entry.name) {
+          entry.value = !entry.value;
+          if (entry.value == true)
+            $scope.addToFilters(entry.type, entry.name);
+          else
+            $scope.removeFromFilters(entry.type, entry.name);
+        }
+      });
+      $scope.findJobs($scope.skip, $scope.itemsPerPage, $scope.filters, false);
+    };
+    //addToFilters
+    $scope.addToFilters = function (type, name) {
+      var once = true;
+      var alreadyPresentInFilters = false;
+      $scope.filters.forEach(function (entry) {
+        if (type == entry.type && name == entry.name) {
+          alreadyPresentInFilters = true;
+        }
+      });
+      if (!alreadyPresentInFilters) {
+        var typeExists = false;
+        var feefilters = $scope.filters.slice();
+        feefilters.forEach(function (entry) {
+          if (type == entry.type && once) {
+            once = false;
+            typeExists = true;
+            $scope.filters.push({
+              type: type,
+              name: name,
+              priority: entry.priority,
+              value: true
+            });
+          }
+        });
+        if (!typeExists) {
+          // There's no real number bigger than plus Infinity
+          var highest = 0;
+          var tmp;
+          for (var i = $scope.filters.length - 1; i >= 0; i--) {
+            tmp = $scope.filters[i].priority;
+            if (tmp > highest)
+              highest = tmp;
+          }
+          $scope.filters.push({
+            type: type,
+            name: name,
+            priority: highest + 1,
+            value: true
+          });
+        }  //salary_expext salay_exp  visa visa
+      }
+    };
+    //removeFromFilters
+    $scope.removeFromFilters = function (type, name) {
+      $scope.filters.forEach(function (entry) {
+        if (type == entry.type && name == entry.name)
+          $scope.filters.splice($scope.filters.indexOf(entry), 1);
+      });
+      $scope.findJobs($scope.skip, $scope.itemsPerPage, $scope.filters, false);
+    };
+    $scope.openFilterModal = function (filterArray, name) {
+      var modalInstance = $modal.open({
+          templateUrl: '/modules/empoyer-jobs/views/employer-job-candidates/filter-modal.html',
+          controller: 'FilterModalCtrl',
+          resolve: {
+            filter: function () {
+              return {
+                values: angular.copy(filterArray),
+                name: name
+              };
+            }
+          }
+        });
+      modalInstance.result.then(function (filterObject) {
+        var filternames = [];
+        filterObject.filters.forEach(function (filter) {
+          if (filter.value) {
+            filternames.push(filter.name);
+          }
+        });
+        if (filterObject.name) {
+          filternames.forEach(function (filter) {
+            $scope.addToFilters(filterObject.name, filter);
+          });
+        }
+        $scope.findJobs($scope.skip, $scope.itemsPerPage, $scope.filters, false);
+      }, function () {
+      });
+    };
+  }
+]).controller('FilterModalCtrl', [
+  '$scope',
+  '$modalInstance',
+  'filter',
+  function ($scope, $modalInstance, filter) {
+    $scope.filters = filter.values;
+    $scope.name = filter.name;
+    $scope.ok = function () {
+      // $scope.$parent.findCandidates($scope.$parent.skip, $scope.$parent.itemsPerPage, $scope.$parent.filters, false);
+      $modalInstance.close({
+        name: $scope.name,
+        filters: $scope.filters
+      });
+    };
+    $scope.cancel = function () {
+      $modalInstance.dismiss('cancel');
+    };
+  }
+]);'use strict';
+angular.module('candidate-jobs').controller('SearchJobsController', [
+  '$scope',
+  'Jobs',
+  '$http',
+  'Authentication',
+  'Candidates',
+  '$location',
+  'Socket',
+  '$rootScope',
+  '$stateParams',
+  function ($scope, Jobs, $http, Authentication, Candidates, $location, Socket, $rootScope, $stateParams) {
+    console.log($rootScope.coords.lat + ',' + $rootScope.coords.longi);
+    $scope.itemsPerPage = 10;
+    $scope.currentPage = 0;
+    $scope.isPageChange = false;
+    $scope.skip = 0;
+    $scope.user = Authentication.user;
+    $scope.firsttime = true;
+    // If user is not signed in then redirect back home
+    if (!$scope.user)
+      $location.path('/signin');
+    $scope.range = function () {
+      var rangeSize = 5;
+      var ret = [];
+      var start;
+      start = $scope.currentPage;
+      if (start > $scope.pageCount() - rangeSize) {
+        start = $scope.pageCount() - rangeSize;
+      }
+      for (var i = start; i < start + rangeSize; i++) {
+        if (i >= 0)
+          ret.push(i);
+      }
+      return ret;
+    };
+    $scope.prevPage = function () {
+      if ($scope.currentPage > 0) {
+        $scope.currentPage--;
+      }
+    };
+    $scope.prevPageDisabled = function () {
+      return $scope.currentPage === 0 ? 'disabled' : '';
+    };
+    $scope.nextPage = function () {
+      if ($scope.currentPage < $scope.pageCount() - 1) {
+        $scope.currentPage++;
+      }
+    };
+    $scope.nextPageDisabled = function () {
+      return $scope.currentPage === $scope.pageCount() - 1 ? 'disabled' : '';
+    };
+    $scope.pageCount = function () {
+      return Math.ceil($scope.total / $scope.itemsPerPage);
+    };
+    $scope.setPage = function (n) {
+      if (n >= 0 && n < $scope.pageCount()) {
+        $scope.currentPage = n;
+      }
+    };
+    $scope.candidate = Candidates.get({ candidateId: $scope.user.candidate });
+    // 		Socket.on('job_posted',function(data){
+    // 		console.log(data);
+    //            $scope.jobs.push(data.job);
+    // console.log( $rootScope.coords.lat+","+ $rootScope.coords.longi);
+    // 	});
+    $scope.findJobs = function (skip, limit, isPageChange) {
+      $http.put('jobs/searchedJobs/' + $scope.user._id, {
+        keyword: $stateParams.keyword,
+        skip: skip,
+        limit: limit,
+        isPageChange: isPageChange
+      }).success(function (job) {
+        $scope.jobs = job.jobs;
+        $scope.total = job.total;
+      });
+    };
+    $scope.$watch('currentPage', function (newValue, oldValue) {
+      $scope.skip = newValue * $scope.itemsPerPage;
+      if ($scope.skip == 0) {
+        //   if first page
+        $scope.findJobs($scope.skip, $scope.itemsPerPage, false);
+      } else {
+        $scope.findJobs($scope.skip, $scope.itemsPerPage, true);
+      }
+    });
     $scope.hasApplied = function (job) {
       if ($scope.candidate.jobs.indexOf(job._id) > -1) {
         return true;
@@ -882,6 +1172,705 @@ angular.module('candidate-jobs').controller('CandidateOpenJobsController', [
       }).error(function (response) {
         $scope.error = response.message;
       });
+    };
+    $scope.filterChanged = function (type, name) {
+      $scope.filters1.forEach(function (entry) {
+        if (name == entry.name) {
+          entry.value = !entry.value;
+          if (entry.value == true)
+            $scope.addToFilters(entry.type, entry.name);
+          else
+            $scope.removeFromFilters(entry.type, entry.name);
+        }
+      });  //$scope.findCandidates($scope.skip,$scope.itemsPerPage,$scope.filters, false);
+    };
+    //addToFilters
+    $scope.addToFilters = function (type, name) {
+      var once = true;
+      var alreadyPresentInFilters = false;
+      $scope.filters.forEach(function (entry) {
+        if (type == entry.type && name == entry.name) {
+          alreadyPresentInFilters = true;
+        }
+      });
+      if (!alreadyPresentInFilters) {
+        var typeExists = false;
+        var feefilters = $scope.filters.slice();
+        feefilters.forEach(function (entry) {
+          if (type == entry.type && once) {
+            once = false;
+            typeExists = true;
+            $scope.filters.push({
+              type: type,
+              name: name,
+              priority: entry.priority,
+              value: true
+            });
+          }
+        });
+        if (!typeExists) {
+          // There's no real number bigger than plus Infinity
+          var highest = 0;
+          var tmp;
+          for (var i = $scope.filters.length - 1; i >= 0; i--) {
+            tmp = $scope.filters[i].priority;
+            if (tmp > highest)
+              highest = tmp;
+          }
+          $scope.filters.push({
+            type: type,
+            name: name,
+            priority: highest + 1,
+            value: true
+          });
+        }  //salary_expext salay_exp  visa visa
+      }
+    };
+    //removeFromFilters
+    $scope.removeFromFilters = function (type, name) {
+      $scope.filters.forEach(function (entry) {
+        if (type == entry.type && name == entry.name)
+          $scope.filters.splice($scope.filters.indexOf(entry), 1);
+      });  //  $scope.findCandidates($scope.skip,$scope.itemsPerPage,$scope.filters, false);
+    };
+    $scope.openFilterModal = function (filterArray, name) {
+      var modalInstance = $modal.open({
+          templateUrl: '/modules/candidate-jobs/views/search-job/filter-modal.html',
+          controller: 'FilterModalCtrl',
+          resolve: {
+            filter: function () {
+              return {
+                values: angular.copy(filterArray),
+                name: name
+              };
+            }
+          }
+        });
+      modalInstance.result.then(function (filterObject) {
+        var filternames = [];
+        filterObject.filters.forEach(function (filter) {
+          if (filter.value) {
+            filternames.push(filter.name);
+          }
+        });
+        if (filterObject.name) {
+          filternames.forEach(function (filter) {
+            $scope.addToFilters(filterObject.name, filter);
+          });
+        }  //$scope.findCandidates($scope.skip,$scope.itemsPerPage,$scope.filters, false);
+      }, function () {
+      });
+    };
+  }
+]).controller('FilterModalCtrl', [
+  '$scope',
+  '$modalInstance',
+  'filter',
+  function ($scope, $modalInstance, filter) {
+    $scope.filters = filter.values;
+    $scope.name = filter.name;
+    $scope.ok = function () {
+      // $scope.$parent.findCandidates($scope.$parent.skip, $scope.$parent.itemsPerPage, $scope.$parent.filters, false);
+      $modalInstance.close({
+        name: $scope.name,
+        filters: $scope.filters
+      });
+    };
+    $scope.cancel = function () {
+      $modalInstance.dismiss('cancel');
+    };
+  }
+]);'use strict';
+angular.module('candidate-jobs').directive('filterListOpenJobs', [
+  '$compile',
+  function ($compile) {
+    return {
+      template: '<div></div>',
+      restrict: 'E',
+      link: function postLink(scope, element, attrs) {
+        // Test directive directive logic
+        // ...
+        var filterName = attrs.filterName;
+        var filterNameString = '\'' + attrs.filterName + '\'';
+        var count = '\'count\'';
+        var type = '';
+        var filterHeading = '';
+        switch (filterName) {
+        case 'gender':
+          filterHeading = 'Gender';
+          break;
+        case 'salary_expectation':
+          filterHeading = 'Salary Expectation';
+          break;
+        case 'visa_status':
+          filterHeading = 'Visa';
+          break;
+        case 'employee_status':
+          filterHeading = 'Employment Status';
+          break;
+        case 'employee_type':
+          filterHeading = 'Employment Type';
+          break;
+        case 'career_level':
+          filterHeading = 'Career Level';
+          break;
+        case 'skills':
+          filterHeading = 'Skills';
+          break;
+        case 'educations':
+          filterHeading = 'Education';
+        case 'industry':
+          filterHeading = 'Industry';
+          break;
+        case 'location':
+          filterHeading = 'Location';
+          break;
+        case 'salary_range':
+          filterHeading = 'Salary Range';
+        }
+        scope.$watch('filters1', function (v) {
+          filterName = attrs.filterName;
+          filterNameString = '\'' + attrs.filterName + '\'';
+          count = '\'count\'';
+          scope.dummyfilters = [];
+          console.log('FILTERS ' + filterName);
+          for (var h = 0, j = v.length; h < j; h++) {
+            if (filterName == v[h].type)
+              scope.dummyfilters.push(v[h]);
+          }
+          console.log(scope.dummyfilters);
+          var html = '<article>' + '<label><strong>' + filterHeading + '</strong></label>' + '<ul>' + '<li class="checkbox i-checks" data-ng-repeat="' + filterName + 'Filter in dummyfilters | orderBy:' + count + ':true  | limitTo: filterLimit">' + '<label>' + '<input type="checkbox" data-ng-click="filterChanged(' + filterNameString + ',' + filterName + 'Filter.name)" data-ng-model="' + filterName + 'Filter.value" id="{{' + filterName + ' + ' + filterName + 'Filter.name}}" />' + '<i></i>' + '<label ng-if="' + filterName + 'Filter.name" for="{{' + filterName + ' + ' + filterName + 'Filter.name}}" >{{' + filterName + 'Filter.name}} ({{' + filterName + 'Filter.count}})</label>' + '<label ng-if="!' + filterName + 'Filter.name" for="{{' + filterName + ' + ' + filterName + 'Filter.name}}" >Not Mentioned ({{' + filterName + 'Filter.count}})</label>' + '</label>' + '</li>' + '</ul>' + '<a href="" data-ng-if="dummyfilters.length > filterLimit" data-ng-click="openFilterModal(dummyfilters, ' + filterNameString + ')">more choices...</a>' + '</article>';
+          var e = $compile(html)(scope);
+          element.replaceWith(e);
+        }, true);
+      }
+    };
+  }
+]);'use strict';
+angular.module('candidate-jobs').directive('googleMaps', [
+  '$compile',
+  function ($compile) {
+    return {
+      template: '<div></div>',
+      restrict: 'E',
+      link: function postLink(scope, element, attrs) {
+        scope.$watch('lat', function (v) {
+          console.log('WTF' + scope.lat);
+          var html = '<map zoom="11" center="[{{lat}},{{longi}}]"><marker position="[{{lat}},{{longi}}]" draggable="true" /><control name="overviewMap" opened="false" /></map>';
+          var e = $compile(html)(scope);
+          element.replaceWith(e);
+        }, true);
+      }
+    };
+  }
+]);'use strict';
+//Setting up route
+angular.module('candidate-signup-wizard').config([
+  '$stateProvider',
+  function ($stateProvider) {
+    // Candidate signup wizard state routing
+    $stateProvider.state('candidate-wizard-five', {
+      url: '/candidate-wizard-five',
+      templateUrl: 'modules/candidate-signup-wizard/views/candidate-wizard-five.client.view.html'
+    }).state('candidate-wizard-four', {
+      url: '/candidate-wizard-four',
+      templateUrl: 'modules/candidate-signup-wizard/views/candidate-wizard-four.client.view.html'
+    }).state('candidate-wizard-three', {
+      url: '/candidate-wizard-three',
+      templateUrl: 'modules/candidate-signup-wizard/views/candidate-wizard-three.client.view.html'
+    }).state('candidate-wizard-two', {
+      url: '/candidate-wizard-two',
+      templateUrl: 'modules/candidate-signup-wizard/views/candidate-wizard-two.client.view.html'
+    }).state('candidate-wizard-one', {
+      url: '/candidate-wizard-one/:tokenId',
+      templateUrl: 'modules/candidate-signup-wizard/views/candidate-wizard-one.client.view.html'
+    });
+  }
+]);'use strict';
+angular.module('candidate-signup-wizard').controller('CandidateSignupController', [
+  '$modalInstance',
+  '$location',
+  '$scope',
+  '$modal',
+  '$http',
+  function ($modalInstance, $location, $scope, $modal, $http) {
+    // Candidate signup controller logic
+    // ...
+    $scope.credentials = {};
+    $scope.signup = function () {
+      $scope.credentials.userType = 'candidate';
+      $http.post('/signupcandidate', $scope.credentials).success(function (response) {
+        //If successful we assign the response to the global user model
+        if (response.status) {
+          $location.path('/signup-email-activation');
+          $modalInstance.dismiss();
+        }  //And redirect to the index page
+           // $location.path('/');
+      }).error(function (response) {
+        $scope.error = response.message;
+      });
+    };
+  }
+]);'use strict';
+angular.module('candidate-signup-wizard').controller('CandidateWizardFiveController', [
+  '$scope',
+  '$http',
+  '$state',
+  'Authentication',
+  'Candidates',
+  function ($scope, $http, $state, Authentication, Candidates) {
+    // Controller Logic
+    // ...
+    $scope.candidate = {};
+    $scope.LoadInitialData = function () {
+      $scope.authentication = Authentication;
+      // Find existing Candidate
+      $scope.candidate = Candidates.get({ candidateId: $scope.authentication.user.candidate });
+    };
+    $scope.SaveAndRedirect = function () {
+      $scope.success = $scope.error = null;
+      if ($scope.candidate.stage == 'Five')
+        $scope.candidate.stage = 'Complete';
+      var candidate = $scope.candidate;
+      candidate.$update(function () {
+        $state.go('candidate-wizard-four');
+      }, function (errorResponse) {
+        $scope.error = response.message;
+      });
+    };
+  }
+]);'use strict';
+angular.module('candidate-signup-wizard').controller('CandidateWizardFourController', [
+  '$scope',
+  '$http',
+  '$state',
+  'Authentication',
+  'Candidates',
+  'locationVarification',
+  '$location',
+  function ($scope, $http, $state, Authentication, Candidates, locationVarification, $location) {
+    $scope.authentication = Authentication;
+    var cityFromRootScope, countryFromRootScope;
+    var useGeoLocationInformation = false;
+    if (!$scope.authentication.user)
+      $state.go('home');
+    var marker;
+    var geocoder = new google.maps.Geocoder();
+    $scope.candidate = {};
+    $scope.LoadInitialData = function () {
+      console.log($scope.authentication.user.candidate);
+      $scope.candidate = Candidates.get({ candidateId: $scope.authentication.user.candidate }, function success() {
+        console.log($scope.candidate);
+        var promise = locationVarification.validateLocation($scope.candidate.location, $scope.candidate.country, $scope.candidate.coordinates.latitude, $scope.candidate.coordinates.longitude).then(function (responseFromLocationFactory) {
+            console.log(responseFromLocationFactory[0]);
+            if (responseFromLocationFactory[0] == 'true') {
+              geocoder.geocode({ 'address': $scope.candidate.location + ',' + $scope.candidate.country }, function (results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                  var map = $scope.map;
+                  map.center = results[0].geometry.location;
+                  $scope.map.setCenter(results[0].geometry.location);
+                  marker = new google.maps.Marker({
+                    position: new google.maps.LatLng($scope.candidate.coordinates.latitude, $scope.candidate.coordinates.longitude),
+                    map: map,
+                    draggable: true,
+                    animation: google.maps.Animation.DROP,
+                    title: 'Select your company Location!'
+                  });
+                } else {
+                  alert('Geocode was not successful for the following reason: ' + status);
+                }
+              });
+            } else {
+              geocoder.geocode({ 'address': $scope.candidate.location + ',' + $scope.candidate.country }, function (results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                  console.log(results[0].geometry.location.lat());
+                  $scope.candidate.coordinates.latitude = results[0].geometry.location.lat();
+                  $scope.candidate.coordinates.longitude = results[0].geometry.location.lng();
+                  var map = $scope.map;
+                  map.center = results[0].geometry.location;
+                  $scope.map.setCenter(results[0].geometry.location);
+                  marker = new google.maps.Marker({
+                    position: new google.maps.LatLng($scope.candidate.coordinates.latitude, $scope.candidate.coordinates.longitude),
+                    map: map,
+                    draggable: true,
+                    animation: google.maps.Animation.DROP,
+                    title: 'Select your company Location!'
+                  });
+                } else {
+                  alert('Geocode was not successful for the following reason: ' + status);
+                }
+              });
+            }
+          });
+      });  // $scope.authentication = Authentication;
+           // Find existing Candidate
+           // $scope.candidate = Candidates.get({ 
+           //     candidateId: $scope.authentication.user.candidate
+           // });
+    };
+    $scope.Back = function () {
+      $location.path('candidate-wizard-three');
+    };
+    $scope.SaveAndRedirect = function () {
+      $scope.success = $scope.error = null;
+      if ($scope.candidate.stage == 'Four') {
+        //$scope.candidate.stage = 'Five';
+        $scope.candidate.stage = 'Complete';
+      }
+      var candidate = $scope.candidate;
+      candidate.coordinates.latitude = marker.position.k;
+      candidate.coordinates.longitude = marker.position.D;
+      console.log(candidate);
+      candidate.$update(function () {
+        $state.go('home');  // redirect to page five which contains MCQs
+      }, function (errorResponse) {
+        $scope.error = response.message;
+      });
+    };
+    $scope.SkipAndRedirect = function () {
+      $scope.success = $scope.error = null;
+      if ($scope.candidate.stage == 'Four') {
+        //$scope.candidate.stage = 'Five';
+        $scope.candidate.stage = 'Complete';
+      }
+      var candidate = $scope.candidate;
+      candidate.$update(function () {
+        $state.go('home');  // redirect to page five which contains MCQs
+      }, function (errorResponse) {
+        $scope.error = response.message;
+      });
+    };
+  }
+]);'use strict';
+angular.module('candidate-signup-wizard').controller('CandidateWizardOneController', [
+  '$scope',
+  '$http',
+  '$state',
+  '$stateParams',
+  'Authentication',
+  '$modal',
+  'Countries',
+  'geolocation',
+  function ($scope, $http, $state, $stateParams, Authentication, $modal, Countries, geolocation) {
+    // Controller Logic
+    // ...
+    var city1 = '';
+    var country1 = '';
+    var lat = 0, lng = 0;
+    var countrycityset = true;
+    $scope.candidate = {
+      coordinates: {
+        longitude: 0,
+        latitude: 0
+      },
+      country: {},
+      city: {}
+    };
+    $scope.LoadInitialData = function () {
+      if ($stateParams.tokenId) {
+        $http.post('/validatetoken', { token: $stateParams.tokenId }).success(function (response) {
+          $scope.user = response.user;
+          if ($scope.user.user == 'nothing') {
+            $state.go('home');
+          } else {
+            $scope.authentication = Authentication;
+            $scope.authentication.user = response.user;
+            $scope.candidate = response.candidate;
+            $scope.candidate.visa_status = 'No Visa';
+            $scope.candidate.gender = 'Male';
+            $scope.candidate.career_level = 'Student/Internship';
+            $scope.candidate.employee_status = 'Part Time';
+            $scope.candidate.employee_type = 'Permanent';
+            $scope.candidate.salary_expectation = '$1000 - $2000';
+            if ($scope.candidate.country === 'choose a country')
+              countrycityset = false;
+            Countries.getCountries(function (countries) {
+              $scope.countries = countries;
+              console.log($scope.candidate.country);
+              if (!countrycityset) {
+                console.log($scope.countries[1]);
+                $scope.candidate.country = $scope.countries[1];
+                $scope.getCountryCities();
+                InitlocationData();
+              } else {
+                angular.forEach($scope.countries, function (country) {
+                  if ($scope.candidate.country == country.name) {
+                    $scope.candidate.country = country;
+                    $scope.getCountryCities();
+                  }
+                });
+              }
+            });
+          }
+        }).error(function (response) {
+          $scope.error = response.message;
+        });
+      } else {
+        $state.go('home');
+      }
+    };
+    $scope.SaveAndRedirect = function () {
+      console.log($scope.candidate);
+      $scope.success = $scope.error = null;
+      if ($scope.candidate.stage == 'One')
+        $scope.candidate.stage = 'Two';
+      $http.post('/savecandidatewizardonedata', { candidate: $scope.candidate }).success(function (response) {
+        $state.go('candidate-wizard-two');
+      }).error(function (response) {
+        $scope.error = response.message;
+      });
+    };
+    var InitlocationData = function () {
+      var geocoder = new google.maps.Geocoder();
+      geolocation.getLocation().then(function (data) {
+        lat = parseFloat(data.coords.latitude);
+        lng = parseFloat(data.coords.longitude);
+        $scope.candidate.coordinates.longitude = lng;
+        $scope.candidate.coordinates.latitude = lat;
+        var latlng = new google.maps.LatLng(lat, lng);
+        geocoder.geocode({ 'latLng': latlng }, function (results, status) {
+          if (status == google.maps.GeocoderStatus.OK) {
+            if (results[1]) {
+              var citycountry = results[1].formatted_address;
+              var res = citycountry.split(',');
+              country1 = res[res.length - 1];
+              city1 = res[res.length - 2];
+              city1 = city1.trim();
+              country1 = country1.trim();
+              console.log(country1 + ' ' + city1);
+              angular.forEach($scope.countries, function (country) {
+                if (countrycityset)
+                  country1 = $scope.candidate.country;
+                if (country1 == country.name) {
+                  $scope.candidate.country = country;
+                  $scope.getCountryCities();
+                }
+              });
+            } else {
+              $scope.candidate.country = $scope.countries[0];
+              $scope.getCountryCities();
+            }
+          } else {
+            $scope.candidate.country = $scope.countries[0];
+            $scope.getCountryCities();
+          }
+        });
+      });
+    };
+    $scope.getCountryCities = function () {
+      var foundit = false;
+      console.log($scope.candidate.country);
+      $http.get('/countries/' + $scope.candidate.country.name).success(function (response) {
+        $scope.cities = response.cities;
+        angular.forEach($scope.cities, function (city) {
+          if (countrycityset)
+            city1 = $scope.candidate.location;
+          if (city.name == city1)
+            //fuck my life
+            {
+              console.log(city);
+              $scope.candidate.location = city;
+              foundit = true;
+            }
+        });
+        if (!foundit)
+          $scope.candidate.location = $scope.cities[0];
+      });
+    };
+    $scope.openCandidatePictureModal = function () {
+      var modalInstance;
+      modalInstance = $modal.open({
+        templateUrl: '/modules/candidate-features/views/cv-partials/picture-partial.html',
+        controller: 'CandidatePictureModalCtrl'
+      });
+      modalInstance.result.then(function (result) {
+        $scope.candidate.picture_url = result.picture_url;
+      }, function () {
+      });
+    };
+  }
+]).controller('CandidatePictureModalCtrl', [
+  '$scope',
+  '$modalInstance',
+  '$upload',
+  function ($scope, $modalInstance, $upload) {
+    var convert = function convertDataURIToBlob(dataURI, mimetype) {
+      var BASE64_MARKER = ';base64,';
+      var base64Index = dataURI.indexOf(BASE64_MARKER) + BASE64_MARKER.length;
+      var base64 = dataURI.substring(base64Index);
+      var raw = window.atob(base64);
+      var rawLength = raw.length;
+      var uInt8Array = new Uint8Array(rawLength);
+      for (var i = 0; i < rawLength; ++i) {
+        uInt8Array[i] = raw.charCodeAt(i);
+      }
+      var bb = new Blob([uInt8Array.buffer], { type: mimetype });
+      return bb;
+    };
+    $scope.upload = function (image) {
+      $scope.formData = convert(image.dataURL, image.type);
+      $scope.upload = $upload.upload({
+        url: '/uploadCandidatePicture',
+        method: 'POST',
+        headers: { 'Content-Type': 'undefined' },
+        data: { myObj: $scope.myModelObj },
+        file: $scope.formData
+      }).progress(function (evt) {
+        console.log('percent: ' + parseInt(100 * evt.loaded / evt.total));
+      }).success(function (data, status, headers, config) {
+        // file is uploaded successfully
+        $scope.response = data;
+        console.log(data);
+        $modalInstance.close({ picture_url: data });
+      });
+    };
+    $scope.ok = function (action) {
+      $modalInstance.close({
+        action: action,
+        picture_url: $scope.picture_url
+      });
+    };
+    $scope.cancel = function () {
+      $modalInstance.dismiss('cancel');
+    };
+  }
+]);'use strict';
+angular.module('candidate-signup-wizard').controller('CandidateWizardThreeController', [
+  '$scope',
+  '$http',
+  '$state',
+  'Authentication',
+  'Candidates',
+  function ($scope, $http, $state, Authentication, Candidates) {
+    // Controller Logic
+    // ....
+    $scope.candidate = {};
+    $scope.questions = [
+      { title: 'Write about yourself' },
+      { title: 'Describe your strengths' },
+      { title: 'Describe your weekness' }
+    ];
+    $scope.LoadInitialData = function () {
+      $scope.authentication = Authentication;
+      // Find existing Candidate
+      $scope.candidate = Candidates.get({ candidateId: $scope.authentication.user.candidate });
+    };
+    $scope.SaveAndRedirect = function () {
+      $scope.success = $scope.error = null;
+      if ($scope.candidate.stage == 'Three')
+        $scope.candidate.stage = 'Four';
+      var candidate = $scope.candidate;
+      if (!candidate.questions)
+        candidate.questions = [];
+      angular.forEach($scope.questions, function (question) {
+        if ($scope.questions && $scope.question != '') {
+          candidate.interview_questions.push(question);
+        }
+      });
+      candidate.$update(function () {
+        $state.go('candidate-wizard-four');
+      }, function (errorResponse) {
+        $scope.error = response.message;
+      });
+    };
+  }
+]);'use strict';
+angular.module('candidate-signup-wizard').controller('CandidateWizardTwoController', [
+  '$scope',
+  '$http',
+  '$state',
+  'Authentication',
+  'Candidates',
+  '$location',
+  function ($scope, $http, $state, Authentication, Candidates, $location) {
+    // Controller Logic
+    // ...
+    $scope.candidate = {};
+    $scope.degree_titles = [
+      'High School',
+      'Associate Degree',
+      'Bachelor Degree',
+      'Master Degree',
+      'Master of Business Administration (M.B.A.)',
+      'Juris Doctor (J.D.)',
+      'Doctor of Medicine (M.D.)',
+      'Doctor of Philosophy (Ph.D.)',
+      'Engineers Degree'
+    ];
+    $scope.LoadInitialData = function () {
+      $scope.authentication = Authentication;
+      // Find existing Candidate
+      $scope.candidate = Candidates.get({ candidateId: $scope.authentication.user.candidate });
+    };
+    //**********Education***********
+    // Add Education
+    $scope.addEducation = function () {
+      if ($scope.newEducation.degree_title != '') {
+        $scope.candidate.educations.push($scope.newEducation);
+        $scope.newEducation = {};
+      }
+    };
+    //Remove Education
+    $scope.removeEducation = function (index) {
+      $scope.candidate.educations.splice(index, 1);
+    };
+    //**********Position***********
+    // Add Position
+    $scope.addPosition = function () {
+      if ($scope.newPosition.company != '') {
+        $scope.candidate.positions.push($scope.newPosition);
+        $scope.newPosition = { name: '' };
+      }
+    };
+    //Remove Position
+    $scope.removePosition = function (index) {
+      $scope.candidate.positions.splice(index, 1);
+    };
+    //**********Position***********
+    // Add Position
+    $scope.addProject = function () {
+      if ($scope.newProject.company != '') {
+        $scope.candidate.projects.push($scope.newProject);
+        $scope.newProject = { name: '' };
+      }
+    };
+    //Remove Position
+    $scope.removeProject = function (index) {
+      $scope.candidate.projects.splice(index, 1);
+    };
+    //**********Skills***********
+    // Add Skills
+    $scope.addSkill = function () {
+      if ($scope.newSkill.title != '') {
+        $scope.candidate.skills.push($scope.newSkill);
+        $scope.newSkill = { name: '' };
+      }
+    };
+    //Remove Skills
+    $scope.removeSkill = function (index) {
+      $scope.candidate.skills.splice(index, 1);
+    };
+    $scope.GoBack = function () {
+      $location.path('candidate-wizard-one/' + Authentication.user.activeToken);
+    };
+    $scope.SaveAndRedirect = function () {
+      $scope.success = $scope.error = null;
+      if ($scope.candidate.stage == 'Two') {
+        // $scope.candidate.stage = 'Three';
+        $scope.candidate.stage = 'Four';
+      }
+      var candidate = $scope.candidate;
+      candidate.$update(function () {
+        $state.go('candidate-wizard-four');  // redirect to page three which contains basic question answers
+      }, function (errorResponse) {
+        $scope.error = response.message;
+      });  // $http.post('/savecandidatewizardonedata', {
+           //         candidate: $scope.candidate
+           //     }).success(function(response) {
+           //         $state.go('candidate-wizard-three');
+           //     }).error(function(response) {
+           //          $scope.error = response.message;
+           //     });
     };
   }
 ]);'use strict';
@@ -1079,7 +2068,13 @@ angular.module('core').config([
     // Redirect to home view when route not found
     $urlRouterProvider.otherwise('/');
     // Home state routing
-    $stateProvider.state('transition', {
+    $stateProvider.state('employer-landing', {
+      url: '/employer-landing',
+      templateUrl: 'modules/core/views/employer-landing.client.view.html'
+    }).state('test', {
+      url: '/test',
+      templateUrl: 'modules/core/views/test.client.view.html'
+    }).state('transition', {
       url: '/transition',
       templateUrl: 'modules/core/views/transition.client.view.html',
       controller: 'TransitionController'
@@ -1101,31 +2096,126 @@ angular.module('core').config([
     });
   }
 ]);'use strict';
+angular.module('users').controller('AuthenticationController', [
+  '$scope',
+  '$http',
+  '$location',
+  'Authentication',
+  '$state',
+  function ($scope, $http, $location, Authentication, $state) {
+    $scope.authentication = Authentication;
+    //If user is signed in then redirect back home
+    if ($scope.authentication.user)
+      $location.path('/');
+    $scope.signup = function () {
+      $http.post('/auth/signup', $scope.credentials).success(function (response) {
+        //If successful we assign the response to the global user model
+        $scope.authentication.user = response;
+        //And redirect to the index page
+        $location.path('/');
+      }).error(function (response) {
+        $scope.error = response.message;
+      });
+    };
+    //be sure to inject $scope and $location
+    var changeLocation = function (url, forceReload) {
+      $scope = $scope || angular.element(document).scope();
+      if (forceReload || $scope.$$phase) {
+        window.location = url;
+      } else {
+        //only use this if you want to replace the history stack
+        //$location.path(url).replace();
+        //this this if you want to change the URL and add it to the history stack
+        $location.path(url);
+        $scope.$apply();
+      }
+    };
+    $scope.signin = function () {
+      $http.post('/auth/signin', $scope.credentials).success(function (response) {
+        //If successful we assign the response to the global user model
+        $scope.authentication.user = response;
+        //And redirect to the index page
+        // $location.path('/');
+        changeLocation('/');
+      }).error(function (response) {
+        console.log(response.message);
+        $scope.error = response.message;
+      });
+    };
+  }
+]);'use strict';
+angular.module('core').controller('EmployerLandingController', [
+  '$scope',
+  '$modal',
+  function ($scope, $modal) {
+    // Controller Logic
+    // ...
+    // open signin
+    $scope.openPostjobModal = function () {
+      var modalInstance = $modal.open({
+          templateUrl: '/modules/employer-signup-wizard/views/partials/employer-signup-partial.html',
+          controller: 'EmpSignupController'
+        });
+      modalInstance.result.then(function (result) {
+        console.log(result);  //    $scope.sendmessage = result.sendmessage;
+      }, function () {
+      });
+    };
+  }
+]);'use strict';
 angular.module('core').controller('HeaderController', [
   '$scope',
   'Authentication',
   'Menus',
   'Socket',
   '$http',
-  function ($scope, Authentication, Menus, Socket, $http) {
+  '$location',
+  '$rootScope',
+  'toaster',
+  function ($scope, Authentication, Menus, Socket, $http, $location, $rootScope, toaster) {
+    console.log('HEADER CLIENT CONTROLLER');
     $scope.authentication = Authentication;
     $scope.isCollapsed = false;
     $scope.menu = Menus.getMenu('topbar');
     $scope.threads = [];
     $scope.unreadnotificationslength = 0;
+    $scope.user = $scope.authentication.user;
+    console.log(Authentication);
     $scope.notifications = [];
     var thread = [];
-    $scope.notificationRead = function (data) {
-      $http.post('/users/readNotification/' + $scope.authentication.user._id, data).success(function (res) {
-      }).error(function (data, status, headers, confige) {
-      });
-      for (var i in $scope.notifications) {
-        if ($scope.notifications[i] === data) {
-          $scope.notifications.splice(i, 1);
-        }
+    $scope.list = ' ';
+    $scope.texts = ' ';
+    $scope.submit = function () {
+      if ($scope.texts) {
+        $scope.list = this.texts;
+        $rootScope = $scope.list;
+        $scope.texts = ' ';
+        $location.path('/search-jobs/' + $scope.list);
       }
     };
+    $scope.findMeAJob = function () {
+      $location.path('/search-jobs/find-me-a-job');
+    };
+    $scope.notificationRead = function (data) {
+      $http.post('/users/readNotification/' + $scope.authentication.user._id, data).success(function (res) {
+        if (res.outgoing == 'not-read')
+          $scope.unreadnotificationslength--;
+        for (var i in $scope.notifications) {
+          if ($scope.notifications[i] === data && $scope.notifications.length > 10) {
+            $scope.notifications.splice(i, 1);
+          }
+        }
+        $scope.apply();
+      }).error(function (data, status, headers, confige) {
+      });
+    };
     if ($scope.authentication.user) {
+      $scope.isCandidate = function () {
+        if ($scope.authentication.user.userType === 'candidate')
+          return true;
+        else
+          return false;
+      };
       var count = 0;
       var y = $scope.authentication.user.notifications.length;
       for (var x = 0; x < y; x++)
@@ -1145,12 +2235,20 @@ angular.module('core').controller('HeaderController', [
       }
       $scope.notifications = $scope.authentication.user.notifications;
       Socket.on('take_the_test_notification', function (data) {
-        if (data.userid == $scope.authentication.user._id)
-          $scope.notifications.push({
-            generalmessage: data.generalmessage,
-            hiddendata: data.hiddendata,
-            created: data.created
-          });
+        console.log('GOT A HIT');
+        if (data.userid == $scope.authentication.user._id) {
+          var present = false;
+          for (var d = 0, len = $scope.notifications.length; d < len; d++) {
+            if ($scope.notifications[d]._id == data.notification._id) {
+              present = true;
+              break;
+            }
+          }
+          if (!present) {
+            $scope.notifications.push(data.notification);
+            $scope.unreadnotificationslength++;
+          }
+        }
       });
       Socket.on('watched_thread_to', function (event, args) {
         $scope.threads = [];
@@ -1164,11 +2262,15 @@ angular.module('core').controller('HeaderController', [
           console.log('Shouldnt have happened');
         });
       });
+      console.log($scope.authentication.user._id);
       $http.get('/users/getMessages/' + $scope.authentication.user._id).success(function (res) {
-        console.log(res + 'weird');
+        console.log('GETMESSAGE' + res);
         if (res.length > 1) {
-          for (var x = 1; x < res.length; x++)
+          for (var x = 1; x < res.length; x++) {
+            if (res[x].senderName == null)
+              res[x].senderName = 'From Recreal Team';
             $scope.threads.push(res[x]);
+          }
         }
       }).error(function (data, status, headers, confige) {
         console.log('Shouldnt have happened');
@@ -1192,7 +2294,7 @@ angular.module('core').controller('HeaderController', [
           }
           if (!alreadyexists) {
             $scope.threads.push(thread);
-            $scope.$apply();
+            toaster.pop('success', 'Message received', data.message.sender.displayName);
           }
         }
       });
@@ -1208,6 +2310,7 @@ angular.module('core').controller('HeaderController', [
 ]);'use strict';
 angular.module('core').controller('HomeController', [
   '$scope',
+  '$modal',
   'Authentication',
   '$state',
   '$rootScope',
@@ -1215,121 +2318,815 @@ angular.module('core').controller('HomeController', [
   'Companies',
   'Candidates',
   'Socket',
-  function ($scope, Authentication, $state, $rootScope, Employers, Companies, Candidates, Socket) {
+  '$location',
+  function ($scope, $modal, Authentication, $state, $rootScope, Employers, Companies, Candidates, Socket, $location) {
     // This provides Authentication context.
+    $scope.OpenCandidateSignUpModal = function () {
+      var modalInstance = $modal.open({
+          templateUrl: '/modules/candidate-signup-wizard/views/partials/candidate-signup-partial.html',
+          controller: 'CandidateSignupController'
+        });
+      modalInstance.result.then(function (result) {
+        console.log(result);  //    $scope.sendmessage = result.sendmessage;
+      }, function () {
+      });
+    };
     $scope.authentication = Authentication;
     var user = $scope.authentication.user;
     console.log(user);
-    //starting angular-charts
-    $scope.data1 = {
-      series: [
-        'Sales',
-        'Income',
-        'Expense',
-        'Laptops',
-        'Keyboards'
-      ],
-      data: [
-        {
-          x: 'Sales',
-          y: [
-            100,
-            500,
-            0
-          ],
-          tooltip: 'this is tooltip'
-        },
-        {
-          x: 'Not Sales',
-          y: [
-            300,
-            100,
-            100
-          ]
-        },
-        {
-          x: 'Tax',
-          y: [351]
-        },
-        {
-          x: 'Not Tax',
-          y: [
-            54,
-            0,
-            879
-          ]
-        }
-      ]
-    };
-    $scope.data2 = {
-      series: [
-        '500 Keyboards',
-        '105 Laptops',
-        '100 TVs'
-      ],
-      data: [
-        {
-          x: 'Sales',
-          y: [
-            100,
-            500,
-            0
-          ],
-          tooltip: 'this is tooltip'
-        },
-        {
-          x: 'Income',
-          y: [
-            300,
-            100,
-            100
-          ]
-        },
-        {
-          x: 'Expense',
-          y: [
-            351,
-            50,
-            25
-          ]
-        }
-      ]
-    };
-    $scope.chartType = 'bar';
-    $scope.config1 = {
-      labels: false,
-      title: 'Products',
-      legend: {
-        display: true,
-        position: 'left'
-      },
-      innerRadius: 0
-    };
-    $scope.config2 = {
-      labels: false,
-      title: 'HTML-enabled legend',
-      legend: {
-        display: true,
-        htmlEnabled: true,
-        position: 'right'
-      },
-      lineLegend: 'traditional'
-    };
-    //ending angular-charts
     if (!user)
       $state.go('home');
     else if (user.userType === 'employer') {
-      console.log('EMPLOYER');
-      $rootScope.employer = Employers.get({ employerId: $scope.authentication.user.employer }, function (employer) {
-        $rootScope.company = Companies.get({ companyId: employer.company });
-      });
-      $state.go('employerDashboard');
+      if ($scope.authentication.user.stage == 'Basic')
+        $location.path('emp-wizard-one/' + $scope.authentication.user.activeToken);
+      if ($scope.authentication.user.stage == 'CompanyLocation')
+        $location.path('emp-wizard-two');
+      if ($scope.authentication.user.stage == 'NoJobs') {
+        $scope.employer = Employers.get({ employerId: $scope.authentication.user.employer }, function (employer) {
+          console.log(employer);
+          if (employer.jobs.length > 0) {
+            // edit first job
+            $location.path('emp-job-post-two/' + employer.jobs[0]);
+          } else {
+            // create new job
+            $location.path('emp-job-post-one');
+          }
+        });
+      }
+      if ($scope.authentication.user.stage == 'Active') {
+        $rootScope.employer = Employers.get({ employerId: $scope.authentication.user.employer }, function (employer) {
+          $rootScope.company = Companies.get({ companyId: employer.company });
+        });
+        $state.go('employerDashboard');
+      }
     } else if (user.userType === 'candidate') {
-      $rootScope.candidate = Candidates.get({ candidate: $scope.authentication.user.candidate });
-      $state.go('candidate-home');
+      $rootScope.candidate = Candidates.get({ candidateId: $scope.authentication.user.candidate }, function (candidate) {
+        switch (candidate.stage) {
+        case 'One':
+          $location.path('candidate-wizard-one/' + $scope.authentication.user.activeToken);
+          break;
+        case 'Two':
+          $state.go('candidate-wizard-two');
+          break;
+        case 'Three':
+          $state.go('candidate-wizard-three');
+          break;
+        case 'Four':
+          $state.go('candidate-wizard-four');
+          break;
+        case 'Five':
+          $state.go('candidate-wizard-five');
+          break;
+        case 'Complete':
+          $state.go('candidate-home');
+          break;
+        }
+      });
     } else if (user.userType === 'transition') {
       $state.go('transition');
     }
+    var monthNames = [
+        'Jan',
+        'Feb',
+        'Mar',
+        'Apr',
+        'May',
+        'Jun',
+        'Jul',
+        'Aug',
+        'Sep',
+        'Oct',
+        'Nov',
+        'Dec'
+      ];
+    var d1 = [];
+    for (var i = 0; i <= 11; i += 1) {
+      d1.push([
+        i,
+        parseInt(Math.floor(Math.random() * (1 + 20 - 10)) + 10)
+      ]);
+    }
+    $('#flot-1ine').length && $.plot($('#flot-1ine'), [{ data: d1 }], {
+      series: {
+        lines: {
+          show: true,
+          lineWidth: 1,
+          fill: true,
+          fillColor: {
+            colors: [
+              { opacity: 0.3 },
+              { opacity: 0.3 }
+            ]
+          }
+        },
+        points: {
+          radius: 3,
+          show: true
+        },
+        grow: {
+          active: true,
+          steps: 50
+        },
+        shadowSize: 2
+      },
+      grid: {
+        hoverable: true,
+        clickable: true,
+        tickColor: '#f0f0f0',
+        borderWidth: 1,
+        color: '#f0f0f0'
+      },
+      colors: ['#1bb399'],
+      xaxis: {},
+      yaxis: { ticks: 5 },
+      tooltip: true,
+      tooltipOpts: {
+        content: 'chart: %x.1 is %y.4',
+        defaultTheme: false,
+        shifts: {
+          x: 0,
+          y: 20
+        }
+      }
+    });
+    var d0 = [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          4,
+          15
+        ],
+        [
+          5,
+          5
+        ],
+        [
+          6,
+          12
+        ],
+        [
+          7,
+          10
+        ],
+        [
+          8,
+          55
+        ],
+        [
+          9,
+          13
+        ],
+        [
+          10,
+          25
+        ],
+        [
+          11,
+          10
+        ],
+        [
+          12,
+          12
+        ],
+        [
+          13,
+          6
+        ],
+        [
+          14,
+          2
+        ],
+        [
+          15,
+          0
+        ],
+        [
+          16,
+          0
+        ]
+      ];
+    var d00 = [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          4,
+          1
+        ],
+        [
+          5,
+          0
+        ],
+        [
+          6,
+          2
+        ],
+        [
+          7,
+          0
+        ],
+        [
+          8,
+          3
+        ],
+        [
+          9,
+          1
+        ],
+        [
+          10,
+          0
+        ],
+        [
+          11,
+          1
+        ],
+        [
+          12,
+          0
+        ],
+        [
+          13,
+          2
+        ],
+        [
+          14,
+          1
+        ],
+        [
+          15,
+          0
+        ],
+        [
+          16,
+          0
+        ]
+      ];
+    $('#flot-sp1ine').length && $.plot($('#flot-sp1ine'), [
+      d0,
+      d00
+    ], {
+      series: {
+        lines: { show: false },
+        splines: {
+          show: true,
+          tension: 0.4,
+          lineWidth: 1,
+          fill: 0.4
+        },
+        points: {
+          radius: 0,
+          show: true
+        },
+        shadowSize: 2
+      },
+      grid: {
+        hoverable: true,
+        clickable: true,
+        tickColor: '#d9dee9',
+        borderWidth: 1,
+        color: '#d9dee9'
+      },
+      colors: [
+        '#19b39b',
+        '#644688'
+      ],
+      xaxis: {},
+      yaxis: { ticks: 4 },
+      tooltip: true,
+      tooltipOpts: {
+        content: 'chart: %x.1 is %y.4',
+        defaultTheme: false,
+        shifts: {
+          x: 0,
+          y: 20
+        }
+      }
+    });
+    var d2 = [];
+    for (var i = 0; i <= 6; i += 1) {
+      d2.push([
+        i,
+        parseInt(Math.floor(Math.random() * (1 + 30 - 10)) + 10)
+      ]);
+    }
+    var d3 = [];
+    for (var i = 0; i <= 6; i += 1) {
+      d3.push([
+        i,
+        parseInt(Math.floor(Math.random() * (1 + 30 - 10)) + 10)
+      ]);
+    }
+    $('#flot-chart').length && $.plot($('#flot-chart'), [
+      {
+        data: d2,
+        label: 'Unique Visits'
+      },
+      {
+        data: d3,
+        label: 'Page Views'
+      }
+    ], {
+      series: {
+        lines: {
+          show: true,
+          lineWidth: 1,
+          fill: true,
+          fillColor: {
+            colors: [
+              { opacity: 0.3 },
+              { opacity: 0.3 }
+            ]
+          }
+        },
+        points: { show: true },
+        shadowSize: 2
+      },
+      grid: {
+        hoverable: true,
+        clickable: true,
+        tickColor: '#f0f0f0',
+        borderWidth: 0
+      },
+      colors: [
+        '#1bb399',
+        '#177bbb'
+      ],
+      xaxis: {
+        ticks: 15,
+        tickDecimals: 0
+      },
+      yaxis: {
+        ticks: 10,
+        tickDecimals: 0
+      },
+      tooltip: true,
+      tooltipOpts: {
+        content: '\'%s\' of %x.1 is %y.4',
+        defaultTheme: false,
+        shifts: {
+          x: 0,
+          y: 20
+        }
+      }
+    });
+    // live update
+    var data = [], totalPoints = 300;
+    function getRandomData() {
+      if (data.length > 0)
+        data = data.slice(1);
+      // Do a random walk
+      while (data.length < totalPoints) {
+        var prev = data.length > 0 ? data[data.length - 1] : 50, y = prev + Math.random() * 10 - 5;
+        if (y < 0) {
+          y = 0;
+        } else if (y > 100) {
+          y = 100;
+        }
+        data.push(y);
+      }
+      // Zip the generated y values with the x values
+      var res = [];
+      for (var i = 0; i < data.length; ++i) {
+        res.push([
+          i,
+          data[i]
+        ]);
+      }
+      return res;
+    }
+    var updateInterval = 30, live;
+    $('#flot-live').length && (live = $.plot('#flot-live', [getRandomData()], {
+      series: {
+        lines: {
+          show: true,
+          lineWidth: 1,
+          fill: true,
+          fillColor: {
+            colors: [
+              { opacity: 0.2 },
+              { opacity: 0.1 }
+            ]
+          }
+        },
+        shadowSize: 2
+      },
+      colors: ['#cccccc'],
+      yaxis: {
+        min: 0,
+        max: 100
+      },
+      xaxis: { show: false },
+      grid: {
+        tickColor: '#f0f0f0',
+        borderWidth: 0
+      }
+    })) && update();
+    function update() {
+      live.setData([getRandomData()]);
+      // Since the axes don't change, we don't need to call plot.setupGrid()
+      live.draw();
+      setTimeout(update, updateInterval);
+    }
+    ;
+    // bar
+    var d1_1 = [
+        [
+          10,
+          120
+        ],
+        [
+          20,
+          70
+        ],
+        [
+          30,
+          100
+        ],
+        [
+          40,
+          60
+        ]
+      ];
+    var d1_2 = [
+        [
+          10,
+          80
+        ],
+        [
+          20,
+          60
+        ],
+        [
+          30,
+          30
+        ],
+        [
+          40,
+          35
+        ]
+      ];
+    var d1_3 = [
+        [
+          10,
+          80
+        ],
+        [
+          20,
+          40
+        ],
+        [
+          30,
+          30
+        ],
+        [
+          40,
+          20
+        ]
+      ];
+    var data1 = [
+        {
+          label: 'Product 1',
+          data: d1_1,
+          bars: {
+            show: true,
+            fill: true,
+            lineWidth: 1,
+            order: 1,
+            fillColor: {
+              colors: [
+                { opacity: 0.5 },
+                { opacity: 0.9 }
+              ]
+            }
+          },
+          color: '#6783b7'
+        },
+        {
+          label: 'Product 2',
+          data: d1_2,
+          bars: {
+            show: true,
+            fill: true,
+            lineWidth: 1,
+            order: 2,
+            fillColor: {
+              colors: [
+                { opacity: 0.5 },
+                { opacity: 0.9 }
+              ]
+            }
+          },
+          color: '#4fcdb7'
+        },
+        {
+          label: 'Product 3',
+          data: d1_3,
+          bars: {
+            show: true,
+            fill: true,
+            lineWidth: 1,
+            order: 3,
+            fillColor: {
+              colors: [
+                { opacity: 0.5 },
+                { opacity: 0.9 }
+              ]
+            }
+          },
+          color: '#8dd168'
+        }
+      ];
+    var d2_1 = [
+        [
+          90,
+          10
+        ],
+        [
+          70,
+          20
+        ]
+      ];
+    var d2_2 = [
+        [
+          80,
+          10
+        ],
+        [
+          60,
+          20
+        ]
+      ];
+    var d2_3 = [
+        [
+          120,
+          10
+        ],
+        [
+          50,
+          20
+        ]
+      ];
+    var data2 = [
+        {
+          label: 'Product 1',
+          data: d2_1,
+          bars: {
+            horizontal: true,
+            show: true,
+            fill: true,
+            lineWidth: 1,
+            order: 1,
+            fillColor: {
+              colors: [
+                { opacity: 0.5 },
+                { opacity: 1 }
+              ]
+            }
+          },
+          color: '#6783b7'
+        },
+        {
+          label: 'Product 2',
+          data: d2_2,
+          bars: {
+            horizontal: true,
+            show: true,
+            fill: true,
+            lineWidth: 1,
+            order: 2,
+            fillColor: {
+              colors: [
+                { opacity: 0.5 },
+                { opacity: 1 }
+              ]
+            }
+          },
+          color: '#4fcdb7'
+        },
+        {
+          label: 'Product 3',
+          data: d2_3,
+          bars: {
+            horizontal: true,
+            show: true,
+            fill: true,
+            lineWidth: 1,
+            order: 3,
+            fillColor: {
+              colors: [
+                { opacity: 0.5 },
+                { opacity: 1 }
+              ]
+            }
+          },
+          color: '#8dd168'
+        }
+      ];
+    $('#flot-bar').length && $.plot($('#flot-bar'), data1, {
+      xaxis: {},
+      yaxis: {},
+      grid: {
+        hoverable: true,
+        clickable: false,
+        borderWidth: 0
+      },
+      legend: {
+        labelBoxBorderColor: 'none',
+        position: 'left'
+      },
+      series: { shadowSize: 1 },
+      tooltip: true
+    });
+    $('#flot-bar-h').length && $.plot($('#flot-bar-h'), data2, {
+      xaxis: {},
+      yaxis: {},
+      grid: {
+        hoverable: true,
+        clickable: false,
+        borderWidth: 0
+      },
+      legend: {
+        labelBoxBorderColor: 'none',
+        position: 'left'
+      },
+      series: { shadowSize: 1 },
+      tooltip: true
+    });
+    // pie
+    var da = [
+        {
+          label: 'iPhone5S',
+          data: 40
+        },
+        {
+          label: 'iPad Mini',
+          data: 10
+        },
+        {
+          label: 'iPad Mini Retina',
+          data: 20
+        },
+        {
+          label: 'iPhone4S',
+          data: 12
+        },
+        {
+          label: 'iPad Air',
+          data: 18
+        }
+      ], da1 = [], series = Math.floor(Math.random() * 4) + 3;
+    for (var i = 0; i < series; i++) {
+      da1[i] = {
+        label: 'Series' + (i + 1),
+        data: Math.floor(Math.random() * 100) + 1
+      };
+    }
+    $('#flot-pie-donut').length && $.plot($('#flot-pie-donut'), da, {
+      series: {
+        pie: {
+          innerRadius: 0.4,
+          show: true,
+          stroke: { width: 0 },
+          label: {
+            show: true,
+            threshold: 0.05
+          }
+        }
+      },
+      colors: [
+        '#65b5c2',
+        '#4da7c1',
+        '#3993bb',
+        '#2e7bad',
+        '#23649e'
+      ],
+      grid: {
+        hoverable: true,
+        clickable: false
+      },
+      tooltip: true,
+      tooltipOpts: { content: '%s: %p.0%' }
+    });
+    $('#flot-pie').length && $.plot($('#flot-pie'), da, {
+      series: {
+        pie: {
+          combine: {
+            color: '#999',
+            threshold: 0.05
+          },
+          show: true
+        }
+      },
+      colors: [
+        '#65b5c2',
+        '#4da7c1',
+        '#3993bb',
+        '#2e7bad',
+        '#23649e'
+      ],
+      legend: { show: false },
+      grid: {
+        hoverable: true,
+        clickable: false
+      },
+      tooltip: true,
+      tooltipOpts: { content: '%s: %p.0%' }
+    });
+    var cTime = new Date(), month = cTime.getMonth() + 1, year = cTime.getFullYear();
+    var theMonths = [
+        'January',
+        'February',
+        'March',
+        'April',
+        'May',
+        'June',
+        'July',
+        'August',
+        'September',
+        'October',
+        'November',
+        'December'
+      ];
+    var theDays = [
+        'S',
+        'M',
+        'T',
+        'W',
+        'T',
+        'F',
+        'S'
+      ];
+    var events = [
+        [
+          '4/' + month + '/' + year,
+          'Meet a friend',
+          '#',
+          '#177bbb',
+          'Contents here'
+        ],
+        [
+          '7/' + month + '/' + year,
+          'Kick off meeting!',
+          '#',
+          '#1bbacc',
+          'Have a kick off meeting with .inc company'
+        ],
+        [
+          '17/' + month + '/' + year,
+          'Milestone release',
+          '#',
+          '#fcc633',
+          'Contents here'
+        ],
+        [
+          '19/' + month + '/' + year,
+          'A link',
+          'http://www.google.com',
+          '#e33244'
+        ]
+      ];
+    $('#calendar').calendar({
+      months: theMonths,
+      days: theDays,
+      events: events,
+      popover_options: {
+        placement: 'top',
+        html: true
+      }
+    });
+  }
+]);'use strict';
+angular.module('core').controller('TestController', [
+  '$scope',
+  function ($scope) {
   }
 ]);'use strict';
 angular.module('core').controller('TransitionController', [
@@ -1389,87 +3186,6 @@ angular.module('core').controller('TransitionController', [
     };
   }
 ]);'use strict';
-angular.module('core').directive('collapseNav', [function () {
-    return {
-      restrict: 'A',
-      compile: function (ele, attrs) {
-        var $a, $aRest, $lists, $listsRest;
-        $lists = ele.find('ul').parent('li');
-        $lists.append('<i class="fa fa-caret-right icon-has-ul"></i>');
-        $a = $lists.children('a');
-        $listsRest = ele.children('li').not($lists);
-        $aRest = $listsRest.children('a');
-        $a.on('click', function (event) {
-          var $parent, $this;
-          $this = $(this);
-          $parent = $this.parent('li');
-          $lists.not($parent).removeClass('open').find('ul').slideUp();
-          $parent.toggleClass('open').find('ul').slideToggle();
-          return event.preventDefault();
-        });
-        return $aRest.on('click', function (event) {
-          return $lists.removeClass('open').find('ul').slideUp();
-        });
-      }
-    };
-  }]).directive('highlightActive', [function () {
-    return {
-      restrict: 'A',
-      controller: [
-        '$scope',
-        '$element',
-        '$attrs',
-        '$location',
-        function ($scope, $element, $attrs, $location) {
-          var highlightActive, links, path;
-          links = $element.find('a');
-          path = function () {
-            return $location.path();
-          };
-          highlightActive = function (links, path) {
-            path = '#!' + path;
-            return angular.forEach(links, function (link) {
-              var $li, $link, href;
-              $link = angular.element(link);
-              $li = $link.parent('li');
-              href = $link.attr('href');
-              if ($li.hasClass('active')) {
-                $li.removeClass('active');
-                $li.parent().parent().removeClass('active');
-              }
-              if (path.indexOf(href) === 0) {
-                $li.parent().parent().addClass('active');
-                return $li.addClass('active');
-              }
-            });
-          };
-          highlightActive(links, $location.path());
-          return $scope.$watch(path, function (newVal, oldVal) {
-            if (newVal === oldVal) {
-              return;
-            }
-            return highlightActive(links, $location.path());
-          });
-        }
-      ]
-    };
-  }]).directive('toggleOffCanvas', [function () {
-    return {
-      restrict: 'A',
-      link: function (scope, ele, attrs) {
-        return ele.on('click', function () {
-          return $('#app').toggleClass('on-canvas');
-        });
-      }
-    };
-  }]).directive('slimScroll', [function () {
-    return {
-      restrict: 'A',
-      link: function (scope, ele, attrs) {
-        return ele.slimScroll({ height: '100%' });
-      }
-    };
-  }]);'use strict';
 angular.module('core').directive('image', [
   '$q',
   function ($q) {
@@ -1582,6 +3298,46 @@ angular.module('core').directive('image', [
               applyScope(imageResult);
             }
           }
+        });
+      }
+    };
+  }
+]);'use strict';
+angular.module('core').directive('triggerJobList', [
+  '$compile',
+  '$rootScope',
+  '$http',
+  'Jobs',
+  'Employers',
+  'Companies',
+  function ($compile, $rootScope, $http, Jobs, Employers, Companies) {
+    return {
+      template: '<div></div>',
+      restrict: 'E',
+      link: function postLink(scope, element, attrs) {
+        $rootScope.$on('inEmployerJobupdateHeader', function (args) {
+          scope.jobs = [];
+          scope.employer = Employers.get({ employerId: scope.user.employer }, function (employer) {
+            scope.company = Companies.get({ companyId: employer.company }, function (company) {
+              var gg = company.jobs;
+              $http.put('jobs/jobsByIDs/' + scope.user._id, gg).success(function (res) {
+                scope.jobslist = [];
+                for (var d, g = res.length; d < g; d++) {
+                  scope.jobslist.push({
+                    name: res[d].title,
+                    id: res[d]._id
+                  });
+                }
+                scope.myColor = scope.jobslist[1];
+                if (args.trigger)
+                  var html = '<select ng-model="myColor" ng-options="joblist.name for joblist in jobslist">' + '</select><br>';
+                else
+                  var html = '';
+                var e = $compile(html)(scope);
+                element.replaceWith(e);
+              });
+            });
+          });
         });
       }
     };
@@ -1738,6 +3494,7 @@ angular.module('core').factory('Socket', [
   function ($rootScope, Authentication, geolocation) {
     //console.log(Authentication.user);
     if (Authentication.user && !socket) {
+      console.log('SOCKET CLIENT FACTORY');
       $rootScope.coords = {
         lat: 0,
         longi: 0
@@ -1747,7 +3504,6 @@ angular.module('core').factory('Socket', [
           lat: data.coords.latitude,
           longi: data.coords.longitude
         };
-        console.log($rootScope.coords.lat + ',' + $rootScope.coords.longi);
       });
       var socket = io.connect('http://localhost:3000');
       socket.emit('user_data', Authentication.user);
@@ -1791,7 +3547,10 @@ angular.module('employer-company').config([
     }).state('company-profile', {
       url: '/company-profile',
       templateUrl: 'modules/employer-company/views/company-profile.client.view.html'
-    });
+    });  // state('logo-partial', {
+         // 	url: '/logo-partial',
+         // 	templateUrl: 'modules/employer-company/views/logo/logo-partial.html'
+         // });
   }
 ]);'use strict';
 angular.module('employer-company').controller('CompanyProfileViewController', [
@@ -1816,12 +3575,14 @@ angular.module('employer-company').controller('CompanyProfileViewController', [
 ]);'use strict';
 angular.module('employer-company').controller('CompanyProfileController', [
   '$scope',
+  '$http',
   'Industries',
   'Authentication',
   'Employers',
   'Companies',
   '$location',
-  function ($scope, Industries, Authentication, Employers, Companies, $location) {
+  '$modal',
+  function ($scope, $http, Industries, Authentication, Employers, Companies, $location, $modal) {
     $scope.user = Authentication.user;
     $scope.industries = Industries.getIndustries();
     // If user is not signed in then redirect back home
@@ -1858,6 +3619,62 @@ angular.module('employer-company').controller('CompanyProfileController', [
         $scope.error = errorResponse.data.message;
       });
     };
+    $scope.openPictureModal = function () {
+      var modalInstance;
+      modalInstance = $modal.open({
+        templateUrl: '/modules/employer-company/views/logo/logo-partial.html',
+        controller: 'CompPictureModalCtrl'
+      });
+      modalInstance.result.then(function (result) {
+        $scope.company.logo_url = result.logo_url;
+      }, function () {
+      });
+    };
+  }
+]).controller('CompPictureModalCtrl', [
+  '$scope',
+  '$modalInstance',
+  '$upload',
+  function ($scope, $modalInstance, $upload) {
+    var convert = function convertDataURIToBlob(dataURI, mimetype) {
+      var BASE64_MARKER = ';base64,';
+      var base64Index = dataURI.indexOf(BASE64_MARKER) + BASE64_MARKER.length;
+      var base64 = dataURI.substring(base64Index);
+      var raw = window.atob(base64);
+      var rawLength = raw.length;
+      var uInt8Array = new Uint8Array(rawLength);
+      for (var i = 0; i < rawLength; ++i) {
+        uInt8Array[i] = raw.charCodeAt(i);
+      }
+      var bb = new Blob([uInt8Array.buffer], { type: mimetype });
+      return bb;
+    };
+    $scope.upload = function (image) {
+      $scope.formData = convert(image.dataURL, image.type);
+      $scope.upload = $upload.upload({
+        url: '/uploadCompPicture',
+        method: 'POST',
+        headers: { 'Content-Type': 'undefined' },
+        data: { myObj: $scope.myModelObj },
+        file: $scope.formData
+      }).progress(function (evt) {
+        console.log('percent: ' + parseInt(100 * evt.loaded / evt.total));
+      }).success(function (data, status, headers, config) {
+        // file is uploaded successfully
+        $scope.response = data;
+        console.log(data);
+        $modalInstance.close({ logo_url: data });
+      });
+    };
+    $scope.ok = function (action) {
+      $modalInstance.close({
+        action: action,
+        logo_url: $scope.logo_url
+      });
+    };
+    $scope.cancel = function () {
+      $modalInstance.dismiss('cancel');
+    };
   }
 ]);'use strict';
 angular.module('employer-company').controller('EmployerProfileViewController', [
@@ -1880,13 +3697,16 @@ angular.module('employer-company').controller('EmployerProfileViewController', [
 ]);'use strict';
 angular.module('employer-company').controller('EmployerProfileController', [
   '$scope',
+  '$http',
   'Countries',
   'Authentication',
   'Employers',
   '$location',
-  function ($scope, Countries, Authentication, Employers, $location) {
+  '$modal',
+  function ($scope, $http, Countries, Authentication, Employers, $location, $modal) {
     $scope.user = Authentication.user;
     $scope.countries = Countries.getCountries();
+    $scope.isEditing = false;
     // If user is not signed in then redirect back home
     if (!$scope.user)
       $location.path('/signin');
@@ -1894,6 +3714,24 @@ angular.module('employer-company').controller('EmployerProfileController', [
     $scope.findOne = function () {
       $scope.employer = Employers.get({ employerId: $scope.user.employer });
     };
+    // 	$scope.myCtrl = function() {
+    // 			var divisionOptions = ["Accounts", "Sales", "Business", "Marketing"];
+    // 			var departmentOptions = [["Finance"],
+    //                ["Admin"],
+    //                ["Software"],
+    //                ["HR"]];
+    // // 
+    // 			    $scope.division = divisionOptions;
+    // 			    $scope.department = []; // we'll get these later
+    // 			    $scope.getDepartment = function(){
+    // 			        // just some silly stuff to get the key of what was selected since we are using simple arrays.
+    // 			        var key = $scope.division.indexOf($scope.division);
+    // 			        // Here you could actually go out and fetch the options for a server.
+    // 			        var myNewOptions = departmentOptions[key];
+    // 			        // Now set the options.
+    // 			        // If you got the results from a server, this would go in the callback
+    // 			        $scope.department = myNewOptions;
+    // 			    };
     // Update existing Employer
     $scope.update = function () {
       var employer = $scope.employer;
@@ -1902,6 +3740,530 @@ angular.module('employer-company').controller('EmployerProfileController', [
       }, function (errorResponse) {
         $scope.error = errorResponse.data.message;
       });
+    };
+    $scope.openPictureModal = function () {
+      var modalInstance;
+      modalInstance = $modal.open({
+        templateUrl: '/modules/employer-company/views/picture-partial.html',
+        controller: 'EmpPictureModalCtrl'
+      });
+      modalInstance.result.then(function (result) {
+        $scope.this.user.picture_url = result.picture_url;
+      }, function () {
+      });
+    };
+  }
+]).controller('EmpPictureModalCtrl', [
+  '$scope',
+  '$modalInstance',
+  '$upload',
+  function ($scope, $modalInstance, $upload) {
+    var convert = function convertDataURIToBlob(dataURI, mimetype) {
+      var BASE64_MARKER = ';base64,';
+      var base64Index = dataURI.indexOf(BASE64_MARKER) + BASE64_MARKER.length;
+      var base64 = dataURI.substring(base64Index);
+      var raw = window.atob(base64);
+      var rawLength = raw.length;
+      var uInt8Array = new Uint8Array(rawLength);
+      for (var i = 0; i < rawLength; ++i) {
+        uInt8Array[i] = raw.charCodeAt(i);
+      }
+      var bb = new Blob([uInt8Array.buffer], { type: mimetype });
+      return bb;
+    };
+    $scope.upload = function (image) {
+      $scope.formData = convert(image.dataURL, image.type);
+      $scope.upload = $upload.upload({
+        url: '/uploadEmpPicture',
+        method: 'POST',
+        headers: { 'Content-Type': 'undefined' },
+        data: { myObj: $scope.myModelObj },
+        file: $scope.formData
+      }).progress(function (evt) {
+        console.log('percent: ' + parseInt(100 * evt.loaded / evt.total));
+      }).success(function (data, status, headers, config) {
+        // file is uploaded successfully
+        $scope.response = data;
+        console.log(data);
+        $modalInstance.close({ picture_url: data });
+      });
+    };
+    $scope.ok = function (action) {
+      $modalInstance.close({
+        action: action,
+        picture_url: $scope.picture_url
+      });
+    };
+    $scope.cancel = function () {
+      $modalInstance.dismiss('cancel');
+    };
+  }
+]);'use strict';
+//Setting up route
+angular.module('employer-signup-wizard').config([
+  '$stateProvider',
+  '$urlRouterProvider',
+  function ($stateProvider, $urlRouterProvider) {
+    $urlRouterProvider.otherwise('/');
+    // Employer signup wizard state routing
+    $stateProvider.state('signup-email-activation', {
+      url: '/signup-email-activation',
+      templateUrl: 'modules/employer-signup-wizard/views/signup-email-activation.client.view.html'
+    }).state('emp-wizard-two', {
+      url: '/emp-wizard-two',
+      templateUrl: 'modules/employer-signup-wizard/views/emp-wizard-two.client.view.html'
+    }).state('emp-wizard-one', {
+      url: '/emp-wizard-one/:tokenId',
+      templateUrl: 'modules/employer-signup-wizard/views/emp-wizard-one.client.view.html'
+    });
+  }
+]);'use strict';
+angular.module('employer-signup-wizard').controller('EmpSignupController', [
+  '$modalInstance',
+  '$scope',
+  '$modal',
+  '$location',
+  '$http',
+  function ($modalInstance, $scope, $modal, $location, $http) {
+    // Controller Logic
+    // ...
+    $scope.credentials = {};
+    $scope.signupemployer = function () {
+      $scope.credentials.userType = 'employer';
+      $http.post('/empsignupwizard/signupemployer', $scope.credentials).success(function (response) {
+        //If successful we assign the response to the global user model
+        if (response.status) {
+          $location.path('/signup-email-activation');
+          $modalInstance.dismiss();
+        }  //And redirect to the index page
+           // $location.path('/');
+      }).error(function (response) {
+        $scope.error = response.message;
+      });
+    };
+  }
+]);'use strict';
+angular.module('employer-signup-wizard').controller('EmpWizardOneController', [
+  '$scope',
+  '$http',
+  'Industries',
+  'Countries',
+  '$rootScope',
+  'geolocation',
+  '$stateParams',
+  '$state',
+  'Authentication',
+  '$modal',
+  function ($scope, $http, Industries, Countries, $rootScope, geolocation, $stateParams, $state, Authentication, $modal) {
+    // Controller Logic
+    // ...
+    var city1 = '';
+    var country1 = '';
+    var gotcompanycountryundefined = false;
+    $scope.gotCompanyFromDB = false;
+    $scope.user = Authentication.user;
+    var lat = 0, lng = 0;
+    $rootScope.coords = {};
+    $scope.company = {
+      website: '',
+      coordinates: {
+        longitude: 0,
+        latitude: 0
+      }
+    };
+    $scope.employer = {};
+    $scope.company.specialities = [];
+    $rootScope.coords = {};
+    $scope.newSpeciality = { name: '' };
+    $scope.employer.role = 'Admin';
+    $scope.user = '';
+    //Load initial data
+    $scope.LoadInitialData = function () {
+      if ($stateParams.tokenId) {
+        $http.post('/validateTokenEmployer', { token: $stateParams.tokenId }).success(function (response) {
+          $scope.user = response.user;
+          console.log(response.user + ' ' + response.company);
+          if (response.company != null) {
+            $scope.company = response.company;
+            $scope.gotCompanyFromDB = true;
+          }
+          console.log(response);
+          if ($scope.user.user == 'nothing') {
+            $state.go('home');
+          } else {
+            $scope.authentication = Authentication;
+            $scope.authentication.user = response.user;
+            if (!$scope.gotCompanyFromDB)
+              $scope.company.specialities.push({ name: 'Product Development' });
+            $scope.industries = Industries.getIndustries();
+            Countries.getCountries(function (countries) {
+              $scope.countries = countries;
+              // $scope.countries.splice(0, 1);
+              if (!$scope.gotCompanyFromDB) {
+                $scope.company.country = $scope.countries[1];
+                $scope.getCountryCities();
+              } else {
+                if ($scope.company.country !== undefined) {
+                  gotcompanycountryundefined = true;
+                  angular.forEach($scope.countries, function (country) {
+                    country1 = $scope.company.country;
+                    if (country1 == country.name) {
+                      $scope.company.country = country;
+                      $scope.getCountryCities();
+                    }
+                  });
+                } else {
+                  $scope.company.country = $scope.countries[1];
+                  $scope.getCountryCities();
+                  InitlocationData();
+                }
+              }
+            });
+            $scope.company.industry = $scope.industries[0].name;
+            $scope.company.company_size = '1 - 10';
+            $scope.company.company_type = 'Sole Proprietorship';
+            if (!$scope.gotCompanyFromDB)
+              InitlocationData();
+          }
+        }).error(function (response) {
+          $scope.error = response.message;
+        });
+        console.log($stateParams.tokenId);
+      } else {
+        $state.go('home');
+      }
+    };
+    var InitlocationData = function () {
+      var geocoder = new google.maps.Geocoder();
+      geolocation.getLocation().then(function (data) {
+        lat = parseFloat(data.coords.latitude);
+        lng = parseFloat(data.coords.longitude);
+        $scope.company.coordinates.longitude = lng;
+        $scope.company.coordinates.latitude = lat;
+        var latlng = new google.maps.LatLng(lat, lng);
+        geocoder.geocode({ 'latLng': latlng }, function (results, status) {
+          if (status == google.maps.GeocoderStatus.OK) {
+            if (results[1]) {
+              var citycountry = results[1].formatted_address;
+              var res = citycountry.split(',');
+              country1 = res[res.length - 1];
+              city1 = res[res.length - 2];
+              city1 = city1.trim();
+              country1 = country1.trim();
+              console.log(country1 + ' ' + city1);
+              angular.forEach($scope.countries, function (country) {
+                if ($scope.gotCompanyFromDB && gotcompanycountryundefined)
+                  country1 = $scope.company.country;
+                if (country1 == country.name) {
+                  $scope.company.country = country;
+                  $scope.getCountryCities();
+                }
+              });
+            } else {
+              $scope.company.country = $scope.countries[0];
+              $scope.getCountryCities();
+            }
+          } else {
+            $scope.company.country = $scope.countries[0];
+            $scope.getCountryCities();
+          }
+        });
+      });
+    };
+    $scope.getCountryCities = function () {
+      var foundit = false;
+      $http.get('/countries/' + $scope.company.country.name).success(function (response) {
+        $scope.cities = response.cities;
+        angular.forEach($scope.cities, function (city) {
+          console.log(city.name + ' ' + city1);
+          if ($scope.gotCompanyFromDB && gotcompanycountryundefined)
+            city1 = $scope.company.city;
+          if (city.name == city1)
+            //fuck my life
+            {
+              console.log(city);
+              $scope.company.city = city;
+              foundit = true;
+            }
+        });
+        if (!foundit)
+          $scope.company.city = $scope.cities[0];
+      });
+    };
+    $scope.SaveAndRedirect = function () {
+      $scope.success = $scope.error = null;
+      $http.post('/SaveEmpSignUpWizardOneData', {
+        user: $scope.user,
+        company: $scope.company,
+        employer: $scope.employer
+      }).success(function (response) {
+        $state.go('emp-wizard-two');
+      }).error(function (response) {
+        $scope.error = response.message;
+      });
+    };
+    //Add specialities
+    $scope.addSpeciality = function () {
+      if ($scope.newSpeciality.name != '') {
+        $scope.company.specialities.push($scope.newSpeciality);
+        $scope.newSpeciality = { name: '' };
+      }
+    };
+    //Remove Speciality
+    $scope.removeSpeciality = function (index) {
+      $scope.company.specialities.splice(index, 1);
+    };
+    $scope.openEmpPictureModal = function () {
+      var modalInstance;
+      modalInstance = $modal.open({
+        templateUrl: '/modules/employer-company/views/picture-partial.html',
+        controller: 'EmpPictureModalCtrl'
+      });
+      modalInstance.result.then(function (result) {
+        $scope.this.user.picture_url = result.picture_url;
+      }, function () {
+      });
+    };
+    $scope.openCompPictureModal = function () {
+      var modalInstance;
+      modalInstance = $modal.open({
+        templateUrl: '/modules/employer-company/views/logo/logo-partial.html',
+        controller: 'CompPictureModalCtrl'
+      });
+      modalInstance.result.then(function (result) {
+        $scope.company.logo_url = result.logo_url;
+      }, function () {
+      });
+    };
+  }
+]).controller('EmpPictureModalCtrl', [
+  '$scope',
+  '$modalInstance',
+  '$upload',
+  function ($scope, $modalInstance, $upload) {
+    var convert = function convertDataURIToBlob(dataURI, mimetype) {
+      var BASE64_MARKER = ';base64,';
+      var base64Index = dataURI.indexOf(BASE64_MARKER) + BASE64_MARKER.length;
+      var base64 = dataURI.substring(base64Index);
+      var raw = window.atob(base64);
+      var rawLength = raw.length;
+      var uInt8Array = new Uint8Array(rawLength);
+      for (var i = 0; i < rawLength; ++i) {
+        uInt8Array[i] = raw.charCodeAt(i);
+      }
+      var bb = new Blob([uInt8Array.buffer], { type: mimetype });
+      return bb;
+    };
+    $scope.upload = function (image) {
+      $scope.formData = convert(image.dataURL, image.type);
+      $scope.upload = $upload.upload({
+        url: '/uploadEmpPicture',
+        method: 'POST',
+        headers: { 'Content-Type': 'undefined' },
+        data: { myObj: $scope.myModelObj },
+        file: $scope.formData
+      }).progress(function (evt) {
+        console.log('percent: ' + parseInt(100 * evt.loaded / evt.total));
+      }).success(function (data, status, headers, config) {
+        // file is uploaded successfully
+        $scope.response = data;
+        console.log(data);
+        $modalInstance.close({ picture_url: data });
+      });
+    };
+    $scope.ok = function (action) {
+      $modalInstance.close({
+        action: action,
+        picture_url: $scope.picture_url
+      });
+    };
+    $scope.cancel = function () {
+      $modalInstance.dismiss('cancel');
+    };
+  }
+]).controller('CompPictureModalCtrl', [
+  '$scope',
+  '$modalInstance',
+  '$upload',
+  function ($scope, $modalInstance, $upload) {
+    var convert = function convertDataURIToBlob(dataURI, mimetype) {
+      var BASE64_MARKER = ';base64,';
+      var base64Index = dataURI.indexOf(BASE64_MARKER) + BASE64_MARKER.length;
+      var base64 = dataURI.substring(base64Index);
+      var raw = window.atob(base64);
+      var rawLength = raw.length;
+      var uInt8Array = new Uint8Array(rawLength);
+      for (var i = 0; i < rawLength; ++i) {
+        uInt8Array[i] = raw.charCodeAt(i);
+      }
+      var bb = new Blob([uInt8Array.buffer], { type: mimetype });
+      return bb;
+    };
+    $scope.upload = function (image) {
+      $scope.formData = convert(image.dataURL, image.type);
+      $scope.upload = $upload.upload({
+        url: '/uploadCompPicture',
+        method: 'POST',
+        headers: { 'Content-Type': 'undefined' },
+        data: { myObj: $scope.myModelObj },
+        file: $scope.formData
+      }).progress(function (evt) {
+        console.log('percent: ' + parseInt(100 * evt.loaded / evt.total));
+      }).success(function (data, status, headers, config) {
+        // file is uploaded successfully
+        $scope.response = data;
+        console.log(data);
+        $modalInstance.close({ logo_url: data });
+      });
+    };
+    $scope.ok = function (action) {
+      $modalInstance.close({
+        action: action,
+        logo_url: $scope.logo_url
+      });
+    };
+    $scope.cancel = function () {
+      $modalInstance.dismiss('cancel');
+    };
+  }
+]);'use strict';
+angular.module('employer-signup-wizard').controller('EmpWizardTwoController', [
+  '$scope',
+  'Users',
+  'Employers',
+  '$interval',
+  'Authentication',
+  '$state',
+  '$http',
+  '$location',
+  '$rootScope',
+  'locationVarification',
+  function ($scope, Users, Employers, $interval, Authentication, $state, $http, $location, $rootScope, locationVarification) {
+    $scope.authentication = Authentication;
+    var cityFromRootScope, countryFromRootScope;
+    var useGeoLocationInformation = false;
+    if (!$scope.authentication.user)
+      $state.go('home');
+    $scope.latitude = 0;
+    $scope.longitude = 0;
+    $scope.myValue = true;
+    var marker;
+    var geocoder = new google.maps.Geocoder();
+    $scope.SaveAndRedirect = function () {
+      console.log(marker.position.D);
+      $http.post('/savelatlong', {
+        user: $scope.authentication.user,
+        latitude: marker.position.k,
+        longitude: marker.position.D
+      }).success(function (response) {
+        console.log(response);
+        $scope.employer = Employers.get({ employerId: response }, function (employer) {
+          console.log(employer);
+          if (employer.jobs.length > 0) {
+            // edit first job
+            $location.path('emp-job-post-one-edit/' + employer.jobs[0]);
+          } else {
+            // create new job
+            $location.path('emp-job-post-one');
+          }
+        });
+      });
+    };
+    $scope.SkipAndRedirect = function () {
+      var user = new Users($scope.authentication.user);
+      if (user.stage == 'CompanyLocation') {
+        user.stage = 'NoJobs';
+      }
+      user.$update(function (response) {
+        $scope.success = true;
+        Authentication.user = response;
+        $location.path('emp-job-post-one/');
+      }, function (response) {
+        $scope.error = response.data.message;
+      });
+    };
+    $scope.Back = function () {
+      $location.path('emp-wizard-one/' + $scope.authentication.user.activeToken);
+    };
+    $scope.LoadInitialData = function () {
+      $http.post('/getCountryCity', { user: $scope.authentication.user }).success(function (response) {
+        var promise = locationVarification.validateLocation(response.city, response.country, response.latitude, response.longitude).then(function (responseFromLocationFactory) {
+            if (responseFromLocationFactory[0] == 'true') {
+              geocoder.geocode({ 'address': response.city + ',' + response.country }, function (results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                  var map = $scope.map;
+                  map.center = results[0].geometry.location;
+                  $scope.map.setCenter(results[0].geometry.location);
+                  marker = new google.maps.Marker({
+                    position: new google.maps.LatLng(response.latitude, response.longitude),
+                    map: map,
+                    draggable: true,
+                    animation: google.maps.Animation.DROP,
+                    title: 'Select your company Location!'
+                  });
+                } else {
+                  alert('Geocode was not successful for the following reason: ' + status);
+                }
+              });
+            } else {
+              geocoder.geocode({ 'address': response.city + ',' + response.country }, function (results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                  console.log(results[0].geometry.location.lat());
+                  $scope.latitude = results[0].geometry.location.lat();
+                  $scope.longitude = results[0].geometry.location.lng();
+                  var map = $scope.map;
+                  map.center = results[0].geometry.location;
+                  $scope.map.setCenter(results[0].geometry.location);
+                  marker = new google.maps.Marker({
+                    position: new google.maps.LatLng($scope.latitude, $scope.longitude),
+                    map: map,
+                    draggable: true,
+                    animation: google.maps.Animation.DROP,
+                    title: 'Select your company Location!'
+                  });
+                } else {
+                  alert('Geocode was not successful for the following reason: ' + status);
+                }
+              });
+            }
+          });
+      });
+    };
+  }
+]);'use strict';
+angular.module('employer-signup-wizard').controller('SignupEmailActivationController', [
+  '$scope',
+  function ($scope) {
+  }
+]);angular.module('employer-signup-wizard').factory('locationVarification', [
+  '$rootScope',
+  'geolocation',
+  '$q',
+  function ($rootScope, geolocation, $q) {
+    return {
+      validateLocation: function (city, country, lat, lng) {
+        var deferred = $q.defer();
+        if (lat != 0) {
+          var geocoder = new google.maps.Geocoder();
+          var latlng = new google.maps.LatLng(lat, lng);
+          geocoder.geocode({ 'latLng': latlng }, function (results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+              if (results[1]) {
+                var citycountry = results[1].formatted_address;
+                var res = citycountry.split(',');
+                countryFromDB = res[res.length - 1].trim();
+                cityFromDB = res[res.length - 2].trim();
+                console.log(cityFromDB + ' ' + countryFromDB);
+                if (countryFromDB == country && cityFromDB == city)
+                  deferred.resolve(['true']);
+                else
+                  deferred.resolve(['false']);
+              }
+            }
+          });
+          return deferred.promise;
+        }
+      }
     };
   }
 ]);'use strict';
@@ -2003,7 +4365,19 @@ angular.module('empoyer-jobs').config([
   '$stateProvider',
   function ($stateProvider) {
     // Empoyer jobs state routing   /jobs/:jobId
-    $stateProvider.state('employer-job-candidates', {
+    $stateProvider.state('emp-job-post-three', {
+      url: '/emp-job-post-three',
+      templateUrl: 'modules/empoyer-jobs/views/emp-job-post-three.client.view.html'
+    }).state('emp-job-post-two', {
+      url: '/emp-job-post-two/:jobId',
+      templateUrl: 'modules/empoyer-jobs/views/emp-job-post-two.client.view.html'
+    }).state('emp-job-post-one', {
+      url: '/emp-job-post-one',
+      templateUrl: 'modules/empoyer-jobs/views/emp-job-post-one.client.view.html'
+    }).state('emp-job-post-one-edit', {
+      url: '/emp-job-post-one-edit/:jobId',
+      templateUrl: 'modules/empoyer-jobs/views/emp-job-post-one.edit.client.view.html'
+    }).state('employer-job-candidates', {
       url: '/employer-job-candidates/:jobId',
       templateUrl: 'modules/empoyer-jobs/views/employer-job-candidates.client.view.html'
     }).state('company-open-jobs', {
@@ -2048,6 +4422,315 @@ angular.module('empoyer-jobs').controller('CompanyOpenJobsController', [
         }
       }
     });
+  }  // 	$scope.employer = Employers.get({
+     //                employerId: $scope.user.employer
+     //            }, function(employer){
+     // 			$scope.company = Companies.get({
+     // 				companyId: employer.company
+     // 			}, function(company){
+     // 				angular.forEach(company.jobs, function(job, key){
+     // 					Jobs.get({
+     // 						jobId: job
+     // 					}, function(job){
+     // 						$scope.jobs.push(job);
+     // 					});
+     // 				});
+     // 			});
+     // 		});
+     // }
+]);'use strict';
+angular.module('empoyer-jobs').controller('EmpJobPostOneController', [
+  '$scope',
+  '$http',
+  '$location',
+  'Jobs',
+  '$stateParams',
+  'Authentication',
+  '$state',
+  'Countries',
+  'locationVarification',
+  function ($scope, $http, $location, Jobs, $stateParams, Authentication, $state, Countries, locationVarification) {
+    // Controller Logic
+    // ...
+    // $scope.industries = Industries.getIndustries();
+    $scope.country = {};
+    $scope.city = {};
+    $scope.user = Authentication.user;
+    if (!$scope.user)
+      $state.go('home');
+    $scope.job = {};
+    $scope.job.industry = {};
+    $scope.job.coordinates = {};
+    //checks whether if this is going to create or update a job 
+    $scope.initialize = function () {
+      if (!$stateParams.jobId) {
+        // new job
+        LoadDefaultData();
+      } else {
+        //update old job
+        findOne();
+      }
+    };
+    var LoadDefaultData = function () {
+      $http.post('/getCompanyByUserId', { id: $scope.user._id }).success(function (response) {
+        $scope.job.employee_type = 'Contract';
+        $scope.job.employee_status = 'Full Time';
+        $scope.job.shift = 'Morning';
+        $scope.job.no_of_positions = '1';
+        $scope.job.travel_required = 'No Travelling';
+        $scope.job.visa_status = 'Citizen';
+        $scope.job.salary_range = 'Less than $1000';
+        $scope.job.country = response.country;
+        $scope.job.city = response.city;
+        $scope.job.coordinates.latitude = response.latitude;
+        $scope.job.coordinates.longitude = response.longitude;
+        getCountry();
+        getIndustry();
+      });
+    };
+    $scope.getCountryCities = function () {
+      var foundit = false;
+      var city1;
+      $http.get('/countries/' + $scope.country.name).success(function (response) {
+        $scope.cities = response.cities;
+        angular.forEach($scope.cities, function (city) {
+          city1 = $scope.job.city;
+          if (city.name == city1)
+            //fuck my life
+            {
+              console.log(city);
+              $scope.city = city;
+              foundit = true;
+            }
+        });
+        if (!foundit)
+          $scope.city = $scope.cities[0];
+      });
+    };
+    var getCountry = function () {
+      var foundit = false;
+      var country1;
+      Countries.getCountries(function (countries) {
+        $scope.countries = countries;
+        angular.forEach($scope.countries, function (cunt) {
+          country1 = $scope.job.country;
+          if (country1 == cunt.name) {
+            foundit = true;
+            $scope.country = cunt;
+            $scope.getCountryCities();
+          }
+        });
+        if (!foundit) {
+          $scope.country = $scope.countries[0];
+          $scope.getCountryCities();
+        }
+      });
+    };
+    var getIndustry = function () {
+      $http.get('/industries').success(function (response) {
+        $scope.industries = response;
+        $scope.job.industry = $scope.industries[0];
+        $scope.getIndustryJobRoles();
+      });
+    };
+    $scope.getIndustryJobRoles = function () {
+      $http.get('/industries/' + $scope.job.industry.name).success(function (response) {
+        $scope.job_roles = response.job_roles;
+        $scope.job.job_role = $scope.job_roles[0];
+        $scope.job.title = $scope.job.job_role.name;
+        $scope.job.responsibilities = $scope.job.job_role.responsibilities;
+        $scope.job.educations = $scope.job.job_role.educations;
+        $scope.job.qualifications = $scope.job.job_role.qualifications;
+        $scope.job.skills = $scope.job.job_role.skills;
+      });
+    };
+    $scope.bindJobRoles = function (jobRole) {
+      $scope.job.title = jobRole.name;
+      $scope.job.responsibilities = jobRole.responsibilities;
+      $scope.job.educations = jobRole.educations;
+      $scope.job.qualifications = jobRole.qualifications;
+      $scope.job.skills = jobRole.skills;
+    };
+    // Find existing Job
+    var findOne = function () {
+      $http.get('/industries').success(function (response) {
+        $scope.industries = response;
+        //get the job
+        Jobs.get({ jobId: $stateParams.jobId }, function (job) {
+          $scope.job = job;
+          getCountry();
+          $scope.job.due_date = new Date($scope.job.due_date);
+          //get industry job_roles
+          $http.get('/industries/' + $scope.job.industry).success(function (response) {
+            $scope.job_roles = response.job_roles;
+            //set industry
+            angular.forEach($scope.industries, function (industry) {
+              if (industry.name === $scope.job.industry) {
+                $scope.job.industry = industry;
+              }
+            });
+            // set job_role
+            angular.forEach($scope.job_roles, function (job_role) {
+              if (job_role._id == $scope.job.job_role) {
+                // never executes. even when the statement is true
+                $scope.job.job_role = job_role;
+              }
+            });
+          });
+        });
+      });
+    };
+    $scope.SaveAndRedirect = function () {
+      $scope.success = $scope.error = null;
+      $scope.job.country = $scope.country.name;
+      $scope.job.city = $scope.city.name;
+      $scope.job.industry = $scope.job.industry.name;
+      $scope.job.job_role = $scope.job.job_role._id;
+      if ($scope.job.stage == 'JobOne') {
+        $scope.job.stage = 'JobTwo';
+      }
+      if (!$stateParams.jobId) {
+        // new job
+        $http.post('/SaveEmpJobPostOneData', $scope.job).success(function (response) {
+          $location.path('emp-job-post-two/' + response._id);
+        }).error(function (response) {
+          $scope.error = response.message;
+        });
+      } else {
+        //update old job
+        var job = $scope.job;
+        job.company = job.company._id;
+        // find job from backend returns populated company which produces error while saving
+        job.$update(function () {
+          $location.path('emp-job-post-two/' + job._id);
+        }, function (errorResponse) {
+          $scope.error = errorResponse.data.message;
+        });
+      }  //     locationVarification.validateLocation().then(function(response){
+         // //     	if(response[0]=='false')
+         // //     	{
+         // // var geocoder = new google.maps.Geocoder();
+         // //                geocoder.geocode({
+         // //             'address': $scope.job.city + "," + $scope.job.country
+         // //         }, function(results, status) {
+         // //             if (status == google.maps.GeocoderStatus.OK) {
+         // //                 console.log(results[0].geometry.location.lat());
+         // //                 $scope.job.coordinates.latitude = results[0].geometry.location.lat();
+         // //                 $scope.job.coordinates.longitude = results[0].geometry.location.lng();
+         // //             } else {
+         // //                 alert('Geocode was not successful for the following reason: ' + status);
+         // //             }
+         // //         });
+         // //     	}
+         //     });
+    };
+  }
+]);'use strict';
+angular.module('empoyer-jobs').controller('EmpJobPostThreeController', [
+  '$scope',
+  function ($scope) {
+  }
+]);'use strict';
+angular.module('empoyer-jobs').controller('EmpJobPostTwoController', [
+  '$scope',
+  '$http',
+  'Jobs',
+  '$stateParams',
+  '$location',
+  function ($scope, $http, Jobs, $stateParams, $location) {
+    $scope.job = {};
+    $scope.job.responsibilities = [];
+    $scope.job.qualifications = [];
+    $scope.newResponsibility = { name: '' };
+    $scope.newSkill = { title: '' };
+    $scope.priorities = [
+      'Must',
+      'Important',
+      'Nice to have'
+    ];
+    $scope.degree_titles = [
+      'High School',
+      'Associate Degree',
+      'Bachelor Degree',
+      'Master Degree',
+      'Master of Business Administration (M.B.A.)',
+      'Juris Doctor (J.D.)',
+      'Doctor of Medicine (M.D.)',
+      'Doctor of Philosophy (Ph.D.)',
+      'Engineers Degree'
+    ];
+    $scope.newQualification = { name: '' };
+    //Find Job
+    $scope.findOne = function () {
+      $scope.job = Jobs.get({ jobId: $stateParams.jobId });
+    };
+    // $scope.job.responsibilities.push({
+    //                     name: 'Product Development'
+    //                 });
+    //**********Responsibilities***********
+    // Add Responsibility
+    $scope.addResponsibility = function () {
+      if ($scope.newResponsibility.name != '') {
+        $scope.job.responsibilities.push($scope.newResponsibility);
+        $scope.newResponsibility = { name: '' };
+      }
+    };
+    //Remove Responsibility
+    $scope.removeResponsibility = function (index) {
+      $scope.job.responsibilities.splice(index, 1);
+    };
+    //**********Qualification***********
+    // Add Qualification
+    $scope.addQualification = function () {
+      if ($scope.newQualification.name != '') {
+        $scope.job.qualifications.push($scope.newQualification);
+        $scope.newQualification = { name: '' };
+      }
+    };
+    //Remove Qualification
+    $scope.removeQualification = function (index) {
+      $scope.job.qualifications.splice(index, 1);
+    };
+    //**********Education***********
+    // Add Education
+    $scope.addEducation = function () {
+      if ($scope.newEducation.degree_title != '') {
+        $scope.job.educations.push($scope.newEducation);
+        $scope.newEducation = { name: '' };
+      }
+    };
+    //Remove Education
+    $scope.removeEducation = function (index) {
+      $scope.job.educations.splice(index, 1);
+    };
+    //**********Skills***********
+    // Add Skills
+    $scope.addSkill = function () {
+      if ($scope.newSkill.title != '') {
+        $scope.job.skills.push($scope.newSkill);
+        $scope.newSkill = { title: '' };
+      }
+    };
+    //Remove Skills
+    $scope.removeSkill = function (index) {
+      $scope.job.skills.splice(index, 1);
+    };
+    //Save and Redirect
+    $scope.SaveAndRedirect = function () {
+      $scope.success = $scope.error = null;
+      var job = $scope.job;
+      job.company = job.company._id;
+      // find job from backend returns populated company which produces error while saving
+      job.$update(function () {
+        $location.path('/');
+      }, function (errorResponse) {
+        $scope.error = errorResponse.data.message;
+      });
+    };
+    //Dont save and go back
+    $scope.GoBack = function () {
+      $location.path('emp-job-post-one-edit/' + $stateParams.jobId);
+    };
   }
 ]);'use strict';
 angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', [
@@ -2056,14 +4739,103 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', [
   'Jobs',
   '$stateParams',
   '$http',
-  function ($scope, $filter, Jobs, $stateParams, $http) {
+  '$modal',
+  '$location',
+  'Authentication',
+  'Socket',
+  '$rootScope',
+  function ($scope, $filter, Jobs, $stateParams, $http, $modal, $location, Authentication, Socket, $rootScope) {
+    $rootScope.$broadcast('inEmployerJobupdateHeader', { trigger: true });
+    $scope.firstTimeFetching = true;
     $scope.locationFilters = [];
-    $scope.salaryFilters = [];
-    $scope.visaFilters = [];
-    $scope.employeetypeFilters = [];
-    $scope.employeestatusFilters = [];
-    $scope.itemsPerPage = 10;
+    $scope.user = Authentication.user;
+    $scope.itemsPerPage = 5;
     $scope.currentPage = 0;
+    $scope.candidates = [];
+    $scope.skip = 0;
+    $scope.dummyfilters = [];
+    $scope.filters = [];
+    $scope.filters1 = [];
+    $scope.firsttime = true;
+    $scope.completefilternames = [];
+    $scope.filterLimit = 5;
+    var i;
+    $scope.priorities = [
+      {
+        'Id': 1,
+        'Label': 'Career Level',
+        'name': 'career_level',
+        'nameinjob': 'career_level'
+      },
+      {
+        'Id': 2,
+        'Label': 'Salary Expectation',
+        'name': 'salary_expectation',
+        'nameinjob': 'salary_range'
+      },
+      {
+        'Id': 3,
+        'Label': 'Skills',
+        'name': 'skills',
+        'nameinjob': 'skills'
+      },
+      {
+        'Id': 4,
+        'Label': 'Education',
+        'name': 'degree_title',
+        'nameinjob': 'degree_title'
+      },
+      {
+        'Id': 5,
+        'Label': 'Gender',
+        'name': 'gender',
+        'nameinjob': 'gender'
+      },
+      {
+        'Id': 6,
+        'Label': 'Employment Status',
+        'name': 'employee_status',
+        'nameinjob': 'employee_status'
+      },
+      {
+        'Id': 7,
+        'Label': 'Employment Type',
+        'name': 'employee_type',
+        'nameinjob': 'employee_type'
+      },
+      {
+        'Id': 8,
+        'Label': 'Visa Status',
+        'name': 'visa_status',
+        'nameinjob': 'visa_status'
+      }
+    ];
+    if (!$scope.user)
+      $location.path('/signin');
+    Socket.on('applied_on_job', function (data) {
+      if ($scope.job._id == data.job._id) {
+        $scope.findCandidates($scope.skip, $scope.itemsPerPage, $scope.filters, false);
+      }
+    });
+    Socket.on('WatchingJob', function (data) {
+      for (var dd = 0, len = $scope.candidates.length; dd < len; dd++) {
+        if (data.userId == $scope.candidates[dd].user._id) {
+          $scope.findCandidates($scope.skip, $scope.itemsPerPage, $scope.filters, false);
+          break;
+        }
+      }
+    });
+    $scope.itemsList = { items1: [] };
+    $scope.itemsList.items1 = $scope.priorities;
+    $scope.sortableOptions = {
+      containment: '#sortable-container',
+      accept: function (sourceItemHandleScope, destSortableScope) {
+        return sourceItemHandleScope.itemScope.sortableScope.$id === destSortableScope.$id;
+      },
+      orderChanged: function (event) {
+        $scope.findCandidates($scope.skip, $scope.itemsPerPage, $scope.filters, false);
+      }
+    };
     $scope.range = function () {
       var rangeSize = 5;
       var ret = [];
@@ -2095,29 +4867,13 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', [
       return $scope.currentPage === $scope.pageCount() - 1 ? 'disabled' : '';
     };
     $scope.pageCount = function () {
-      console.log($scope.total + ' ' + $scope.itemsPerPage);
-      console.log($scope.total / $scope.itemsPerPage);
       return Math.ceil($scope.total / $scope.itemsPerPage);
     };
     $scope.setPage = function (n) {
-      console.log('EVERYTIME ITS CALLED');
       if (n >= 0 && n < $scope.pageCount()) {
         $scope.currentPage = n;
-        console.log($scope.currentPage);
       }
     };
-    $scope.$watch('currentPage', function (newValue, oldValue) {
-      console.log('CURRENT PAGE');
-      $http.put('jobs/getPaginatedCandidates/' + $stateParams.jobId, {
-        skip: newValue * $scope.itemsPerPage,
-        limit: $scope.itemsPerPage
-      }).success(function (job) {
-        $scope.pagedItems = $scope.job.candidates;
-        $scope.total = $scope.job.candidates.length;
-        $scope.candidates = job.candidates;
-        $scope.filteredCandidates = $scope.candidates;
-      });
-    });
     $scope.isShortListed = function (candidate) {
       var ans = false;
       angular.forEach($scope.job.shortListedCandidates, function (item) {
@@ -2126,22 +4882,37 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', [
       });
       return ans;
     };
-    $scope.findCandidates = function () {
+    $scope.findCandidates = function (skip, limit, filters, isPageChange) {
       $http.put('jobs/getPaginatedCandidates/' + $stateParams.jobId, {
-        skip: 0,
-        limit: $scope.itemsPerPage,
-        filter: 'general'
+        skip: skip,
+        limit: limit,
+        filter: filters,
+        isPageChange: isPageChange,
+        priority: $scope.itemsList.items1
       }).success(function (job) {
+        console.log(job);
+        $scope.filters1 = [];
         $scope.job = job.job;
-        $scope.candidates = $scope.job.candidates;
+        // $scope.locationFilters=job.filters.locationFilters;
         $scope.total = job.totalentries;
-        console.log($scope.total);
+        $scope.candidates = job.candidates;
+        job.filters.forEach(function (entry) {
+          $scope.filters1.push(entry);
+        });
+        if ($scope.firsttime) {
+          $scope.firsttime = false;
+          $scope.filters1.forEach(function (entry) {
+            var alreadyexists = false;
+            for (var h = 0, a = $scope.completefilternames.length; h < a; h++) {
+              if ($scope.completefilternames[h] == entry.type)
+                alreadyexists = true;
+            }
+            if (!alreadyexists)
+              $scope.completefilternames.push(entry.type);
+          });
+        }
       });
     };
-    // $http.get('jobs/candidates/' + $stateParams.jobId).success(function(job) {
-    // 	$scope.job = job;
-    // 	$scope.candidates = job.candidates;
-    // 	$scope.filteredCandidates = $scope.candidates;
     // Add to Short List
     $scope.addCandidateToShortList = function (candidate) {
       var attribute = {
@@ -2149,11 +4920,7 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', [
           candidateId: candidate._id
         };
       $http.put('jobs/addToShortList/' + $scope.job._id, attribute).success(function (response) {
-        $scope.job.shortListedCandidates.push({ candidate: candidate._id });  // $scope.$apply();
-                                                                              // $scope.candidate.jobs.push(job);
-                                                                              // $scope.jobs.splice($scope.jobs.indexOf(job), 1);
-                                                                              // $scope.$apply();
-                                                                              // $location.path('jobs/' + job._id);
+        $scope.job.shortListedCandidates.push({ candidate: candidate._id });
       }).error(function (response) {
         $scope.error = response.message;
       });
@@ -2175,91 +4942,137 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', [
         $scope.error = response.message;
       });
     };
-    // });
-    // $scope.search.name = 'Rawalpindi';
-    var populateLocationFilters = function () {
-      $scope.candidates = $filter('orderBy')($scope.candidates, 'location');
-      var filterValue = 'invalid_value';
-      for (var i = 0; i < $scope.candidates.length; i++) {
-        var candidate = $scope.candidates[i];
-        if (candidate.location !== filterValue) {
-          filterValue = candidate.location;
-          $scope.locationFilters.push({
-            name: filterValue,
-            count: 0,
-            value: false
-          });
+    //only watch currentPage for pagination purposes 
+    $scope.$watch('currentPage', function (newValue, oldValue) {
+      $scope.skip = newValue * $scope.itemsPerPage;
+      if ($scope.skip == 0) {
+        //   if first page
+        $scope.findCandidates($scope.skip, $scope.itemsPerPage, $scope.filters, false);
+      } else {
+        $scope.findCandidates($scope.skip, $scope.itemsPerPage, $scope.filters, true);
+      }
+    });
+    //Removes and adds filter for salary
+    $scope.filterChanged = function (type, name) {
+      $scope.filters1.forEach(function (entry) {
+        if (name == entry.name) {
+          entry.value = !entry.value;
+          if (entry.value == true)
+            $scope.addToFilters(entry.type, entry.name);
+          else
+            $scope.removeFromFilters(entry.type, entry.name);
         }
-        $scope.locationFilters[$scope.locationFilters.length - 1].count++;
+      });
+      $scope.findCandidates($scope.skip, $scope.itemsPerPage, $scope.filters, false);
+    };
+    //addToFilters
+    $scope.addToFilters = function (type, name) {
+      var once = true;
+      var alreadyPresentInFilters = false;
+      $scope.filters.forEach(function (entry) {
+        if (type == entry.type && name == entry.name) {
+          alreadyPresentInFilters = true;
+        }
+      });
+      if (!alreadyPresentInFilters) {
+        var typeExists = false;
+        var feefilters = $scope.filters.slice();
+        feefilters.forEach(function (entry) {
+          if (type == entry.type && once) {
+            once = false;
+            typeExists = true;
+            $scope.filters.push({
+              type: type,
+              name: name,
+              priority: entry.priority,
+              value: true
+            });
+          }
+        });
+        if (!typeExists) {
+          // There's no real number bigger than plus Infinity
+          var highest = 0;
+          var tmp;
+          for (var i = $scope.filters.length - 1; i >= 0; i--) {
+            tmp = $scope.filters[i].priority;
+            if (tmp > highest)
+              highest = tmp;
+          }
+          $scope.filters.push({
+            type: type,
+            name: name,
+            priority: highest + 1,
+            value: true
+          });
+        }  //salary_expext salay_exp  visa visa
       }
     };
-    var populateSalaryFilters = function () {
-      $scope.candidates = $filter('orderBy')($scope.candidates, 'salary_expectation');
-      var filterValue = 'invalid_value';
-      for (var i = 0; i < $scope.candidates.length; i++) {
-        var candidate = $scope.candidates[i];
-        if (candidate.salary_expectation !== filterValue) {
-          filterValue = candidate.salary_expectation;
-          $scope.salaryFilters.push({
-            name: filterValue,
-            count: 0,
-            value: false
-          });
-        }
-        $scope.salaryFilters[$scope.salaryFilters.length - 1].count++;
-      }
+    //removeFromFilters
+    $scope.removeFromFilters = function (type, name) {
+      $scope.filters.forEach(function (entry) {
+        if (type == entry.type && name == entry.name)
+          $scope.filters.splice($scope.filters.indexOf(entry), 1);
+      });
+      $scope.findCandidates($scope.skip, $scope.itemsPerPage, $scope.filters, false);
     };
-    var populateVisaFilters = function () {
-      $scope.candidates = $filter('orderBy')($scope.candidates, 'visa_status');
-      var filterValue = 'invalid_value';
-      for (var i = 0; i < $scope.candidates.length; i++) {
-        var candidate = $scope.candidates[i];
-        if (candidate.visa_status !== filterValue) {
-          filterValue = candidate.visa_status;
-          $scope.visaFilters.push({
-            name: filterValue,
-            count: 0,
-            value: false
+    $scope.openFilterModal = function (filterArray, name) {
+      var modalInstance = $modal.open({
+          templateUrl: '/modules/empoyer-jobs/views/employer-job-candidates/filter-modal.html',
+          controller: 'FilterModalCtrl',
+          resolve: {
+            filter: function () {
+              return {
+                values: angular.copy(filterArray),
+                name: name
+              };
+            }
+          }
+        });
+      modalInstance.result.then(function (filterObject) {
+        var filternames = [];
+        filterObject.filters.forEach(function (filter) {
+          if (filter.value) {
+            filternames.push(filter.name);
+          }
+        });
+        if (filterObject.name) {
+          filternames.forEach(function (filter) {
+            $scope.addToFilters(filterObject.name, filter);
           });
         }
-        $scope.visaFilters[$scope.visaFilters.length - 1].count++;
-      }
+        $scope.findCandidates($scope.skip, $scope.itemsPerPage, $scope.filters, false);
+      }, function () {
+      });
     };
-    var populateEmployeestatusFilters = function () {
-      $scope.candidates = $filter('orderBy')($scope.candidates, 'employee_status');
-      var filterValue = 'invalid_value';
-      for (var i = 0; i < $scope.candidates.length; i++) {
-        var candidate = $scope.candidates[i];
-        if (candidate.employee_status !== filterValue) {
-          filterValue = candidate.employee_status;
-          $scope.employeestatusFilters.push({
-            name: filterValue,
-            count: 0,
-            value: false
-          });
-        }
-        $scope.employeestatusFilters[$scope.employeestatusFilters.length - 1].count++;
-      }
-    };
-    var populateEmployeetypeFilters = function () {
-      $scope.candidates = $filter('orderBy')($scope.candidates, 'employee_type');
-      var filterValue = 'invalid_value';
-      for (var i = 0; i < $scope.candidates.length; i++) {
-        var candidate = $scope.candidates[i];
-        if (candidate.employee_type !== filterValue) {
-          filterValue = candidate.employee_type;
-          $scope.employeetypeFilters.push({
-            name: filterValue,
-            count: 0,
-            value: false
-          });
-        }
-        $scope.employeetypeFilters[$scope.employeetypeFilters.length - 1].count++;
+    $scope.compareType = function (typeName, value) {
+      if ($scope.job[typeName] === value) {
+        return true;
+      } else {
+        return false;
       }
     };
   }
+]).controller('FilterModalCtrl', [
+  '$scope',
+  '$modalInstance',
+  'filter',
+  function ($scope, $modalInstance, filter) {
+    $scope.filters = filter.values;
+    $scope.name = filter.name;
+    $scope.ok = function () {
+      // $scope.$parent.findCandidates($scope.$parent.skip, $scope.$parent.itemsPerPage, $scope.$parent.filters, false);
+      $modalInstance.close({
+        name: $scope.name,
+        filters: $scope.filters
+      });
+    };
+    $scope.cancel = function () {
+      $modalInstance.dismiss('cancel');
+    };
+  }
 ]);'use strict';
-angular.module('empoyer-jobs').controller('PostJobController', [
+var gt = angular.module('empoyer-jobs');
+gt.controller('PostJobController', [
   '$scope',
   'Industries',
   'Countries',
@@ -2274,7 +5087,10 @@ angular.module('empoyer-jobs').controller('PostJobController', [
     if (!$scope.user)
       $location.path('/signin');
     $scope.industries = Industries.getIndustries();
-    $scope.countries = Countries.getCountries();
+    Countries.getCountries(function (countries) {
+      $scope.countries = countries;
+    });
+    // $scope.countries = Countries.getCountries();
     $scope.studyFields = Studyfields.getStudyFields();
     $scope.skills = [];
     $scope.skills.push({
@@ -2349,6 +5165,66 @@ angular.module('empoyer-jobs').controller('PostJobController', [
       $scope.lat = $rootScope.coords.lat;
       $scope.longi = $rootScope.coords.longi;
       console.log($scope.lat);
+    };
+  }
+]);'use strict';
+angular.module('empoyer-jobs').directive('filterList', [
+  '$compile',
+  function ($compile) {
+    return {
+      template: '<div></div>',
+      restrict: 'E',
+      link: function postLink(scope, element, attrs) {
+        // Test directive directive logic
+        // ...
+        var filterName = attrs.filterName;
+        var filterNameString = '\'' + attrs.filterName + '\'';
+        var count = '\'count\'';
+        var type = '';
+        var filterHeading = '';
+        switch (filterName) {
+        case 'gender':
+          filterHeading = 'Gender';
+          break;
+        case 'salary_expectation':
+          filterHeading = 'Salary Expectation';
+          break;
+        case 'visa_status':
+          filterHeading = 'Visa';
+          break;
+        case 'employee_status':
+          filterHeading = 'Employment Status';
+          break;
+        case 'employee_type':
+          filterHeading = 'Employment Type';
+          break;
+        case 'career_level':
+          filterHeading = 'Career Level';
+          break;
+        case 'skills':
+          filterHeading = 'Skills';
+          break;
+        case 'educations':
+          filterHeading = 'Education';
+          break;
+        case 'isOnline':
+          filterHeading = 'Presence';
+          break;
+        }
+        scope.$watch('filters1', function (v) {
+          filterName = attrs.filterName;
+          filterNameString = '\'' + attrs.filterName + '\'';
+          count = '\'count\'';
+          scope.dummyfilters = [];
+          for (var h = 0, j = v.length; h < j; h++) {
+            if (filterName == v[h].type)
+              scope.dummyfilters.push(v[h]);
+          }
+          var html = '<article style="padding-top: 10px;">' + '<label><strong>' + filterHeading + '</strong></label>' + '<ul class="list-unstyled m-t-n-sm">' + '<li class="checkbox i-checks" data-ng-repeat="' + filterName + 'Filter in dummyfilters | orderBy:' + count + ':true  | limitTo: filterLimit">' + '<label>' + '<input type="checkbox" data-ng-click="filterChanged(' + filterNameString + ',' + filterName + 'Filter.name)" data-ng-model="' + filterName + 'Filter.value" id="{{' + filterName + ' + ' + filterName + 'Filter.name}}" />' + '<i></i>' + '<label ng-if="' + filterName + 'Filter.name" for="{{' + filterName + ' + ' + filterName + 'Filter.name}}" >{{' + filterName + 'Filter.name}} ({{' + filterName + 'Filter.count}})</label>' + '<label ng-if="!' + filterName + 'Filter.name" for="{{' + filterName + ' + ' + filterName + 'Filter.name}}" >Not Mentioned ({{' + filterName + 'Filter.count}})</label>' + '</label>' + '</li>' + '</ul>' + '<a href="" data-ng-if="dummyfilters.length > filterLimit" data-ng-click="openFilterModal(dummyfilters, ' + filterNameString + ')">more choices...</a>' + '</article>';
+          var e = $compile(html)(scope);
+          element.replaceWith(e);
+        }, true);
+      }
     };
   }
 ]);'use strict';
@@ -2670,6 +5546,12 @@ angular.module('messages').config([
     $stateProvider.state('list-user-messages', {
       url: '/list-user-messages',
       templateUrl: 'modules/messages/views/list-user-messages.client.view.html'
+    }).state('list-user-messages.inboxs', {
+      url: '/inboxs/:threadId',
+      templateUrl: 'modules/messages/views/inbox.client.view.html'
+    }).state('create-message', {
+      url: '/create-message',
+      templateUrl: 'modules/messages/views/create-message.client.view.html'
     });
   }
 ]);'use strict';
@@ -2693,8 +5575,55 @@ angular.module('messages').controller('MessagesController', [
   '$location',
   'Authentication',
   'Messages',
-  function ($scope, $stateParams, $location, Authentication, Messages) {
+  '$http',
+  'Socket',
+  function ($scope, $stateParams, $location, Authentication, Messages, $http, Socket) {
     $scope.authentication = Authentication;
+    $scope.threads = [];
+    $scope.message = {};
+    $scope.thread;
+    $scope.balsamic = {};
+    $scope.message.messages = [];
+    $scope.displayNameOfReceiver;
+    $scope.nomessages = false;
+    $scope.unreadthreads = 0;
+    console.log($stateParams.threadId);
+    $scope.listThreads = function () {
+      $http.get('/getAllMessagesWithFlagForUnread/' + $scope.authentication.user._id).success(function (res) {
+        $scope.threads = res;
+        console.log(res);
+        for (var s = 0, len = $scope.threads.length; s < len; s++) {
+          if ($scope.threads[s].receiver == $scope.authentication.user._id)
+            if (!$scope.threads[s].readByReceiver)
+              $scope.unreadthreads++;
+          if ($scope.threads[s].sender == $scope.authentication.user._id)
+            if (!$scope.threads[s].readBySender)
+              $scope.unreadthreads++;
+        }
+        for (var s = 0, len = $scope.threads.length; s < len; s++)
+          if ($stateParams.threadId != 'main' && $stateParams.threadId == $scope.threads[s]._id) {
+            $scope.selectedmessage($scope.threads[s]);
+            break;
+          }
+        if ($stateParams.threadId == 'main' && $scope.threads.length >= 1)
+          $scope.selectedmessage($scope.threads[0]);
+        if ($stateParams.threadId == 'main' && $scope.threads.length == 0)
+          $scope.nomessages = true;
+      });
+    };
+    $scope.selectedmessage = function (message) {
+      $scope.thread = message;
+      $scope.displayNameOfReceiver = '';
+      $scope.messages = message.messages;
+      console.log($scope.messages);
+      for (var x = 0, len = $scope.messages.length; x < len; x++)
+        if ($scope.messages[x].author._id != $scope.authentication.user._id) {
+          $scope.displayNameOfReceiver = $scope.messages[x].author.displayName;
+          break;
+        }
+      $scope.findOneAndMarkAsRead();
+      $stateParams.threadId = $scope.thread._id;
+    };
     // Create new Message
     $scope.create = function () {
       // Create new Message object
@@ -2739,6 +5668,90 @@ angular.module('messages').controller('MessagesController', [
     // Find existing Message
     $scope.findOne = function () {
       $scope.message = Messages.get({ messageId: $stateParams.messageId });
+    };
+    $scope.sendMessage = function () {
+      var threadId = $scope.thread._id;
+      var message = {
+          threadId: $scope.thread._id,
+          messageBody: $scope.balsamic.message,
+          author: $scope.authentication.user
+        };
+      if ($scope.authentication.user._id == $scope.thread.sender._id) {
+        var thread = {
+            idc: threadId,
+            sender: { displayName: $scope.authentication.user.displayName },
+            receiver: $scope.thread.receiver._id,
+            messages: { created: Date.now() }
+          };
+        Socket.emit('message_sent_from', { message: thread });
+      } else {
+        var thread = {
+            idc: threadId,
+            sender: { displayName: $scope.authentication.user.displayName },
+            receiver: $scope.thread.sender._id,
+            messages: [{ created: Date.now() }]
+          };
+        Socket.emit('message_sent_from', { message: thread });
+      }
+      $http.put('/threads/updateThread/' + $scope.thread._id, message).success(function (messageBody) {
+        console.log(messageBody);
+        Socket.emit('update_threads', {
+          sender: messageBody.sender,
+          receiver: messageBody.receiver,
+          threadId: $scope.thread._id,
+          messageBody: $scope.balsamic.message,
+          author: $scope.authentication.user,
+          authordp: $scope.authentication.user.picture_url,
+          created: Date.now()
+        });
+      });
+    };
+    Socket.on('i_am_here', function (data) {
+      for (var x = 0, b = $scope.thread.messages.length; x < b; x++) {
+        if ($scope.thread.messages[x].author._id === data.userId)
+          $scope.thread.messages[x].author.isOnline = data.isOnline == 'Online' ? true : false;
+        if ($scope.thread.messages[x].author.authorid == data.userId)
+          $scope.thread.messages[x].author.isOnline = data.isOnline == 'Online' ? true : false;
+      }
+    });
+    //socket incoming_thread start
+    Socket.on('incoming_thread', function (data) {
+      $scope.balsamic.message = '';
+      $scope.newMessage = {
+        messageBody: data.messageBody,
+        author: {
+          _id: data.id,
+          displayName: data.author,
+          picture_url: data.authordp,
+          isOnline: 'Online'
+        },
+        created: data.created
+      };
+      $scope.unreadthreads++;
+      for (var x = 0, len = $scope.threads.length; x < len; x++) {
+        if ($scope.threads[x]._id == data.threadId) {
+          $scope.threads[x].messages.unshift($scope.newMessage);
+          break;
+        }
+      }
+    });
+    $scope.sortMessage = function (message) {
+      var date = new Date(message.created);
+      return date;
+    };
+    $scope.findOneAndMarkAsRead = function () {
+      $http.put('/threads/getUserThread/' + $scope.thread._id, { id: $scope.authentication.user._id }).success(function (thread) {
+        $scope.thread = thread.thread;
+        if (!thread.alreadyRead && $scope.unreadthreads != 0)
+          $scope.unreadthreads--;
+        if (thread.thread.sender._id === $scope.authentication.user._id)
+          $http.put('/users/addSubscriber/' + $scope.authentication.user._id, { id: thread.thread.receiver._id }).success(function () {
+          });
+        else
+          $http.put('/users/addSubscriber/' + $scope.authentication.user._id, { id: thread.thread.sender._id }).success(function () {
+          });
+        Socket.emit('watched_thread', $scope.authentication.user._id);
+      });
     };
   }
 ]);'use strict';
@@ -3052,257 +6065,27 @@ angular.module('static-factories').filter('employeestatusFilter', [function () {
       }
     };
   }]);'use strict';
-angular.module('static-factories').factory('Countries', [function () {
+angular.module('static-factories').factory('Countries', [
+  '$http',
+  function ($http) {
     // Industries service logic
     // ...
     var factory = {};
-    var countries = [
-        { name: 'Afghanistan' },
-        { name: 'Albania' },
-        { name: 'Algeria' },
-        { name: 'American Samoa' },
-        { name: 'Andorra' },
-        { name: 'Angola' },
-        { name: 'Anguilla' },
-        { name: 'Antarctica' },
-        { name: 'Antigua and Barbuda' },
-        { name: 'Argentina' },
-        { name: 'Armenia' },
-        { name: 'Aruba' },
-        { name: 'Australia' },
-        { name: 'Austria' },
-        { name: 'Azerbaijan' },
-        { name: 'Bahamas' },
-        { name: 'Bahrain' },
-        { name: 'Bangladesh' },
-        { name: 'Barbados' },
-        { name: 'Belarus' },
-        { name: 'Belgium' },
-        { name: 'Belize' },
-        { name: 'Benin' },
-        { name: 'Bermuda' },
-        { name: 'Bhutan' },
-        { name: 'Bolivia' },
-        { name: 'Bosnia and Herzegovina' },
-        { name: 'Botswana' },
-        { name: 'Bouvet Island' },
-        { name: 'Brazil' },
-        { name: 'British Indian Ocean Territories' },
-        { name: 'Brunei Darussalam' },
-        { name: 'Bulgaria' },
-        { name: 'Burkina Faso' },
-        { name: 'Burundi' },
-        { name: 'Cambodia' },
-        { name: 'Cameroon' },
-        { name: 'Canada' },
-        { name: 'Cape Verde' },
-        { name: 'Cayman Islands' },
-        { name: 'Central African Republic' },
-        { name: 'Chad' },
-        { name: 'Chile' },
-        { name: 'China' },
-        { name: 'Christmas Island' },
-        { name: 'Cocos Islands' },
-        { name: 'Colombia' },
-        { name: 'Comoros' },
-        { name: 'Congo' },
-        { name: 'Cook Islands' },
-        { name: 'Costa Rica' },
-        { name: 'Cote Divoire' },
-        { name: 'Croatia' },
-        { name: 'Cuba' },
-        { name: 'Cyprus' },
-        { name: 'Czech Republic' },
-        { name: 'Denmark' },
-        { name: 'Djibouti' },
-        { name: 'Dominica' },
-        { name: 'Dominican Republic' },
-        { name: 'East Timor' },
-        { name: 'Ecuador' },
-        { name: 'Egypt' },
-        { name: 'El Salvador' },
-        { name: 'Equatorial Guinea' },
-        { name: 'Eritrea' },
-        { name: 'Estonia' },
-        { name: 'Ethiopia' },
-        { name: 'Falkland Islands' },
-        { name: 'Faroe Islands' },
-        { name: 'Fiji' },
-        { name: 'Finland' },
-        { name: 'France' },
-        { name: 'France, Metropolitan' },
-        { name: 'French Guiana' },
-        { name: 'French Polynesia' },
-        { name: 'French Southern Territories' },
-        { name: 'FYROM' },
-        { name: 'Gabon' },
-        { name: 'Gambia' },
-        { name: 'Georgia' },
-        { name: 'Germany' },
-        { name: 'Ghana' },
-        { name: 'Gibraltar' },
-        { name: 'Greece' },
-        { name: 'Greenland' },
-        { name: 'Grenada' },
-        { name: 'Guadeloupe' },
-        { name: 'Guam' },
-        { name: 'Guatemala' },
-        { name: 'Guinea' },
-        { name: 'Guinea-Bissau' },
-        { name: 'Guyana' },
-        { name: 'Haiti' },
-        { name: 'Heard Island And Mcdonald Islands' },
-        { name: 'Honduras' },
-        { name: 'Hong Kong' },
-        { name: 'Hungary' },
-        { name: 'Iceland' },
-        { name: 'India' },
-        { name: 'Indonesia' },
-        { name: 'Iran' },
-        { name: 'Iraq' },
-        { name: 'Ireland' },
-        { name: 'Israel' },
-        { name: 'Italy' },
-        { name: 'Jamaica' },
-        { name: 'Japan' },
-        { name: 'Jordan' },
-        { name: 'Kazakhstan' },
-        { name: 'Kenya' },
-        { name: 'Kiribati' },
-        { name: 'Korea, Democratic People&amp;#39;s Republic of' },
-        { name: 'Korea, Republic of' },
-        { name: 'Kuwait' },
-        { name: 'Kyrgyzstan' },
-        { name: 'Lao Peoples Democratic Republic' },
-        { name: 'Latvia' },
-        { name: 'Lebanon' },
-        { name: 'Lesotho' },
-        { name: 'Liberia' },
-        { name: 'Libyan Arab Jamahiriya' },
-        { name: 'Liechtenstein' },
-        { name: 'Lithuania' },
-        { name: 'Luxembourg' },
-        { name: 'Macau' },
-        { name: 'Madagascar' },
-        { name: 'Malawi' },
-        { name: 'Malaysia' },
-        { name: 'Maldives' },
-        { name: 'Mali' },
-        { name: 'Malta' },
-        { name: 'Marshall Islands' },
-        { name: 'Martinique' },
-        { name: 'Mauritania' },
-        { name: 'Mauritius' },
-        { name: 'Mayotte' },
-        { name: 'Mexico' },
-        { name: 'Micronesia' },
-        { name: 'Moldova' },
-        { name: 'Monaco' },
-        { name: 'Mongolia' },
-        { name: 'Montserrat' },
-        { name: 'Morocco' },
-        { name: 'Mozambique' },
-        { name: 'Myanmar' },
-        { name: 'Namibia' },
-        { name: 'Nauru' },
-        { name: 'Nepal' },
-        { name: 'Netherlands' },
-        { name: 'Netherlands Antilles' },
-        { name: 'New Caledonia' },
-        { name: 'New Zealand' },
-        { name: 'Nicaragua' },
-        { name: 'Niger' },
-        { name: 'Nigeria' },
-        { name: 'Niue' },
-        { name: 'Norfolk Island' },
-        { name: 'Northern Mariana Islands' },
-        { name: 'Norway' },
-        { name: 'Oman' },
-        { name: 'Palau' },
-        { name: 'Panama' },
-        { name: 'Papua New Guinea' },
-        { name: 'Pakistan' },
-        { name: 'Paraguay' },
-        { name: 'Peru' },
-        { name: 'Philippines' },
-        { name: 'Pitcairn' },
-        { name: 'Poland' },
-        { name: 'Portugal' },
-        { name: 'Puerto Rico' },
-        { name: 'Qatar' },
-        { name: 'Reunion' },
-        { name: 'Romania' },
-        { name: 'Russian Federation' },
-        { name: 'Rwanda' },
-        { name: 'Saint Helena' },
-        { name: 'Saint Kitts and Nevis' },
-        { name: 'Saint Lucia' },
-        { name: 'Saint Pierre and Miquelon' },
-        { name: 'Saint Vincent and The Grenadines' },
-        { name: 'Samoa' },
-        { name: 'San Marino' },
-        { name: 'Sao Tome and Principe' },
-        { name: 'Saudi Arabia' },
-        { name: 'Senegal' },
-        { name: 'Seychelles' },
-        { name: 'Sierra Leone' },
-        { name: 'Singapore' },
-        { name: 'Slovakia' },
-        { name: 'Slovenia' },
-        { name: 'Solomon Islands' },
-        { name: 'Somalia' },
-        { name: 'South Africa' },
-        { name: 'South Georgia and Sandwich Islands' },
-        { name: 'Spain' },
-        { name: 'Sri Lanka' },
-        { name: 'Sudan' },
-        { name: 'Suriname' },
-        { name: 'Svalbard and Jan Mayen' },
-        { name: 'Swaziland' },
-        { name: 'Sweden' },
-        { name: 'Switzerland' },
-        { name: 'Syrian Arab Republic' },
-        { name: 'Taiwan' },
-        { name: 'Tajikistan' },
-        { name: 'Tanzania' },
-        { name: 'Thailand' },
-        { name: 'Togo' },
-        { name: 'Tokelau' },
-        { name: 'Tonga' },
-        { name: 'Trinidad and Tobago' },
-        { name: 'Tunisia' },
-        { name: 'Turkey' },
-        { name: 'Turkmenistan' },
-        { name: 'Turks and Caicos Islands' },
-        { name: 'Tuvalu' },
-        { name: 'Uganda' },
-        { name: 'Ukraine' },
-        { name: 'United Arab Emirates' },
-        { name: 'United Kingdom' },
-        { name: 'United States' },
-        { name: 'United States Minor Outlying Islands' },
-        { name: 'Uruguay' },
-        { name: 'Uzbekistan' },
-        { name: 'Vanuatu' },
-        { name: 'Vatican City State' },
-        { name: 'Venezuela' },
-        { name: 'Vietnam' },
-        { name: 'Virgin Islands (British)' },
-        { name: 'Virgin Islands (U.S.)' },
-        { name: 'Wallis And Futuna Islands' },
-        { name: 'Western Sahara' },
-        { name: 'Yemen' },
-        { name: 'Yugoslavia' },
-        { name: 'Zaire' },
-        { name: 'Zambia' },
-        { name: 'Zimbabwe' }
-      ];
+    var cachedCountries = [];
     // Public API
-    factory.getCountries = function () {
-      return countries;
+    factory.getCountries = function (callback) {
+      if (!cachedCountries) {
+        callback(cachedCountries);
+      } else {
+        $http.get('/countries').success(function (countries) {
+          cachedCountries = countries;
+          callback(countries);
+        });
+      }
     };
     return factory;
-  }]);'use strict';
+  }
+]);'use strict';
 angular.module('static-factories').factory('Industries', [function () {
     // Industries service logic
     // ...
@@ -3900,6 +6683,392 @@ angular.module('static-factories').factory('Industries', [function () {
     // Public API
     factory.getIndustries = function () {
       return industries;
+    };
+    return factory;
+  }]);'use strict';
+angular.module('static-factories').factory('Locationz', [function () {
+    // Industries service logic
+    // ...
+    var factory = {};
+    var locationz = [
+        { name: 'Bagh' },
+        { name: 'Bhimber' },
+        { name: 'khuiratta' },
+        { name: 'Kotli' },
+        { name: 'Mangla' },
+        { name: 'Mirpur' },
+        { name: 'Muzaffarabad' },
+        { name: 'Plandri' },
+        { name: 'Rawalakot' },
+        { name: 'Punch' },
+        { name: 'Amir Chah' },
+        { name: 'Bazdar' },
+        { name: 'Bela' },
+        { name: 'Bellpat' },
+        { name: 'Bagh' },
+        { name: 'Burj' },
+        { name: 'Chah Sandan' },
+        { name: 'Chaman' },
+        { name: 'Chakku' },
+        { name: 'Chhatr' },
+        { name: 'Dalbandin' },
+        { name: 'Dera Bugti' },
+        { name: 'Dhana Sar' },
+        { name: 'Diwana' },
+        { name: 'Duki' },
+        { name: 'Dushi' },
+        { name: 'Duzab' },
+        { name: 'Gajar' },
+        { name: 'Gandava' },
+        { name: 'Garhi Khairo' },
+        { name: 'Garruck' },
+        { name: 'Ghazluna' },
+        { name: 'Girdan' },
+        { name: 'Gulistan' },
+        { name: 'Gwadar' },
+        { name: 'Gwash' },
+        { name: 'Hab Chauki' },
+        { name: 'Hameedabad' },
+        { name: 'Harnai' },
+        { name: 'Hinglaj' },
+        { name: 'Hoshab' },
+        { name: 'Ispikan' },
+        { name: 'Jhal' },
+        { name: 'Jhal Jhao' },
+        { name: 'Jhatpat' },
+        { name: 'Jiwani' },
+        { name: 'Kalandi' },
+        { name: 'Kalat' },
+        { name: 'Kamararod' },
+        { name: 'Kanak' },
+        { name: 'Kandi' },
+        { name: 'Kanpur' },
+        { name: 'Kapip' },
+        { name: 'Kappar' },
+        { name: 'Karodi' },
+        { name: 'Katuri' },
+        { name: 'Kharan' },
+        { name: 'Khuzdar' },
+        { name: 'Kikki' },
+        { name: 'Kohan' },
+        { name: 'Kohlu' },
+        { name: 'Korak' },
+        { name: 'Lahri' },
+        { name: 'Lasbela' },
+        { name: 'Liari' },
+        { name: 'Loralai' },
+        { name: 'Mach' },
+        { name: 'Mand' },
+        { name: 'Mangucha' },
+        { name: 'Mashki Chah' },
+        { name: 'Maslti' },
+        { name: 'Mastung' },
+        { name: 'Mekhtar' },
+        { name: 'Merui' },
+        { name: 'Mianez' },
+        { name: 'Murgha Kibzai' },
+        { name: 'Musa Khel Bazar' },
+        { name: 'Nagha Kalat' },
+        { name: 'Nal' },
+        { name: 'Naseerabad' },
+        { name: 'Nauroz Kalat' },
+        { name: 'Nur Gamma' },
+        { name: 'Nushki' },
+        { name: 'Nuttal' },
+        { name: 'Ormara' },
+        { name: 'Palantuk' },
+        { name: 'Panjgur' },
+        { name: 'Pasni' },
+        { name: 'Piharak' },
+        { name: 'Pishin' },
+        { name: 'Qamruddin Karez' },
+        { name: 'Qila Abdullah' },
+        { name: 'Qila Ladgasht' },
+        { name: 'Qila Safed' },
+        { name: 'Qila Saifullah' },
+        { name: 'Quetta' },
+        { name: 'Rakhni' },
+        { name: 'Robat Thana' },
+        { name: 'Rodkhan' },
+        { name: 'Saindak' },
+        { name: 'Sanjawi' },
+        { name: 'Saruna' },
+        { name: 'Shabaz Kalat' },
+        { name: 'Shahpur' },
+        { name: 'Sharam Jogizai' },
+        { name: 'Shingar' },
+        { name: 'Shorap' },
+        { name: 'Sibi' },
+        { name: 'Sonmiani' },
+        { name: 'Spezand' },
+        { name: 'Spintangi' },
+        { name: 'Sui' },
+        { name: 'Suntsar' },
+        { name: 'Surab' },
+        { name: 'Thalo' },
+        { name: 'Tump' },
+        { name: 'Turbat' },
+        { name: 'Umarao' },
+        { name: 'pirMahal' },
+        { name: 'Uthal' },
+        { name: 'Vitakri' },
+        { name: 'Wadh' },
+        { name: 'Washap' },
+        { name: 'Wasjuk' },
+        { name: 'Yakmach' },
+        { name: 'Zhob' },
+        { name: 'Astor' },
+        { name: 'Baramula' },
+        { name: 'Hunza' },
+        { name: 'Gilgit' },
+        { name: 'Nagar' },
+        { name: 'Skardu' },
+        { name: 'Shangrila' },
+        { name: 'Shandur' },
+        { name: 'Bajaur' },
+        { name: 'Hangu' },
+        { name: 'Malakand' },
+        { name: 'Miram Shah' },
+        { name: 'Mohmand' },
+        { name: 'Khyber' },
+        { name: 'Kurram' },
+        { name: 'North Waziristan' },
+        { name: 'South Waziristan' },
+        { name: 'Wana' },
+        { name: 'NWFP' },
+        { name: 'Abbottabad' },
+        { name: 'Ayubia' },
+        { name: 'Adezai' },
+        { name: 'Banda Daud Shah' },
+        { name: 'Bannu' },
+        { name: 'Batagram' },
+        { name: 'Birote' },
+        { name: 'Buner' },
+        { name: 'Chakdara' },
+        { name: 'Charsadda' },
+        { name: 'Chitral' },
+        { name: 'Dargai' },
+        { name: 'Darya Khan' },
+        { name: 'Dera Ismail Khan' },
+        { name: 'Drasan' },
+        { name: 'Drosh' },
+        { name: 'Hangu' },
+        { name: 'Haripur' },
+        { name: 'Kalam' },
+        { name: 'Karak' },
+        { name: 'Khanaspur' },
+        { name: 'Kohat' },
+        { name: 'Kohistan' },
+        { name: 'Lakki Marwat' },
+        { name: 'Latamber' },
+        { name: 'Lower Dir' },
+        { name: 'Madyan' },
+        { name: 'Malakand' },
+        { name: 'Mansehra' },
+        { name: 'Mardan' },
+        { name: 'Mastuj' },
+        { name: 'Mongora' },
+        { name: 'Nowshera' },
+        { name: 'Paharpur' },
+        { name: 'Peshawar' },
+        { name: 'Saidu Sharif' },
+        { name: 'Shangla' },
+        { name: 'Sakesar' },
+        { name: 'Swabi' },
+        { name: 'Swat' },
+        { name: 'Tangi' },
+        { name: 'Tank' },
+        { name: 'Thall' },
+        { name: 'Tordher' },
+        { name: 'Upper Dir' },
+        { name: 'Ahmedpur East' },
+        { name: 'Ahmed Nager Chatha' },
+        { name: 'Ali Pur' },
+        { name: 'Arifwala' },
+        { name: 'Attock' },
+        { name: 'Basti Malook' },
+        { name: 'Bhagalchur' },
+        { name: 'Bhalwal' },
+        { name: 'Bahawalnagar' },
+        { name: 'Bahawalpur' },
+        { name: 'Bhaipheru' },
+        { name: 'Bhakkar' },
+        { name: 'Burewala' },
+        { name: 'Chailianwala' },
+        { name: 'Chakwal' },
+        { name: 'Chichawatni' },
+        { name: 'Chiniot' },
+        { name: 'Chowk Azam' },
+        { name: 'Chowk Sarwar Shaheed' },
+        { name: 'Daska' },
+        { name: 'Darya Khan' },
+        { name: 'Dera Ghazi Khan' },
+        { name: 'Derawar Fort' },
+        { name: 'Dhaular' },
+        { name: 'Dina City' },
+        { name: 'Dinga' },
+        { name: 'Dipalpur' },
+        { name: 'Faisalabad' },
+        { name: 'Fateh Jang' },
+        { name: 'Gadar' },
+        { name: 'Ghakhar Mandi' },
+        { name: 'Gujranwala' },
+        { name: 'Gujrat' },
+        { name: 'Gujar Khan' },
+        { name: 'Hafizabad' },
+        { name: 'Haroonabad' },
+        { name: 'Hasilpur' },
+        { name: 'Haveli Lakha' },
+        { name: 'Jampur' },
+        { name: 'Jhang' },
+        { name: 'Jhelum' },
+        { name: 'Kalabagh' },
+        { name: 'Karor Lal Esan' },
+        { name: 'Kasur' },
+        { name: 'Kamalia' },
+        { name: 'Kamokey' },
+        { name: 'Khanewal' },
+        { name: 'Khanpur' },
+        { name: 'Kharian' },
+        { name: 'Khushab' },
+        { name: 'Kot Addu' },
+        { name: 'Jahania' },
+        { name: 'Jalla Araain' },
+        { name: 'Jauharabad' },
+        { name: 'Laar' },
+        { name: 'Lahore' },
+        { name: 'Lalamusa' },
+        { name: 'Layyah' },
+        { name: 'Lodhran' },
+        { name: 'Mamoori' },
+        { name: 'Mandi Bahauddin' },
+        { name: 'Makhdoom Aali' },
+        { name: 'Mandi Warburton' },
+        { name: 'Mailsi' },
+        { name: 'Mian Channu' },
+        { name: 'Minawala' },
+        { name: 'Mianwali' },
+        { name: 'Multan' },
+        { name: 'Murree' },
+        { name: 'Muridke' },
+        { name: 'Muzaffargarh' },
+        { name: 'Narowal' },
+        { name: 'Okara' },
+        { name: 'Renala Khurd' },
+        { name: 'Rajan Pur' },
+        { name: 'Pak Pattan' },
+        { name: 'Panjgur' },
+        { name: 'Pattoki' },
+        { name: 'Pirmahal' },
+        { name: 'Qila Didar Singh' },
+        { name: 'Rabwah' },
+        { name: 'Raiwind' },
+        { name: 'Rajan Pur' },
+        { name: 'Rahim Yar Khan' },
+        { name: 'Rawalpindi' },
+        { name: 'Rohri' },
+        { name: 'Sadiqabad' },
+        { name: 'Safdar Abad \u2013 (Dhaban Singh)' },
+        { name: 'Sahiwal' },
+        { name: 'Sangla Hill' },
+        { name: 'Samberial' },
+        { name: 'Sarai Alamgir' },
+        { name: 'Sargodha' },
+        { name: 'Shakargarh' },
+        { name: 'Shafqat Shaheed Chowk' },
+        { name: 'Sheikhupura' },
+        { name: 'Sialkot' },
+        { name: 'Sohawa' },
+        { name: 'Sooianwala' },
+        { name: 'Sundar (city)' },
+        { name: 'Talagang' },
+        { name: 'Tarbela' },
+        { name: 'Takhtbai' },
+        { name: 'Taxila' },
+        { name: 'Toba Tek Singh' },
+        { name: 'Vehari' },
+        { name: 'Wah Cantonment' },
+        { name: 'Wazirabad' },
+        { name: 'Ali Bandar' },
+        { name: 'Baden' },
+        { name: 'Chachro' },
+        { name: 'Dadu' },
+        { name: 'Digri' },
+        { name: 'Diplo' },
+        { name: 'Dokri' },
+        { name: 'Gadra' },
+        { name: 'Ghanian' },
+        { name: 'Ghauspur' },
+        { name: 'Ghotki' },
+        { name: 'Hala' },
+        { name: 'Hyderabad' },
+        { name: 'Islamkot' },
+        { name: 'Jacobabad' },
+        { name: 'Jamesabad' },
+        { name: 'Jamshoro' },
+        { name: 'Janghar' },
+        { name: 'Jati (Mughalbhin)' },
+        { name: 'Jhudo' },
+        { name: 'Jungshahi' },
+        { name: 'Kandiaro' },
+        { name: 'Karachi' },
+        { name: 'Kashmor' },
+        { name: 'Keti Bandar' },
+        { name: 'Khairpur' },
+        { name: 'Khora' },
+        { name: 'Klupro' },
+        { name: 'Khokhropur' },
+        { name: 'Korangi' },
+        { name: 'Kotri' },
+        { name: 'Kot Sarae' },
+        { name: 'Larkana' },
+        { name: 'Lund' },
+        { name: 'Mathi' },
+        { name: 'Matiari' },
+        { name: 'Mehar' },
+        { name: 'Mirpur Batoro' },
+        { name: 'Mirpur Khas' },
+        { name: 'Mirpur Sakro' },
+        { name: 'Mithi' },
+        { name: 'Mithani' },
+        { name: 'Moro' },
+        { name: 'Nagar Parkar' },
+        { name: 'Naushara' },
+        { name: 'Naudero' },
+        { name: 'Noushero Feroz' },
+        { name: 'Nawabshah' },
+        { name: 'Nazimabad' },
+        { name: 'Naokot' },
+        { name: 'Pendoo' },
+        { name: 'Pokran' },
+        { name: 'Qambar' },
+        { name: 'Qazi Ahmad' },
+        { name: 'Ranipur' },
+        { name: 'Ratodero' },
+        { name: 'Rohri' },
+        { name: 'Saidu Sharif' },
+        { name: 'Sakrand' },
+        { name: 'Sanghar' },
+        { name: 'Shadadkhot' },
+        { name: 'Shahbandar' },
+        { name: 'Shahdadpur' },
+        { name: 'Shahpur Chakar' },
+        { name: 'Shikarpur' },
+        { name: 'Sujawal' },
+        { name: 'Sukkur' },
+        { name: 'Tando Adam' },
+        { name: 'Tando Allahyar' },
+        { name: 'Tando Bago' },
+        { name: 'Tar Ahamd Rind' },
+        { name: 'Thatta' },
+        { name: 'Tujal' },
+        { name: 'Umarkot' },
+        { name: 'Veirwaro' },
+        { name: 'Warah' }
+      ];
+    // Public API
+    factory.getLocationz = function () {
+      return locationz;
     };
     return factory;
   }]);'use strict';
@@ -5008,9 +8177,9 @@ angular.module('threads').controller('ThreadsController', [
     Socket.on('i_am_here', function (data) {
       for (var x = 0, b = $scope.thread.messages.length; x < b; x++) {
         if ($scope.thread.messages[x].author._id === data.userId)
-          $scope.thread.messages[x].author.isOnline = data.isOnline;
+          $scope.thread.messages[x].author.isOnline = data.isOnline == 'Online' ? true : false;
         if ($scope.thread.messages[x].author.authorid == data.userId)
-          $scope.thread.messages[x].author.isOnline = data.isOnline;
+          $scope.thread.messages[x].author.isOnline = data.isOnline == 'Online' ? true : false;
       }
     });
     //socket incoming_thread start
@@ -5024,7 +8193,7 @@ angular.module('threads').controller('ThreadsController', [
           authorid: data.id,
           displayName: data.author,
           picture_url: data.authordp,
-          isOnline: true
+          isOnline: 'Online'
         },
         created: data.created
       });
@@ -5038,13 +8207,13 @@ angular.module('threads').controller('ThreadsController', [
     //           $http.put('/users/deleteSubscriber/'+$scope.authentication.user._id,{id:$scope.thread.sender._id}).success(function(){});                     
     //    });
     $scope.showOnline = function (data) {
-      if (data.author.isOnline)
+      if (data.author.isOnline == 'Online')
         return true;
       else
         return false;
     };
     $scope.showOffline = function (data) {
-      if (data.author.isOnline)
+      if (data.author.isOnline == 'Online')
         return false;
       else
         return true;
@@ -5162,6 +8331,26 @@ angular.module('threads').controller('ThreadsController', [
     $scope.startCompose = function () {
       $scope.isCompose = true;
     };
+    // Check / Uncheck All
+    $scope.checkAll = function () {
+      for (var i = 0; i < $scope.threads.length; i++) {
+        $scope.threads[i].selected = $scope.allChecked;
+      }
+    };
+    // Change the status of the 'Check All' checkbox
+    // According to the other checkboxes
+    $scope.changeCheckAll = function () {
+      for (var i = 0; i < $scope.threads.length; i++) {
+        // If there is an unchecked input
+        // Change the status and exit the function
+        if (!$scope.threads[i].selected) {
+          $scope.allChecked = false;
+          return false;
+        }
+      }
+      // If all are checked
+      $scope.allChecked = true;
+    };
   }
 ]);'use strict';
 //Threads service used to communicate Threads REST endpoints
@@ -5251,6 +8440,7 @@ angular.module('users').controller('AuthenticationController', [
       $http.post('/auth/signup', $scope.credentials).success(function (response) {
         //If successful we assign the response to the global user model
         $scope.authentication.user = response;
+        console.log($scope.authentication.user);
         //And redirect to the index page
         $location.path('/');
       }).error(function (response) {
@@ -5271,13 +8461,16 @@ angular.module('users').controller('AuthenticationController', [
       }
     };
     $scope.signin = function () {
+      console.log('SIGNINGWTF' + $scope.credentials);
       $http.post('/auth/signin', $scope.credentials).success(function (response) {
         //If successful we assign the response to the global user model
         $scope.authentication.user = response;
+        console.log(response);
         //And redirect to the index page
         // $location.path('/');
         changeLocation('/');
       }).error(function (response) {
+        console.log(response.message);
         $scope.error = response.message;
       });
     };
