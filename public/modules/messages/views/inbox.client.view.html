@@ -28,7 +28,7 @@
 	                      <ul class="list-group auto no-radius m-b-none m-t-n-xxs list-group-lg" >
 	                        <li class="list-group-item"  data-ng-repeat="thread in threads" ng-click="selectedmessage(thread)">
 	                          <a class="thumb-sm pull-left m-r-sm">
-	                            <img src="/theme/images/a0.png" class="img-circle">
+	                            <img src="{{thread.messages[0].author.picture_url}}" class="img-circle">
 	                          </a>
 	                          <a class="clear text-ellipsis">
 	                          	<small class="pull-right">{{thread.created | date}}</small>
@@ -75,7 +75,7 @@
 							</div>
 	                        <section class="chat-body">
 	                          <div class="panel b-light text-sm m-b-none">
-	                            <div class="panel-body">
+	                            <div ng:class="{true:'panel-body bg-light', false:'panel-body'}[message.author._id==authentication.user._id]">
 	                              <span  ng:class="{true:'arrow left', false:'arrow right'}[message.author._id==authentication.user._id]"></span>
 	                              <p class="m-b-none">{{message.messageBody}}</p>
 	                            </div>
