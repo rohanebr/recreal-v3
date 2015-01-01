@@ -27,7 +27,7 @@ angular.module('employer-signup-wizard').controller('EmpWizardOneController', ['
             name: ''
         };
         $scope.employer.role = "Admin";
-        $scope.user = '';
+        $scope.user = {};
         //Load initial data
         $scope.LoadInitialData = function() {
             if ($stateParams.tokenId) {
@@ -209,7 +209,7 @@ angular.module('employer-signup-wizard').controller('EmpWizardOneController', ['
           controller: 'EmpPictureModalCtrl',
         });
         modalInstance.result.then(function(result) {
-           $scope.this.user.picture_url = result.picture_url;
+           $scope.user.picture_url = result.picture_url;
         }, function() {
 
         });
