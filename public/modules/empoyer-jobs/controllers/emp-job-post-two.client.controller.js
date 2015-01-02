@@ -102,6 +102,7 @@ angular.module('empoyer-jobs').controller('EmpJobPostTwoController', ['$scope','
 				if(job.stage == 'JobOne')
 					job.stage = 'Active';
 				job.$update(function() {
+					Authentication.user.stage = 'Active';
 					$location.path('/');			
 				}, function(errorResponse) {
 					$scope.error = errorResponse.data.message;
