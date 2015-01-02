@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('empoyer-jobs').controller('EmpJobPostTwoController', ['$scope','$http', 'Jobs', '$stateParams', '$location',
-	function($scope,$http, Jobs, $stateParams, $location) {
+angular.module('empoyer-jobs').controller('EmpJobPostTwoController', ['$scope','$http', 'Jobs', 'Users', '$stateParams', '$location', 'Employers', 'Authentication',
+	function($scope,$http, Jobs, Users, $stateParams, $location, Employers, Authentication) {
 	
 		$scope.job={};
 		$scope.job.responsibilities = [];
@@ -99,8 +99,10 @@ angular.module('empoyer-jobs').controller('EmpJobPostTwoController', ['$scope','
 			
 			var job = $scope.job ;
 				job.company = job.company._id;	// find job from backend returns populated company which produces error while saving
+				if(job.stage == 'JobOne')
+					job.stage = 'Active';
 				job.$update(function() {
-					$location.path('/');
+					$location.path('/');			
 				}, function(errorResponse) {
 					$scope.error = errorResponse.data.message;
 				});
@@ -110,6 +112,5 @@ angular.module('empoyer-jobs').controller('EmpJobPostTwoController', ['$scope','
 		$scope.GoBack = function(){
 			$location.path('emp-job-post-one-edit/' + $stateParams.jobId);
 		}
-
 	}
 ]);
