@@ -311,7 +311,7 @@ angular.module('employer-signup-wizard').controller('EmpWizardOneController', ['
         }
 
       $scope.upload = function(image){
-
+console.log(image);
             $scope.formData = convert(image.dataURL, image.type);
 
             $scope.upload = $upload.upload({
