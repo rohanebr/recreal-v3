@@ -537,7 +537,7 @@ $scope.openEducationModal=function(education)
       };
 
 
-      $scope.openPictureModal = function() {
+      $scope.openCandidatePictureModal = function() {
         var modalInstance;
         modalInstance = $modal.open({
           templateUrl: '/modules/candidate-features/views/cv-partials/picture-partial.html',

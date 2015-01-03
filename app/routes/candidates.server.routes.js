@@ -9,7 +9,7 @@ module.exports = function(app) {
 
 
 
-    app.route('/uploadpicture').post(users.requiresLogin, candidates.uploadPicture);
+    app.route('/uploadCandidatePicture').post(users.requiresLogin, candidates.uploadPicture);
     app.route('/uploads/fullsize/:file').get(candidates.getImage);
         app.route('/candidates')
             .get(candidates.list);

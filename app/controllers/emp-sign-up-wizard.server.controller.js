@@ -251,8 +251,25 @@ console.log(req.body);
                 company.country = req.body.company.country.name;
                 company.city = req.body.company.city.name;
                 company.save(function(err) {
-                    if (!err) {
-                      
+                    if (!err) 
+                    {
+                       if (user) 
+                       {
+                            if (user.stage == "Basic")
+                            {
+                                user.stage = "CompanyLocation";
+                                user.markModified('stage');
+                                user.save(function(err) {
+                                    if (!err) {
+                                        res.jsonp(company);
+                                    } else {
+                                        res.jsonp({
+                                            stat: "Couldnt save company. check backend"
+                                        });
+                                    }
+                                });
+                            }
+                        }
                         res.jsonp(company);
                     }
                 });

@@ -90,21 +90,40 @@ console.log($scope.authentication.user.candidate);
         };
 
 
-  $scope.Back = function() {
+        $scope.Back = function() {
           $location.path("candidate-wizard-three");
         };
         $scope.SaveAndRedirect = function() {
             $scope.success = $scope.error = null;
 
             if($scope.candidate.stage=='Four')
-                $scope.candidate.stage = 'Five';
+            {
+                //$scope.candidate.stage = 'Five';
+                $scope.candidate.stage = 'Complete';
+            }
 
             var candidate = $scope.candidate ;
             candidate.coordinates.latitude= marker.position.k;
             candidate.coordinates.longitude= marker.position.D;
-console.log(candidate);
+            console.log(candidate);
             candidate.$update(function() {
-                 $state.go('candidate-wizard-five');
+                 $state.go('home');// redirect to page five which contains MCQs
+            }, function(errorResponse) {
+                 $scope.error = response.message;
+            });
+        };
+        $scope.SkipAndRedirect = function() {
+            $scope.success = $scope.error = null;
+
+            if($scope.candidate.stage=='Four')
+            {
+                //$scope.candidate.stage = 'Five';
+                $scope.candidate.stage = 'Complete';
+            }
+
+            var candidate = $scope.candidate ;
+            candidate.$update(function() {
+                 $state.go('home');// redirect to page five which contains MCQs
             }, function(errorResponse) {
                  $scope.error = response.message;
             });

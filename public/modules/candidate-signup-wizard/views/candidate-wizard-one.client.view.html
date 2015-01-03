@@ -53,8 +53,8 @@
 	                    </header>
                 		<section class="row section-left-margin">
 	                		<section class="col-md-3">
-		                        <a href="" class="pull-right" ng-click="openCandidatePictureModal()" ><i class="fa fa-edit"></i></a>
-		                        <img alt=""class="img-circle m-b" src="{{user.picture_url}}" width="140px" height="140px">
+		                       <a class="pull-right" ng-click="openCandidatePictureModal()" href=""><i class="fa fa-edit"></i></a>
+                				<img alt=""class="img180_180"   src="{{candidate.picture_url}}">
 	                        </section>
 							<section class="col-md-4">
 								<div class="form-group">
@@ -63,7 +63,7 @@
 								</div>
 								<div class="form-group">
 									<label for="">Job Title</label>
-									<input  type="text" class="form-control" placeholder="Manager IT" data-ng-model="candidate.title">
+									<input  type="text" class="form-control" required placeholder="Manager IT" data-ng-model="candidate.title">
 								</div>
 							</section>
                       		<section class="col-md-4">
@@ -73,7 +73,7 @@
 		                        </div>
 		                        <div class="form-group">
 									<label>Email Address</label>
-									<input type="email" class="form-control" data-ng-model="user.email"  placeholder="Carter">
+									<input type="email" disabled class="form-control" data-ng-model="user.email"  placeholder="Carter">
 								</div>
                         	</section>
                     	</section>

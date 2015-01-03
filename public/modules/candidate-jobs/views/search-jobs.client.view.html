@@ -9,7 +9,7 @@
           <tr ng-repeat="job in jobs" data-ng-show="!hasApplied(job)">
             <td>
                   <a class="pull-left" href="#">
-                <img alt="" src="http://cns.com.pk/wp-content/uploads/2012/06/CNS-Logo.bmp" class="img-rounded img64_64">
+                <img alt="" src="{{job.company.logo_url}}" class="img-rounded img64_64">
             </a>
             <section class="media-body">
                 <a data-ng-href="#!/jobs/{{job._id}}"><h3 class="media-heading">{{job.title}}</h3></a>
