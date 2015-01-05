@@ -52,7 +52,7 @@ angular.module('core').controller('HomeController', ['$scope', '$modal', 'Authen
                     });
                 });
 
-                $state.go('employerDashboard');
+                $state.go('company-open-jobs');
 
             }
         } else if (user.userType === 'candidate') {
