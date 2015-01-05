@@ -1,7 +1,7 @@
-<article data-ng-controller="CandidateCvController" class="container">
+<article data-ng-controller="CandidateCvController" class="container cv-container">
     <section class="col-md-8">
         <section style="border-right:1px;">
-            <div class="col-md-3 text-center">
+            <div class="col-md-3 text-center pic-container">
                 <a class="pull-right" ng-show="isEditing" ng-click="openPictureModal()" href=""><i class="fa fa-edit"></i></a>
                 <img alt=""class="img180_180"   src="{{candidate.picture_url}}">
             </div>
@@ -43,7 +43,7 @@
                     <ul>
                         <li ng-repeat="position in candidate.positions">
                             <a class="pull-right" ng-show="isEditing" ng-click="openExperienceModal(position)" href=""><i class="fa fa-edit"></i></a>
-                            <h4><strong>{{position.title}}</strong> at {{position.company_name}}</h4>
+                            <h4><strong>{{position.title}}</strong> <span style="color: #7F7F7F;">at</span> {{position.company_name}}</h4>
                             <h6>{{position.start_date | date}} to {{position.end_date | date}}</h6>
                             <p>{{position.summary}}</p>
                         </li>
@@ -59,7 +59,7 @@
                         <li ng-repeat="project in candidate.projects">
                            <a class="pull-right" ng-show="isEditing" ng-click="openProjectModal(project)" href=""><i class="fa fa-edit"></i></a>
 
-                            <h4><strong>{{project.name}}</strong> at {{project.company}}</h4>
+                            <h4><strong>{{project.name}}</strong> <span style="color: #7F7F7F;">at</span> {{project.company}}</h4>
                             <h6>{{project.start_date | date}} to {{project.end_date | date}}</h6>
                             <p>{{project.description}}</p>
                         </li>
