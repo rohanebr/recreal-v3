@@ -94,5 +94,15 @@ module.exports = {
 		clientID: process.env.LINKEDIN_ID || 'cheq81slu4pe',
 		clientSecret: process.env.LINKEDIN_SECRET || 'mbCnZofMsah7ilQc',
 		callbackURL: 'http://recreal.com/auth/linkedin/callback'
+	},
+	mailer: {
+		from: process.env.MAILER_FROM || 'Recreal',
+		options: {
+			service: process.env.MAILER_SERVICE_PROVIDER || 'gmail',
+			auth: {
+				user: process.env.MAILER_EMAIL_ID || 'muddaserahmed@gmail.com',
+				pass: process.env.MAILER_PASSWORD || 'sqlserver'
+			}
+		}
 	}
 };
