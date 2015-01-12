@@ -2357,7 +2357,7 @@ angular.module('core').controller('HomeController', [
         $rootScope.employer = Employers.get({ employerId: $scope.authentication.user.employer }, function (employer) {
           $rootScope.company = Companies.get({ companyId: employer.company });
         });
-        $state.go('employerDashboard');
+        $state.go('company-open-jobs');
       }
     } else if (user.userType === 'candidate') {
       $rootScope.candidate = Candidates.get({ candidateId: $scope.authentication.user.candidate }, function (candidate) {
@@ -3876,7 +3876,7 @@ angular.module('employer-signup-wizard').controller('EmpWizardOneController', [
     $rootScope.coords = {};
     $scope.newSpeciality = { name: '' };
     $scope.employer.role = 'Admin';
-    $scope.user = '';
+    $scope.user = {};
     //Load initial data
     $scope.LoadInitialData = function () {
       if ($stateParams.tokenId) {
@@ -4020,7 +4020,7 @@ angular.module('employer-signup-wizard').controller('EmpWizardOneController', [
         controller: 'EmpPictureModalCtrl'
       });
       modalInstance.result.then(function (result) {
-        $scope.this.user.picture_url = result.picture_url;
+        $scope.user.picture_url = result.picture_url;
       }, function () {
       });
     };
@@ -4100,6 +4100,7 @@ angular.module('employer-signup-wizard').controller('EmpWizardOneController', [
       return bb;
     };
     $scope.upload = function (image) {
+      console.log(image);
       $scope.formData = convert(image.dataURL, image.type);
       $scope.upload = $upload.upload({
         url: '/uploadCompPicture',
@@ -4473,6 +4474,7 @@ angular.module('empoyer-jobs').controller('EmpJobPostOneController', [
     };
     var LoadDefaultData = function () {
       $http.post('/getCompanyByUserId', { id: $scope.user._id }).success(function (response) {
+        console.log(response);
         $scope.job.employee_type = 'Contract';
         $scope.job.employee_status = 'Full Time';
         $scope.job.shift = 'Morning';
@@ -4514,6 +4516,7 @@ angular.module('empoyer-jobs').controller('EmpJobPostOneController', [
         $scope.countries = countries;
         angular.forEach($scope.countries, function (cunt) {
           country1 = $scope.job.country;
+          console.log(country1 + 'DSF');
           if (country1 == cunt.name) {
             foundit = true;
             $scope.country = cunt;
@@ -4558,6 +4561,7 @@ angular.module('empoyer-jobs').controller('EmpJobPostOneController', [
         //get the job
         Jobs.get({ jobId: $stateParams.jobId }, function (job) {
           $scope.job = job;
+          console.log($scope.job);
           getCountry();
           $scope.job.due_date = new Date($scope.job.due_date);
           //get industry job_roles
@@ -4635,9 +4639,12 @@ angular.module('empoyer-jobs').controller('EmpJobPostTwoController', [
   '$scope',
   '$http',
   'Jobs',
+  'Users',
   '$stateParams',
   '$location',
-  function ($scope, $http, Jobs, $stateParams, $location) {
+  'Employers',
+  'Authentication',
+  function ($scope, $http, Jobs, Users, $stateParams, $location, Employers, Authentication) {
     $scope.job = {};
     $scope.job.responsibilities = [];
     $scope.job.qualifications = [];
@@ -4721,7 +4728,10 @@ angular.module('empoyer-jobs').controller('EmpJobPostTwoController', [
       var job = $scope.job;
       job.company = job.company._id;
       // find job from backend returns populated company which produces error while saving
+      if (job.stage == 'JobOne')
+        job.stage = 'Active';
       job.$update(function () {
+        Authentication.user.stage = 'Active';
         $location.path('/');
       }, function (errorResponse) {
         $scope.error = errorResponse.data.message;

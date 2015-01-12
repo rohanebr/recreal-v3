@@ -1,0 +1,30 @@
+{
+  "name": "angular-sortable",
+  "version": "0.3.1",
+  "main": [
+    "./dist/js/angular-sortable.js",
+    "./dist/css/angular-sortable.css"
+  ],
+  "ignore": [
+    "**/.*"
+  ],
+  "dependencies": {
+    "angular": "1.2.22",
+    "jquery": "~2.1.1"
+  },
+  "devDependencies": {
+    "angular-mocks": "1.2.22",
+    "angular-scenario": "1.2.22"
+  },
+  "appPath": "",
+  "homepage": "https://github.com/schartier/angular-sortable",
+  "_release": "0.3.1",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.3.1",
+    "commit": "5bdf3ecce3d3783061b106fa1e0544a431331871"
+  },
+  "_source": "git://github.com/schartier/angular-sortable.git",
+  "_target": "~0.3.1",
+  "_originalSource": "angular-sortable"
+}

@@ -30,6 +30,7 @@ angular.module('empoyer-jobs').controller('EmpJobPostOneController', ['$scope','
 			 $http.post('/getCompanyByUserId', {
                     id: $scope.user._id
                 }).success(function(response){
+                	console.log(response);
 			$scope.job.employee_type = "Contract";
 			$scope.job.employee_status = "Full Time";
 			$scope.job.shift = "Morning";
@@ -74,6 +75,7 @@ angular.module('empoyer-jobs').controller('EmpJobPostOneController', ['$scope','
                          
                                 angular.forEach($scope.countries, function(cunt) {
                                     country1 = $scope.job.country;
+                                    console.log(country1+"DSF");
                                     if (country1 == cunt.name) {
                                     	foundit=true;
                                         $scope.country = cunt;
@@ -131,7 +133,7 @@ angular.module('empoyer-jobs').controller('EmpJobPostOneController', ['$scope','
 					jobId: $stateParams.jobId
 				}, function(job){
 					$scope.job = job;
-					
+					console.log($scope.job);
 					getCountry();
 					$scope.job.due_date=new Date($scope.job.due_date);
 					//get industry job_roles
