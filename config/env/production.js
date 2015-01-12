@@ -4,7 +4,7 @@ module.exports = {
 	db: process.env.MONGOHQ_URL || process.env.MONGOLAB_URI || 'mongodb://muddaserahmed:sqlserver1@ds041380.mongolab.com:41380/recreal',
 	assets: {
 		lib: {
-			ccss: [
+			css: [
 				// 'public/lib/bootstrap/dist/css/bootstrap.css',
 				// 'public/lib/bootstrap/dist/css/bootstrap-theme.css'
 
