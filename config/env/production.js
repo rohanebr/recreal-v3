@@ -67,9 +67,6 @@ module.exports = {
 			    'public/lib/ngmap/build/scripts/ng-map.js',
 				'public/lib/angular-animate/angular-animate.js',
 				'public/lib/angularjs-toaster/toaster.js'
-				
-
-
 			]
 		},
 		css: 'public/dist/application.min.css',
