@@ -22,7 +22,7 @@ module.exports.getGlobbedFiles = function(globPatterns, removeRoot) {
 	var _this = this;
 
 	// URL paths regex
-	var urlRegex = new RegExp('^(?:[a-z]+:)?//', 'i');
+	var urlRegex = new RegExp('^(?:[a-z]+:)?\/\/', 'i');
 
 	// The output array
 	var output = [];
@@ -41,7 +41,10 @@ module.exports.getGlobbedFiles = function(globPatterns, removeRoot) {
 			}, function(err, files) {
 				if (removeRoot) {
 					files = files.map(function(file) {
-						return file.replace(removeRoot, '');
+						if (file.indexOf(removeRoot) === 0)
+							return file.substring(removeRoot.length, file.length);
+						else
+							return file;
 					});
 				}
 
@@ -63,7 +66,6 @@ module.exports.getJavaScriptAssets = function(includeTests) {
 	if (includeTests) {
 		output = _.union(output, this.getGlobbedFiles(this.assets.tests));
 	}
-
 	return output;
 };
 
