@@ -189,7 +189,7 @@ var JobSchema = new Schema({
 	}],
 
 	
-	jobApplicants: [{
+	jobApplications: [{
 		candidate: {
 			type: Schema.ObjectId,
 			ref: 'Candidate'
@@ -199,7 +199,6 @@ var JobSchema = new Schema({
 		  	enum: ['Applicant','ShortListed','Test','PhoneScreening','Interview', 'Hired' ],
 		  	default:'Applicant'
 	    }
-
 	}],
 
 	// candidates: [{
@@ -246,7 +245,12 @@ JobSchema.index({candidates: 1});
 
 JobSchema.methods.apply = function(candidate, callback) {
 	var job = this;
-   	this.candidates.push(candidate);	
+	var jobApplication = {
+		candidate: candidate,
+		stage: 'Applicant'
+	}
+	this.jobApplications.push(jobApplication)
+   	// this.candidates.push(candidate);	
 	this.save(function(err) {
 		candidate.jobs.push(job);
 		candidate.save(callback);
