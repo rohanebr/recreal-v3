@@ -188,20 +188,34 @@ var JobSchema = new Schema({
 		ref: 'Exam'
 	}],
 
-	candidates: [{
-		type: Schema.ObjectId,
-		ref: 'Candidate'
-	}],
-	shortListedCandidates: [{
+	
+	jobApplicants: [{
 		candidate: {
 			type: Schema.ObjectId,
 			ref: 'Candidate'
 		},
-		employer: {
-			type: Schema.ObjectId,
-			ref: 'Employer'
-		}
+		stage:{
+	      	type: String,
+		  	enum: ['Applicant','ShortListed','Test','PhoneScreening','Interview', 'Hired' ],
+		  	default:'Applicant'
+	    }
+
 	}],
+
+	// candidates: [{
+	// 	type: Schema.ObjectId,
+	// 	ref: 'Candidate'
+	// }],
+	// shortListedCandidates: [{
+	// 	candidate: {
+	// 		type: Schema.ObjectId,
+	// 		ref: 'Candidate'
+	// 	},
+	// 	employer: {
+	// 		type: Schema.ObjectId,
+	// 		ref: 'Employer'
+	// 	}
+	// }],
 	user: {
 		type: Schema.ObjectId,
 		ref: 'User'
