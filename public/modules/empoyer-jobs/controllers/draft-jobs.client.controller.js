@@ -1,5 +1,6 @@
 'use strict';
-angular.module('empoyer-jobs').controller('CompanyOpenJobsController', ['$scope', 'Authentication', 'Jobs', 'Employers', 'Companies', '$location', 'Socket',
+
+angular.module('empoyer-jobs').controller('DraftJobsController', ['$scope', 'Authentication', 'Jobs', 'Employers', 'Companies', '$location', 'Socket',
     function($scope, Authentication, Jobs, Employers, Companies, $location, Socket) {
         $scope.user = Authentication.user;
 
@@ -21,7 +22,7 @@ angular.module('empoyer-jobs').controller('CompanyOpenJobsController', ['$scope'
                     Jobs.get({
                         jobId: job
                     }, function(job) {
-                        if(job.stage == 'Active' && new Date(job.due_date) > Date.now())
+                        if(job.stage != 'Active')
                             $scope.jobs.push(job);
                     });
                 });

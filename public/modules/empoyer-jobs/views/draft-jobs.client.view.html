@@ -1,6 +1,5 @@
-
-<section data-ng-controller="CompanyOpenJobsController">
-  <section class="row">
+<section data-ng-controller="DraftJobsController">
+	<section class="row">
     <section class="container custom-wrapper">
       <section class="hbox">
         <!-- .aside -->
@@ -134,10 +133,20 @@
                         <section>
                         <span><span style="margin-right:2%;font-weight:bold;">Sort By:</span><a href=""style="margin-right:2%;text-decoration: underline; color:#126da7;">A-Z <i class="fa fa-arrow-up"></i></a><a href=""style="margin-right:2%;text-decoration: underline; color:#126da7;">Most Recent Closed</a><a href=""style="margin-right:2%;text-decoration: underline; color:#126da7;">Most Candidates</a><a href=""style="margin-right:2%;text-decoration: underline; color:#126da7;">Most Shortlist</a><hr style="margin-top: 5px;"/>
                         </section>
+
+
+
+                        
+
+
+
                       <section style="margin-left:8px;" ng-repeat="job in jobs |filter:searchText">
                         <section>
                         <h4 style="margin-bottom: 5px;"><a href="#!/jobs/{{job._id}}" class="text-info">{{job.title}} <i class="icon-twitter"></i></a></h4>
-                          <small class="text-muted" style="margin-left:5px"><i class="fa fa-map-marker fa-lg text-primary"></i> {{job.location}} , {{job.country}}</small><small class="block text-muted pull-right"> Close Date: {{job.due_date | date}}</small>
+                          <small class="text-muted" style="margin-left:5px"><i class="fa fa-map-marker fa-lg text-primary"></i> {{job.location}} , {{job.country}}</small>
+                          
+                          <a href="#!/emp-job-post-one-edit/{{job._id}}" class="pull-right" style="color:#126da7;text-decoration: underline; font-size:13px;">Edit and Post</a>
+                          
                           <p style="margin-top:7px; margin-left:5px;margin-bottom:3px;font-size:13px;text-decoration: underline; color:#126da7;"><span style="margin-right:2%"><a href="#!/employer-job-candidates/{{job._id}}">Candidates: {{job.candidates.length}}</a></span><span style="margin-right:2%"><a href="#!/shortlisted-candidates/{{job._id}}">Short Listed: {{job.shortListedCandidates.length}}</a></span><span style="margin-right:2%">Interview: 0</span></p>
                           <p><small class="text-muted pull-left" style="margin-left:5px; font-style: italic"> Posted By: {{employer.displayName.toUpperCase()}}</small></p>
                           <p class="row"><hr/></p>
