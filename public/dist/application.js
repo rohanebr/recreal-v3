@@ -4236,7 +4236,8 @@ angular.module('employer-signup-wizard').controller('SignupEmailActivationContro
   '$scope',
   function ($scope) {
   }
-]);angular.module('employer-signup-wizard').factory('locationVarification', [
+]);'use strict';
+angular.module('employer-signup-wizard').factory('locationVarification', [
   '$rootScope',
   'geolocation',
   '$q',
@@ -4252,8 +4253,8 @@ angular.module('employer-signup-wizard').controller('SignupEmailActivationContro
               if (results[1]) {
                 var citycountry = results[1].formatted_address;
                 var res = citycountry.split(',');
-                countryFromDB = res[res.length - 1].trim();
-                cityFromDB = res[res.length - 2].trim();
+                var countryFromDB = res[res.length - 1].trim();
+                var cityFromDB = res[res.length - 2].trim();
                 console.log(cityFromDB + ' ' + countryFromDB);
                 if (countryFromDB == country && cityFromDB == city)
                   deferred.resolve(['true']);
@@ -4366,7 +4367,13 @@ angular.module('empoyer-jobs').config([
   '$stateProvider',
   function ($stateProvider) {
     // Empoyer jobs state routing   /jobs/:jobId
-    $stateProvider.state('emp-job-post-three', {
+    $stateProvider.state('expired-jobs', {
+      url: '/expired-jobs',
+      templateUrl: 'modules/empoyer-jobs/views/expired-jobs.client.view.html'
+    }).state('draft-jobs', {
+      url: '/draft-jobs',
+      templateUrl: 'modules/empoyer-jobs/views/draft-jobs.client.view.html'
+    }).state('emp-job-post-three', {
       url: '/emp-job-post-three',
       templateUrl: 'modules/empoyer-jobs/views/emp-job-post-three.client.view.html'
     }).state('emp-job-post-two', {
@@ -4410,7 +4417,59 @@ angular.module('empoyer-jobs').controller('CompanyOpenJobsController', [
       $scope.company = Companies.get({ companyId: employer.company }, function (company) {
         angular.forEach(company.jobs, function (job, key) {
           Jobs.get({ jobId: job }, function (job) {
-            $scope.jobs.push(job);
+            if (job.stage == 'Active' && new Date(job.due_date) > Date.now())
+              $scope.jobs.push(job);
+          });
+        });
+      });
+    });
+    Socket.on('applied_on_job', function (data) {
+      for (var d = 0, h = $scope.jobs.length; d < h; d++) {
+        if ($scope.jobs[d]._id == data.job._id) {
+          $scope.jobs[d] = data.job;
+          break;
+        }
+      }
+    });
+  }  // 	$scope.employer = Employers.get({
+     //                employerId: $scope.user.employer
+     //            }, function(employer){
+     // 			$scope.company = Companies.get({
+     // 				companyId: employer.company
+     // 			}, function(company){
+     // 				angular.forEach(company.jobs, function(job, key){
+     // 					Jobs.get({
+     // 						jobId: job
+     // 					}, function(job){
+     // 						$scope.jobs.push(job);
+     // 					});
+     // 				});
+     // 			});
+     // 		});
+     // }
+]);'use strict';
+angular.module('empoyer-jobs').controller('DraftJobsController', [
+  '$scope',
+  'Authentication',
+  'Jobs',
+  'Employers',
+  'Companies',
+  '$location',
+  'Socket',
+  function ($scope, Authentication, Jobs, Employers, Companies, $location, Socket) {
+    $scope.user = Authentication.user;
+    // If user is not signed in then redirect back home
+    if (!$scope.user)
+      $location.path('/signin');
+    //		$scope.employer = $rootScope.employer;
+    //		$scope.company = $rootScope.company;
+    $scope.jobs = [];
+    $scope.employer = Employers.get({ employerId: $scope.user.employer }, function (employer) {
+      $scope.company = Companies.get({ companyId: employer.company }, function (company) {
+        angular.forEach(company.jobs, function (job, key) {
+          Jobs.get({ jobId: job }, function (job) {
+            if (job.stage != 'Active')
+              $scope.jobs.push(job);
           });
         });
       });
@@ -5080,6 +5139,57 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', [
       $modalInstance.dismiss('cancel');
     };
   }
+]);'use strict';
+angular.module('empoyer-jobs').controller('ExpiredJobsController', [
+  '$scope',
+  'Authentication',
+  'Jobs',
+  'Employers',
+  'Companies',
+  '$location',
+  'Socket',
+  function ($scope, Authentication, Jobs, Employers, Companies, $location, Socket) {
+    $scope.user = Authentication.user;
+    // If user is not signed in then redirect back home
+    if (!$scope.user)
+      $location.path('/signin');
+    //		$scope.employer = $rootScope.employer;
+    //		$scope.company = $rootScope.company;
+    $scope.jobs = [];
+    $scope.employer = Employers.get({ employerId: $scope.user.employer }, function (employer) {
+      $scope.company = Companies.get({ companyId: employer.company }, function (company) {
+        angular.forEach(company.jobs, function (job, key) {
+          Jobs.get({ jobId: job }, function (job) {
+            if (new Date(job.due_date) < Date.now())
+              $scope.jobs.push(job);
+          });
+        });
+      });
+    });
+    Socket.on('applied_on_job', function (data) {
+      for (var d = 0, h = $scope.jobs.length; d < h; d++) {
+        if ($scope.jobs[d]._id == data.job._id) {
+          $scope.jobs[d] = data.job;
+          break;
+        }
+      }
+    });
+  }  // 	$scope.employer = Employers.get({
+     //                employerId: $scope.user.employer
+     //            }, function(employer){
+     // 			$scope.company = Companies.get({
+     // 				companyId: employer.company
+     // 			}, function(company){
+     // 				angular.forEach(company.jobs, function(job, key){
+     // 					Jobs.get({
+     // 						jobId: job
+     // 					}, function(job){
+     // 						$scope.jobs.push(job);
+     // 					});
+     // 				});
+     // 			});
+     // 		});
+     // }
 ]);'use strict';
 var gt = angular.module('empoyer-jobs');
 gt.controller('PostJobController', [
