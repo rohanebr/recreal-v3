@@ -239,9 +239,9 @@ exports.uploadPicture = function(req, res) {
 
     } else {
 
-       var newPath = __dirname + "../../../uploads/fullsize/" + imageName;
+       var newPath = __dirname + "/app/uploads/fullsize/" + imageName;
 
-      var thumbPath = __dirname + "../../../uploads/thumbs/" + imageName;
+      var thumbPath = __dirname + "/app/uploads/thumbs/" + imageName;
       fs.writeFile(newPath, data, function (err) {
        var candidate = Candidate.find({user: req.user._id}).exec(function(err, candidates){
          	var old_url = candidates[0].picture_url;
@@ -691,7 +691,7 @@ candidate.markModified('skills');
 
 // Show files
 exports.getImage =  function (req, res){
-  var path = __dirname + "../../../uploads/fullsize/" + req.params.file;
+  var path = __dirname + "/app/uploads/fullsize/" + req.params.file;
 //   file = req.params.file;
 	
 
