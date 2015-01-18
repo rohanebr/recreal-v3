@@ -239,9 +239,18 @@ exports.uploadPicture = function(req, res) {
 
     } else {
 
-       var newPath = __dirname + "/app/uploads/fullsize/" + imageName;
+      //  dev
+       // var newPath = __dirname + "/app/uploads/fullsize/" + imageName;
+       
+       //prod
+       var newPath = "/app/uploads/fullsize/" + imageName;
 
+      //dev
+      // var thumbPath = __dirname + "/app/uploads/thumbs/" + imageName;
+      
+      //  prod
       var thumbPath = __dirname + "/app/uploads/thumbs/" + imageName;
+      
       fs.writeFile(newPath, data, function (err) {
        var candidate = Candidate.find({user: req.user._id}).exec(function(err, candidates){
          	var old_url = candidates[0].picture_url;
