@@ -691,7 +691,7 @@ candidate.markModified('skills');
 
 // Show files
 exports.getImage =  function (req, res){
-  var path = __dirname + "../../../uploads/fullsize/" + req.params.file;
+  var path = "/app/uploads/fullsize/" + req.params.file;
 //   file = req.params.file;
 	
 
