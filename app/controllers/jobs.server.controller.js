@@ -725,8 +725,11 @@ exports.getPaginatedCandidates = function(req, res) {
 
     Job.findById(req.job.id)
         .exec(function(err, job) {
-
-            var candidates = job.jobApplications;
+            console.log(job.jobApplications[0].candidate);
+            var candidates=[];
+              for(var s=0;s<job.jobApplications.length;s++)
+         candidates.push(job.jobApplications[s].candidate);
+           
 
 
 
@@ -752,7 +755,7 @@ exports.getPaginatedCandidates = function(req, res) {
 
 
             });
-
+console.log("SDFGG"+incomingfilters.length);
             if (incomingfilters.length != 0) {
                 var c1;
                 var lengthincomingfilters = incomingfilters.length;
@@ -870,8 +873,8 @@ exports.getPaginatedCandidates = function(req, res) {
                         if (dbfilters[s] == "educations")
                             filters = filterHelper.sortandfilterArray(dbfilters[s], candidatepool, incomingfilters, filters);
 
-                    }
-                    // console.log(filters); 
+                    }console.log("FILTERS");
+                     console.log(filters); 
                     res.jsonp({
                         candidates: c1,
                         totalentries: totallength,

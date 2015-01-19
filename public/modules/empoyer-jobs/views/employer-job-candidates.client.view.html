@@ -44,11 +44,11 @@
                 </section>
                 <section class="panel panel-default">
                     <header class="panel-heading">                    
-                      <span class="label bg-dark">{{jobApplications.length}}</span> Job Applications
+                      <span class="label bg-dark">{{candidates.length}}</span> Job Applications
                     </header>
-                    <section class="panel-body slim-scroll" data-height="230px" data-size="10px">
-                      <article ng-repeat="jobApplication in jobApplications" class="media">
-                        <span class="pull-left thumb-md"><img src="{{jobApplication.candidate.picture_url}}"></span>
+                  <section class="panel-body slim-scroll" data-height="230px" data-size="10px">
+                      <article ng-repeat="candidate in candidates" class="media">
+                        <span class="pull-left thumb-md"><img src="{{candidate.picture_url}}"></span>
                         <div class="media-body">
                           <div class="pull-right media-xs text-center text-muted">
 
@@ -60,28 +60,28 @@
                                 </a>
                             </aside>
                           </div>
-                          <a data-ng-href="#!/candidates/{{jobApplication.candidate._id}}" class="h4">{{jobApplication.candidate.displayName}}</a>
+                          <a data-ng-href="#!/candidates/{{candidate._id}}" class="h4">{{candidate.displayName}}</a>
                           <small class="block">
-                              <a href="#" class="">{{jobApplication.candidate.title}}</a> 
-                              <span ng-show="candidate.isOnline == 'Online'" class="label label-success">{{jobApplication.candidate.isOnline}}</span>
-                              <span ng-show="candidate.isOnline == 'Offline'" class="label label-danger">{{jobApplication.candidate.isOnline}}</span>
+                              <a href="#" class="">{{candidate.title}}</a> 
+                              <span ng-show="candidate.isOnline == 'Online'" class="label label-success">{{candidate.isOnline}}</span>
+                              <span ng-show="candidate.isOnline == 'Offline'" class="label label-danger">{{candidate.isOnline}}</span>
                           </small>
                           <small class="block m-t-sm">
-                            <span class="r bg-light wrapper-xxs text-sm" data-ng-repeat="skill in jobApplication.candidate.skills">{{skill.title}}</span>
+                            <span class="r bg-light wrapper-xxs text-sm" data-ng-repeat="skill in candidate.skills">{{skill.title}}</span>
                           </small>
                           <small class="block m-t-sm">
 
-                              <span data-ng-show="compareType('location',jobApplication.candidate.location)" class="label label-success">{{jobApplication.candidate.location}}</span>
-                              <span data-ng-show="!compareType('location',jobApplication.candidate.location)" class="label label-danger">{{jobApplication.candidate.location}}</span>
+                              <span data-ng-show="compareType('location',candidate.location)" class="label label-success">{{candidate.location}}</span>
+                              <span data-ng-show="!compareType('location',candidate.location)" class="label label-danger">{{candidate.location}}</span>
 
-                              <span data-ng-show="compareType('salary_range',jobApplication.candidate.salary_expectation)" class="label label-success">{{candidate.salary_expectation}}</span>
-                              <span data-ng-show="!compareType('salary_range',candidate.salary_expectation)" class="label label-danger">{{jobApplication.candidate.salary_expectation}}</span>
+                              <span data-ng-show="compareType('salary_range',candidate.salary_expectation)" class="label label-success">{{candidate.salary_expectation}}</span>
+                              <span data-ng-show="!compareType('salary_range',candidate.salary_expectation)" class="label label-danger">{{candidate.salary_expectation}}</span>
 
-                              <span data-ng-show="compareType('employee_type',jobApplication.candidate.employee_type)" class="label label-success">{{jobApplication.candidate.employee_type}}</span>
-                              <span data-ng-show="!compareType('employee_type',jobApplication.candidate.employee_type)" class="label label-danger">{{jobApplication.candidate.employee_type}}</span>
+                              <span data-ng-show="compareType('employee_type',candidate.employee_type)" class="label label-success">{{candidate.employee_type}}</span>
+                              <span data-ng-show="!compareType('employee_type',candidate.employee_type)" class="label label-danger">{{candidate.employee_type}}</span>
 
-                              <span data-ng-show="compareType('employee_status',jobApplication.candidate.employee_status)" class="label label-success">{{jobApplication.candidate.employee_status}}</span>
-                              <span data-ng-show="!compareType('employee_status',jobApplication.candidate.employee_status)" class="label label-danger">{{jobApplication.candidate.employee_status}}</span>
+                              <span data-ng-show="compareType('employee_status',candidate.employee_status)" class="label label-success">{{candidate.employee_status}}</span>
+                              <span data-ng-show="!compareType('employee_status',candidate.employee_status)" class="label label-danger">{{candidate.employee_status}}</span>
 
                             </small>
                         </div>
