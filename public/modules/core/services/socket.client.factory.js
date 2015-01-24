@@ -13,7 +13,7 @@ geolocation.getLocation().then(function(data){
 $rootScope.coords = {lat:data.coords.latitude, longi:data.coords.longitude};
      
     });
-	var socket = io.connect('https://morning-sea-1792.herokuapp.com');
+	var socket = io.connect();
 
 socket.emit("user_data",Authentication.user);
 }

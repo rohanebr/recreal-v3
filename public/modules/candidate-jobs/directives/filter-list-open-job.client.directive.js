@@ -65,12 +65,12 @@ angular.module('candidate-jobs').directive('filterListOpenJobs', ['$compile',
 					if(filterName==v[h].type)
 					scope.dummyfilters.push(v[h]);
 				}
-console.log(scope.dummyfilters);
+
 			
 			var html =	'<article>' + 
  		                      '<label><strong>'+ filterHeading +'</strong></label>' +
  		                        '<ul>' + 
-		                            '<li class="checkbox i-checks" data-ng-repeat="'+ filterName +'Filter in dummyfilters | orderBy:'+ count + ':true  | limitTo: filterLimit">' + 
+		                            '<li class="checkbox i-checks" data-ng-repeat="'+ filterName +'Filter in v | orderBy:'+ count + ':true  | limitTo: filterLimit">' + 
 			                            '<label>' +
 				                            '<input type="checkbox" data-ng-click="filterChanged('+ filterNameString +','+filterName+'Filter.name)" data-ng-model="'+ filterName +'Filter.value" id="{{'+ filterName +' + '+ filterName +'Filter.name}}" />' +
 				                            '<i></i>' +
@@ -80,7 +80,7 @@ console.log(scope.dummyfilters);
  		                            '</li>' + 
  		                        '</ul>'
  		                        + 
- 		                        '<a href="" data-ng-if="dummyfilters.length > filterLimit" data-ng-click="openFilterModal(dummyfilters, '+ filterNameString +')">more choices...</a>' + 
+ 		                        '<a href="" data-ng-if="v.length > filterLimit" data-ng-click="openFilterModal(v, '+ filterNameString +')">more choices...</a>' + 
  		                        '</article>';
                 var e =$compile(html)(scope);
 

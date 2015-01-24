@@ -1,6 +1,7 @@
 'use strict'
 angular.module('employer-signup-wizard').factory('locationVarification', ['$rootScope', 'geolocation', '$q',
     function($rootScope, geolocation, $q) {
+
         return {
             validateLocation: function(city, country, lat, lng) {
                 var deferred = $q.defer();

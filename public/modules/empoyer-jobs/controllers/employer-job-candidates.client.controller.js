@@ -135,10 +135,10 @@ $scope.sortableOptions = {
                 console.log(job);
 
 
-            	  $scope.filters1=[];
+                  $scope.filters1=[];
                 $scope.job = job.job;
                 // $scope.locationFilters=job.filters.locationFilters;
-                	 $scope.total = job.totalentries;
+                     $scope.total = job.totalentries;
                 $scope.candidates = job.candidates;
                 job.filters.forEach(function(entry){
                            $scope.filters1.push(entry);
@@ -155,6 +155,7 @@ $scope.sortableOptions = {
                 {
                   $scope.firsttime=false;
                      $scope.filters1.forEach(function(entry){
+
                                     var alreadyexists=false;
                                     for(var h=0,a=$scope.completefilternames.length;h<a;h++)
                                     {
@@ -164,12 +165,14 @@ $scope.sortableOptions = {
 
                                     }
                                if(!alreadyexists)
-                              $scope.completefilternames.push(entry.type);
+                            { 
+                             $scope.completefilternames.push(entry.type);
+                            }
 
 
                      });
 
-
+              
 
 
                 }
@@ -227,25 +230,33 @@ $scope.sortableOptions = {
          $scope.$watch("currentPage", function(newValue, oldValue) {
             $scope.skip = newValue * $scope.itemsPerPage;
             if($scope.skip == 0){ //   if first page
-            	$scope.findCandidates($scope.skip,$scope.itemsPerPage,$scope.filters, false);
+                $scope.findCandidates($scope.skip,$scope.itemsPerPage,$scope.filters, false);
             } else {
-            	$scope.findCandidates($scope.skip,$scope.itemsPerPage,$scope.filters, true);
+                $scope.findCandidates($scope.skip,$scope.itemsPerPage,$scope.filters, true);
             }
         });
          //Removes and adds filter for salary
         
 $scope.filterChanged=function(type,name)
 {
+  
 $scope.filters1.forEach(function(entry){
+  console.log(entry.value);
 
 if(name==entry.name)
- {entry.value=!entry.value;
-if(entry.value==true)
+ {
+  //entry.value=!entry.value;
 
-  $scope.addToFilters(entry.type,entry.name);
-else  $scope.removeFromFilters(entry.type,entry.name);
+if(entry.value==true)
+{
+  console.log("ADD FILTERS");
+  $scope.addToFilters(entry.type,entry.name);}
+else 
+ $scope.removeFromFilters(entry.type,entry.name);
 }
+console.log("ENTRY");
 });
+console.log($scope.filters);
 $scope.findCandidates($scope.skip,$scope.itemsPerPage,$scope.filters, false);
 
 
@@ -257,17 +268,17 @@ $scope.findCandidates($scope.skip,$scope.itemsPerPage,$scope.filters, false);
      {
  var once=true;
       var alreadyPresentInFilters=false;
-     	 $scope.filters.forEach(function(entry){
+         $scope.filters.forEach(function(entry){
           if(type==entry.type && name==entry.name)
                   {
-                  	alreadyPresentInFilters=true;
+                    alreadyPresentInFilters=true;
                   }
          });
 
          if(!alreadyPresentInFilters){
 
           var typeExists = false;
-          var feefilters=$scope.filters.slice();
+          var feefilters=angular.copy($scope.filters);
           feefilters.forEach(function(entry){
            
             if(type==entry.type && once){
@@ -292,11 +303,12 @@ $scope.findCandidates($scope.skip,$scope.itemsPerPage,$scope.filters, false);
             
           }
 
+
             //salary_expext salay_exp  visa visa
          }
 
 
-
+ console.log($scope.filters);
           
 
      
@@ -317,7 +329,7 @@ $scope.findCandidates($scope.skip,$scope.itemsPerPage,$scope.filters, false);
                 
                         
           });
-            $scope.findCandidates($scope.skip,$scope.itemsPerPage,$scope.filters, false);
+         //   $scope.findCandidates($scope.skip,$scope.itemsPerPage,$scope.filters, false);
 
      }
   $scope.openFilterModal = function (filterArray, name) {
