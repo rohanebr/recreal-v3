@@ -17,6 +17,18 @@ module.exports = function(app) {
 		.put(users.requiresLogin, employers.hasAuthorization, employers.update)
 		.delete(users.requiresLogin, employers.hasAuthorization, employers.delete);
 
+
+
+	app.route('/employers/addToFavorites/:employerId')
+		.put(employers.addToFavorites);
+
+	app.route('/employers/removeFromFavorites/:employerId')
+		.put(employers.removeFromFavorites);
+
+
+	app.route('/employers/favoriteCandidates/:employerId')
+		.get(employers.getFavoriteCandidates);
+
 	// Finish by binding the Employer middleware
 	app.param('employerId', employers.employerByID);
 };

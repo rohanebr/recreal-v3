@@ -1,13 +1,16 @@
 'use strict';
 
-angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$scope', '$filter', 'Jobs', '$stateParams', '$http', '$modal','$location','Authentication','Socket','$rootScope',
-    function($scope, $filter, Jobs, $stateParams, $http, $modal,$location,Authentication,Socket,$rootScope) {
+angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$scope', '$filter', 'Jobs', 'Employers','$stateParams', '$http', '$modal','$location','Authentication','Socket','$rootScope',
+    function($scope, $filter, Jobs, Employers, $stateParams, $http, $modal,$location,Authentication,Socket,$rootScope) {
       $rootScope.$broadcast("inEmployerJobupdateHeader", {
             trigger: true
         });
         $scope.firstTimeFetching=true;
         $scope.locationFilters = [];
         $scope.user = Authentication.user;
+        $scope.employer = Employers.get({ 
+          employerId: $scope.user.employer
+        });
         $scope.itemsPerPage = 5;
         $scope.currentPage = 0;
         $scope.candidates=[];
@@ -111,10 +114,10 @@ $scope.sortableOptions = {
             }
         };
 
-        $scope.isShortListed = function(candidate) {
+        $scope.isFavorite = function(candidate) {
 
             var ans = false;
-            angular.forEach($scope.job.shortListedCandidates, function(item) {
+            angular.forEach($scope.employer.favorites, function(item) {
                 if (item.candidate == candidate._id)
                     ans = true;
             });
@@ -142,13 +145,6 @@ $scope.sortableOptions = {
                 $scope.candidates = job.candidates;
                 job.filters.forEach(function(entry){
                            $scope.filters1.push(entry);
-                        
-
-                    
-               
-                      
-            
-
                 });
 
                 if($scope.firsttime)
@@ -184,7 +180,7 @@ $scope.sortableOptions = {
 
 
         // Add to Short List
-        $scope.addCandidateToShortList = function(candidate) {
+        $scope.addCandidateToFavorites = function(candidate) {
 
             var attribute = {
                 jobId: $scope.job._id,
@@ -192,10 +188,11 @@ $scope.sortableOptions = {
             }
 
 
-            $http.put('jobs/addToShortList/' + $scope.job._id, attribute).success(function(response) {
+            $http.put('employers/addToFavorites/' + $scope.employer._id, attribute).success(function(response) {
 
-                $scope.job.shortListedCandidates.push({
-                    candidate: candidate._id
+                $scope.employer.favorites.push({
+                    candidate: candidate._id,
+                    job: $scope.job._id
                 });
 
             }).error(function(response) {
@@ -205,22 +202,22 @@ $scope.sortableOptions = {
 
 
         // Remove from Short List
-        $scope.removeCandidateFromShortList = function(candidate) {
+        $scope.removeCandidateFromFavorites = function(candidate) {
 
             var attribute = {
                 jobId: $scope.job._id,
                 candidateId: candidate._id
             }
 
-            $http.put('jobs/removeFromShortList/' + $scope.job._id, attribute).success(function(response) {
+            $http.put('employers/removeFromFavorites/' + $scope.employer._id, attribute).success(function(response) {
 
-                angular.forEach($scope.job.shortListedCandidates, function(item) {
+                angular.forEach($scope.employer.favorites, function(item) {
                     if (item.candidate == candidate._id)
-                        $scope.job.shortListedCandidates.splice($scope.job.shortListedCandidates.indexOf(item), 1);
+                        $scope.employer.favorites.splice($scope.employer.favorites.indexOf(item), 1);
                 });
                 //And redirect to the index page
 
-                $location.path('jobs/' + job._id);
+                // $location.path('jobs/' + job._id);
             }).error(function(response) {
                 $scope.error = response.message;
             });
@@ -308,7 +305,7 @@ $scope.findCandidates($scope.skip,$scope.itemsPerPage,$scope.filters, false);
          }
 
 
- console.log($scope.filters);
+        console.log($scope.filters);
           
 
      

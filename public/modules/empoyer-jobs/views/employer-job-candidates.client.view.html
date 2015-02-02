@@ -53,10 +53,10 @@
                           <div class="pull-right media-xs text-center text-muted">
 
                             <aside class="">
-                                <a href="" ng-hide="isShortListed(candidate)" ng-click="addCandidateToShortList(candidate) "><i class="fa fa-star-o fa-2x" style="padding-top:20px;"></i>
+                                <a href="" ng-hide="isFavorite(candidate)" ng-click="addCandidateToFavorites(candidate) "><i class="fa fa-star-o fa-2x" style="padding-top:20px;"></i>
                                 </a>
 
-                                <a href="" ng-show="isShortListed(candidate)" ng-click=" removeCandidateFromShortList(candidate)"><i class="fa fa-star fa-2x" style="color:#f1d104; padding-top:20px;"></i>
+                                <a href="" ng-show="isFavorite(candidate)" ng-click=" removeCandidateFromFavorites(candidate)"><i class="fa fa-star fa-2x" style="color:#f1d104; padding-top:20px;"></i>
                                 </a>
                             </aside>
                           </div>
