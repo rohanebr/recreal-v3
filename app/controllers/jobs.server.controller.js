@@ -134,17 +134,7 @@ exports.getJobCandidates = function(req, res) {
     });
 };
 
-/**
- * Show the current Job
- */
-exports.getShortListedCandidates = function(req, res) {
-    Job.findOne({
-        _id: req.job._id
-    }).populate('shortListedCandidates').populate('shortListedCandidates.candidate').exec(function(err, job) {
-        // User.findOne({_id: job.})
-        res.jsonp(job);
-    });
-};
+
 
 exports.apply = function(req, res, next)
 
@@ -292,64 +282,6 @@ exports.jobByID = function(req, res, next, id) {
     });
 };
 
-exports.addToShortList = function(req, res, next) {
-
-    if (req.user.userType === 'employer') {
-
-        var jobId = req.body.jobId;
-        var candidateId = req.body.candidateId;
-
-
-
-
-        Job.findOne({
-            _id: jobId
-        }).exec(function(err, job) {
-
-            var exists = false;
-            job.shortListedCandidates.forEach(function(slc) {
-                if (slc.candidate == candidateId) {
-                    exists = true;
-                }
-            });
-
-            if (!exists) {
-                Employer.findOne({
-                    user: req.user._id
-                }).exec(function(err, employer) {
-                    Candidate.findOne({
-                        _id: candidateId
-                    }).exec(function(err, candidate) {
-                        job.addToShortList(candidate, employer);
-                        res.jsonp(job);
-                    });
-                });
-            }
-        });
-
-    }
-};
-
-
-exports.removeFromShortList = function(req, res, next) {
-
-    if (req.user.userType === 'employer') {
-        var jobId = req.body.jobId;
-        var candidateId = req.body.candidateId;
-
-
-        Job.findByIdAndUpdate(jobId, {
-            $pull: {
-                shortListedCandidates: {
-                    candidate: candidateId
-                }
-            }
-        }, function(err, job) {
-            res.jsonp(job);
-        });
-
-    }
-};
 
 
 /**
@@ -725,7 +657,7 @@ exports.getPaginatedCandidates = function(req, res) {
 
     Job.findById(req.job.id)
         .exec(function(err, job) {
-            console.log(job.jobApplications[0].candidate);
+            // console.log(job.jobApplications[0].candidate);
             var candidates=[];
               for(var s=0;s<job.jobApplications.length;s++)
          candidates.push(job.jobApplications[s].candidate);

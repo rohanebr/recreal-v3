@@ -256,16 +256,6 @@ JobSchema.methods.apply = function(candidate, callback) {
 		candidate.save(callback);
 	});
 };
-		
-JobSchema.methods.addToShortList = function(candidate, employer, callback) {
-	var job = this;
-	var shortListedCandidate = {
-		candidate: candidate,
-		employer: employer
-	};
-   	this.shortListedCandidates.push(shortListedCandidate);	
-	this.save(callback);
-};
 
 mongoose.model('Job', JobSchema);
 

@@ -50,6 +50,16 @@ var EmployerSchema = new Schema({
     type: 'String',
     trim: true
   },
+  favorites: [{
+   candidate: {
+     type: Schema.ObjectId,
+     ref: 'Candidate'
+   },
+   job: {
+     type: Schema.ObjectId,
+     ref: 'Job'
+   }
+  }],
 	company: {
 		type: Schema.ObjectId,
 		ref: 'Company',
@@ -93,5 +103,15 @@ EmployerSchema.virtual('picture_url').get(function () {
 
 // 	next();
 // });
+
+EmployerSchema.methods.addToFavorites = function(candidate, job, callback) {
+  var employer = this;
+  var favoriteCandidate = {
+    candidate: candidate,
+    job: job
+  };
+    this.favorites.push(favoriteCandidate);  
+    this.save(callback);
+};
 
 mongoose.model('Employer', EmployerSchema);

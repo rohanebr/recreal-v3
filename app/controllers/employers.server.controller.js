@@ -5,6 +5,8 @@
  */
 var mongoose = require('mongoose'),
 	Employer = mongoose.model('Employer'),
+	Job = mongoose.model('Job'),
+	Candidate = mongoose.model('Candidate'),
 	_ = require('lodash');
 
 /**
@@ -191,4 +193,77 @@ exports.getImage =  function (req, res){
   res.writeHead(200, {'Content-Type': 'image/jpg' });
   res.end(img, 'binary');
 
+};
+
+
+exports.addToFavorites = function(req, res, next) {
+
+    if (req.user.userType === 'employer') {
+
+        var employerId = req.user.employer;
+        var candidateId = req.body.candidateId;
+        var jobId = req.body.jobId;
+
+
+
+
+        Employer.findOne({
+            _id: employerId
+        }).exec(function(err, employer) {
+
+            var exists = false;
+            employer.favorites.forEach(function(fav) {
+                if (fav.candidate == candidateId) {
+                    exists = true;
+                }
+            });
+
+            if (!exists) {
+                Job.findOne({
+                    _id: jobId
+                }).exec(function(err, job) {
+                    Candidate.findOne({
+                        _id: candidateId
+                    }).exec(function(err, candidate) {
+                        employer.addToFavorites(candidate, job);
+                        res.jsonp(employer);
+                    });
+                });
+            }
+        });
+
+    }
+};
+
+
+exports.removeFromFavorites = function(req, res, next) {
+
+    if (req.user.userType === 'employer') {
+        var jobId = req.body.jobId;
+        var candidateId = req.body.candidateId;
+
+
+        Employer.findByIdAndUpdate(req.user.employer, {
+            $pull: {
+                favorites: {
+                    candidate: candidateId
+                }
+            }
+        }, function(err, job) {
+            res.jsonp(true);
+        });
+
+    }
+};
+
+/**
+ * Show the current Job
+ */
+exports.getFavoriteCandidates = function(req, res) {
+    Employer.findOne({
+        _id: req.user.employer
+    }).populate('favorites').populate('favorites.candidate').exec(function(err, employer) {
+        // User.findOne({_id: job.})
+        res.jsonp(employer);
+    });
 };
