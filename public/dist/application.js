@@ -67,6 +67,8 @@ ApplicationConfiguration.registerModule('employer-signup-wizard');'use strict';
 // Use applicaion configuration module to register a new module
 ApplicationConfiguration.registerModule('employers');'use strict';
 // Use applicaion configuration module to register a new module
+ApplicationConfiguration.registerModule('empolyer-favorites');'use strict';
+// Use applicaion configuration module to register a new module
 ApplicationConfiguration.registerModule('empoyer-jobs');'use strict';
 // Use applicaion configuration module to register a new module
 ApplicationConfiguration.registerModule('exams');'use strict';
@@ -1338,8 +1340,7 @@ angular.module('candidate-jobs').directive('filterListOpenJobs', [
             if (filterName == v[h].type)
               scope.dummyfilters.push(v[h]);
           }
-          console.log(scope.dummyfilters);
-          var html = '<article>' + '<label><strong>' + filterHeading + '</strong></label>' + '<ul>' + '<li class="checkbox i-checks" data-ng-repeat="' + filterName + 'Filter in dummyfilters | orderBy:' + count + ':true  | limitTo: filterLimit">' + '<label>' + '<input type="checkbox" data-ng-click="filterChanged(' + filterNameString + ',' + filterName + 'Filter.name)" data-ng-model="' + filterName + 'Filter.value" id="{{' + filterName + ' + ' + filterName + 'Filter.name}}" />' + '<i></i>' + '<label ng-if="' + filterName + 'Filter.name" for="{{' + filterName + ' + ' + filterName + 'Filter.name}}" >{{' + filterName + 'Filter.name}} ({{' + filterName + 'Filter.count}})</label>' + '<label ng-if="!' + filterName + 'Filter.name" for="{{' + filterName + ' + ' + filterName + 'Filter.name}}" >Not Mentioned ({{' + filterName + 'Filter.count}})</label>' + '</label>' + '</li>' + '</ul>' + '<a href="" data-ng-if="dummyfilters.length > filterLimit" data-ng-click="openFilterModal(dummyfilters, ' + filterNameString + ')">more choices...</a>' + '</article>';
+          var html = '<article>' + '<label><strong>' + filterHeading + '</strong></label>' + '<ul>' + '<li class="checkbox i-checks" data-ng-repeat="' + filterName + 'Filter in v | orderBy:' + count + ':true  | limitTo: filterLimit">' + '<label>' + '<input type="checkbox" data-ng-click="filterChanged(' + filterNameString + ',' + filterName + 'Filter.name)" data-ng-model="' + filterName + 'Filter.value" id="{{' + filterName + ' + ' + filterName + 'Filter.name}}" />' + '<i></i>' + '<label ng-if="' + filterName + 'Filter.name" for="{{' + filterName + ' + ' + filterName + 'Filter.name}}" >{{' + filterName + 'Filter.name}} ({{' + filterName + 'Filter.count}})</label>' + '<label ng-if="!' + filterName + 'Filter.name" for="{{' + filterName + ' + ' + filterName + 'Filter.name}}" >Not Mentioned ({{' + filterName + 'Filter.count}})</label>' + '</label>' + '</li>' + '</ul>' + '<a href="" data-ng-if="v.length > filterLimit" data-ng-click="openFilterModal(v, ' + filterNameString + ')">more choices...</a>' + '</article>';
           var e = $compile(html)(scope);
           element.replaceWith(e);
         }, true);
@@ -3505,7 +3506,7 @@ angular.module('core').factory('Socket', [
           longi: data.coords.longitude
         };
       });
-      var socket = io.connect('https://morning-sea-1792.herokuapp.com');
+      var socket = io.connect();
       socket.emit('user_data', Authentication.user);
     }
     return {
@@ -4363,6 +4364,74 @@ angular.module('employers').factory('Employers', [
   }
 ]);'use strict';
 //Setting up route
+angular.module('empolyer-favorites').config([
+  '$stateProvider',
+  function ($stateProvider) {
+    // Empolyer favorites state routing
+    $stateProvider.state('employer-favorites', {
+      url: '/employer-favorites',
+      templateUrl: 'modules/empolyer-favorites/views/employer-favorites.client.view.html'
+    });
+  }
+]);'use strict';
+angular.module('empolyer-favorites').controller('EmployerFavoritesController', [
+  '$scope',
+  '$http',
+  'Authentication',
+  'Employers',
+  '$stateParams',
+  '$modal',
+  '$rootScope',
+  function ($scope, $http, Authentication, Employers, $stateParams, $modal, $rootScope) {
+    // Controller Logic
+    // ...
+    $rootScope.selectedCandidates = [];
+    $scope.user = Authentication.user;
+    $scope.employer = Employers.get({ employerId: $scope.user.employer });
+    $scope.formData = { userType: '' };
+    $http.get('employers/favoriteCandidates/' + $scope.user.employer).success(function (employer) {
+      $scope.employer = employer;
+      $scope.shortListedObjects = employer.favorites;
+    });
+    $scope.$on('$destroy', function () {
+      for (var d = 0, s = $scope.shortListedObjects.length; d < s; d++) {
+        var f = $scope.shortListedObjects[d];
+        console.log(f.selected);
+        if (f.selected) {
+          $rootScope.selectedCandidates.push($scope.shortListedObjects[d].candidate._id);
+          console.log('WTF');
+        }
+      }
+    });
+    // Remove from Short List
+    $scope.removeCandidateFromFavorites = function (shortlist) {
+      var attribute = {
+          jobId: shortlist.job._id,
+          candidateId: shortlist.candidate._id
+        };
+      $http.put('employers/removeFromFavorites/' + $scope.employer._id, attribute).success(function (response) {
+      }).error(function (response) {
+        $scope.error = response.message;
+      });
+    };
+    // send message
+    $scope.openMessageModal = function (reciever) {
+      var mesg = $modal.open({
+          templateUrl: '/modules/short-list/views/message/message.html',
+          controller: 'messageController',
+          resolve: {
+            reciever: function () {
+              return reciever;
+            }
+          }
+        });
+      mesg.result.then(function (result) {
+      }, function () {
+      });
+    };
+  }
+]);'use strict';
+//Setting up route
 angular.module('empoyer-jobs').config([
   '$stateProvider',
   function ($stateProvider) {
@@ -4806,6 +4875,7 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', [
   '$scope',
   '$filter',
   'Jobs',
+  'Employers',
   '$stateParams',
   '$http',
   '$modal',
@@ -4813,11 +4883,12 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', [
   'Authentication',
   'Socket',
   '$rootScope',
-  function ($scope, $filter, Jobs, $stateParams, $http, $modal, $location, Authentication, Socket, $rootScope) {
+  function ($scope, $filter, Jobs, Employers, $stateParams, $http, $modal, $location, Authentication, Socket, $rootScope) {
     $rootScope.$broadcast('inEmployerJobupdateHeader', { trigger: true });
     $scope.firstTimeFetching = true;
     $scope.locationFilters = [];
     $scope.user = Authentication.user;
+    $scope.employer = Employers.get({ employerId: $scope.user.employer });
     $scope.itemsPerPage = 5;
     $scope.currentPage = 0;
     $scope.candidates = [];
@@ -4943,9 +5014,9 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', [
         $scope.currentPage = n;
       }
     };
-    $scope.isShortListed = function (candidate) {
+    $scope.isFavorite = function (candidate) {
       var ans = false;
-      angular.forEach($scope.job.shortListedCandidates, function (item) {
+      angular.forEach($scope.employer.favorites, function (item) {
         if (item.candidate == candidate._id)
           ans = true;
       });
@@ -4976,37 +5047,40 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', [
               if ($scope.completefilternames[h] == entry.type)
                 alreadyexists = true;
             }
-            if (!alreadyexists)
+            if (!alreadyexists) {
               $scope.completefilternames.push(entry.type);
+            }
           });
         }
       });
     };
     // Add to Short List
-    $scope.addCandidateToShortList = function (candidate) {
+    $scope.addCandidateToFavorites = function (candidate) {
       var attribute = {
           jobId: $scope.job._id,
           candidateId: candidate._id
         };
-      $http.put('jobs/addToShortList/' + $scope.job._id, attribute).success(function (response) {
-        $scope.job.shortListedCandidates.push({ candidate: candidate._id });
+      $http.put('employers/addToFavorites/' + $scope.employer._id, attribute).success(function (response) {
+        $scope.employer.favorites.push({
+          candidate: candidate._id,
+          job: $scope.job._id
+        });
       }).error(function (response) {
         $scope.error = response.message;
       });
     };
     // Remove from Short List
-    $scope.removeCandidateFromShortList = function (candidate) {
+    $scope.removeCandidateFromFavorites = function (candidate) {
       var attribute = {
           jobId: $scope.job._id,
           candidateId: candidate._id
         };
-      $http.put('jobs/removeFromShortList/' + $scope.job._id, attribute).success(function (response) {
-        angular.forEach($scope.job.shortListedCandidates, function (item) {
+      $http.put('employers/removeFromFavorites/' + $scope.employer._id, attribute).success(function (response) {
+        angular.forEach($scope.employer.favorites, function (item) {
           if (item.candidate == candidate._id)
-            $scope.job.shortListedCandidates.splice($scope.job.shortListedCandidates.indexOf(item), 1);
-        });
-        //And redirect to the index page
-        $location.path('jobs/' + job._id);
+            $scope.employer.favorites.splice($scope.employer.favorites.indexOf(item), 1);
+        });  //And redirect to the index page
+             // $location.path('jobs/' + job._id);
       }).error(function (response) {
         $scope.error = response.message;
       });
@@ -5024,14 +5098,18 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', [
     //Removes and adds filter for salary
     $scope.filterChanged = function (type, name) {
       $scope.filters1.forEach(function (entry) {
+        console.log(entry.value);
         if (name == entry.name) {
-          entry.value = !entry.value;
-          if (entry.value == true)
+          //entry.value=!entry.value;
+          if (entry.value == true) {
+            console.log('ADD FILTERS');
             $scope.addToFilters(entry.type, entry.name);
-          else
+          } else
             $scope.removeFromFilters(entry.type, entry.name);
         }
+        console.log('ENTRY');
       });
+      console.log($scope.filters);
       $scope.findCandidates($scope.skip, $scope.itemsPerPage, $scope.filters, false);
     };
     //addToFilters
@@ -5045,7 +5123,7 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', [
       });
       if (!alreadyPresentInFilters) {
         var typeExists = false;
-        var feefilters = $scope.filters.slice();
+        var feefilters = angular.copy($scope.filters);
         feefilters.forEach(function (entry) {
           if (type == entry.type && once) {
             once = false;
@@ -5075,14 +5153,14 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', [
           });
         }  //salary_expext salay_exp  visa visa
       }
+      console.log($scope.filters);
     };
     //removeFromFilters
     $scope.removeFromFilters = function (type, name) {
       $scope.filters.forEach(function (entry) {
         if (type == entry.type && name == entry.name)
           $scope.filters.splice($scope.filters.indexOf(entry), 1);
-      });
-      $scope.findCandidates($scope.skip, $scope.itemsPerPage, $scope.filters, false);
+      });  //   $scope.findCandidates($scope.skip,$scope.itemsPerPage,$scope.filters, false);
     };
     $scope.openFilterModal = function (filterArray, name) {
       var modalInstance = $modal.open({
