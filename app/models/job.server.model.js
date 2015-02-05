@@ -188,17 +188,29 @@ var JobSchema = new Schema({
 		ref: 'Exam'
 	}],
 
-	
+	stages: [{
+		type: String
+	}],
+
 	jobApplications: [{
 		candidate: {
 			type: Schema.ObjectId,
 			ref: 'Candidate'
 		},
 		stage:{
-	      	type: String,
-		  	enum: ['Applicant','ShortListed','Test','PhoneScreening','Interview', 'Hired' ],
-		  	default:'Applicant'
+	      	type: String
+	    },
+	    coverLetter: {
+	    	title: {
+	    		type: String
+	    	},
+	    	content: {
+	    		type: String
+	    	}
 	    }
+	    // comments: [{
+
+	    // }]
 	}],
 
 	// candidates: [{
@@ -235,6 +247,18 @@ JobSchema.plugin(searchPlugin, {
 JobSchema.index({candidates: 1});
 
 
+
+
+JobSchema.pre('save', function(next) {
+	if (!(this.stages.length > 0))  // only first time
+	{
+		this.stages = ['Unscreened','Screening', 'Shortlist', 'Test', 'Telephone Interview', 'Interview', 'Rejected', 'Hired'];
+	}
+
+	next();
+});
+
+
 //two below lines added for text saerch plugin remove if not required
 
 
@@ -247,7 +271,7 @@ JobSchema.methods.apply = function(candidate, callback) {
 	var job = this;
 	var jobApplication = {
 		candidate: candidate,
-		stage: 'Applicant'
+		stage: job.stages[0]
 	}
 	this.jobApplications.push(jobApplication)
    	// this.candidates.push(candidate);	
