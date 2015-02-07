@@ -5029,14 +5029,14 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', [
         filter: filters,
         isPageChange: isPageChange,
         priority: $scope.itemsList.items1
-      }).success(function (job) {
-        console.log(job);
+      }).success(function (serverData) {
+        console.log(serverData);
         $scope.filters1 = [];
-        $scope.job = job.job;
+        $scope.job = serverData.job;
         // $scope.locationFilters=job.filters.locationFilters;
-        $scope.total = job.totalentries;
-        $scope.candidates = job.candidates;
-        job.filters.forEach(function (entry) {
+        $scope.total = serverData.totalentries;
+        $scope.candidates = serverData.candidates;
+        serverData.filters.forEach(function (entry) {
           $scope.filters1.push(entry);
         });
         if ($scope.firsttime) {
