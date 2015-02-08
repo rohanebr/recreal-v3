@@ -7,6 +7,7 @@ angular.module('empoyer-jobs').controller('EmployerJobCandidatesController', ['$
         });
         $scope.firstTimeFetching=true;
         $scope.locationFilters = [];
+        $scope.filteredjobApplications=[];
         $scope.user = Authentication.user;
         $scope.employer = Employers.get({ 
           employerId: $scope.user.employer
@@ -142,7 +143,10 @@ $scope.sortableOptions = {
                 $scope.job = serverData.job;
                 // $scope.locationFilters=job.filters.locationFilters;
                      $scope.total = serverData.totalentries;
-                $scope.candidates = serverData.candidates;
+                     for(var h=0,y=serverData.candidates.length;h<y;h++)
+                      $scope.candidates.push({candidate:serverData.candidates[h],jobapplication:serverData.jobapplication[h]});
+                // $scope.candidates = serverData.candidates;
+                $scope.filteredjobApplications =serverData.jobapplication;
                 serverData.filters.forEach(function(entry){
                            $scope.filters1.push(entry);
                 });

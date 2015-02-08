@@ -138,8 +138,26 @@ exports.getJobCandidates = function(req, res) {
 
 exports.apply = function(req, res, next)
 
-{
-    if (req.user.userType === 'candidate') {
+{    var alreadyapplied=false;
+console.log("APPLY ");    
+    console.log(req.job._id);
+    Job.findOne({
+                _id: req.job._id
+            })
+            .exec(function(err, job)
+                {
+                    var job1=req.job;
+                 Candidate.findOne({
+                    user: req.user._id
+                }).exec(function(err, candidate) {
+                  
+                           for(var s=0,k=job1.jobApplications.length;s<k;s++)
+                           if(job1.jobApplications[s].candidate.equals(candidate.id))
+                           {
+                            alreadyapplied=true;
+                            break;
+                           }
+  if (req.user.userType === 'candidate' && !alreadyapplied) {
         var job = req.job;
         Job.findOne({
                 _id: req.job._id
@@ -185,6 +203,11 @@ exports.apply = function(req, res, next)
                 });
             });
     }
+                });   
+               
+
+                });
+  
 };
 /**
  * Update a Job
@@ -608,7 +631,7 @@ exports.getPaginatedJobs = function(req, res) {
 exports.getPaginatedCandidates = function(req, res) {
     var filters = [];
     var dbfilters = ["salary_expectation", "visa_status", "employee_status", "employee_type", "career_level", "gender", "skills", "educations", "isOnline"];
-
+    var jobapplications=[];
     var incomingfilters = [];
 
     var precedence = req.body.precedence;
@@ -655,6 +678,7 @@ exports.getPaginatedCandidates = function(req, res) {
 
     Job.findById(req.job.id)
         .exec(function(err, job) {
+            jobapplications= job.jobApplications;
             // console.log(job.jobApplications[0].candidate);
             var candidates=[];
               for(var s=0;s<job.jobApplications.length;s++)
@@ -687,7 +711,7 @@ exports.getPaginatedCandidates = function(req, res) {
             });
 console.log("SDFGG"+incomingfilters.length);
             if (incomingfilters.length != 0) {
-                var c1;
+                var c1=[{jobapplication:{}}];
                 var lengthincomingfilters = incomingfilters.length;
                 for (var h = 0, t = dbfilters.length; h < t; h++) {
                     var alreadyPresent = false;
@@ -803,9 +827,20 @@ console.log("SDFGG"+incomingfilters.length);
                         if (dbfilters[s] == "educations")
                             filters = filterHelper.sortandfilterArray(dbfilters[s], candidatepool, incomingfilters, filters);
 
-                    }console.log("FILTERS");
-                     console.log(filters); 
+                    }
+                    console.log("CANDIDATE");
+                    var filteredJobApplications = [];
+                    for(var h=0,j=c1.length;h<j;h++)
+                         for(var hh=0,jj=jobapplications.length;hh<jj;hh++)
+                             {
+                                  if(jobapplications[hh].candidate.equals(c1[h]._id))
+                                   {  filteredJobApplications.push(jobapplications[hh]);
+                                   
+}                                    }
+                        
+                    console.log(filteredJobApplications); 
                     res.jsonp({
+                        jobapplication:filteredJobApplications,
                         candidates: c1,
                         totalentries: totallength,
                         job: job,
