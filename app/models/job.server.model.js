@@ -254,7 +254,6 @@ JobSchema.pre('save', function(next) {
 	{
 		this.stages = ['Unscreened','Screening', 'Shortlist', 'Test', 'Telephone Interview', 'Interview', 'Rejected', 'Hired'];
 	}
-
 	next();
 });
 
