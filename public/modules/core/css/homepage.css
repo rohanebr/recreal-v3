@@ -113,3 +113,45 @@ border-top: 1px solid #ddd;
 display: block;
 margin: 30px 0;
 }
+
+
+/* css stolen from recruiterbox for the stolen div */
+#glossary {
+    padding: 5% 0 5% 0;
+background-color:#f5f5f5;
+}
+
+#glossary .glossary-item+.glossary-item {
+margin-top:2em;
+}
+
+#glossary h2,#glossary h3 {
+color:#555;
+}
+
+#glossary h3 {
+font-weight:400;
+margin-bottom:1em;
+}
+
+#glossary p+p {
+margin-top:1.6em;
+}
+
+.text-left,#glossary .section-heading {
+text-align:left;
+}
+
+blockquote p,#glossary p {
+font-size:16px;
+font-weight:300;
+}
+
+#glossary .col-md-6:first-child {
+padding-right:30px;
+}
+
+#glossary .col-md-6:last-child {
+padding-left:30px;
+}
+}
