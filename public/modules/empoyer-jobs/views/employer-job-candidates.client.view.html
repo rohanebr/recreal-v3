@@ -48,41 +48,41 @@
                     </header>
                   <section class="panel-body slim-scroll" data-height="230px" data-size="10px">
                       <article ng-repeat="candidate in candidates" class="media">
-                        <span class="pull-left thumb-md"><img src="{{candidate.picture_url}}"></span>
+                        <span class="pull-left thumb-md"><img src="{{candidate.candidate.picture_url}}"></span>
                         <div class="media-body">
                           <div class="pull-right media-xs text-center text-muted">
 
                             <aside class="">
-                                <label class="label label-primary">{{candidate.stage}}</label>
-                                <a href="" ng-hide="isFavorite(candidate)" ng-click="addCandidateToFavorites(candidate) "><i class="fa fa-star-o fa-2x" style="padding-top:20px;"></i>
+                                <label class="label label-primary">{{candidate.jobapplication.stage}}</label>
+                                <a href="" ng-hide="isFavorite(candidate.candidate)" ng-click="addCandidateToFavorites(candidate.candidate) "><i class="fa fa-star-o fa-2x" style="padding-top:20px;"></i>
                                 </a>
 
-                                <a href="" ng-show="isFavorite(candidate)" ng-click=" removeCandidateFromFavorites(candidate)"><i class="fa fa-star fa-2x" style="color:#f1d104; padding-top:20px;"></i>
+                                <a href="" ng-show="isFavorite(candidate.candidate)" ng-click=" removeCandidateFromFavorites(candidate.candidate)"><i class="fa fa-star fa-2x" style="color:#f1d104; padding-top:20px;"></i>
                                 </a>
                             </aside>
                           </div>
-                          <a data-ng-href="#!/candidates/{{candidate._id}}" class="h4">{{candidate.displayName}}</a>
+                          <a data-ng-href="#!/candidates/{{candidate.candidate._id}}" class="h4">{{candidate.candidate.displayName}}</a>
                           <small class="block">
-                              <a href="#" class="">{{candidate.title}}</a> 
-                              <span ng-show="candidate.isOnline == 'Online'" class="label label-success">{{candidate.isOnline}}</span>
-                              <span ng-show="candidate.isOnline == 'Offline'" class="label label-danger">{{candidate.isOnline}}</span>
+                              <a href="#" class="">{{candidate.candidate.title}}</a> 
+                              <span ng-show="candidate.candidate.isOnline == 'Online'" class="label label-success">{{candidate.candidate.isOnline}}</span>
+                              <span ng-show="candidate.candidate.isOnline == 'Offline'" class="label label-danger">{{candidate.candidate.isOnline}}</span>
                           </small>
                           <small class="block m-t-sm">
-                            <span class="r bg-light wrapper-xxs text-sm" data-ng-repeat="skill in candidate.skills">{{skill.title}}</span>
+                            <span class="r bg-light wrapper-xxs text-sm" data-ng-repeat="skill in candidate.candidate.skills">{{skill.title}}</span>
                           </small>
                           <small class="block m-t-sm">
 
-                              <span data-ng-show="compareType('location',candidate.location)" class="label label-success">{{candidate.location}}</span>
-                              <span data-ng-show="!compareType('location',candidate.location)" class="label label-danger">{{candidate.location}}</span>
+                              <span data-ng-show="compareType('location',candidate.candidate.location)" class="label label-success">{{candidate.candidate.location}}</span>
+                              <span data-ng-show="!compareType('location',candidate.candidate.location)" class="label label-danger">{{candidate.candidate.location}}</span>
 
-                              <span data-ng-show="compareType('salary_range',candidate.salary_expectation)" class="label label-success">{{candidate.salary_expectation}}</span>
-                              <span data-ng-show="!compareType('salary_range',candidate.salary_expectation)" class="label label-danger">{{candidate.salary_expectation}}</span>
+                              <span data-ng-show="compareType('salary_range',candidate.candidate.salary_expectation)" class="label label-success">{{candidate.candidate.salary_expectation}}</span>
+                              <span data-ng-show="!compareType('salary_range',candidate.candidate.salary_expectation)" class="label label-danger">{{candidate.candidate.salary_expectation}}</span>
 
-                              <span data-ng-show="compareType('employee_type',candidate.employee_type)" class="label label-success">{{candidate.employee_type}}</span>
-                              <span data-ng-show="!compareType('employee_type',candidate.employee_type)" class="label label-danger">{{candidate.employee_type}}</span>
+                              <span data-ng-show="compareType('employee_type',candidate.candidate.employee_type)" class="label label-success">{{candidate.candidate.employee_type}}</span>
+                              <span data-ng-show="!compareType('employee_type',candidate.candidate.employee_type)" class="label label-danger">{{candidate.candidate.employee_type}}</span>
 
-                              <span data-ng-show="compareType('employee_status',candidate.employee_status)" class="label label-success">{{candidate.employee_status}}</span>
-                              <span data-ng-show="!compareType('employee_status',candidate.employee_status)" class="label label-danger">{{candidate.employee_status}}</span>
+                              <span data-ng-show="compareType('employee_status',candidate.candidate.employee_status)" class="label label-success">{{candidate.candidate.employee_status}}</span>
+                              <span data-ng-show="!compareType('employee_status',candidate.candidate.employee_status)" class="label label-danger">{{candidate.candidate.employee_status}}</span>
 
                             </small>
                         </div>
