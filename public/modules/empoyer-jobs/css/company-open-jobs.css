@@ -4,3 +4,6 @@
 .page-title { 
     margin-bottom: 10px;
 }
+.sidebar-active{
+	background-color: #eeeeee;
+}
