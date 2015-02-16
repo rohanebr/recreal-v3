@@ -137,7 +137,7 @@ $scope.sortableOptions = {
 
 
                 console.log(serverData);
-
+                  $scope.candidates=[];
 
                   $scope.filters1=[];
                 $scope.job = serverData.job;
