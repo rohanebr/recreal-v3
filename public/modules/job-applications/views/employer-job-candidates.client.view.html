@@ -14,7 +14,16 @@
                 </section>
                 <!-- Filters -->
                 <section>
-                    <div class="col-sm-12">
+
+<!--  -->
+<!--  -->
+<!--  -->
+<!-- code for sortable matching algo criteria -->
+<!--  -->
+<!--  -->
+<!--  -->
+                    
+                    <!-- <div class="col-sm-12">
                         <article class="thumbnail">
                             <div id="sortable-container">
                                 <div class="sortable-row" as-sortable="sortableOptions" ng-model="itemsList.items1">
@@ -26,8 +35,19 @@
                                 </div>
                             </div>
                         </article>
+                    </div> -->
+
+<!-- stages navigation -->
+                    <div class="col-sm-12">
+                        <article class="thumbnail">
+                          <div data-ng-repeat="stage in job.stages">
+                            <a  data-ng-click="" href="">{{stage}}</a><br>
+                          </div>
+                        </article>
                     </div>
-                    </div>
+
+
+<!-- filters -->
                     <div class="col-sm-12">
                         <div data-ng-repeat="filtername in completefilternames">
                             <filter-list filter-name="{{filtername}}">
@@ -53,7 +73,12 @@
                           <div class="pull-right media-xs text-center text-muted">
 
                             <aside class="">
-                                <label class="label label-primary">{{candidate.jobapplication.stage}}</label>
+                                <!-- <label class="label label-primary">{{candidate.jobapplication.stage}}</label> -->
+                                
+                                <select class="form-control" data-ng-change="changeStage(candidate.jobapplication)" data-ng-model="candidate.jobapplication.stage">
+                                  <option data-ng-repeat="stage in job.stages">{{stage}}</option>
+                                </select>
+                                
                                 <a href="" ng-hide="isFavorite(candidate.candidate)" ng-click="addCandidateToFavorites(candidate.candidate) "><i class="fa fa-star-o fa-2x" style="padding-top:20px;"></i>
                                 </a>
 

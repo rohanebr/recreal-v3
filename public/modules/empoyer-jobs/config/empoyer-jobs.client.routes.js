@@ -29,10 +29,10 @@ angular.module('empoyer-jobs').config(['$stateProvider',
 			url: '/emp-job-post-one-edit/:jobId',
 			templateUrl: 'modules/empoyer-jobs/views/emp-job-post-one.edit.client.view.html'
 		}).
-		state('employer-job-candidates', {
-			url: '/employer-job-candidates/:jobId',
-			templateUrl: 'modules/empoyer-jobs/views/employer-job-candidates.client.view.html'
-		}).
+		// state('employer-job-candidates', {
+		// 	url: '/employer-job-candidates/:jobId',
+		// 	templateUrl: 'modules/empoyer-jobs/views/employer-job-candidates.client.view.html'
+		// }).
 		state('company-open-jobs', {
 			url: '/company-open-jobs',
 			templateUrl: 'modules/empoyer-jobs/views/company-open-jobs.client.view.html'
