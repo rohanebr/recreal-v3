@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('job-applications').controller('EmployerJobCandidatesController', ['$scope', '$filter', 'Jobs', 'Employers', '$stateParams', '$http', '$modal', '$location', 'Authentication', 'Socket', '$rootScope', 'JobApplications',
-    function($scope, $filter, Jobs, Employers, $stateParams, $http, $modal, $location, Authentication, Socket, $rootScope, JobApplications) {
+angular.module('job-applications').controller('EmployerJobCandidatesController', ['$scope', '$filter', '$state','Jobs', 'Employers', '$stateParams', '$http', '$modal', '$location', 'Authentication', 'Socket', '$rootScope', 'JobApplications',
+    function($scope, $filter, $state, Jobs, Employers, $stateParams, $http, $modal, $location, Authentication, Socket, $rootScope, JobApplications) {
         $rootScope.$broadcast("inEmployerJobupdateHeader", {
             trigger: true
         });
@@ -24,6 +24,9 @@ angular.module('job-applications').controller('EmployerJobCandidatesController',
         $scope.completefilternames = [];
         $scope.filterLimit = 5;
         var i;
+        if(!$scope.currentStage){
+            $scope.currentStage = 'All';
+        }
         $scope.priorities = [{
             'Id': 1,
             'Label': "Career Level",
@@ -224,6 +227,7 @@ angular.module('job-applications').controller('EmployerJobCandidatesController',
 
             $http.put('jobs/getPaginatedCandidates/' + $stateParams.jobId, {
                 skip: skip,
+                stage: $scope.currentStage,
                 limit: limit,
                 filter: filters,
                 isPageChange: isPageChange,
@@ -421,6 +425,24 @@ angular.module('job-applications').controller('EmployerJobCandidatesController',
             }, function() {
 
             });
+        };
+
+        $scope.stageLink = function(stage){
+            $scope.currentStage = stage;
+            switch(stage){
+                case 'all':
+                    $state.go('employer-job-candidates.all');
+                break;
+                case 'Interview':
+                    $state.go('employer-job-candidates.interview');
+                break;   
+                case 'Test':
+                    $state.go('employer-job-candidates.exam');
+                break;
+                default:
+                    $state.go('employer-job-candidates.all');
+                break;
+            }
         };
 
 

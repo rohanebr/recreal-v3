@@ -1,0 +1,65 @@
+<article>
+                <section class="logo text-center col-md-12">
+                    <h2>{{job.title}}</h2>
+                </section>
+                <section class="panel panel-default">
+                    <header class="panel-heading">                    
+                      <span class="label bg-dark">{{candidates.length}}</span> Job Applications
+                    </header>
+                  <section class="panel-body slim-scroll" data-height="230px" data-size="10px">
+                      <article ng-repeat="candidate in candidates" class="media">
+                        <span class="pull-left thumb-md"><img src="{{candidate.candidate.picture_url}}"></span>
+                        <div class="media-body">
+                          <div class="pull-right media-xs text-center text-muted">
+
+                            <aside class="">
+                                <!-- <label class="label label-primary">{{candidate.jobapplication.stage}}</label> -->
+                                
+                                <select class="form-control" data-ng-change="changeStage(candidate.jobapplication)" data-ng-model="candidate.jobapplication.stage">
+                                  <option data-ng-repeat="stage in job.stages">{{stage}}</option>
+                                </select>
+                                
+                                <a href="" ng-hide="isFavorite(candidate.candidate)" ng-click="addCandidateToFavorites(candidate.candidate) "><i class="fa fa-star-o fa-2x" style="padding-top:20px;"></i>
+                                </a>
+
+                                <a href="" ng-show="isFavorite(candidate.candidate)" ng-click=" removeCandidateFromFavorites(candidate.candidate)"><i class="fa fa-star fa-2x" style="color:#f1d104; padding-top:20px;"></i>
+                                </a>
+                            </aside>
+                          </div>
+                          <a data-ng-href="#!/candidates/{{candidate.candidate._id}}" class="h4">{{candidate.candidate.displayName}}</a>
+                          <small class="block">
+                              <a href="#" class="">{{candidate.candidate.title}}</a> 
+                              <span ng-show="candidate.candidate.isOnline == 'Online'" class="label label-success">{{candidate.candidate.isOnline}}</span>
+                              <span ng-show="candidate.candidate.isOnline == 'Offline'" class="label label-danger">{{candidate.candidate.isOnline}}</span>
+                          </small>
+                          <small class="block m-t-sm">
+                            <span class="r bg-light wrapper-xxs text-sm" data-ng-repeat="skill in candidate.candidate.skills">{{skill.title}}</span>
+                          </small>
+                          <small class="block m-t-sm">
+
+                              Exam pending of this harami man...
+
+                            </small>
+                        </div>
+                        <hr>
+                      </article>
+                      
+                    </section>
+                  </section>
+
+                <section class="text-right col-md-12">
+                    <ul class="pagination pagination-sm m-t-none m-b-none">
+                        <li ng-class="prevPageDisabled()">
+                            <a href ng-click="prevPage()"><i class="fa fa-chevron-left"></i></a>
+                        </li>
+                        <li ng-repeat="n in range()" ng-class="{active: n == currentPage}" ng-click="setPage(n)">
+                            <a href="#">{{n+1}}</a>
+                        </li>
+                        <li ng-class="nextPageDisabled()">
+                            <a href ng-click="nextPage()"><i class="fa fa-chevron-right"></i></a>
+                        </li>
+                    </ul>
+
+                </section>
+                
+                </article>
