@@ -443,6 +443,7 @@ angular.module('job-applications').controller('EmployerJobCandidatesController',
                     $state.go('employer-job-candidates.all');
                 break;
             }
+            $scope.findCandidates($scope.skip, $scope.itemsPerPage, $scope.filters, false);
         };
 
 
