@@ -41,11 +41,10 @@
                     
                     <div class="col-sm-12">
                         <article class="thumbnail">
-                          <a ng-show="currentStage == 'All'" class="label label-primary" data-ng-click="stageLink('All')" href="">All</a><br>
-                             <a ng-hide="currentStage == 'All'" data-ng-click="stageLink('All')" href="">All</a><br>
+                          <a ng-class="currentStage == 'All' ? 'label label-primary' : ''" data-ng-click="stageLink('All')" href="">All</a><br>
+                            
                           <div data-ng-repeat="stage in job.stages">
-                            <a ng-show="currentStage == stage" class="label label-primary" data-ng-click="stageLink(stage)" href="">{{stage}}</a><br>
-                             <a ng-hide="currentStage == stage" data-ng-click="stageLink(stage)" href="">{{stage}}</a><br>
+                            <a ng-class="currentStage == stage ? 'label label-primary' : ''" data-ng-click="stageLink(stage)" href="">{{stage}}</a><br>
                           </div>
                         </article>
                     </div>
