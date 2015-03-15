@@ -1,44 +1,4 @@
-<section data-ng-controller="EmployerJobCandidatesController">
-    <article class="row ">
-        <section class="container custom-wrapper">
-            <section class="hbox stretch">
-
-                
-            
-            <aside class="col-md-3 bg-light lt b-r b-light aside-md hidden-print" id="nav">
-                <div>
-                    <span data-ng-repeat="filter in filters" data-ng-click="removeFromFilters(filter.type,filter.name)">{{filter.name}}</span>
-                </div>
-                <section>
-                    <hr class="col-sm-9">
-                </section>
-                <!-- Filters -->
-                <section>
-                    <div class="col-sm-12">
-                        <article class="thumbnail">
-                            <div id="sortable-container">
-                                <div class="sortable-row" as-sortable="sortableOptions" ng-model="itemsList.items1">
-                                    <div ng-repeat="item in itemsList.items1" as-sortable-item>
-                                        <div class="skill-div" as-sortable-item-handle>
-                                            {{item.Label}}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </article>
-                    </div>
-                    </div>
-                    <div class="col-sm-12">
-                        <div data-ng-repeat="filtername in completefilternames">
-                            <filter-list filter-name="{{filtername}}">
-                            </filter-list>
-                        </div>
-                    </div>
-                </section>
-                <!-- end Filters -->
-            </aside>
-
-            <article>
+<article>
                 <section class="logo text-center col-md-12">
                     <h2>{{job.title}}</h2>
                 </section>
@@ -53,7 +13,12 @@
                           <div class="pull-right media-xs text-center text-muted">
 
                             <aside class="">
-                                <label class="label label-primary">{{candidate.jobapplication.stage}}</label>
+                                <!-- <label class="label label-primary">{{candidate.jobapplication.stage}}</label> -->
+                                
+                                <select class="form-control" data-ng-change="changeStage(candidate.jobapplication)" data-ng-model="candidate.jobapplication.stage">
+                                  <option data-ng-repeat="stage in job.stages">{{stage}}</option>
+                                </select>
+                                
                                 <a href="" ng-hide="isFavorite(candidate.candidate)" ng-click="addCandidateToFavorites(candidate.candidate) "><i class="fa fa-star-o fa-2x" style="padding-top:20px;"></i>
                                 </a>
 
@@ -108,7 +73,3 @@
                 </section>
                 
                 </article>
-            </section>
-        </section>
-    </article>
-</section>

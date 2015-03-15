@@ -138,7 +138,7 @@
                         <section>
                         <h4 style="margin-bottom: 5px;"><a href="#!/jobs/{{job._id}}" class="text-info">{{job.title}} <i class="icon-twitter"></i></a></h4>
                           <small class="text-muted" style="margin-left:5px"><i class="fa fa-map-marker fa-lg text-primary"></i> {{job.location}} , {{job.country}}</small><small class="block text-muted pull-right"> Close Date: {{job.due_date | date}}</small>
-                          <p style="margin-top:7px; margin-left:5px;margin-bottom:3px;font-size:13px;text-decoration: underline; color:#126da7;"><span style="margin-right:2%"><a href="#!/employer-job-candidates/{{job._id}}">Candidates: {{job.jobApplications.length}}</a></span><span style="margin-right:2%"><a href="#!/shortlisted-candidates/{{job._id}}">Short Listed: {{job.shortListedCandidates.length}}</a></span><span style="margin-right:2%">Interview: 0</span></p>
+                          <p style="margin-top:7px; margin-left:5px;margin-bottom:3px;font-size:13px;text-decoration: underline; color:#126da7;"><span style="margin-right:2%"><a href="#!/employer-job-candidates/{{job._id}}/all">Candidates: {{job.jobApplications.length}}</a></span><span style="margin-right:2%"><a href="#!/shortlisted-candidates/{{job._id}}">Short Listed: {{job.shortListedCandidates.length}}</a></span><span style="margin-right:2%">Interview: 0</span></p>
                           <p><small class="text-muted pull-left" style="margin-left:5px; font-style: italic"> Posted By: {{employer.displayName.toUpperCase()}}</small></p>
                           <p class="row"><hr/></p>
                         </section>

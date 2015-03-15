@@ -781,10 +781,18 @@ console.log("SDFGG"+incomingfilters.length);
                             matching.calculateMatchPercent(candidates, precedence, job);
                             c1 = filterHelper.sortCandidates(candidates, job);
                             c1 = c1.splice(req.body.skip, req.body.limit);
-
-
+                               var filteredJobApplications = [];
+                    for(var h=0,j=c1.length;h<j;h++)
+                         for(var hh=0,jj=jobapplications.length;hh<jj;hh++)
+                             {
+                                  if(jobapplications[hh].candidate.equals(c1[h]._id))
+                                   {  filteredJobApplications.push(jobapplications[hh]);
+                                   
+}                                       }
+             
 
                             res.jsonp({
+                                  jobapplication:filteredJobApplications,
                                 candidates: c1,
                                 totalentries: totallength,
                                 job: job,
@@ -836,7 +844,7 @@ console.log("SDFGG"+incomingfilters.length);
                                   if(jobapplications[hh].candidate.equals(c1[h]._id))
                                    {  filteredJobApplications.push(jobapplications[hh]);
                                    
-}                                    }
+}                                       }
                         
                     console.log(filteredJobApplications); 
                     res.jsonp({
