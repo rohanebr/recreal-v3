@@ -51,9 +51,7 @@ angular.module('core').controller('HomeController', ['$scope', '$modal', 'Authen
                         companyId: employer.company
                     });
                 });
-
                 $state.go('company-open-jobs');
-
             }
         } else if (user.userType === 'candidate') {
             $rootScope.candidate = Candidates.get({
