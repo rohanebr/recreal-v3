@@ -9,6 +9,7 @@
     <header class="navbar navbar-fixed-top bg-primary dk affix-top"
     data-offset-top="1" data-spy="affix" id="header">
         <div class="container">
+
             <div class="navbar-header">
                 <a class="navbar-brand m-r-lg" href="#"><img class="m-r-sm"
                 src="/theme/images/logo.ico"><span class="text-lt">recreal</span></a>
@@ -20,27 +21,6 @@
 
             <div class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
-                  <!--   <li>
-                        <a data-ride="scroll" href="#howitworks">Features</a>
-                    </li>
-
-
-                    <li>
-                        <a data-ride="scroll" href="#features">Speciality</a>
-                    </li>
-
-
-                    <li>
-                        <a data-ride="scroll" href="#pro">Testimonials</a>
-                    </li>
-
-
-                    <li>
-                        <a data-ride="scroll" href="#download">Pricing</a>
-                    </li>
-                    <li>
-                        <a data-ride="scroll" href="#download">Contact Us</a>
-                    </li> -->
                     <li>
                         <a ui-sref="employer-landing">Employers - Post jobs, Search resumes</a>
                     </li>
@@ -52,14 +32,23 @@
                         <div class="m-t-sm">
                             <a class="btn btn-link btn-sm" ng-href="/#!/signin">Sign
                             in</a> or <a class=
-                            "btn btn-sm btn-success btn-rounded m-l" href=
+                            "btn btn-sm btn-primary btn-rounded m-l" href=
                             "" ng-click="OpenCandidateSignUpModal()"><strong>
                             Submit CV</strong></a>
+                                <a class=
+                            "btn btn-sm btn-success btn-rounded m-l" ui-sref=
+                            "employer-landing"><strong>
+                            Employer</strong></a>
+                            
                         </div>
                     </li>
+
                 </ul>
+
             </div>
+
         </div>
+
     </header>
     <!-- / header -->
 

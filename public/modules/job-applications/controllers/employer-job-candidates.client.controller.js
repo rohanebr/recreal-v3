@@ -297,7 +297,7 @@ angular.module('job-applications').controller('EmployerJobCandidatesController',
         $scope.filterChanged = function(type, name) {
 
             $scope.filters1.forEach(function(entry) {
-                console.log(entry.value);
+              
 
                 if (name == entry.name) {
                     //entry.value=!entry.value;
@@ -308,7 +308,7 @@ angular.module('job-applications').controller('EmployerJobCandidatesController',
                     } else
                         $scope.removeFromFilters(entry.type, entry.name);
                 }
-                console.log("ENTRY");
+               
             });
             console.log($scope.filters);
             $scope.findCandidates($scope.skip, $scope.itemsPerPage, $scope.filters, false);
