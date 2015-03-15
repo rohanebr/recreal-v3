@@ -633,7 +633,7 @@ exports.getPaginatedCandidates = function(req, res) {
     var dbfilters = ["salary_expectation", "visa_status", "employee_status", "employee_type", "career_level", "gender", "skills", "educations", "isOnline"];
     var jobapplications=[];
     var incomingfilters = [];
-
+    console.log(req.body.stage);
     var precedence = req.body.precedence;
     //entry.type shld be equal to any field given in the candidate model 
     //it is important to name them exactly as the model variables
@@ -841,10 +841,14 @@ console.log("SDFGG"+incomingfilters.length);
                     for(var h=0,j=c1.length;h<j;h++)
                          for(var hh=0,jj=jobapplications.length;hh<jj;hh++)
                              {
-                                  if(jobapplications[hh].candidate.equals(c1[h]._id))
-                                   {  filteredJobApplications.push(jobapplications[hh]);
+                                  if(jobapplications[hh].candidate.equals(c1[h]._id) && (jobapplications[hh].stage==req.body.stage || req.body.stage=="All"))
+                                     filteredJobApplications.push(jobapplications[hh]);
                                    
-}                                       }
+                                         
+                             }
+
+
+
                         
                     console.log(filteredJobApplications); 
                     res.jsonp({
