@@ -224,15 +224,16 @@ angular.module('job-applications').controller('EmployerJobCandidatesController',
         ////////////////////////////////////////////
 
         $scope.findCandidates = function(skip, limit, filters, isPageChange) {
-
-            $http.put('jobs/getPaginatedCandidates/' + $stateParams.jobId, {
+             var jsonObject={
                 skip: skip,
                 stage: $scope.currentStage,
                 limit: limit,
                 filter: filters,
                 isPageChange: isPageChange,
                 priority: $scope.itemsList.items1
-            }).success(function(serverData) {
+            };
+            console.log(jsonObject);
+            $http.put('jobs/getPaginatedCandidates/' + $stateParams.jobId,jsonObject ).success(function(serverData) {
 
 
                 console.log(serverData);
