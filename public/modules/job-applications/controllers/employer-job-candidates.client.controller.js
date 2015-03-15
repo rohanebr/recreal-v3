@@ -224,15 +224,16 @@ angular.module('job-applications').controller('EmployerJobCandidatesController',
         ////////////////////////////////////////////
 
         $scope.findCandidates = function(skip, limit, filters, isPageChange) {
-
-            $http.put('jobs/getPaginatedCandidates/' + $stateParams.jobId, {
+             var jsonObject={
                 skip: skip,
                 stage: $scope.currentStage,
                 limit: limit,
                 filter: filters,
                 isPageChange: isPageChange,
                 priority: $scope.itemsList.items1
-            }).success(function(serverData) {
+            };
+            console.log(jsonObject);
+            $http.put('jobs/getPaginatedCandidates/' + $stateParams.jobId,jsonObject ).success(function(serverData) {
 
 
                 console.log(serverData);
@@ -296,7 +297,7 @@ angular.module('job-applications').controller('EmployerJobCandidatesController',
         $scope.filterChanged = function(type, name) {
 
             $scope.filters1.forEach(function(entry) {
-                console.log(entry.value);
+              
 
                 if (name == entry.name) {
                     //entry.value=!entry.value;
@@ -307,7 +308,7 @@ angular.module('job-applications').controller('EmployerJobCandidatesController',
                     } else
                         $scope.removeFromFilters(entry.type, entry.name);
                 }
-                console.log("ENTRY");
+               
             });
             console.log($scope.filters);
             $scope.findCandidates($scope.skip, $scope.itemsPerPage, $scope.filters, false);
