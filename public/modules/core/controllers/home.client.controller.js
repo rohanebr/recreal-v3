@@ -20,6 +20,21 @@ angular.module('core').controller('HomeController', ['$scope', '$modal', 'Authen
                 });
         };
 
+        $scope.OpenSigninModal = function() {
+
+            var modalInstance = $modal.open({
+                templateUrl: '/modules/users/views/signin.partial.client.view.html',
+                controller: 'AuthenticationController'
+            });
+            modalInstance.result.then(function(result) {
+                    console.log(result);
+                    //    $scope.sendmessage = result.sendmessage;
+                },
+                function() {
+
+                });
+        };
+
 
         $scope.authentication = Authentication;
         var user = $scope.authentication.user;

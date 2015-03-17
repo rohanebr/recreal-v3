@@ -5,6 +5,21 @@ angular.module('core').controller('EmployerLandingController', ['$scope', '$moda
 		// Controller Logic
 		// ...
 		// open signin
+		$scope.OpenSigninModal = function() {
+
+            var modalInstance = $modal.open({
+                templateUrl: '/modules/users/views/signin.partial.client.view.html',
+                controller: 'AuthenticationController'
+            });
+            modalInstance.result.then(function(result) {
+                    console.log(result);
+                    //    $scope.sendmessage = result.sendmessage;
+                },
+                function() {
+
+                });
+        };
+        
 		$scope.openPostjobModal = function() {
 	     
 	     	var modalInstance = $modal.open({
