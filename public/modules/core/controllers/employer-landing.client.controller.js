@@ -12,12 +12,12 @@ angular.module('core').controller('EmployerLandingController', ['$scope', '$moda
                 controller: 'AuthenticationController'
             });
             modalInstance.result.then(function(result) {
-                    console.log(result);
-                    //    $scope.sendmessage = result.sendmessage;
-                },
-                function() {
+                console.log(result);
+                //    $scope.sendmessage = result.sendmessage;
+            },
+            function() {
 
-                });
+            });
         };
         
 		$scope.openPostjobModal = function() {
