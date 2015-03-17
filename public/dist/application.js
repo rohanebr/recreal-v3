@@ -2154,6 +2154,16 @@ angular.module('core').controller('EmployerLandingController', [
     // Controller Logic
     // ...
     // open signin
+    $scope.OpenSigninModal = function () {
+      var modalInstance = $modal.open({
+          templateUrl: '/modules/users/views/signin.partial.client.view.html',
+          controller: 'AuthenticationController'
+        });
+      modalInstance.result.then(function (result) {
+        console.log(result);  //    $scope.sendmessage = result.sendmessage;
+      }, function () {
+      });
+    };
     $scope.openPostjobModal = function () {
       var modalInstance = $modal.open({
           templateUrl: '/modules/employer-signup-wizard/views/partials/employer-signup-partial.html',
@@ -2328,6 +2338,16 @@ angular.module('core').controller('HomeController', [
       var modalInstance = $modal.open({
           templateUrl: '/modules/candidate-signup-wizard/views/partials/candidate-signup-partial.html',
           controller: 'CandidateSignupController'
+        });
+      modalInstance.result.then(function (result) {
+        console.log(result);  //    $scope.sendmessage = result.sendmessage;
+      }, function () {
+      });
+    };
+    $scope.OpenSigninModal = function () {
+      var modalInstance = $modal.open({
+          templateUrl: '/modules/users/views/signin.partial.client.view.html',
+          controller: 'AuthenticationController'
         });
       modalInstance.result.then(function (result) {
         console.log(result);  //    $scope.sendmessage = result.sendmessage;
@@ -3125,6 +3145,31 @@ angular.module('core').controller('HomeController', [
         html: true
       }
     });
+  }
+]);'use strict';
+angular.module('siginin-wizard').controller('SigninController', [
+  '$modalInstance',
+  '$scope',
+  '$modal',
+  '$location',
+  '$http',
+  function ($modalInstance, $scope, $modal, $location, $http) {
+    // Controller Logic
+    // ...
+    $scope.credentials = {};
+    $scope.signin = function () {
+      $scope.credentials.userType = 'employer';
+      $http.post('/empsignupwizard/signupemployer', $scope.credentials).success(function (response) {
+        //If successful we assign the response to the global user model
+        if (response.status) {
+          $location.path('/signup-email-activation');
+          $modalInstance.dismiss();
+        }  //And redirect to the index page
+           // $location.path('/');
+      }).error(function (response) {
+        $scope.error = response.message;
+      });
+    };
   }
 ]);'use strict';
 angular.module('core').controller('TestController', [
@@ -5489,14 +5534,16 @@ angular.module('job-applications').controller('EmployerJobCandidatesController',
     //////////   Get list of paginated candidates
     ////////////////////////////////////////////
     $scope.findCandidates = function (skip, limit, filters, isPageChange) {
-      $http.put('jobs/getPaginatedCandidates/' + $stateParams.jobId, {
-        skip: skip,
-        stage: $scope.currentStage,
-        limit: limit,
-        filter: filters,
-        isPageChange: isPageChange,
-        priority: $scope.itemsList.items1
-      }).success(function (serverData) {
+      var jsonObject = {
+          skip: skip,
+          stage: $scope.currentStage,
+          limit: limit,
+          filter: filters,
+          isPageChange: isPageChange,
+          priority: $scope.itemsList.items1
+        };
+      console.log(jsonObject);
+      $http.put('jobs/getPaginatedCandidates/' + $stateParams.jobId, jsonObject).success(function (serverData) {
         console.log(serverData);
         $scope.candidates = [];
         $scope.filters1 = [];
@@ -5541,7 +5588,6 @@ angular.module('job-applications').controller('EmployerJobCandidatesController',
     //Removes and adds filter for salary
     $scope.filterChanged = function (type, name) {
       $scope.filters1.forEach(function (entry) {
-        console.log(entry.value);
         if (name == entry.name) {
           //entry.value=!entry.value;
           if (entry.value == true) {
@@ -5550,7 +5596,6 @@ angular.module('job-applications').controller('EmployerJobCandidatesController',
           } else
             $scope.removeFromFilters(entry.type, entry.name);
         }
-        console.log('ENTRY');
       });
       console.log($scope.filters);
       $scope.findCandidates($scope.skip, $scope.itemsPerPage, $scope.filters, false);
