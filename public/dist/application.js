@@ -2111,6 +2111,7 @@ angular.module('users').controller('AuthenticationController', [
     if ($scope.authentication.user)
       $location.path('/');
     $scope.signup = function () {
+      console.log('remove this log from users/authentication.client.controller');
       $http.post('/auth/signup', $scope.credentials).success(function (response) {
         //If successful we assign the response to the global user model
         $scope.authentication.user = response;
