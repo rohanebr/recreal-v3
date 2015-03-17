@@ -12,12 +12,12 @@ angular.module('core').controller('HomeController', ['$scope', '$modal', 'Authen
                 controller: 'CandidateSignupController'
             });
             modalInstance.result.then(function(result) {
-                    console.log(result);
-                    //    $scope.sendmessage = result.sendmessage;
-                },
-                function() {
+                console.log(result);
+                //    $scope.sendmessage = result.sendmessage;
+            },
+            function() {
 
-                });
+            });
         };
 
         $scope.OpenSigninModal = function() {
