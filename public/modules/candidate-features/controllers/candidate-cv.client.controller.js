@@ -1,5 +1,3 @@
-
-
 'use strict';
 
 angular.module('candidate-features').controller('CandidateCvController', ['$scope','Industries','Countries', '$http', 'Authentication', 'Candidates', '$location', '$modal',
