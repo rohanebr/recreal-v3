@@ -243,13 +243,17 @@ angular.module('job-applications').controller('EmployerJobCandidatesController',
                 $scope.job = serverData.job;
                 // $scope.locationFilters=job.filters.locationFilters;
                 $scope.total = serverData.totalentries;
+                $scope.filteredjobApplications = serverData.jobapplication;
+              
                 for (var h = 0, y = serverData.candidates.length; h < y; h++)
+                      for(var hh=0,yy=serverData.jobapplication.length;hh<yy;hh++) 
+                             if(serverData.jobapplication[hh].candidate==serverData.candidates[h].user.candidate)
                     $scope.candidates.push({
                         candidate: serverData.candidates[h],
-                        jobapplication: serverData.jobapplication[h]
+                        jobapplication: serverData.jobapplication[hh]
                     });
                 // $scope.candidates = serverData.candidates;
-                $scope.filteredjobApplications = serverData.jobapplication;
+                
                 serverData.filters.forEach(function(entry) {
                     $scope.filters1.push(entry);
                 });
