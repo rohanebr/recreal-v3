@@ -8,7 +8,7 @@ angular.module('core').controller('EmployerLandingController', ['$scope', '$moda
 		$scope.OpenSigninModal = function() {
 
             var modalInstance = $modal.open({
-                templateUrl: '/modules/users/views/signin.partial.client.view.html',
+                templateUrl: '/modules/users/views/signin-employer.partial.client.view.html',
                 controller: 'AuthenticationController'
             });
             modalInstance.result.then(function(result) {
