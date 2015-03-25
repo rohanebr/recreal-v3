@@ -2157,7 +2157,7 @@ angular.module('core').controller('EmployerLandingController', [
     // open signin
     $scope.OpenSigninModal = function () {
       var modalInstance = $modal.open({
-          templateUrl: '/modules/users/views/signin.partial.client.view.html',
+          templateUrl: '/modules/users/views/signin-employer.partial.client.view.html',
           controller: 'AuthenticationController'
         });
       modalInstance.result.then(function (result) {
@@ -5344,6 +5344,7 @@ angular.module('job-applications').controller('EmployerJobCandidatesController',
     $scope.firsttime = true;
     $scope.completefilternames = [];
     $scope.filterLimit = 5;
+    $scope.phone_visible = false;
     var i;
     if (!$scope.currentStage) {
       $scope.currentStage = 'All';
@@ -5526,13 +5527,15 @@ angular.module('job-applications').controller('EmployerJobCandidatesController',
         $scope.job = serverData.job;
         // $scope.locationFilters=job.filters.locationFilters;
         $scope.total = serverData.totalentries;
-        for (var h = 0, y = serverData.candidates.length; h < y; h++)
-          $scope.candidates.push({
-            candidate: serverData.candidates[h],
-            jobapplication: serverData.jobapplication[h]
-          });
-        // $scope.candidates = serverData.candidates;
         $scope.filteredjobApplications = serverData.jobapplication;
+        for (var h = 0, y = serverData.candidates.length; h < y; h++)
+          for (var hh = 0, yy = serverData.jobapplication.length; hh < yy; hh++)
+            if (serverData.jobapplication[hh].candidate == serverData.candidates[h].user.candidate)
+              $scope.candidates.push({
+                candidate: serverData.candidates[h],
+                jobapplication: serverData.jobapplication[hh]
+              });
+        // $scope.candidates = serverData.candidates;
         serverData.filters.forEach(function (entry) {
           $scope.filters1.push(entry);
         });
@@ -5625,6 +5628,21 @@ angular.module('job-applications').controller('EmployerJobCandidatesController',
         if (type == entry.type && name == entry.name)
           $scope.filters.splice($scope.filters.indexOf(entry), 1);
       });  //   $scope.findCandidates($scope.skip,$scope.itemsPerPage,$scope.filters, false);
+    };
+    // send message
+    $scope.openMessageModal = function (reciever) {
+      var mesg = $modal.open({
+          templateUrl: '/modules/short-list/views/message/message.html',
+          controller: 'messageController',
+          resolve: {
+            reciever: function () {
+              return reciever;
+            }
+          }
+        });
+      mesg.result.then(function (result) {
+      }, function () {
+      });
     };
     $scope.openFilterModal = function (filterArray, name) {
       var modalInstance = $modal.open({
