@@ -14,16 +14,25 @@
 
                             <aside class="">
                                 <!-- <label class="label label-primary">{{candidate.jobapplication.stage}}</label> -->
-                                
+
+
+                                <label class="label label-default">Match: 68%</label>
+                                <br>
+
+                                <label>Stage: </label>
                                 <select class="form-control" data-ng-change="changeStage(candidate.jobapplication)" data-ng-model="candidate.jobapplication.stage">
                                   <option data-ng-repeat="stage in job.stages">{{stage}}</option>
                                 </select>
                                 
-                                <a href="" ng-hide="isFavorite(candidate.candidate)" ng-click="addCandidateToFavorites(candidate.candidate) "><i class="fa fa-star-o fa-2x" style="padding-top:20px;"></i>
-                                </a>
-
-                                <a href="" ng-show="isFavorite(candidate.candidate)" ng-click=" removeCandidateFromFavorites(candidate.candidate)"><i class="fa fa-star fa-2x" style="color:#f1d104; padding-top:20px;"></i>
-                                </a>
+                                <label>Assigned To: </label>
+                                <select class="form-control" >
+                                  <option >Monica</option>
+                                  <option >Mathew</option>
+                                  <option >Gerard</option>
+                                  <option >David</option>
+                                </select>
+                                
+                                
                             </aside>
                           </div>
                           <a data-ng-href="#!/candidates/{{candidate.candidate._id}}" class="h4">{{candidate.candidate.displayName}}</a>
@@ -50,6 +59,29 @@
                               <span data-ng-show="!compareType('employee_status',candidate.candidate.employee_status)" class="label label-danger">{{candidate.candidate.employee_status}}</span>
 
                             </small>
+                                <a href="" data-ng-click="openMessageModal(candidate.candidate)" data-toggle="modal"><i class="fa fa-envelope-o fa-2x"></i></a>
+                            <a target="_blank" href="https://www.linkedin.com/profile/view?id=108526618&trk=nav_responsive_tab_profile" class="undecorated-link">
+                              <img class="img30_30" src="/modules/users/img/buttons/linkedin.png">
+                            </a>
+                            <a href="" data-ng-click="skype_visible = !skype_visible" class="undecorated-link">
+                              <img class="img30_30" src="/modules/users/img/buttons/skype.ico">
+                            </a>
+                            <span data-ng-show="skype_visible">{{candidate.candidate.skype_name}}</span>
+
+                          
+
+
+
+                            <a href=""><i class="fa fa-phone" data-ng-click="phone_visible = !phone_visible"></i></a>
+                            <span data-ng-show="phone_visible">{{candidate.candidate.contact_no}}</span>
+
+                            <a href="" ng-hide="isFavorite(candidate.candidate)" ng-click="addCandidateToFavorites(candidate.candidate) "><i class="fa fa-star-o fa-2x" style="padding-top:20px;"></i>
+                                </a>
+
+                                <a href="" ng-show="isFavorite(candidate.candidate)" ng-click=" removeCandidateFromFavorites(candidate.candidate)"><i class="fa fa-star fa-2x" style="color:#f1d104; padding-top:20px;"></i>
+                                </a>
+
+
                         </div>
                         <hr>
                       </article>

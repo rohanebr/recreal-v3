@@ -22,6 +22,7 @@
                                 <a href="" ng-hide="isFavorite(candidate.candidate)" ng-click="addCandidateToFavorites(candidate.candidate) "><i class="fa fa-star-o fa-2x" style="padding-top:20px;"></i>
                                 </a>
 
+
                                 <a href="" ng-show="isFavorite(candidate.candidate)" ng-click=" removeCandidateFromFavorites(candidate.candidate)"><i class="fa fa-star fa-2x" style="color:#f1d104; padding-top:20px;"></i>
                                 </a>
                             </aside>
@@ -35,9 +36,18 @@
                           <small class="block m-t-sm">
                             <span class="r bg-light wrapper-xxs text-sm" data-ng-repeat="skill in candidate.candidate.skills">{{skill.title}}</span>
                           </small>
+                          <small class="block m-t-sm">
+                            <span>Exams Taken: {{candidate.candidate.takenExams.length}}</span>
+                          </small>
+                          <small class="block m-t-sm">
+                            <span>Exams given by us: 3</span>
+                          </small>
+                              <section class="col-md-offset-10">
+                                <a type="button" class="btn btn-small btn-success" data-ng-click="openMessageModal(candidate.candidate)" data-toggle="modal"><i class="fa fa-envelope-o fa-2x"></i></a>
+                            </section>
                           <h3 class="block m-t-sm">
 
-                              Exam pending....
+                              Exams pending:2
 
                             </h3>
                         </div>

@@ -32,14 +32,18 @@
                               <span ng-show="candidate.candidate.isOnline == 'Online'" class="label label-success">{{candidate.candidate.isOnline}}</span>
                               <span ng-show="candidate.candidate.isOnline == 'Offline'" class="label label-danger">{{candidate.candidate.isOnline}}</span>
                           </small>
+                           <small class="block m-t-sm">
+                            <span class="r bg-light wrapper-xxs text-sm">{{candidate.candidate.location}}, {{candidate.candidate.country}} </span>
+                          </small>
                           <small class="block m-t-sm">
                             <span class="r bg-light wrapper-xxs text-sm" data-ng-repeat="skill in candidate.candidate.skills">{{skill.title}}</span>
                           </small>
-                          <h3 class="block m-t-sm">
-
-                              Interview pending...
-
-                            </h3>
+                          <small class="block m-t-sm">
+                            <span>Experience: 7 years</span>
+                          </small>
+                           <section class="col-md-offset-10">
+                                <a type="button" class="btn btn-small btn-success" data-ng-click="openMessageModal(candidate.candidate)" data-toggle="modal"><i class="fa fa-envelope-o fa-2x"></i></a>
+                            </section>
                         </div>
                         <hr>
                       </article>

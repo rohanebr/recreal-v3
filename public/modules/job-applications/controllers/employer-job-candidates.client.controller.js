@@ -23,6 +23,8 @@ angular.module('job-applications').controller('EmployerJobCandidatesController',
         $scope.firsttime = true;
         $scope.completefilternames = [];
         $scope.filterLimit = 5;
+
+        $scope.phone_visible = false;
         var i;
         if(!$scope.currentStage){
             $scope.currentStage = 'All';
@@ -395,6 +397,29 @@ angular.module('job-applications').controller('EmployerJobCandidatesController',
             //   $scope.findCandidates($scope.skip,$scope.itemsPerPage,$scope.filters, false);
 
         }
+
+        // send message
+        $scope.openMessageModal = function(reciever) {
+         
+            var mesg = $modal.open({
+            templateUrl: '/modules/short-list/views/message/message.html',
+            controller: 'messageController',
+            resolve:{
+                reciever: function () {
+                    return reciever;
+                }   
+            } 
+          });
+          mesg.result.then(function(result) 
+           {
+          //    $scope.sendmessage = result.sendmessage;
+           }, 
+          function() {
+
+          });
+        };
+
+        
         $scope.openFilterModal = function(filterArray, name) {
 
             var modalInstance = $modal.open({
