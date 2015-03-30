@@ -405,6 +405,7 @@ exports.hasAuthorization = function(roles) {
  * Helper function to save or update a OAuth user profile
  */
 exports.saveOAuthUserProfile = function(req, providerUserProfile, done) {
+
 	if (!req.user) {
 		// Define a search query fields
 		var searchMainProviderIdentifierField = 'providerData.' + providerUserProfile.providerIdentifierField;
@@ -423,7 +424,7 @@ exports.saveOAuthUserProfile = function(req, providerUserProfile, done) {
 		var searchQuery = {
 			$or: [mainProviderSearchQuery, additionalProviderSearchQuery]
 		};
-
+		
 		User.findOne(searchQuery, function(err, user) {
 			if (err) {
 				return done(err);
@@ -432,21 +433,82 @@ exports.saveOAuthUserProfile = function(req, providerUserProfile, done) {
 					var possibleUsername = providerUserProfile.username || ((providerUserProfile.email) ? providerUserProfile.email.split('@')[0] : '');
 
 					User.findUniqueUsername(possibleUsername, null, function(availableUsername) {
-						user = new User({
+						var typeObject = new Candidate(
+							// {
+ 						// 	title:          ,
+ 						// 	displayName: providerUserProfile.displayName,
+
+							// }		
+
+							);
+
+			     		user = new User({
 							firstName: providerUserProfile.firstName,
 							lastName: providerUserProfile.lastName,
 							username: availableUsername,
 							displayName: providerUserProfile.displayName,
 							email: providerUserProfile.email,
 							provider: providerUserProfile.provider,
+							picture_url:providerUserProfile.providerData.pictureUrl,
 							providerData: providerUserProfile.providerData,
+							isOnline:'Online',
+							
+							candidate:typeObject,
 							userType: 'transition'
 						});
+						typeObject.firstName = user.firstName;
+	    				typeObject.lastName = user.lastName;
+	    				typeObject.displayName = user.displayName;
+	    				typeObject.user = user;
+	    				if(providerUserProfile.providerData.location)
+	    				typeObject.country=providerUserProfile.providerData.location.name;
+	    			console.log()
+ 						if(providerUserProfile.providerData.skills.values.length!=0)
+ 						{ var linkskills=providerUserProfile.providerData.skills.values;
+ 							for(var s=0;s<linkskills.length;s++)
+ 								  {
+                               typeObject.skills.push({title:linkskills[s].skill.name,level:"Intermidiate",experience:2,last_used:Date.now()});
+ 								  }
+ 						}
 
-						// And save the user
+ 						if(providerUserProfile.providerData.educations.values!=0)
+ 							 {
+ 							 	var edu=providerUserProfile.providerData.educations.values;
+ 							 	for(var s=0;s<edu.length;s++)
+ 							 			typeObject.educations.push({degree:edu[s].degree,study_feild:edu[s].fieldOfStudy?edu[s].fieldOfStudy:"none",start_date:new Date(edu[s].startDate.year),end_date:new Date(edu[s].endDate.year),institute:edu[s].schoolName,notes:edu[s].notes?edu[s].notes:""});
+ 							 	
+ 							 }
+ 					    if(providerUserProfile.providerData.positions.values!=0)
+ 					    {
+ 					    	var pos=providerUserProfile.providerData.positions.values;
+ 					    	for(var s=0;s<pos.length;s++)
+ 					    	{
+ 					    		typeObject.positions.push({company_name:pos[s].company.name,title:pos[s].title,summary:pos[s].summary?pos[s].summary:"",start_date:pos[s].startDate.year,end_date:pos[s].endDate?pos[s].endDate.year:"",is_current:pos[s].endDate?false:true});
+ 					    	}
+ 					    }
+ 					    if(providerUserProfile.providerData.languages.values!=0)
+ 					    {
+ 					    	var lang=	providerUserProfile.providerData.languages.values;
+ 					    	for(var s=0;s<lang.length;s++)
+ 					    	 typeObject.languages.push({name:lang[s].language.name,proficiency:"Professional Working"});
+
+ 					    }
+	    				typeObject.title=providerUserProfile.providerData.headline;
+	    				if(providerUserProfile.providerData.pictureUrl)
+	    				typeObject.picture_url=providerUserProfile.providerData.pictureUrl;
+	    				if(providerUserProfile.providerData.summary)
+	    					typeObject.objective=providerUserProfile.providerData.summary;
+	    				else
+	    					typeObject.objective="You have no Objectives in Linkedin Profile";
+                        
+                        typeObject.save(function(err){
+                        	// And save the user
 						user.save(function(err) {
 							return done(err, user);
-						});
+						});		
+
+                        });
+						
 					});
 				} else {
 					return done(err, user);
@@ -954,8 +1016,13 @@ exports.changePassword = function(req, res) {
 };
 
 exports.getLinkedInProfile = function(req, res){
+//console.log("GET LINKEDINPROFILE");
+Candidate.findOne({_id:req.user.candidate}).populate('user').exec(function(err, user) {
+res.json( user);
 
-// 	console.log(req);
+
+});
+
 	// Linkedin.auth.getAccessToken(res, req.query.code, function(err, results) {
  //        if ( err )
  //            return console.error(err);
@@ -969,14 +1036,14 @@ exports.getLinkedInProfile = function(req, res){
  //        return res.redirect('/');
  //    });
 	var linkedin = Linkedin.init(req.user.providerData.accessToken);
-	linkedin.people.me(function(err, $in) {
-		var h=req.user.providerData.following.companies.values.length;
-	 for(var d=0;d<h;d++)
-	{    linkedin.companies.name("ZTE", function(err, company) {
-    console.log(company);
-});}
-		res.json( $in);
-	});
+// 	linkedin.people.me(function(err, $in) {
+// 		var h=req.user.providerData.following.companies.values.length;
+// 	 for(var d=0;d<h;d++)
+// 	{    linkedin.companies.name("ZTE", function(err, company) {
+//     console.log(company);
+// });}
+// 		res.json( $in);
+// 	});
 
 	// passport.authenticate('linkedin');
 	// passport.authenticate('linkedin');
