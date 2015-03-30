@@ -178,7 +178,8 @@ var CandidateSchema = new Schema({
 		},
 		level:{
 		  type: String,
-		  trim: true
+		  trim: true,
+		  enum:["Beginner","Intermidiate","Expert"]
 		},
 		experience:{
 		  type: Number
