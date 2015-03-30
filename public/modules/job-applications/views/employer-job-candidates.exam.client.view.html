@@ -84,7 +84,7 @@
                                 <!-- <label class="label label-primary">{{candidate.jobapplication.stage}}</label> -->
                                 
                                 <select class="form-control" data-ng-change="changeStage(candidate.jobapplication)" data-ng-model="candidate.jobapplication.stage">
-                                  <option data-ng-repeat="stage in job.stages">{{stage}}</option>
+                                <option data-ng-repeat="stage in job.stages">{{stage}}</option>
                                 </select>
                                 
                                 <a href="" ng-hide="isFavorite(candidate.candidate)" ng-click="addCandidateToFavorites(candidate.candidate) "><i class="fa fa-star-o fa-2x" style="padding-top:20px;"></i>
