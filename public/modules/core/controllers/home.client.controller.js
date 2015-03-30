@@ -94,7 +94,8 @@ angular.module('core').controller('HomeController', ['$scope', '$modal', 'Authen
                 }
             });
         } else if (user.userType === 'transition') {
-            $state.go('transition');
+            $location.path('/linkedin-cv'); 
+
         }
 
 

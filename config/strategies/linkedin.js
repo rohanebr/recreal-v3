@@ -22,7 +22,7 @@ module.exports = function() {
 			clientSecret: config.linkedin.clientSecret,
 			callbackURL: config.linkedin.callbackURL,
 			passReqToCallback: true,
-			scope: ['r_basicprofile', 'r_emailaddress','r_fullprofile']
+			scope: ['r_basicprofile', 'r_emailaddress','r_fullprofile','r_contactinfo']
 		},
 		function(req, access_token, refreshToken, profile, done) {
 			// Set the provider data and include tokens
