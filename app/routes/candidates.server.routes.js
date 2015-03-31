@@ -19,9 +19,7 @@ module.exports = function(app) {
             .get(candidates.read)
             .put(users.requiresLogin, candidates.hasAuthorization, candidates.update)
             .delete(users.requiresLogin, candidates.hasAuthorization, candidates.delete);
-
-
-
+       
         
         app.route('/candidates/addSkill/:candidateId')
             .put(users.requiresLogin, candidates.hasAuthorization, candidates.addSkill);
