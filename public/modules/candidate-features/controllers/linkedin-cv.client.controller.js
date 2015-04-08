@@ -6,9 +6,9 @@ angular.module('candidate-features').controller('LinkedinCvController', ['$scope
 		$scope.getLinkiedInProfile = function(){
 			
 			$scope.user = Authentication.user;
-
+			console.log($scope.user);
 			 $http.get('/users/linkedInProfile/' + $scope.user._id).success(function(res) {
-             
+             	console.log(res);
 			 	$scope.candidate = new Object();
 
 			 	$scope.candidate.displayName = res.displayName;
