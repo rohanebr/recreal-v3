@@ -160,9 +160,7 @@ exports.signin = function(req, res, next) {
 		if (err || !user) {
 			res.send(400, info);
 		} else {
-			// // Remove sensitive data before login
-			// user.password = undefined;
-			// user.salt = undefined;
+			
 
 	
 			req.login(user, function(err) {
