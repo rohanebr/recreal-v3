@@ -226,11 +226,12 @@ exports.getUserThread = function(req,res)
 {
 	var alreadyRead=false;
 	var idofuser=req.body.id;
-     	var id=req.thread._id;
+	console.log(req.thread.id);
+     	var id=req.thread.id;
  		Thread.findById(id).populate('sender').populate('receiver').populate('messages.author').exec(function(err, thread) {
  			if(thread.readBySender && thread.readByReceiver)
  				alreadyRead=true;
-	if(thread.sender._id==idofuser)
+	if(thread.sender && thread.sender._id==idofuser)
 		 {
 		 	thread.readBySender=true;
             thread.markModified('readBySender');

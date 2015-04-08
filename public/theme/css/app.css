@@ -742,6 +742,7 @@ body.container {
   overflow-y: auto;
 }
 .no-touch .scrollable.hover {
+  width:303px;
   overflow-y: hidden;
 }
 .no-touch .scrollable.hover:hover {

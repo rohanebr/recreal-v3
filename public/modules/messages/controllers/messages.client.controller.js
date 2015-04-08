@@ -15,7 +15,6 @@ angular.module('messages').controller('MessagesController', ['$scope', '$statePa
         console.log($stateParams.threadId);
 
 
-
         $scope.listThreads = function() {
 
             $http.get('/getAllMessagesWithFlagForUnread/' + $scope.authentication.user._id).success(function(res) {
@@ -53,19 +52,23 @@ if($scope.threads[s].sender==$scope.authentication.user._id)
 
 
         };
+        $scope.fromTime = function(msg)
+        {
+          console.log(msg);
 
+            return moment(msg).from(moment());
+        }
         $scope.selectedmessage = function(message) {
             $scope.thread = message;
-             $scope.displayNameOfReceiver="";
+           //  $scope.displayNameOfReceiver="";
             $scope.messages = message.messages;
 
-            console.log($scope.messages);
-            for (var x = 0, len = $scope.messages.length; x < len; x++)
-                if ($scope.messages[x].author._id != $scope.authentication.user._id) {
-                    $scope.displayNameOfReceiver = $scope.messages[x].author.displayName;
-                    break;
-
-                }
+            // console.log($scope.messages);
+            // for (var x = 0, len = $scope.messages.length; x < len; x++)
+            //     if ($scope.messages[x].author._id != $scope.authentication.user._id) {
+            //         $scope.displayNameOfReceiver = $scope.messages[x].author.displayName;
+            //         break;
+            //     }
            
             $scope.findOneAndMarkAsRead();
             $stateParams.threadId=$scope.thread._id;
@@ -269,15 +272,16 @@ $scope.unreadthreads++;
 
         $scope.findOneAndMarkAsRead = function() {
 
-
-            $http.put('/threads/getUserThread/' + $scope.thread._id, {
+           console.log($scope.thread);
+            $http.put('/threads/getUserThread/'+$scope.thread._id , {
+                threadId:$scope.thread._id,
                 id: $scope.authentication.user._id
             }).success(function(thread) {
                 $scope.thread = thread.thread;
                 if(!thread.alreadyRead && $scope.unreadthreads!=0)
                     $scope.unreadthreads--;
 
-               
+               if(thread.thread.sender){
                 if (thread.thread.sender._id === $scope.authentication.user._id)
                     $http.put('/users/addSubscriber/' + $scope.authentication.user._id, {
                         id: thread.thread.receiver._id
@@ -287,6 +291,7 @@ $scope.unreadthreads++;
                         id: thread.thread.sender._id
                     }).success(function() {});
                 Socket.emit('watched_thread', $scope.authentication.user._id);
+            }
             });
         };
 
