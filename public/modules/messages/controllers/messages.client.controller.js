@@ -54,7 +54,7 @@ if($scope.threads[s].sender==$scope.authentication.user._id)
         };
         $scope.fromTime = function(msg)
         {
-          console.log(msg);
+         
 
             return moment(msg).from(moment());
         }
@@ -146,7 +146,7 @@ if($scope.threads[s].sender==$scope.authentication.user._id)
                 author: $scope.authentication.user
             };
 
-            if ($scope.authentication.user._id == $scope.thread.sender._id) {
+            if ($scope.thread.sender && $scope.authentication.user._id == $scope.thread.sender._id) {
 
                 var thread = {
                     idc: threadId,
@@ -174,7 +174,7 @@ if($scope.threads[s].sender==$scope.authentication.user._id)
                     sender: {
                         displayName: $scope.authentication.user.displayName
                     },
-                    receiver: $scope.thread.sender._id,
+                    receiver: $scope.thread.sender?$scope.thread.sender._id:"",
                     messages: [{
                         created: Date.now()
                     }]
@@ -189,8 +189,9 @@ if($scope.threads[s].sender==$scope.authentication.user._id)
 
 
             }
+            
             $http.put('/threads/updateThread/' + $scope.thread._id, message).success(function(messageBody) {
-                console.log(messageBody);
+                
                 Socket.emit('update_threads', {
                     sender: messageBody.sender,
                     receiver: messageBody.receiver,
@@ -246,7 +247,7 @@ $scope.unreadthreads++;
                     {
                        if($scope.threads[x]._id==data.threadId)
                           {
-                           $scope.threads[x].messages.unshift($scope.newMessage);
+                           $scope.threads[x].messages.push($scope.newMessage);
                             break;
                           }
 

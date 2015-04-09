@@ -89,9 +89,9 @@
                         <section class="chat-body">
                           <form action="" class="m-b-none">
                             <div class="input-group">
-                              <input type="text" class="form-control" placeholder="Say something">
+                              <input type="text" class="form-control" placeholder="Say something" data-ng-model="balsamic.message">
                               <span class="input-group-btn">
-                                <button class="btn btn-default" type="button">SEND</button>
+                                <button class="btn btn-default"  data-ng-click="sendMessage()" type="button">SEND</button>
                               </span>
                             </div>
                           </form>
