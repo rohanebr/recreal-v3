@@ -17,8 +17,9 @@ angular.module('candidate-signup-wizard').controller('CandidateSignupController'
 				//And redirect to the index page
 				// $location.path('/');
 
-			}).error(function(response) {
+			}).error(function(response) {console.log(response);
 				$scope.error = response.message;
+				
 			});
 		};
 

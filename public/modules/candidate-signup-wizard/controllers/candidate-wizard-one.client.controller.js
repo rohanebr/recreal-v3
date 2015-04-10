@@ -165,7 +165,7 @@ angular.module('candidate-signup-wizard').controller('CandidateWizardOneControll
 
 	}
 ]).controller('CandidatePictureModalCtrl', [
-  '$scope', '$modalInstance', '$upload', function($scope, $modalInstance, $upload) {
+  '$scope', '$modalInstance', '$upload','Authentication', function($scope, $modalInstance, $upload,Authentication) {
 
         var convert = function convertDataURIToBlob(dataURI, mimetype) {
           var BASE64_MARKER = ';base64,';
@@ -186,6 +186,7 @@ angular.module('candidate-signup-wizard').controller('CandidateWizardOneControll
         }
 
         $scope.upload = function(image){
+      console.log($scope.image2);
 
             $scope.formData = convert(image.dataURL, image.type);
 
@@ -196,7 +197,8 @@ angular.module('candidate-signup-wizard').controller('CandidateWizardOneControll
             //headers: {'header-key': 'header-value'},
             headers: {'Content-Type': 'undefined'},
             //withCredentials: true,
-            data: {myObj: $scope.myModelObj},
+            data: {myObj: "displaypic"},
+           
             file: $scope.formData, // or list of files ($files) for html5 only
             //fileName: 'doc.jpg' or ['1.jpg', '2.jpg', ...] // to modify the name of the file(s)
             // customize file formData name ('Content-Desposition'), server side file variable name. 

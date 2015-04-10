@@ -89,7 +89,7 @@ module.exports = function(db) {
 
 
 
-	app.use(multer({dest:'./uploads/'}));
+	app.use(multer({dest:'./tmp/'}));
 
 
 

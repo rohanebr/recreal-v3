@@ -7,7 +7,10 @@
  */
 var mongoose = require('mongoose'),
 Candidate = mongoose.model('Candidate'),
-_ = require('lodash');
+User = mongoose.model('User'),
+_ = require('lodash'),
+fse = require('fs-extra');
+
 
 
 /**
@@ -225,60 +228,98 @@ var util = require('util');
 
 /// Post files
 exports.uploadPicture = function(req, res) {
-
+var reqcopy=req; var dirextension;
   fs.readFile(req.files.file.path, function (err, data) {
-
+  var tmp = req.files.file.path;
     var imageName = req.files.file.name
+   
 
     /// If there's an error
     if(!imageName){
 
-      console.log("There was an error")
+     
       res.redirect("/");
       res.end();
 
     } else {
-
+  dirextension = __dirname+"/../../uploads/fullsize";
+  
       //  dev
-       // var newPath = __dirname + "/app/uploads/fullsize/" + imageName;
+        var newPath = __dirname + "/../../uploads/fullsize/" + imageName;
        
        //prod
-       var newPath = "/app/uploads/fullsize/" + imageName;
+       //var newPath = "/app/uploads/fullsize/" + imageName;
 
       //dev
-      // var thumbPath = __dirname + "/app/uploads/thumbs/" + imageName;
-      
-      //  prod
-      var thumbPath = __dirname + "/app/uploads/thumbs/" + imageName;
-      
-      fs.writeFile(newPath, data, function (err) {
-       var candidate = Candidate.find({user: req.user._id}).exec(function(err, candidates){
-         	var old_url = candidates[0].picture_url;
-			candidates[0].picture_url = "/uploads/fullsize/" + imageName;
-			candidates[0].save(function(err) {
-				if (err) {
-					return res.send(400, {
-						message: getErrorMessage(err)
-					});
-				} else {
-					
-					//delete old picture
-					if (old_url != '/uploads/fullsize/no-image.jpg') {
-						fs.unlink(__dirname + '../../..' + old_url, function (err) {
-					  		if (err) console.log(err);
-						  	console.log('successfully deleted /tmp/hello');
-						});
-					};
-					res.send("/uploads/fullsize/" + imageName)
-				}
-			});
-		});
+       var thumbPath = __dirname + "/../../uploads/thumbs/" + imageName;
+           fse.ensureDir(dirextension, function (err) {
+            if(err)
+              console.log(err);
+            else
+              fse.copy(tmp,newPath,function(err){
+                          if(err)
+                              console.log(err);
+                           else
+                                   {
+                                    fse.copy(tmp,thumbPath,function(err){
+                                            if(err)
+                                                console.log(err);
+                                            else
+                                            {
+                                               var candidate = Candidate.find({user: req.user._id}).exec(function(err, candidates){
+                                                     var old_url = candidates[0].picture_url;
+                                               candidates[0].picture_url = "/uploads/fullsize/" + imageName;
+                                               candidates[0].save(function(err) {
+                                                 if (err) {
+                                                   return res.send(400, {
+                                                     message: getErrorMessage(err)
+                                                   });
+                                                 } else {
+                                                    
+                                                   //delete old picture
+                                                   if (old_url != '/uploads/fullsize/no-image.jpg') {
+                                                           fs.unlink(__dirname + '/../../' + old_url, function (err) {
+                                                                  if (err)
+                                                                       console.log(err);
+                                                                  else
+                                                                      console.log('successfully deleted /tmp/hello');
+                                                                     });
+                                                                    }
+                                                        
+                                                             }
+                                                       });
+                                              });
+                                              var user = User.findOne({_id:req.user._id}).exec(function(err,user){
+                                                var old_url = user.picture_url;
+                                                user.picture_url="/../../uploads/fullsize/"+imageName;
+                                                user.save(function(err){
+                                                  if(!err)
+                                                  {if (old_url != '/../../uploads/fullsize/no-image.jpg') {
+                                                           fs.unlink(__dirname + old_url, function (err) {
+                                                                  if (err)
+                                                                       console.log(err);
+                                                                  else
+                                                                      console.log('successfully deleted /tmp/hello');
+                                                                     });
+                                                                    }
+                                                          res.send("/../../uploads/fullsize/" + imageName);}
+                                                });
+                                              });
+                                            
 
-         
 
-      });
-    }
-  });
+                                            }
+                                                
+                                             });   //end fse.copy 2
+                                  }  
+                           });    //end of fse.copy 1
+
+          });  //end of ensureDir
+        }
+         });
+        
+
+
 };
 
 //Add New Project
@@ -700,7 +741,7 @@ candidate.markModified('skills');
 
 // Show files
 exports.getImage =  function (req, res){
-  var path = "/app/uploads/fullsize/" + req.params.file;
+  var path = __dirname+ "/../../uploads/fullsize/" + req.params.file;
 //   file = req.params.file;
 	
 
