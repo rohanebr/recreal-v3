@@ -45,23 +45,11 @@ var getErrorMessage = function(err) {
 exports.signupemployer = function(req, res) {
     // For security measurement we remove the roles from the req.body object
     delete req.body.roles;
+    console.log(req.body.email);
     var user = new User(req.body);
     var message = null;
     user.provider = 'local';
-    user.displayName = user.firstName + ' ' + user.lastName;
-    // var employer = new Employer();
-    // user.employer = employer;
-    // var company=new Company();
-    // employer.role=req.body.employer.role;
-    //    company.employers.push(employer);
-    //    company.user = user;
-    // company.save();
-    // employer.firstName = user.firstName;
-    // employer.lastName = user.lastName;
-    // employer.displayName = user.displayName;
-    // employer.user = user;
-    // employer.company = company;
-    // employer.save();
+    
     var newEmployer = new Employer();
     user.employer = newEmployer;
     var company = new Company();
@@ -111,9 +99,9 @@ exports.signupemployer = function(req, res) {
                 },
                 // Lookup user by username
                 function(token, done) {
-                    if (req.body.username) {
+                    if (req.body.email) {
                         User.findOne({
-                            username: req.body.username
+                            email: req.body.email
                         }, function(err, user) {
                             if (!user) {
                                 return res.status(400).send({
@@ -187,7 +175,7 @@ exports.ValidateTokenEmployer = function(req, res) {
     User.findOne({
         "activeToken": req.body.token
     }).exec(function(err, user) {
-        console.log(user);
+      
         if (user) {
             if (user.stage == "DeActive") {
                 user.stage = "Basic";
@@ -214,11 +202,17 @@ exports.ValidateTokenEmployer = function(req, res) {
                         if (err) {
                             res.send(400, err);
                         } else {
-
+                           req.login(user, function(err) {
+                if (err) {
+                    res.send(400, err);
+                } else {
+                    
                             res.jsonp({
                                 user: user,
                                 company: company
                             });
+                }
+            });
                         }
                     });
                 }

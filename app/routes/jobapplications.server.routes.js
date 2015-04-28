@@ -10,6 +10,7 @@ module.exports = function(app) {
 	// ...   
 	app.route('/jobs/changeApplicantStage/:jobId')
 	.put(jobapplications.changeStage);
+	app.route('/jobs/addInterviewDate/:jobId').put(jobapplications.addInterviewDate);
 
 	// Finish by binding the Job middleware
 	app.param('jobId', jobs.jobByID);

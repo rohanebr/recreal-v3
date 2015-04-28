@@ -47,7 +47,7 @@ exports.list = function(req, res) {
 
 exports.changeStage = function(req, res) {
     if (req.user.userType === 'employer') {
-	    var c;
+	   
 	    var jobApplication=req.body;
 		var job=req.job;
 
@@ -61,3 +61,26 @@ exports.changeStage = function(req, res) {
 	}
     console.log('method called update job application stage!!');
 };
+
+
+
+exports.addInterviewDate =function(req,res)
+{
+if (req.user.userType === 'employer') {
+	   
+	    var jobApplication=req.body.application;
+		var job=req.job;
+
+		job.jobApplications.forEach(function(item){
+			if(item._id == jobApplication._id){
+				item.stage = jobApplication.stage;
+				item.interview_date=req.body.time;
+			}
+		});
+		job.markModified('jobApplications');
+		job.save();
+	}
+    console.log('method called interview time job application stage!!');
+
+
+}

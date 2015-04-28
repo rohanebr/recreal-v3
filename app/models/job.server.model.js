@@ -200,6 +200,7 @@ var JobSchema = new Schema({
 		stage:{
 	      	type: String
 	    },
+	    interview_date:{type:String},
 	    coverLetter: {
 	    	title: {
 	    		type: String
