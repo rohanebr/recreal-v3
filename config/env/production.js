@@ -17,7 +17,8 @@ module.exports = {
 				"public/theme/css/font.css" ,
 				"public/theme/css/app.css",
 				"public/theme/js/calendar/bootstrap_calendar.css",
-  			    "public/lib/angularjs-toaster/toaster.css"
+  			    "public/lib/angularjs-toaster/toaster.css",
+  			    'public/lib/angular-bootstrap-datetimepicker/src/css/datetimepicker.css'
 
 
 			],
@@ -66,7 +67,8 @@ module.exports = {
 				'https://maps.google.com/maps/api/js?sensor=false',
 			    'public/lib/ngmap/build/scripts/ng-map.js',
 				'public/lib/angular-animate/angular-animate.js',
-				'public/lib/angularjs-toaster/toaster.js'
+				'public/lib/angularjs-toaster/toaster.js',
+				'public/lib/angular-bootstrap-datetimepicker/src/js/datetimepicker.js'
 			]
 		},
 		css: 'public/dist/application.min.css',

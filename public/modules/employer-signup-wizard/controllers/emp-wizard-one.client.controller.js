@@ -1,14 +1,22 @@
 'use strict';
 
-angular.module('employer-signup-wizard').controller('EmpWizardOneController', ['$scope', '$http', 'Industries', 'Countries', '$rootScope', 'geolocation', '$stateParams', '$state', 'Authentication','$modal',
-    function($scope, $http, Industries, Countries, $rootScope, geolocation, $stateParams, $state, Authentication,$modal) {
+angular.module('employer-signup-wizard').controller('EmpWizardOneController', ['$scope', '$http', 'Industries', 'Countries', '$rootScope', 'geolocation', '$stateParams', '$state', 'Authentication','$modal','$timeout',
+    function($scope, $http, Industries, Countries, $rootScope, geolocation, $stateParams, $state, Authentication,$modal,$timeout) {
         // Controller Logic
         // ...
+        
         var city1 = "";
         var country1 = "";
         var gotcompanycountryundefined=false;
         $scope.gotCompanyFromDB = false;
         $scope.user = Authentication.user;
+ $timeout(function() {
+       if(!$scope.user)
+
+            $state.reload();  
+    }, 2000);
+         
+        
         var lat = 0,
             lng = 0;
         $rootScope.coords = {};

@@ -12,7 +12,22 @@ body{
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
 	display: none !important;
 }
-
+.time-cards-box { float: left; width: 230px; margin: 19px 26px 0 0px; }
+.main-card-bg { background: #fff; box-shadow: 0 0 5px rgba(0,0,0,.1); }
+.yellow-bg { background: #f4b400; }
+.green-bg { background: #00a813; }
+.blue-bg { background: #087ac2; }
+.red-bg { background: #db4437; }
+.grey-bg { background: #d3d8dc; }
+.blue-lt-bg { background: #46b7ff; }
+.blue-bg { background-color: #95bddc; }
+.blue2-bg { background-color: #0c89d8; }
+.blue3-bg { background-color: #46b7ff; }
+.main-card-upper h3 { padding: 0; margin: 0; font-size: 18px; font-weight: 500; color: #fff; }
+.main-card-upper p { font-size: 14px; color: rgba(255,255,255,1); padding: 7px 0 0 0; }
+.main-card-upper .time-cont { max-width: 160px; background: #fff; color: #333333; font-size: 16px; font-weight: 500; text-align: center; line-height: 38px; margin: 17px auto 8px auto; text-transform: uppercase; }
+.main-card-upper { padding: 15px 17px 0 13px; min-height: 161px; position: relative; }
+.call-detail { text-align: center; color: #fff; font-size: 12px; line-height: 14px; padding: 0 30px; letter-spacing: -.6px; }
 .required-css
 {
     color: red;

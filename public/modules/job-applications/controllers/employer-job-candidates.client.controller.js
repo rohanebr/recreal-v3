@@ -214,9 +214,35 @@ angular.module('job-applications').controller('EmployerJobCandidatesController',
         ////////////////////////////////////////////
 
         $scope.changeStage = function(jobApplication){
+            $scope.d1=jobApplication;
             JobApplications.changeStage(jobApplication, $scope.job, function(responseJobApplication){
               jobApplication.stage = responseJobApplication.stage;
+
             });
+            if(jobApplication.stage=='Interview')
+            {
+                    console.log(jobApplication);
+                 var modalInstance = $modal.open({
+                             templateUrl: '/modules/job-applications/views/employer-job-candidates/schedule-modal.html',
+                               controller: 'InterviewController',
+                                 type: jobApplication,
+                                 resolve: {
+                                items: function() {
+                                    return $scope.d1;
+                                },
+                                job:function(){return $scope.job;}
+                            }
+
+                             
+                        });
+                 modalInstance.result.then(function(result) {
+                console.log(result);
+                //    $scope.sendmessage = result.sendmessage;
+            },
+            function() {
+
+            });
+            }
         }
 
         

@@ -17,7 +17,12 @@ angular.module('job-applications').factory('JobApplications', ['$http',
                 // $scope.error = response.message;
             });
 		};
+        factory.addInterviewDate = function(jobApplication,job,time,callback)
+        {$http.put('jobs/addInterviewDate/'+job._id,{application:jobApplication,time:time}).success(function(response){
+          callback(response);
 
+
+        }).error(function(error){callback(error)});}
 		factory.addCandidateToFavorites = function(candidate, job, employer, callback){
 
 			var attribute = {
