@@ -219,7 +219,7 @@
   <ul class="nav navbar-nav navbar-right m-n hidden-xs nav-user user">
     <li class="hidden-xs dropdown" class="dropdown-toggle" data-toggle="dropdown">
        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-       <i class="i i-mail i-2x text-primary-lt"></i>
+       <i ng-class="{false:'i i-mail i-2x', true:'i i-mail i-2x text-primary-lt'}[threads.length==0]"></i>
         <span class="badge badge-sm up bg-danger">{{threads.length}}</span>
        </a>
        <section class="dropdown-menu aside-xl animated flipInY">
@@ -247,7 +247,7 @@
     </li>
     <li class="hidden-xs dropdown" class="dropdown-toggle" data-toggle="dropdown">
       <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-        <i class="i i-paperplane i-2x"></i>
+        <i ng-class="{false:'i i-paperplane i-2x', true:'i i-paperplane i-2x text-primary-lt'}[unreadnotificationslength==0]"></i>
         <span class="badge badge-sm up bg-danger">{{unreadnotificationslength}}</span>
       </a>
       <section class="dropdown-menu aside-xl animated flipInY">

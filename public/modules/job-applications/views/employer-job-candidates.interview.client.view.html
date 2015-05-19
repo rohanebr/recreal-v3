@@ -6,15 +6,28 @@
                     <header class="panel-heading">                    
                       <span class="label bg-dark">{{candidates.length}}</span> Job Applications
                     </header>
-                  <section class="panel-body slim-scroll" data-height="230px" data-size="10px">
-                      <article ng-repeat="candidate in candidates" class="media">
+                 <section class="panel-body slim-scroll" data-height="230px" data-size="10px">
+                    <div class="time-cards-box" data-ng-repeat="candidate in candidates">
+                        <div class="main-card-bg">
+                            <div class="main-card-upper blue2-bg">
+                                <h3>{{candidate.candidate.displayName}} <span> -   {{candidate.candidate.location}}</span></h3>
+                                <p>{{candidate.candidate.title}}</p>
+                                
+                                <div class="time-cont">{{candidate.jobapplication.interview_date | date:'h:mm a'}} -PK</div>
+                                <div class="call-detail">
+                                    Your have to call {{candidate.candidate.displayName}}
+                                </div>
+                            </div>
+                         
+                        </div>
+                        
+                    </div>
+                  <!--     <article ng-repeat="candidate in candidates" class="media">
                         <span class="pull-left thumb-md"><img src="{{candidate.candidate.picture_url}}"></span>
                         <div class="media-body">
                           <div class="pull-right media-xs text-center text-muted">
 
                             <aside class="">
-                                <!-- <label class="label label-primary">{{candidate.jobapplication.stage}}</label> -->
-                                
                                 <select class="form-control" data-ng-change="changeStage(candidate.jobapplication)" data-ng-model="candidate.jobapplication.stage">
                                   <option data-ng-repeat="stage in job.stages">{{stage}}</option>
                                 </select>
@@ -47,8 +60,8 @@
                         </div>
                         <hr>
                       </article>
-                      
-                    </section>
+                       -->
+                    </section> 
                   </section>
 
                 <section class="text-right col-md-12">

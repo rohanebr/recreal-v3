@@ -4,7 +4,7 @@ angular.module('core').factory('Socket', ['$rootScope','Authentication','geoloca
 	function($rootScope,Authentication,geolocation) {
 
    
-//console.log(Authentication.user);
+console.log(Authentication.user);
 if(Authentication.user && !socket)
 {
 console.log("SOCKET CLIENT FACTORY");

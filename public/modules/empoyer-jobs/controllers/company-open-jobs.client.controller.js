@@ -1,8 +1,8 @@
 'use strict';
-angular.module('empoyer-jobs').controller('CompanyOpenJobsController', ['$scope', 'Authentication', 'Jobs', 'Employers', 'Companies', '$location', 'Socket',
-    function($scope, Authentication, Jobs, Employers, Companies, $location, Socket) {
+angular.module('empoyer-jobs').controller('CompanyOpenJobsController', ['$scope', 'Authentication', 'Jobs', 'Employers', 'Companies', '$location', 'Socket','$rootScope',
+    function($scope, Authentication, Jobs, Employers, Companies, $location, Socket,$rootScope) {
         $scope.user = Authentication.user;
-
+      
         // If user is not signed in then redirect back home
         if (!$scope.user) $location.path('/signin');
 
