@@ -6,6 +6,7 @@ angular.module('candidate-signup-wizard').controller('CandidateWizardTwoControll
 		// ...
 
         $scope.candidate={};
+        
         $scope.degree_titles = ['High School','Associate Degree','Bachelor Degree','Master Degree','Master of Business Administration (M.B.A.)',
                                 'Juris Doctor (J.D.)','Doctor of Medicine (M.D.)','Doctor of Philosophy (Ph.D.)',
                                 'Engineers Degree'];
@@ -20,6 +21,7 @@ angular.module('candidate-signup-wizard').controller('CandidateWizardTwoControll
         // Add Education
         $scope.addEducation = function() {
             if ($scope.newEducation.degree_title != '') {
+                if(!$scope.candidate.educations)  $scope.candidate.educations = [];
                 $scope.candidate.educations.push($scope.newEducation);
                 $scope.newEducation = {};
             }
