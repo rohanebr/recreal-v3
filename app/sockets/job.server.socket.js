@@ -12,8 +12,6 @@ exports.publishCreate = function(){
 exports.applicationReceived = function(data){
     io.sockets.emit('applied_on_job', data);
     io.sockets.emit('Notification',data);
-            
-    
 };
 
 
