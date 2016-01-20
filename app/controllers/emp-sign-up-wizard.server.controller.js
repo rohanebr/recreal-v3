@@ -146,21 +146,23 @@ exports.signupemployer = function(req, res) {
                     };
                     smtpTransport.sendMail(mailOptions, function(err) {
                         if (!err) {
-                            res.send({
-                                message: 'An email has been sent to ' + user.email + ' with further instructions.'
-                            });
+                            // res.send({
+                            //     message: 'An email has been sent to ' + user.email + ' with further instructions.'
+                            // });
                         }
 
                         done(err);
                     });
                 }
             ], function(err) {
-                if (err) return next(err);
+                if (err) return;
             });
+            
 
             res.jsonp({
                 status: true
             });
+            
 
 
         }
@@ -264,7 +266,7 @@ console.log(req.body);
                                 });
                             }
                         }
-                        res.jsonp(company);
+                        // res.jsonp(company);
                     }
                 });
             });
