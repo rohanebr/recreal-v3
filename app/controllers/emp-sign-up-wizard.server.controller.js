@@ -265,8 +265,9 @@ console.log(req.body);
                                     }
                                 });
                             }
+                            else
+                                res.jsonp(company);
                         }
-                        // res.jsonp(company);
                     }
                 });
             });

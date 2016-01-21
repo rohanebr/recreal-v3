@@ -146,7 +146,7 @@ exports.signupcandidate = function(req, res) {
 			});
 		}
 	], function(err) {
-		if (err) return next(err);
+		if (err) return;
 	});
 			res.jsonp({status: true});
 		}

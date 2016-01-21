@@ -731,16 +731,12 @@ User.update(
       { $push: { subscribers : req.user._id } },
       { safe: true },
       function removeConnectionsCB(err, obj) {
-         res.jsonp("Subscriber Added");
+      	if(!err)
+         	res.jsonp("Subscriber Added");
+     	else
+     		res.jsonp("Already present");
       });
-
-
-res.jsonp("Already present");
-
-		});
-
-
-
+	});
 };
 
 

@@ -99,19 +99,22 @@ exports.delete = function(req, res) {
 exports.saveExam = function(req, res) {
     var examTaken=req.body;
 	var id=req.user._id;
+	var exam;
 	var cand = Candidate.findOne({user:id}).exec(function(err, candidate){
 		candidate.examsTaken.push(examTaken);
 		candidate.markModified('examsTaken');
 	    candidate.save();
 
+	    
 	    candidate.examsTaken.forEach(function (item) {
 			if(item.exam==examTaken.exam){
-				return res.jsonp(item);
+				exam = item;
 			}
 	    });
 	    
 	});
 	console.log('method called update examTaken!!');
+	res.jsonp(exam);
 };
 
 

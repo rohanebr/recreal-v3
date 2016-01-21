@@ -43,7 +43,7 @@ angular.module('core').controller('HeaderController', ['$scope', 'Authentication
                     }
                 }
 
-                $scope.apply();
+                // $scope.apply();
             }).error(function(data, status, headers, confige) {
 
 
