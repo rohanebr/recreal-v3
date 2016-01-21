@@ -137,10 +137,10 @@ exports.signupcandidate = function(req, res) {
 			};
 			smtpTransport.sendMail(mailOptions, function(err) {
 				if (!err) {
-					res.send({
-						message: 'An email has been sent to ' + user.email + ' with further instructions.'
-					});
-				}
+				// 	res.send({
+				// 		message: 'An email has been sent to ' + user.email + ' with further instructions.'
+				// 	});
+				 }
 
 				done(err);
 			});

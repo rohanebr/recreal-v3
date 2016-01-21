@@ -25,8 +25,7 @@ module.exports = {
 				"public/theme/css/font.css" ,
 				"public/theme/css/app.css",
 				"public/theme/js/calendar/bootstrap_calendar.css",
-  			    "public/lib/angularjs-toaster/toaster.css",
-  			    'public/lib/angular-bootstrap-datetimepicker/src/css/datetimepicker.css'
+  			    "public/lib/angularjs-toaster/toaster.css"
 
 
 			],
@@ -37,8 +36,7 @@ module.exports = {
 
 				"public/theme/js/jquery.min.js" ,
 				"public/lib/angular/angular.min.js",
-				"public/lib/angular-animate/angular-animate.min.js",
-      			// <!-- Bootstrap -->
+				// <!-- Bootstrap -->
 				"public/theme/js/bootstrap.js" ,
 				// <!-- App -->
 				"public/theme/js/app.js" ,
@@ -73,14 +71,12 @@ module.exports = {
 				'public/lib/textAngular/dist/textAngular-sanitize.min.js',
 				'public/lib/textAngular/dist/textAngular.min.js',
 				'public/lib/ng-sortable/dist/ng-sortable.js',
-				'https://maps.google.com/maps/api/js?sensor=false',
+				'https://maps.google.com/maps/api/js',
 			    'public/lib/ngmap/build/scripts/ng-map.js',
-			
+				'public/lib/angular-animate/angular-animate.js',
 				'public/lib/angularjs-toaster/toaster.js',
-				'public/theme/js/app.plugin.js',
 				'public/lib/moment/moment.js',
-				'public/lib/moment-timezone/moment-timezone-with-data.js',
-				'public/lib/angular-bootstrap-datetimepicker/src/js/datetimepicker.js'
+				'public/lib/angular-bootstrap-datetimepicker/datetimepicker.js'
 				
 
 

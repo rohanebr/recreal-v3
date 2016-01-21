@@ -52,7 +52,7 @@ $scope.formData = {userType:''};
 	     
 	     	var mesg = $modal.open({
 	        templateUrl: '/modules/short-list/views/message/message.html',
-	        controller: 'messageController',
+	        controller: 'MessagesController',
 	        resolve:{
 	        	reciever: function () {
 			        return reciever;
