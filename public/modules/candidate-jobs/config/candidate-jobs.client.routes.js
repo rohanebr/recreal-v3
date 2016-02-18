@@ -16,6 +16,10 @@ angular.module('candidate-jobs').config(['$stateProvider',
 		state('search-jobs', {
 			url: '/search-jobs/:keyword',
 			templateUrl: 'modules/candidate-jobs/views/search-jobs.client.view.html'
+		}).
+		state('jobs-near-me', {
+			url: '/jobs-near-me',
+			templateUrl: 'modules/candidate-jobs/views/jobs-near-me.client.view.html'
 		});
 	}
 ]);

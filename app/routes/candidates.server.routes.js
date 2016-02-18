@@ -20,7 +20,7 @@ module.exports = function(app) {
             .put(users.requiresLogin, candidates.hasAuthorization, candidates.update)
             .delete(users.requiresLogin, candidates.hasAuthorization, candidates.delete);
        
-        
+        app.route('/candidates/GetCandidateDetails/:candidateId').get(candidates.GetCandidateDetails);
         app.route('/candidates/addSkill/:candidateId')
             .put(users.requiresLogin, candidates.hasAuthorization, candidates.addSkill);
         app.route('/candidates/addExperience/:candidateId')

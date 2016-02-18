@@ -22,11 +22,11 @@ angular.module('employer-signup-wizard').controller('EmpWizardTwoController', ['
                 latitude: marker.position.k,
                 longitude: marker.position.D
             }).success(function(response) {
-                console.log(response);
+               
                 $scope.employer = Employers.get({
                     employerId: response
                 }, function(employer) {
-                    console.log(employer);
+                  
                     if (employer.jobs.length > 0) { // edit first job
                         $location.path('emp-job-post-one-edit/' + employer.jobs[0]);
                     } else { // create new job

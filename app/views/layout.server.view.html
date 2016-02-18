@@ -35,6 +35,7 @@
 	<!--Application CSS Files-->
 	{% for cssFile in cssFiles %}<link rel="stylesheet" href="{{cssFile}}">
 	{% endfor %}
+	
 	<link rel="stylesheet" href="/lib/jquery-ui/themes/smoothness/jquery-ui.css">
 	<link rel="stylesheet" href="/modules/core/css/core.css">
 	
@@ -68,7 +69,7 @@
 	<!--Application JavaScript Files-->
 	{% for jsFile in jsFiles %}<script type="text/javascript" src="{{jsFile}}"></script>
 	{% endfor %} 
-
+	
 	
 
 	{% if process.env.NODE_ENV === 'development' %}

@@ -1,16 +1,24 @@
 var mongoose = require('mongoose'),
 
     Candidate = mongoose.model('Candidate');
-var studyfield=["Electrical Engineering","Computer Engineering",
-                                            "Civil Engineering",
-                                            "MBA",
-                                            "BBA",
-                                            "Physics",
-                                            "Mathematics",
-                                            "Chemistry"];
+var studyfield=["Electrical Engineering",
+                "Computer Engineering",
+                "Civil Engineering",
+                "MBA",
+                "BBA",
+                "Physics",
+                "Mathematics",
+                "Chemistry"];
 
-var degree=["Pre-Matriculation","O-level/Matriculation","Intermediate/A-Level","Certificate","Diploma","Bachelor's Degree","Master's Degree","Doctorate"];
-var level=["Beginner","Intermediate","Expert"];
+var degree=["Pre-Matriculation",
+            "O-level/Matriculation",
+            "Intermediate/A-Level",
+            "Certificate","Diploma",
+            "Bachelor's Degree",
+            "Master's Degree",
+            "Doctorate"];
+var level=["Beginner",
+           "Intermediate","Expert"];
 var career_level=["Student/Internship","Entry Level","Mid Career","Management","Executive (Director)","Senior Executive (CEO)"];
 var salary_expectation=["10,000 - 15,000","15,000 - 30,000","30,000 - 60,000"];
 exports.calculateMatchPercent=function(candidates,precedence,job)

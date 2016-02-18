@@ -44,7 +44,7 @@ angular.module('short-list').controller('messageController', [
 
 		// Remove from Short List
 		$scope.sendMessage = function(message) {
-          console.log("MESSAGE sender");
+        
 			// Create new Thread object
 			var thread = new Threads ({
 				sender: $scope.user._id,

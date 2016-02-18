@@ -62,6 +62,14 @@ var CandidateSchema = new Schema({
 		type: String,
 		trim: true
 	},
+	views:{
+    type:Number,
+    default:0
+    },
+	likes:{
+    type:Number,
+    default:0
+	},
 	xp:{
 		type: Number,
 		default: 0
@@ -244,6 +252,10 @@ var CandidateSchema = new Schema({
 		 	default:0
 		          }
 		           }],
+    importantJobs:[{
+        type: Schema.ObjectId,
+		ref: 'Job'
+    }],
 	jobs: [{
 		type: Schema.ObjectId,
 		ref: 'Job'

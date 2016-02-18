@@ -26,15 +26,15 @@
                     </header>
                     <section class="scrollable hover w-f">
                       <ul class="list-group auto no-radius m-b-none m-t-n-xxs list-group-lg">
-                        <li class="list-group-item" data-ng-repeat="thread in threads" data-ng-click="selectedmessage(thread)">
+                        <li ui-sref-active="active" class="list-group-item" data-ng-repeat="mainThread in threads" data-ng-click="selectedmessage(mainThread)">
                           <a class="thumb-sm pull-left m-r-sm">
-                            <img src="images/a0.png" class="img-circle">
+                            <img src="http://localhost:3000{{mainThread.messages[0].author.picture_url}}" class="img-circle">
                           </a>
                           <a class="clear text-ellipsis">
-                            <small class="pull-right">3 minuts ago</small>
-                            <strong class="block" ng-if="!thread.sender">Recreal Team</strong>
-                            <strong class="block" ng-if="thread.sender">Recreal Team</strong>
-                            <small>{{thread.subject}}  </small>
+                            <small class="pull-right">{{fromTime(mainThread.messages[mainThread.messages.length-1].created)}}</small>
+                            <strong class="block" ng-if="!mainThread.sender">Recreal Team</strong>
+                            <strong class="block" ng-if="mainThread.sender">{{mainThread.messages[0].author.firstName}} {{mainThread.messages[0].author.lastName}}</strong>
+                            <small>{{mainThread.subject}} </small>
                           </a>
                         </li>
                         
@@ -57,12 +57,12 @@
                   <section class="panel panel-default">
                     <header class="panel-heading">Chat</header>
                     <section class="chat-list panel-body">
-                      <article id="chat-id-1" class="chat-item left" data-ng-repeat="thre in messages">
-                        <a class="pull-left thumb-sm avatar"><img src="images/a2.png"></a>
+                      <article id="chat-id-1" ng:class="{true:'chat-item right', false:'chat-item left'}[authentication.user._id==thre.author._id]" data-ng-repeat="thre in messages">
+                        <a ng:class="{true:'pull-right thumb-sm avatar', false:'pull-left thumb-sm avatar'}[authentication.user._id==thre.author._id]"><img src="http://localhost:3000{{thre.author.picture_url}}"></a>
                         <section class="chat-body">
                           <div class="panel b-light text-sm m-b-none">
                             <div class="panel-body">
-                              <span class="arrow left"></span>
+                              <span ng:class="{true:'arrow right', false:'arrow left'}[authentication.user._id==thre.author._id]"></span>
                               <p class="m-b-none">{{thre.messageBody}}</p>
                             </div>
                           </div>
@@ -87,14 +87,14 @@
                       <article class="chat-item" id="chat-form">
                         <a class="pull-left thumb-sm avatar"> <img src="{{authentication.user.picture_url}}" alt="..." class="img-circle"></a>
                         <section class="chat-body">
-                          <form action="" class="m-b-none">
+                         
                             <div class="input-group">
-                              <input type="text" class="form-control" placeholder="Say something" data-ng-model="balsamic.message">
+                              <input type="text" class="form-control" ui-keydown="{'enter':'sendMessage()'}" placeholder="Say something" data-ng-model="balsamic.message">
                               <span class="input-group-btn">
-                                <button class="btn btn-default"  data-ng-click="sendMessage()" type="button">SEND</button>
+                                <button class="btn btn-default"  data-ng-click="sendMessage()" >SEND</button>
                               </span>
                             </div>
-                          </form>
+                         
                         </section>
                       </article>
                     </footer>

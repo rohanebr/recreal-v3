@@ -8,15 +8,17 @@
                     </div>   
 	                <div class="col-md-9">
 	                	<h2>{{job.title}}</h2>
-	                	<h5>Viewed:{{job.views.length}}</h5>
-	                	<a href="/#!/companies/{{job.company._id}}"><h4>at {{job.company.company_name}}</h4></a>
+	                	<h5>Viewed : {{job.views.length}}</h5>
+	                	<a href="/#!/companies/{{job.company._id}}" data-ng-show="job.user"><h4>at {{job.company.company_name}}</h4></a>
+	                	<a href="/#!/companies/{{job.company._id}}" data-ng-hide="job.user"><h4>at {{job.company}}</h4></a>
 	                	<span><h6 class="col-md-9">Posted 5 days ago</h6>
 	                	 <strong class="col-md-3"><a class=" btn btn-sm btn-success pull-right" ng-hide=" authentication.user.userType==='employer' || isApplied" ng-click="apply(job)">Apply Now</a></strong></span>
 					</div>
 		    </section>
 		    <p></p>
 		    <section class="responsive">
-		    	<table class="table">
+		    	<!-- this table is used for jobs posted through recreal-->
+		    	<table data-ng-show="job.user" class="table">
 		    	<tr>
 		    		<td>
 		    			<strong>Industry:</strong> 
@@ -53,7 +55,7 @@
 		    			{{job.shift}}
 		    		</td>
 		    		<td>
-		    			<strong>Dergee:</strong> 
+		    			<strong>Degree:</strong> 
 		    		</td>
 		    		<td>
 		    			{{job.degree_title}}
@@ -66,6 +68,7 @@
 		    		<td>
 		    			{{job.employee_type}}
 		    		</td>
+		    		
 		    		<td>
 		    			<strong>Degree Title:</strong>
 		    		</td>

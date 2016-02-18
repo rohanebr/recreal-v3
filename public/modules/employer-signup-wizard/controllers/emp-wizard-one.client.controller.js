@@ -72,7 +72,9 @@ angular.module('employer-signup-wizard').controller('EmpWizardOneController', ['
 
                             } else {
                                 if($scope.company.country!==undefined)
-{gotcompanycountryundefined=true;
+                                {
+
+                                gotcompanycountryundefined=true;
                                 angular.forEach($scope.countries, function(country) {
 
                                     country1 = $scope.company.country;

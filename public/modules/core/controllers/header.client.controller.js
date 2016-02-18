@@ -5,6 +5,7 @@ angular.module('core').controller('HeaderController', ['$scope', 'Authentication
         console.log("HEADER CLIENT CONTROLLER");
         $scope.authentication = Authentication;
         $scope.isCollapsed = false;
+        $scope.searchCriteria ="";
         $scope.menu = Menus.getMenu('topbar');
         $scope.threads = [];
         $scope.unreadnotificationslength = 0;
@@ -26,8 +27,8 @@ angular.module('core').controller('HeaderController', ['$scope', 'Authentication
             }
         };
         $scope.findMeAJob = function() {
-
-            $location.path('/search-jobs/find-me-a-job');
+               console.log($scope.texts);
+            $location.path('/search-jobs/'+$scope.texts);
         };
 
         $scope.notificationRead = function(data) {
@@ -43,7 +44,7 @@ angular.module('core').controller('HeaderController', ['$scope', 'Authentication
                     }
                 }
 
-                $scope.apply();
+                // $scope.apply();
             }).error(function(data, status, headers, confige) {
 
 
@@ -132,7 +133,8 @@ angular.module('core').controller('HeaderController', ['$scope', 'Authentication
             console.log($scope.authentication.user._id);
 
             $http.get('/users/getMessages/' + $scope.authentication.user._id).success(function(res) {
-                console.log("GETMESSAGE" + res);
+                console.log("GETMESSAGE");
+                console.log(res);
 
                 if (res.length > 1) {
                     for (var x = 1; x < res.length; x++) {

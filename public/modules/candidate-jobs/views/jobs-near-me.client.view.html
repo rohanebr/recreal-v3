@@ -1,0 +1,86 @@
+
+ <div data-ng-controller="jobsNearMeController" data-ng-init="findJobsNearMe()" class="row">
+
+<div class="col-sm-6">
+<ng-map data-ng-model="map" center="45.518970, -122.672899" style="height:870px"
+                      zoom="11"
+                      map-type-id="ROADMAP"
+                      
+                      heading="90">
+                    </ng-map> 
+</div>
+<div class="col-sm-6">
+	<h2>{{selectedJob.title}} - {{selectedJob.company}}</h2>
+<strong class="col-md-3"><a class=" btn btn-sm btn-success pull-right" ng-click="apply(selectedJob)">Apply Now</a></strong>
+		    	<!-- this table is used for jobs posted through recreal-->
+		    	<table class="table">
+				    	<tr>
+				    		<td>
+				    			<strong>Industry:</strong> 
+				    		</td>
+				    		<td>
+				    			{{selectedJob.Industry}}
+				    		</td>
+				    		<td>
+				    			<strong>Location:</strong> 
+				    		</td>
+				    		<td>
+				    			{{selectedJob.JobLocation}}
+				    		</td>
+				    	</tr>
+				    	<tr>
+				    		<td>
+				    			<strong>Career Level:</strong> 
+				    		</td>
+				    		<td>
+				    			{{selectedJob.CareerLevel}}
+				    		</td>
+				    		<td>
+				    			<strong>Functional Area:</strong> 
+				    		</td>
+				    		<td>
+				    			{{selectedJob.FunctionalArea}}
+				    		</td>
+				    	</tr>
+				    	<tr>
+				    		<td>
+				    			<strong>Age:</strong> 
+				    		</td>
+				    		<td>
+				    			{{selectedJob.Age}}
+				    		</td>
+				    		<td>
+				    			<strong>Degree:</strong> 
+				    		</td>
+				    		<td>
+				    			{{selectedJob.MinimumEducation}}
+				    		</td>
+				    	</tr>
+				    	<tr>
+				    		<td>
+				    			<strong>Employement Type:</strong> 
+				    		</td>
+				    		<td>
+				    			{{selectedJob.JobType}}
+				    		</td>
+				    		
+				    		<td>
+				    			<strong>Degree Title:</strong>
+				    		</td>
+				    		<td>
+				    			{{selectedJob.DegreeTitle}}
+				    		</td>
+				    	</tr>
+				    	<tr><td>
+				    		<strong>Total Position:</strong> 
+				    	</td><td>
+				    	{{selectedJob.TotalPosition}}
+				    </td></tr>
+				    <tr><td></td><td></td><td></td><td></td></tr>
+				    	</table>
+		    
+	</div>
+                </div>
+
+               
+             

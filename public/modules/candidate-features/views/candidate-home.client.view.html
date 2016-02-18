@@ -2,15 +2,180 @@
 
 
 
+    <section class="scrollable wrapper">
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="row">
+                <div class="col-sm-6">
+                    <section class="panel panel-default">
+                        <header class="panel-heading bg-light no-border">
+                            <div class="clearfix">
 
+                                <a href="#" class="pull-left thumb-md avatar b-3x m-r"> <img src="{{user.picture_url}}" alt="..."> </a>
+                                <div class="clear">
+                                    <div class="h3 m-t-xs m-b-xs">{{user.displayName}}<i class="fa fa-circle text-success pull-right text-xs m-t-sm"></i> </div> <small class="text-muted">{{candidate.title}}</small> </div>
+                            </div>
+                        </header>
+                        <div class="list-group no-radius alt">
+                            <a class="list-group-item" href="#"> <span class="badge bg-success">{{candidate.likes}}</span> <i class="fa fa-thumbs-up icon-muted"></i> Likes </a>
+                            <a class="list-group-item" data-ng-href="#!/candidate-applied-jobs"> <span class="badge bg-info">{{candidate.jobs.length}}</span> <i class="fa fa-envelope icon-muted"></i> Jobs Applied </a>
+                            <a class="list-group-item" href="#"> <span class="badge bg-light">{{candidate.views}}</span> <i class="fa fa-eye icon-muted"></i> Profile visits </a>
+                        </div>
+                    </section>
+                    <section ng-repeat="impJob in candidate.importantJobs" class="panel panel-info">
+                        <div class="panel-body">
+                            <a href="#" class="thumb pull-right m-l m-t-xs avatar"> <img src="images/a4.png"> <i class="on md b-white bottom"></i> </a>
+                            <div class="clear"> <a href="#" class="text-info">{{impJob.title}}<i class="icon-twitter"></i></a> <small class="block text-muted">2,415 followers / 225 tweets</small> <a href="#" class="btn btn-xs btn-success m-t-xs">View Job</a> </div>
+                        </div>
+                        
+                    </section>
+                </div>
+                <!-- <div class="col-sm-6">
+                    <section class="panel panel-default">
+                        <div class="text-center wrapper bg-light lt">
+                            <div class="sparkline inline" data-type="bar" data-height="126" data-bar-width="6" data-bar-spacing="20" data-stacked-bar-color="['#1d89cf', '#e0e6f0']">
+                                <canvas width="214" height="126" style="display: inline-block; width: 214px; height: 126px; vertical-align: top;"></canvas>
+                            </div>
+                        </div>
+                        <ul class="list-group no-radius">
+                            <li class="list-group-item"> <span class="pull-right">45,000</span> <span class="label bg-primary">1</span> .inc company </li>
+                            <li class="list-group-item"> <span class="pull-right">23,200</span> <span class="label bg-info">2</span> Gamecorp </li>
+                            <li class="list-group-item"> <span class="pull-right">21,000</span> <span class="label bg-success">3</span> Starup </li>
+                            <li class="list-group-item"> <span class="pull-right">15,000</span> <span class="label bg-light">4</span> Neosoft company </li>
+                        </ul>
+                    </section>
+                </div> -->
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <section class="panel panel-default">
+                <div class="panel-body">
+                    <div class="clearfix text-center m-t">
+                        <div class="inline">
+                            <div class="easypiechart easyPieChart" data-percent="75" data-line-width="5" data-bar-color="#4cc0c1" data-track-color="#f5f5f5" data-scale-color="false" data-size="134" data-line-cap="butt" data-animate="1000" style="width: 134px; height: 134px; line-height: 134px;">
+                                <div class="thumb-lg"> <img src="{{user.picture_url}}" alt="..." class="img-circle"> </div>
+                                <canvas width="134" height="134"></canvas>
+                            </div>
+                            <div class="h4 m-t m-b-xs">{{user.displayName}}</div> <small class="text-muted m-b">{{candidate.title}}</small> </div>
+                    </div>
+                </div>
+                <footer class="panel-footer bg-info text-center">
+                    <div class="row pull-out">
+                        <div class="col-xs-4">
+                            <div class="padder-v"> <span class="m-b-xs h3 block text-white">{{candidate.skills.length}}</span> <small class="text-muted">Skills</small> </div>
+                        </div>
+                        <div class="col-xs-4 dk">
+                            <div class="padder-v"> <span class="m-b-xs h3 block text-white">{{candidate.projects.length}}</span> <small class="text-muted">Projects</small> </div>
+                        </div>
+                        <div class="col-xs-4">
+                            <div class="padder-v"> <span class="m-b-xs h3 block text-white">{{candidate.examsTaken.length}}</span> <small class="text-muted">Exams Taken</small> </div>
+                        </div>
+                    </div>
+                </footer>
+            </section>
+        </div>
+    </div>
+    <!-- <div class="row">
+        <div class="col-lg-6">
+            <section class="row m-l-none m-r-none m-b text-center box-shadow">
+                <div class="col-xs-4 bg-primary dk lter r-l">
+                    <div class="wrapper"> <i class="fa fa-facebook fa fa-3x m-t m-b-sm text-white"></i>
+                        <p class="text-muted font-bold">Facebook</p>
+                        <div class="h4 font-bold">32k</div>
+                    </div>
+                </div>
+                <div class="col-xs-4 bg-info lt">
+                    <div class="wrapper"> <i class="fa fa-twitter fa fa-3x m-t m-b-sm text-white"></i>
+                        <p class="text-muted font-bold">Twitter</p>
+                        <div class="h4 font-bold">50k</div>
+                    </div>
+                </div>
+                <div class="col-xs-4 bg-danger lt r-r">
+                    <div class="wrapper"> <i class="fa fa-dribbble fa fa-3x m-t m-b-sm text-white"></i>
+                        <p class="text-muted font-bold">Dribbble</p>
+                        <div class="h4 font-bold">16k</div>
+                    </div>
+                </div>
+            </section>
+            <!-- chat -->
+           <!--  <section class="panel panel-default">
+                <header class="panel-heading">Chat</header>
+                <section class="chat-list panel-body">
+                    <article id="chat-id-1" class="chat-item left">
+                        <a href="#" class="pull-left thumb-sm avatar"><img src="images/a2.png">
+                        </a>
+                        <section class="chat-body">
+                            <div class="panel b-light text-sm m-b-none">
+                                <div class="panel-body"> <span class="arrow left"></span>
+                                    <p class="m-b-none">Hi John, What's up...</p>
+                                </div>
+                            </div> <small class="text-muted"><i class="fa fa-ok text-success"></i> 2 minutes ago</small> </section>
+                    </article>
+                    <article id="chat-id-1" class="chat-item right">
+                        <a href="#" class="pull-right thumb-sm avatar"><img src="images/a3.png" class="img-circle">
+                        </a>
+                        <section class="chat-body">
+                            <div class="panel bg-light text-sm m-b-none">
+                                <div class="panel-body"> <span class="arrow right"></span>
+                                    <p class="m-b-none">Lorem ipsum dolor sit amet, conse
+                                        <br>adipiscing eli...
+                                        <br>:)</p>
+                                </div>
+                            </div> <small class="text-muted">1 minutes ago</small> </section>
+                    </article>
+                </section>
+                <footer class="panel-footer">
+                    <!-- chat form -->
+                   <!--  <article class="chat-item" id="chat-form">
+                        <a class="pull-left thumb-sm avatar"><img src="images/a3.png" class="img-circle">
+                        </a>
+                        <section class="chat-body">
+                            <form action="" class="m-b-none">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Say something"> <span class="input-group-btn"> <button class="btn btn-default" type="button">SEND</button> </span> </div>
+                            </form>
+                        </section>
+                    </article>
+                </footer>
+            </section> -->
+            <!-- /chat -->
+     <!--        <section class="panel panel-default">
+                <header class="panel-heading"> <span class="label bg-dark">15</span> Inbox </header>
+                <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 230px;">
+                    <section class="panel-body slim-scroll" data-height="230px" data-size="10px" style="overflow: hidden; width: auto; height: 230px;">
+                        <article class="media"> <span class="pull-left thumb-sm"><img src="images/a2.png"></span>
+                            <div class="media-body">
+                                <div class="pull-right media-xs text-center text-muted"> <strong class="h4">12:18</strong>
+                                    <br> <small class="label bg-light">pm</small> </div> <a href="#" class="h4">Bootstrap 3 released</a> <small class="block"><a href="#" class="">John Smith</a> <span class="label label-success">Circle</span></small> <small class="block m-t-sm">Sleek, intuitive, and powerful mobile-first front-end framework for faster and easier web development.</small> </div>
+                        </article>
+                        <div class="line pull-in"></div>
+                        <article class="media"> <span class="pull-left thumb-sm"><i class="fa fa-file-o fa-3x icon-muted"></i></span>
+                            <div class="media-body">
+                                <div class="pull-right media-xs text-center text-muted"> <strong class="h4">17</strong>
+                                    <br> <small class="label bg-light">feb</small> </div> <a href="#" class="h4">Bootstrap documents</a> <small class="block"><a href="#" class="">John Smith</a> <span class="label label-info">Friends</span></small> <small class="block m-t-sm">There are a few easy ways to quickly get started with Bootstrap, each one appealing to a different skill level and use case. Read through to see what suits your particular needs.</small> </div>
+                        </article>
+                        <div class="line pull-in"></div>
+                        <article class="media">
+                            <div class="media-body">
+                                <div class="pull-right media-xs text-center text-muted"> <strong class="h4">09</strong>
+                                    <br> <small class="label bg-light">jan</small> </div> <a href="#" class="h4 text-success">Mobile first html/css framework</a> <small class="block m-t-sm">Bootstrap, Ratchet</small> </div>
+                        </article>
+                    </section>
+                    <div class="slimScrollBar" style="width: 10px; position: absolute; top: 0px; opacity: 0.4; display: none; border-radius: 7px; z-index: 99; right: 1px; height: 164.798px; background: rgb(0, 0, 0);"></div>
+                    <div class="slimScrollRail" style="width: 10px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 7px; opacity: 0.2; z-index: 90; right: 1px; background: rgb(51, 51, 51);"></div>
+                </div>
+            </section> -->
+        </div>
+        
+    </div> 
+</section>
     <article class="col-md-8">
         
-      
 
-        
+       
             
             <section class="row" ng-repeat="job in jobs">
-                <div data-ng-hide="hasApplied(job)">
+                <div>
                     <div class="col-md-3" style="height: 150px">    
                         <a class="pull-left" href="#!/jobs/{{job._id}}">
                             <img alt="" src="http://1.bp.blogspot.com/-PDyJ4V86jJc/UegSwGYXY2I/AAAAAAAABjM/adUNk71ddes/s1600/954862_10151698062655336_1754121665_n.jpg" class="img-rounded img150_150">
@@ -24,7 +189,8 @@
                         </div>
                         <div class="pull-right">    
                             <label>{{job.dueDate | date}}</label>
-                            <strong><a class="btn btn-sm btn-success" ng-click="apply(job)">Apply Now</a></strong>
+                            <strong><a data-ng-hide="hasApplied(job)" class="btn btn-sm btn-success" ng-click="viewJob(job)">Apply Now</a></strong>
+                            <strong><a data-ng-show="hasApplied(job)" class="btn btn-sm btn-success">Applied</a></strong>
                         </div>
                     </div>
                 </div>

@@ -40,7 +40,7 @@ var getErrorMessage = function(err) {
 
 
 exports.signupcandidate = function(req, res) {
-	console.log("IT CAME");
+	
 	delete req.body.roles;
 
 	// Init Variables
@@ -65,6 +65,7 @@ exports.signupcandidate = function(req, res) {
 	thread.created= Date.now();
 	thread.updated= Date.now();
 	thread.receiver=user;
+	thread.readBySender= true;
 	thread.subject="Welcome to Recreal";
 	thread.messages.push({messageBody:"Our team welcomes you to Recreal. The only site which provides real time synergetic hiring!!",created:Date.now()});
 	thread.save();
@@ -146,7 +147,7 @@ exports.signupcandidate = function(req, res) {
 			});
 		}
 	], function(err) {
-		if (err) return next(err);
+		if (err) return;
 	});
 			res.jsonp({status: true});
 		}
@@ -227,3 +228,5 @@ exports.SaveCandidateWizardFive = function(req,res){
 	console.log("candidate wizard five called");
 	res.jsonp({status: true});
 };
+
+
