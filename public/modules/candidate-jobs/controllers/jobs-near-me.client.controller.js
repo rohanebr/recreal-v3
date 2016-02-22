@@ -71,7 +71,7 @@ angular.module('candidate-jobs').controller('jobsNearMeController', ['$scope' ,'
                                                                      url: "#!/rozeeJobs/"+response.jobs[i]._id,
                                                                      selectedJob: response.jobs[i]
                                                                    });
-                                        google.maps.event.addListener(marker, 'mouseover', function() {
+                                        google.maps.event.addListener(marker, 'click', function() {
                                                   
                                                   $scope.selectedJob = this.selectedJob;
                                                   console.log($scope.selectedJob);
