@@ -141,7 +141,7 @@ exports.sendTest = function(req, res){
 	var candidates=req.body.candidates;
 	var tests=req.body.tests;
 	console.log(tests[0]);
-var candidatesalreadygiventest=[];
+	var candidatesalreadygiventest=[];
 	Candidate.find().find({"_id":{$in:candidates}}).populate('examsTaken.exam').exec(function(err,docs){
 
               for(var h=0,d=docs.length;h<d;h++)

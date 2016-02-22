@@ -121,44 +121,42 @@ exports.hasAuthorization = function(req, res, next) {
  */
 exports.addSkill=function(req,res)
 {
-var userId=req.user._id;
-if(req.user.userType === 'candidate')
-{
-var c;
-var skill=req.body;
-console.log(skill);
-Candidate.update(
-      { user: userId },
-      { $push: { skills : skill } },
-      { safe: true },
-      function removeConnectionsCB(err, obj) {
+  var userId=req.user._id;
+  if(req.user.userType === 'candidate')
+  {
+  var c;
+  var skill=req.body;
+  console.log(skill);
+  Candidate.update(
+        { user: userId },
+        { $push: { skills : skill } },
+        { safe: true },
+        function removeConnectionsCB(err, obj) {
 
-      });
+        });
 
-}
+  }
 
-console.log("add Skill function called");
-
-
+  console.log("add Skill function called");
 };
 exports.deleteSkill = function(req, res) {
-var userId=req.user._id;
-if(req.user.userType === 'candidate')
-{
-var c;
-var skill=req.body;
+  var userId=req.user._id;
+  if(req.user.userType === 'candidate')
+  {
+  var c;
+  var skill=req.body;
 
-Candidate.update(
-      { user: userId },
-      { $pull: { skills : { _id : skill._id } } },
-      { safe: true },
-      function removeConnectionsCB(err, obj) {
+  Candidate.update(
+        { user: userId },
+        { $pull: { skills : { _id : skill._id } } },
+        { safe: true },
+        function removeConnectionsCB(err, obj) {
 
-      })
-}
+        })
+  }
 
 
-	console.log('method called delete Skill!');
+  	console.log('method called delete Skill!');
 
 
 };
@@ -172,37 +170,33 @@ exports.updateSkill = function(req, res) {
     {
     var c;
     var skill=req.body;
-var id=req.user._id;
+  var id=req.user._id;
 
-//moongoose is like a retarded person we have to go in the moongooseDocumentarray and change each entry within the
-//array one by one. then tell the moongoose that skills has been modified and then save it. If you dont follow this
-//exact pattern you cannot update anything right. As of this current version moongoose is retarded
-var cand = Candidate.findOne({user:id}).exec(function(err, candidate){
-candidate.skills.forEach(function (item) {
-if(item._id==skill._id)
-      {
-      item.title=skill.title;
-      item.level=skill.level;
-      item.experience=skill.experience;
-      item.last_used=skill.last_used;
+  //moongoose is like a retarded person we have to go in the moongooseDocumentarray and change each entry within the
+  //array one by one. then tell the moongoose that skills has been modified and then save it. If you dont follow this
+  //exact pattern you cannot update anything right. As of this current version moongoose is retarded
+  var cand = Candidate.findOne({user:id}).exec(function(err, candidate){
+  candidate.skills.forEach(function (item) {
+  if(item._id==skill._id)
+        {
+        item.title=skill.title;
+        item.level=skill.level;
+        item.experience=skill.experience;
+        item.last_used=skill.last_used;
+        }
+
+      });
+
+  candidate.markModified('skills');
+           candidate.save();
+
+      		});
+
+
+
       }
 
-    });
-
-candidate.markModified('skills');
-         candidate.save();
-
-    		});
-
-
-
-    }
-
-    	console.log('method called update skill!!');
-
-
-
-
+      	console.log('method called update skill!!');
 };
 
 //Delete   Experience
