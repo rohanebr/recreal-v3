@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('users').controller('AuthenticationController', ['$scope', '$http', '$location', 'Authentication', '$state',
+angular.module('users').controller('AuthenticationController', ['$scope', '$http','$location', 'Authentication', '$state',
 	function($scope, $http, $location, Authentication, $state) {
 		$scope.authentication = Authentication;
 
@@ -51,6 +51,14 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$http
 				console.log(response.message);
 				$scope.error = response.message;
 			});
+ // auth.signin({}, function (profile, token) {
+ //      // Success callback
+ //      store.set('profile', profile);
+ //      store.set('token', token);
+ //      $location.path('/');
+ //    }, function () {
+ //      // Error callback
+ //    });
 		};
 	}
 ]);

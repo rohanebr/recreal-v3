@@ -7,12 +7,12 @@ angular.module('candidate-features').controller('CandidateHomeController', ['$sc
 
 		// If user is not signed in then redirect back home
 		if (!$scope.user) $location.path('/signin');
-        console.log($scope.user.candidate);
+        
 		$scope.candidate = Candidates.get({ 
 			candidateId: $scope.user.candidate
 		});	
 
-		
+		console.log($scope.candidate);
 		$scope.jobs = Jobs.query();
 
 		$scope.hasApplied = function(job){
@@ -23,6 +23,10 @@ angular.module('candidate-features').controller('CandidateHomeController', ['$sc
 			}
 			return false;
 		};
+		$scope.viewJob = function(job)
+		{
+        $location.path('jobs/' + job._id);
+	   }
 
 		// Apply for a Job
 		$scope.apply = function(job) {
@@ -36,7 +40,8 @@ angular.module('candidate-features').controller('CandidateHomeController', ['$sc
 				$scope.$apply();
 				//And redirect to the index page
 
-				$location.path('jobs/' + job._id);
+			//	$location.path('jobs/' + job._id);
+				 toaster.pop('Job', "Successfully Applied On Job", job.title);
 			}).error(function(response) {
 				$scope.error = response.message;
 			});

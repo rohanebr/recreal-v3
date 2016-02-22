@@ -4,6 +4,7 @@
 angular.module('messages').controller('MessagesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Messages', '$http', 'Socket',
     function($scope, $stateParams, $location, Authentication, Messages, $http, Socket) {
         $scope.authentication = Authentication;
+        console.log($scope.authentication);
         $scope.threads = [];
         $scope.message = {};
         $scope.thread;
@@ -194,6 +195,7 @@ if($scope.threads[s].sender==$scope.authentication.user._id)
                 
                 Socket.emit('update_threads', {
                     sender: messageBody.sender,
+                    updated:Date.now(),
                     receiver: messageBody.receiver,
                     threadId: $scope.thread._id,
                     messageBody: $scope.balsamic.message,
@@ -278,7 +280,7 @@ $scope.unreadthreads++;
                 threadId:$scope.thread._id,
                 id: $scope.authentication.user._id
             }).success(function(thread) {
-                $scope.thread = thread.thread;
+               $scope.thread = thread.thread;
                 if(!thread.alreadyRead && $scope.unreadthreads!=0)
                     $scope.unreadthreads--;
 

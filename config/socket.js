@@ -196,11 +196,11 @@ exports.create = function(server) {
             for (var x = 0; x < socketid.length; x++)
                 socketid[x].emit('watched_thread_to', data);
 
-            console.log("WATCHED THREAD");
+            
         });
 
         socket.on('message_sent_from', function(data) {
-            console.log(data.message);
+            
             var socketid = fetchmesocketid(data.message.receiver);
             for (var x = 0; x < socketid.length; x++)
                 socketid[x].emit('message_sent_to', data);
@@ -211,37 +211,7 @@ exports.create = function(server) {
 
 
 
-// // Socket API for saving a vote
-// registerPresence = function(socket) {
-//   socket.on('register:user', function(data) {
-//     var ip = socket.handshake.headers['x-forwarded-for'] || socket.handshake.address.address;    
-//     Poll.findById(data.poll_id, function(err, poll) {
-//       var choice = poll.choices.id(data.choice);
-//       choice.votes.push({ ip: ip });      
-//       poll.save(function(err, doc) {
-//         var theDoc = { 
-//           question: doc.question, _id: doc._id, choices: doc.choices, 
 
-//           userVoted: false, totalVotes: 0 
-//         };
-//         for(var i = 0, ln = doc.choices.length; i < ln; i++) {
-//           var choice = doc.choices[i]; 
-//           for(var j = 0, jLn = choice.votes.length; j < jLn; j++) {
-//             var vote = choice.votes[j];
-//             theDoc.totalVotes++;
-//             theDoc.ip = ip;
-//             if(vote.ip === ip) {
-//               theDoc.userVoted = true;
-//               theDoc.userChoice = { _id: choice._id, text: choice.text };
-//             }
-//           }
-//         }       
-//         socket.emit('myvote', theDoc);
-//         socket.broadcast.emit('vote', theDoc);
-//       });     
-//     });
-//   });
-// };
 
 
 
@@ -258,7 +228,7 @@ function fetchmesocketid(data) {
 }
 
 function containsObject(socket) {
-    console.log("FUNCT");
+    
     for (var x = 0, b = online_users.length; x < b; x++) {
         if (online_users[x].socket.id === socket) {
             return true;

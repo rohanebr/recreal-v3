@@ -7,6 +7,10 @@ angular.module(ApplicationConfiguration.applicationModuleName, ApplicationConfig
 angular.module(ApplicationConfiguration.applicationModuleName).config(['$locationProvider',
 	function($locationProvider) {
 		$locationProvider.hashPrefix('!');
+		//  authProvider.init({
+  //   domain: 'recreal.auth0.com',
+  //   clientID: 'vsbjIZUSGcre7UFUZFr0jzWwnHhAdxKL'
+  // });
 	}
 ]);
 

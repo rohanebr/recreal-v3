@@ -88,6 +88,7 @@ exports.list = function(req, res) {
 				message: getErrorMessage(err)
 			});
 		} else {
+      console.log(candidates);
 			res.jsonp(candidates);
 		}
 	});
@@ -606,8 +607,7 @@ if(req.user.userType === 'candidate')
 {
 var c;
 var education=req.body;
-console.log(education._id);
-console.log(education.degree);
+
 Candidate.update(
       { user: EducationId },
       { $pull: { educations : { _id : education._id } } },
@@ -674,7 +674,7 @@ if(req.user.userType === 'candidate')
 {
 var c;
 var position=req.body;
-console.log(position);
+
 Candidate.update(
       { user: userId },
       { $push: { positions : position } },
@@ -742,5 +742,18 @@ exports.getImage =  function (req, res){
   var img = fs.readFileSync(path);
   res.writeHead(200, {'Content-Type': 'image/jpg' });
   res.end(img, 'binary');
+
+};
+
+
+exports.GetCandidateDetails = function(req,res){
+
+console.log(req);
+Candidate.findById(id).populate('user', 'displayName','jobs','importantJobs').exec(function(err, candidate) {
+    if (!err)  
+
+      res.jsonp(candidate);
+   
+  });
 
 };

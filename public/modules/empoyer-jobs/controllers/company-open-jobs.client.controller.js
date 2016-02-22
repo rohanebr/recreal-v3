@@ -5,7 +5,7 @@ angular.module('empoyer-jobs').controller('CompanyOpenJobsController', ['$scope'
       
         // If user is not signed in then redirect back home
         if (!$scope.user) $location.path('/signin');
-
+      console.log($scope.user);
         //		$scope.employer = $rootScope.employer;
         //		$scope.company = $rootScope.company;
 
@@ -17,6 +17,7 @@ angular.module('empoyer-jobs').controller('CompanyOpenJobsController', ['$scope'
             $scope.company = Companies.get({
                 companyId: employer.company
             }, function(company) {
+                console.log(company);
                 angular.forEach(company.jobs, function(job, key) {
                     Jobs.get({
                         jobId: job
@@ -27,7 +28,7 @@ angular.module('empoyer-jobs').controller('CompanyOpenJobsController', ['$scope'
                 });
             });
         });
-
+      if(Socket)
         Socket.on('applied_on_job', function(data) {
             for (var d = 0, h = $scope.jobs.length; d < h; d++) {
                 if ($scope.jobs[d]._id == data.job._id) {
@@ -36,6 +37,7 @@ angular.module('empoyer-jobs').controller('CompanyOpenJobsController', ['$scope'
                 }
             }
         });
+
     }
 
 

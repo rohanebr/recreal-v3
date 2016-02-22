@@ -5,6 +5,7 @@
  */
 var mongoose = require('mongoose'),
     Job = mongoose.model('Job'),
+    ScrappedJob = mongoose.model('scrappedJob'),
     Employer = mongoose.model('Employer'),
     User = mongoose.model('User'),
     Candidate = mongoose.model('Candidate'),
@@ -13,7 +14,27 @@ var mongoose = require('mongoose'),
     matching = require('../helpers/matching-algo.server.helper.js'),
     filterHelper = require('../helpers/filter.server.helper.js'),
     Notification = require('../sockets/notification.server.socket.js'),
-    searchPlugin = require('mongoose-search-plugin');
+    searchPlugin = require('mongoose-search-plugin'),
+    async = require('async'),
+    Distance =require('../helpers/matrix.server.helper.js');
+/**searc
+*  asynchEach : a non blocking iterator
+*  getErrorMessage: Displays error message 
+*  Create
+*  read: gets a job with company details input is Job ID
+*  getJobCandidates: Input Job id output Job details with list of candidates
+*  apply: input: User id and Job id output: job itself Additional info: it adds a notification in
+*         the db to the employeer that a candidate has applied for a job, also emits sockets for 
+*         notifying employer in real time. Increments the number of applicants in the Job view through
+*         sockets also
+*  list: Lists all Jobs
+*  delete: Input: Job id 
+*  jobsByIDs: Input Array of Job IDs output list of Jobs with details
+*  jobbyID: Single job id output Job 
+*  OnePlusView: Input Job id, update view on job 
+*  searchedJob: Input keywords, output list of Jobs 
+*  getPaginatedJobs: Get Jobs based on filters
+*/
 
 
 Array.prototype.asyncEach = function(iterator) {
@@ -112,10 +133,12 @@ exports.create = function(req, res) {
  * Show the current Job
  */
 exports.read = function(req, res) {
+   
     Job.findOne({
         _id: req.job._id
     }).populate('company').exec(function(err, job) {
-        res.jsonp(job);
+            if(!err)
+           res.jsonp(job);
     });
 };
 
@@ -170,7 +193,7 @@ console.log("APPLY ");
                     User.findById(job.user).exec(function(err, user) {
                         user.notifications.push({
                             generalmessage: candidate.displayName + " has applied for the " + job.title + " job",
-                            hiddendata: "/employer-job-candidates/" + job._id,
+                            hiddendata: "/employer-job-candidates/" + job._id+"all",
                             created: Date.now(),
                             isRead: false
                         });
@@ -264,13 +287,14 @@ exports.delete = function(req, res) {
  * List of Jobs
  */
 exports.list = function(req, res) {
-    console.log("FUCK ME");
+   
     Job.find().sort('-created').populate('user', 'displayName').populate('company').exec(function(err, jobs) {
         if (err) {
             return res.send(400, {
                 message: getErrorMessage(err)
             });
         } else {
+            console.log(jobs);
             res.jsonp(jobs);
         }
     });
@@ -298,7 +322,7 @@ exports.jobByID = function(req, res, next, id) {
     Job.findById(id).populate('user', 'displayName').exec(function(err, job) {
         if (err) return next(err);
         if (!job) return next(new Error('Failed to load Job ' + id));
-        req.job = job;
+         req.job = job;
         next();
     });
 };
@@ -319,8 +343,12 @@ exports.hasAuthorization = function(req, res, next) {
 exports.onePlusView = function(req, res) {
     var numberofviews = req.job.views;
     var alreadyviewedbytheuser = false;
+    console.log(req.job);
     Job.findById(req.job._id).exec(function(err, job) {
-        if (req.job.views.length == 0)
+        console.log("ONE PLUS VIEW");
+     
+
+       if (req.job.views.length == 0)
             job.views.push(req.body.user._id);
         if (req.job.views.length > 0) {
             for (var d = 0; d < numberofviews.length; d++) {
@@ -333,6 +361,10 @@ exports.onePlusView = function(req, res) {
         }
         job.markModified('views');
         job.save();
+
+    
+   
+       
     });
 };
 
@@ -340,32 +372,46 @@ exports.searchedJobs = function(req, res) {
     Job.setKeywords(function(err) {
 
     });
+     ScrappedJob.setKeywords(function(err) {
+
+    });
+    
     if (req.body.keyword != 'find-me-a-job') {
         Job.search(req.body.keyword, {
             title: 1
-        }, function(err, output) {
+        }, function(err, jobs) {
             if (err) return handleError(err);
             else {
-                console.log(output);
-                var totallength = output.results.length;
+                ScrappedJob.search(req.body.keyword,{},function(err,scrappedJobs){
+                var output = jobs.results.concat(scrappedJobs.results); 
+               console.log(output[0]);
+                var totallength = jobs.results.length+scrappedJobs.results.length;
                 var ids = [];
                 for (var a = req.body.skip; a < totallength; a++)
                     if (a < (req.body.skip + req.body.limit))
-                        ids.push(output.results[a]._id);
-
+                        ids.push(output[a]._id);
+            console.log(ids);
                 Job.find({
                     _id: {
                         $in: ids
                     }
                 }).populate('user', 'displayName').populate('company').exec(function(err, out) {
                     if (!err) {
-                        console.log(out);
-                        res.jsonp({
-                            jobs: out,
-                            total: output.totalCount
+                          ScrappedJob.find({_id: {
+                        $in: ids
+                    }}).exec(function(err,scrappedJobs){
+
+                            res.jsonp({
+                            jobs: out.concat(scrappedJobs),
+                            total: output.totalCount+scrappedJobs.totalCount
                         });
+                          });
+                        
                     }
                 });
+                  
+                });
+               
 
 
 
@@ -415,213 +461,234 @@ exports.searchedJobs = function(req, res) {
 
 };
 exports.getPaginatedJobs = function(req, res) {
-    var filters = [];
-    var dbfilters = ["industry", "location", "salary_range", "gender", "employee_type", "career_level"];
-    var incomingfilters = [];
-    var previousentry = "";
-    var previouscount = 0;
-    var count = 0;
-    var g = 0;
-    var ffilter = req.body.filter;
-    console.log(req.params.userId);
-    Candidate.findOne({
-        user: req.params.userId
-    }).exec(function(err, candidate) {
-        var jj = candidate.jobs;
+    // var filters = [];
+    // var dbfilters = ["industry", "location", "salary_range", "gender", "employee_type", "career_level"];
+    // var incomingfilters = [];
+    // var previousentry = "";
+    // var previouscount = 0;
+    // var count = 0;
+    // var g = 0;
+    // var ffilter = req.body.filter;
+    // console.log(req.params.userId);
+    // Candidate.findOne({
+    //     user: req.params.userId
+    // }).exec(function(err, candidate) {
+    //     var jj = candidate.jobs;
+    //     var dummy;
+    //     count = 0;
+    //     // console.log(ffilter);
+    //     ffilter.forEach(function(entry) {
+    //         if (entry.type != previousentry)
+    //             count++;
+
+    //         entry.priority = count;
+    //         if (previouscount != count)
+    //             incomingfilters.push({
+    //                 name: [entry.name],
+    //                 type: entry.type,
+    //                 priority: entry.priority
+    //             });
+    //         else {
+    //             incomingfilters[incomingfilters.length - 1].name.push(entry.name);
+
+    //         }
+    //         previousentry = entry.type;
+    //         previouscount = count;
+
+    //     });
+
+    //     var incomingfilters2 = incomingfilters.slice();
+    //     var incomingfilters3 = incomingfilters.slice();
+    //     var incomingfilters4 = incomingfilters.slice();
+    //     var jobs = Job.find({
+    //         _id: {
+    //             $nin: jj
+    //         }
+    //     }).sort('-created').populate('user', 'displayName').populate('company');
+    //     var totallength = 0;
 
 
 
 
-        var dummy;
-        count = 0;
-        // console.log(ffilter);
-        ffilter.forEach(function(entry) {
-            if (entry.type != previousentry)
-                count++;
+    //     if (incomingfilters.length != 0) {
+    //         var c1;
+    //         var lengthincomingfilters = incomingfilters.length;
+    //         for (var h = 0, t = dbfilters.length; h < t; h++) {
+    //             var alreadyPresent = false;
+    //             for (var y = 0, w = incomingfilters.length; y < w; y++) {
+    //                 if (incomingfilters[y].type == dbfilters[h])
+    //                     alreadyPresent = true;
 
-            entry.priority = count;
-            if (previouscount != count)
-                incomingfilters.push({
-                    name: [entry.name],
-                    type: entry.type,
-                    priority: entry.priority
+    //             }
+    //             if (!alreadyPresent)
+    //                 incomingfilters.push({
+    //                     name: [""],
+    //                     type: dbfilters[h],
+    //                     priority: -4
+    //                 });
+
+    //         }
+    //         var letspopulatefilters = [];
+    //         var x = 0;
+    //         incomingfilters.asyncEach(function(incomingfilter, resume) {
+    //             if (letspopulatefilters.length != 0) {
+
+    //                 for (var h = 0; h < letspopulatefilters.length; h++) {
+
+    //                     var names = letspopulatefilters[h].name;
+    //                     if (letspopulatefilters[h].type != "skills" && letspopulatefilters[h].type != "educations")
+    //                         jobs.where(letspopulatefilters[h].type).in(names);
+    //                     if (letspopulatefilters[h].type == "skills")
+    //                         jobs.where("skills.title").in(names);
+    //                     if (letspopulatefilters[h].type == "educations")
+    //                         jobs.where("educations.degree").in(names);
+
+
+
+    //                 }
+    //             }
+
+
+    //             jobs.exec(function(err, candidates) {
+
+
+
+
+    //                 console.log(incomingfilter);
+    //                 if (x < lengthincomingfilters)
+    //                     letspopulatefilters.push(incomingfilter);
+    //                 x++;
+    //                 if (incomingfilter.type != "skills" && incomingfilter.type != "educations") {
+    //                     filters = filterHelper.sortandfilter(incomingfilter.type, candidates, incomingfilters2, filters);
+    //                     for (var s = 0, ss = candidates.length; s < ss; s++)
+    //                         console.log("WTF" + candidates[s].user.isOnline);
+
+    //                 }
+    //                 if (incomingfilter.type == "skills")
+    //                     filters = filterHelper.sortandfilterArray(incomingfilter.type, candidates, incomingfilters3, filters);
+    //                 if (incomingfilter.type == "educations")
+    //                     filters = filterHelper.sortandfilterArray(incomingfilter.type, candidates, incomingfilters4, filters);
+
+
+
+
+    //                 if (x == incomingfilters.length) {
+    //                     totallength = candidates.length;
+    //                     c1 = candidates.slice();
+    //                     c1 = c1.splice(req.body.skip, req.body.limit);
+
+
+
+    //                     res.jsonp({
+
+    //                         total: totallength,
+    //                         jobs: candidates,
+    //                         filters: filters
+    //                     });
+
+    //                 }
+
+    //             });
+
+
+    //             resume();
+
+    //         });
+
+
+    //     }
+
+
+
+
+    //     if (incomingfilters.length == 0) {
+    //         var c1;
+    //         // selectedCandidates.select('displayName title objective picture_url location salary_expectation visa_status employee_type employee_status skills calculateScore');
+
+    //         jobs.exec(function(err, candidatepool) {
+    //             c1 = candidatepool.slice();
+    //             totallength = candidatepool.length;
+    //             c1 = c1.splice(req.body.skip, req.body.limit);
+
+
+    //             for (var s = 0; s < dbfilters.length; s++) {
+    //                 if (dbfilters[s] != "skills" && dbfilters[s] != "educations")
+    //                     filters = filterHelper.sortandfilter(dbfilters[s], candidatepool, incomingfilters, filters);
+    //                 if (dbfilters[s] == "skills")
+    //                     filters = filterHelper.sortandfilterArray(dbfilters[s], candidatepool, incomingfilters, filters);
+    //                 if (dbfilters[s] == "educations")
+    //                     filters = filterHelper.sortandfilterArray(dbfilters[s], candidatepool, incomingfilters, filters);
+
+    //             }
+    //             console.log(filters);
+    //             res.jsonp({
+
+    //                 total: totallength,
+    //                 jobs: c1,
+    //                 filters: filters
+    //             });
+
+
+
+
+    //         });
+
+
+
+
+    //     }
+
+
+
+    //     //    var jobs= Job.find().sort('-created').populate('user', 'displayName').populate('company');
+    //     // var totallength=0;
+    //     // jobs.exec(function(err,jobarray){
+    //     //     totallength=jobarray.length;
+
+
+
+
+    //     //  jobs.skip(req.body.skip).limit(req.body.limit).exec(function(err, jobs) {
+    //     //         if (err) {
+    //     //             return res.send(400, {
+    //     //                 message: getErrorMessage(err)
+    //     //             });
+    //     //         } else {
+    //     //             res.jsonp({jobs:jobs,total:totallength});
+    //     //         }
+    //     //     });
+
+    //     // });
+
+
+
+
+    // });
+var total = 0;
+//This find is for the number of total jobs only
+Job.find().exec(function(err,jobs){
+    ScrappedJob.find().exec(function(err,scrappedjobs){
+             total = jobs.length + scrappedjobs.length;
+
+                Job.find().sort('-created').populate('user', 'displayName').populate('company').limit(req.body.limit).skip(req.body.skip)
+          .exec(function(err, jobs){
+                       ScrappedJob.find().limit(req.body.limit).skip(req.body.skip).exec(function(err,scrappedjobs){
+                       
+                        if(!err)
+                        res.jsonp({
+                                  jobs: jobs.concat(scrappedjobs),
+                                  total:total
+                                  });
                 });
-            else {
-                incomingfilters[incomingfilters.length - 1].name.push(entry.name);
-
-            }
-            previousentry = entry.type;
-            previouscount = count;
 
         });
-
-        var incomingfilters2 = incomingfilters.slice();
-        var incomingfilters3 = incomingfilters.slice();
-        var incomingfilters4 = incomingfilters.slice();
-        var jobs = Job.find({
-            _id: {
-                $nin: jj
-            }
-        }).sort('-created').populate('user', 'displayName').populate('company');
-        var totallength = 0;
-
-
-
-
-        if (incomingfilters.length != 0) {
-            var c1;
-            var lengthincomingfilters = incomingfilters.length;
-            for (var h = 0, t = dbfilters.length; h < t; h++) {
-                var alreadyPresent = false;
-                for (var y = 0, w = incomingfilters.length; y < w; y++) {
-                    if (incomingfilters[y].type == dbfilters[h])
-                        alreadyPresent = true;
-
-                }
-                if (!alreadyPresent)
-                    incomingfilters.push({
-                        name: [""],
-                        type: dbfilters[h],
-                        priority: -4
-                    });
-
-            }
-            var letspopulatefilters = [];
-            var x = 0;
-            incomingfilters.asyncEach(function(incomingfilter, resume) {
-                if (letspopulatefilters.length != 0) {
-
-                    for (var h = 0; h < letspopulatefilters.length; h++) {
-
-                        var names = letspopulatefilters[h].name;
-                        if (letspopulatefilters[h].type != "skills" && letspopulatefilters[h].type != "educations")
-                            jobs.where(letspopulatefilters[h].type).in(names);
-                        if (letspopulatefilters[h].type == "skills")
-                            jobs.where("skills.title").in(names);
-                        if (letspopulatefilters[h].type == "educations")
-                            jobs.where("educations.degree").in(names);
-
-
-
-                    }
-                }
-
-
-                jobs.exec(function(err, candidates) {
-
-
-
-
-                    console.log(incomingfilter);
-                    if (x < lengthincomingfilters)
-                        letspopulatefilters.push(incomingfilter);
-                    x++;
-                    if (incomingfilter.type != "skills" && incomingfilter.type != "educations") {
-                        filters = filterHelper.sortandfilter(incomingfilter.type, candidates, incomingfilters2, filters);
-                        for (var s = 0, ss = candidates.length; s < ss; s++)
-                            console.log("WTF" + candidates[s].user.isOnline);
-
-                    }
-                    if (incomingfilter.type == "skills")
-                        filters = filterHelper.sortandfilterArray(incomingfilter.type, candidates, incomingfilters3, filters);
-                    if (incomingfilter.type == "educations")
-                        filters = filterHelper.sortandfilterArray(incomingfilter.type, candidates, incomingfilters4, filters);
-
-
-
-
-                    if (x == incomingfilters.length) {
-                        totallength = candidates.length;
-                        c1 = candidates.slice();
-                        c1 = c1.splice(req.body.skip, req.body.limit);
-
-
-
-                        res.jsonp({
-
-                            total: totallength,
-                            jobs: candidates,
-                            filters: filters
-                        });
-
-                    }
-
-                });
-
-
-                resume();
-
-            });
-
-
-        }
-
-
-
-
-        if (incomingfilters.length == 0) {
-            var c1;
-            // selectedCandidates.select('displayName title objective picture_url location salary_expectation visa_status employee_type employee_status skills calculateScore');
-
-            jobs.exec(function(err, candidatepool) {
-                c1 = candidatepool.slice();
-                totallength = candidatepool.length;
-                c1 = c1.splice(req.body.skip, req.body.limit);
-
-
-                for (var s = 0; s < dbfilters.length; s++) {
-                    if (dbfilters[s] != "skills" && dbfilters[s] != "educations")
-                        filters = filterHelper.sortandfilter(dbfilters[s], candidatepool, incomingfilters, filters);
-                    if (dbfilters[s] == "skills")
-                        filters = filterHelper.sortandfilterArray(dbfilters[s], candidatepool, incomingfilters, filters);
-                    if (dbfilters[s] == "educations")
-                        filters = filterHelper.sortandfilterArray(dbfilters[s], candidatepool, incomingfilters, filters);
-
-                }
-                console.log(filters);
-                res.jsonp({
-
-                    total: totallength,
-                    jobs: c1,
-                    filters: filters
-                });
-
-
-
-
-            });
-
-
-
-
-        }
-
-
-
-        //    var jobs= Job.find().sort('-created').populate('user', 'displayName').populate('company');
-        // var totallength=0;
-        // jobs.exec(function(err,jobarray){
-        //     totallength=jobarray.length;
-
-
-
-
-        //  jobs.skip(req.body.skip).limit(req.body.limit).exec(function(err, jobs) {
-        //         if (err) {
-        //             return res.send(400, {
-        //                 message: getErrorMessage(err)
-        //             });
-        //         } else {
-        //             res.jsonp({jobs:jobs,total:totallength});
-        //         }
-        //     });
-
-        // });
-
-
-
-
     });
+
+
+});
+
+
+ 
 
 };
 
@@ -873,3 +940,51 @@ console.log("SDFGG"+incomingfilters.length);
 
         });
 };
+
+
+exports.findJobsNearMe = function(req,res)
+{
+    var ids= [];
+ScrappedJob.find({"JobLocation":{ "$regex": req.body.city, "$options": "i"}},function(err,docs){
+var src =[req.body.lat+","+req.body.lng];
+for (var doc in docs) {
+var dest = [docs[doc].JobLocation];
+async.series([
+                 function(done) {
+                             var val =  Distance.calculate(src,dest,15);
+                             if(val==true)
+                                  ids.push(docs[doc]._id);
+                               
+                                    done(err,val);
+                 },
+                 function(val,done){
+                   
+                    
+                    
+                 }
+                 ],
+                 function(err){if (err) return next(err);
+                      
+
+                 }); 
+
+                
+
+}
+ ScrappedJob.find({
+                            _id: {
+                                $in: ids
+                            }
+                        }).exec(function(err,Fdocs){
+                            console.log(Fdocs.length);
+                                
+                                res.jsonp({jobs:Fdocs});
+                        });
+ 
+
+
+});
+
+
+
+}

@@ -189,7 +189,7 @@
         <span class="input-group-btn">
           <button type="submit" class="btn btn-sm bg-white b-white btn-icon"><i class="fa fa-search"></i></button>
         </span>
-        <input type="text" data-ng-model="texts" class="form-control input-sm no-border" placeholder="Search apps, projects...">            
+        <input type="text" data-ng-model="texts" class="form-control input-sm no-border" placeholder="Search apps, projects...">             
       </div>
     </div>
   </form>
@@ -206,6 +206,7 @@
 </form> -->
 <form data-ng-submit="findMeAJob()" class="navbar-form navbar-left" data-ng-show="isCandidate()">
   <input type="submit" id="sumbit2" value="Find me a Job"/>
+
 </form>
 
 <a data-ng-show="authentication.user.userType == 'employer'" href="#!/employer-favorites">Favorites</a>

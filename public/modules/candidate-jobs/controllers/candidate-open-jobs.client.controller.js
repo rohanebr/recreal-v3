@@ -121,7 +121,7 @@ angular.module('candidate-jobs').controller('CandidateOpenJobsController', ['$sc
             }).success(function(job) {
                 $scope.filters1 = [];
                 $scope.jobs = job.jobs;
-
+               
                 console.log(job.jobs);
                 // $scope.locationFilters=job.filters.locationFilters;
                 $scope.total = job.total;

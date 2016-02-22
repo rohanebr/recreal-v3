@@ -13,7 +13,7 @@ module.exports = function(app) {
 		.get(jobs.read)
 		.put(users.requiresLogin, jobs.hasAuthorization, jobs.update)
 		.delete(users.requiresLogin, jobs.hasAuthorization, jobs.delete);
-
+    app.route('/job/jobsNearMe/').post(jobs.findJobsNearMe);
 	app.route('/jobs/apply/:jobId')
 		.put(jobs.apply);
     app.route('/jobs/onePlusView/:jobId')

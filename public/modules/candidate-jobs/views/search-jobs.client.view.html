@@ -9,12 +9,16 @@
           <tr ng-repeat="job in jobs" data-ng-show="!hasApplied(job)">
             <td>
                   <a class="pull-left" href="#">
-                <img alt="" src="{{job.company.logo_url}}" class="img-rounded img64_64">
+                <img data-ng-show = "job.user" alt="" src="{{job.company.logo_url}}" class="img-rounded img64_64">
+                <img data-ng-hide = "job.user" alt="" src="{{job.image}}" class="img-rounded img64_64">
             </a>
             <section class="media-body">
-                <a data-ng-href="#!/jobs/{{job._id}}"><h3 class="media-heading">{{job.title}}</h3></a>
-                <h5>at <a data-ng-href="#!/companies/{{job.company._id}}">{{job.company.company_name}}</a></h5>                    
-                <p>{{job.description | truncate:270}}</p>
+                <a data-ng-show="job.user" data-ng-href="#!/jobs/{{job._id}}"><h3 class="media-heading">{{job.title}}</h3></a>
+                <a data-ng-hide="job.user && job.image!=''" data-ng-href="#!/rozeeJobs/{{job._id}}"><h3 class="media-heading">{{job.title}}</h3></a>
+                <h5>at <a data-ng-href="#!/companies/{{job.company._id}}" data-ng-show="job.user">{{job.company.company_name}}</a>
+                  <a data-ng-href="" data-ng-hide="job.user">{{job.company}}</a>
+                </h5>                    
+                <p  ng-bind-html="job.description | truncate:270"></p>
                 <div>
                     <span  class="skill-div" data-ng-repeat="skill in job.skills">{{skill.title}}</span>
                 </div>

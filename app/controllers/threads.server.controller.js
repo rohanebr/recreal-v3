@@ -38,7 +38,7 @@ var getErrorMessage = function(err) {
 
 exports.create = function(req, res) {
 	var thread = new Thread(req.body);
-
+console.log(thread);
 	thread.save(function(err) {
 		if (err) {
 			return res.send(400, {

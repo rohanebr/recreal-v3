@@ -29,6 +29,9 @@ angular.module('employer-signup-wizard').factory('locationVarification', ['$root
                     return deferred.promise;
                 }
             }
+
+
+
         };
     }
 ]);

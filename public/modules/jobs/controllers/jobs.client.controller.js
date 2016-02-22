@@ -81,30 +81,39 @@ angular.module('jobs').controller('JobsController', ['$http', '$scope', '$stateP
 
 		// Find existing Job
 		$scope.findOne = function() {
+
 			$scope.job = Jobs.get({ 
 				jobId: $stateParams.jobId
 			}, function(job){
 
-				$scope.candidate = Candidates.get({ 
+                 $scope.candidate = Candidates.get({ 
 					candidateId: $scope.user.candidate
 				}, function(candidate){
 
 					if($scope.user.userType === 'candidate' && $scope.candidate.jobs.indexOf($scope.job._id) > 1){
 						$scope.isApplied = true;
 					}
-					
-				});	
+					 $http.put('jobs/onePlusView/' + $stateParams.jobId , {user:$scope.user}).success(function(response) {				
+							 }).error(function(response) {
+									$scope.error = response.message;
+														 });
+
+			});	
+
+			},function(err){
+                 
+                  $http.get('scrappedjobs/'+$stateParams.jobId).success(function(response){
+
+                  	 $scope.job = response;
+                  	 console.log($scope.job);
+                  }).error(function(response){});
+
+
 
 			});
     
 
-            $http.put('jobs/onePlusView/' + $stateParams.jobId , {user:$scope.user}).success(function(response) {
-
-				
-			 }).error(function(response) {
-			$scope.error = response.message;
-			 });
-
+           
          
 		};
 	}
