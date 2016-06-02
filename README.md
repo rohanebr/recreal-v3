@@ -1,5 +1,5 @@
-# recreal-v4
-recreal-v4 is a full-stack JavaScript open-source solution, which provides a solid starting point for building a job portal. It is built upon the open source MEANJS boilerplate that makes use of [MongoDB](http://www.mongodb.org/), [Node.js](http://www.nodejs.org/), [Express](http://expressjs.com/), and [AngularJS](http://angularjs.org/).
+# recreal-v3
+recreal-v3 is a full-stack JavaScript open-source solution, which provides a solid starting point for building a job portal. It is built upon the open source MEANJS boilerplate that makes use of [MongoDB](http://www.mongodb.org/), [Node.js](http://www.nodejs.org/), [Express](http://expressjs.com/), and [AngularJS](http://angularjs.org/).
 
 ## Before You Begin
 Before you begin we recommend you read about the basic building blocks that assemble a MEAN.JS application:
