@@ -1,17 +1,8 @@
-<section data-ng-controller="EmployerJobCandidatesController">
-    <article class="row ">
-        <section class="container custom-wrapper">
-            <section class="hbox stretch">
-
-                
-            
-            <aside class="col-md-3 bg-light lt b-r b-light aside-md hidden-print" id="nav">
-                <div>
-                    <span data-ng-repeat="filter in filters" data-ng-click="removeFromFilters(filter.type,filter.name)">{{filter.name}}</span>
-                </div>
-                <section>
-                    <hr class="col-sm-9">
+<article>
+                <section class="logo text-center col-md-12">
+                    <h2>{{job.title}}</h2>
                 </section>
+<<<<<<< HEAD
                 <!-- Filters -->
                 <section>
 
@@ -77,6 +68,8 @@
                 
                     <h2 >{{job.title}}</h2>
                
+=======
+>>>>>>> d0e5664... double filters fix
                 <section class="panel panel-default">
                     <header class="panel-heading">                    
                       <span class="label bg-dark">{{candidates.length}}</span> Job Applications
@@ -110,21 +103,11 @@
                           <small class="block m-t-sm">
                             <span class="r bg-light wrapper-xxs text-sm" data-ng-repeat="skill in candidate.candidate.skills">{{skill.title}}</span>
                           </small>
-                          <small class="block m-t-sm">
+                          <h3 class="block m-t-sm">
 
-                              <span data-ng-show="compareType('location',candidate.candidate.location)" class="label label-success">{{candidate.candidate.location}}</span>
-                              <span data-ng-show="!compareType('location',candidate.candidate.location)" class="label label-danger">{{candidate.candidate.location}}</span>
+                              Exam pending....
 
-                              <span data-ng-show="compareType('salary_range',candidate.candidate.salary_expectation)" class="label label-success">{{candidate.candidate.salary_expectation}}</span>
-                              <span data-ng-show="!compareType('salary_range',candidate.candidate.salary_expectation)" class="label label-danger">{{candidate.candidate.salary_expectation}}</span>
-
-                              <span data-ng-show="compareType('employee_type',candidate.candidate.employee_type)" class="label label-success">{{candidate.candidate.employee_type}}</span>
-                              <span data-ng-show="!compareType('employee_type',candidate.candidate.employee_type)" class="label label-danger">{{candidate.candidate.employee_type}}</span>
-
-                              <span data-ng-show="compareType('employee_status',candidate.candidate.employee_status)" class="label label-success">{{candidate.candidate.employee_status}}</span>
-                              <span data-ng-show="!compareType('employee_status',candidate.candidate.employee_status)" class="label label-danger">{{candidate.candidate.employee_status}}</span>
-
-                            </small>
+                            </h3>
                         </div>
                         <hr>
                       </article>
@@ -148,8 +131,3 @@
                 </section>
                 
                 </article>
-            
-            </section>
-        </section>
-    </article>
-</section>
